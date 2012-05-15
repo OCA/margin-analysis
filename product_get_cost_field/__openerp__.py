@@ -32,7 +32,7 @@
  """,
  'website': 'http://www.camptocamp.com/',
  'init_xml': [],
- 'update_xml': [],
+ 'update_xml': ['product_view.xml'],
  'demo_xml': [],
  'tests': [],
  'installable': True,

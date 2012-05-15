@@ -13,7 +13,7 @@
         </field>
       </field>
     </record>
-    
+
     <record model="ir.ui.view" id="product_get_cost_field_tree">
       <field name="name">product.get_cost_field.view.tree</field>
       <field name="type">tree</field>
