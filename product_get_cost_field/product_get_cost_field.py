@@ -32,7 +32,8 @@ class Product(Model):
     ##     return self.standard_price # XXX or a string?
 
 
-    def _cost_price(self, cr, uid, ids, context=None):
+    def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
+        print "get cost field _cost_price", field_name, arg, context
         res = {}
         for product in self.browse(cr, uid, ids):
             res[product.id] = product.standard_price
