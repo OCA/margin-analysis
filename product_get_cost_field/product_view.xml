@@ -8,19 +8,21 @@
       <field name="inherit_id" ref="product.product_normal_form_view" />
       <field name="arch" type="xml">
         <field name="list_price" position="after">
-          <field name="cost_price"/> <!-- FIXME groups setting! -->
+          <field name="cost_price"
+                 groups="sale.group_sale_manager"/>
         </field>
       </field>
     </record>
-
+    
     <record model="ir.ui.view" id="product_get_cost_field_tree">
       <field name="name">product.get_cost_field.view.tree</field>
       <field name="type">tree</field>
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_product_tree_view" />
       <field name="arch" type="xml">
-        <field name="standard_price" position="replace"> 
-          <field name="cost_price"/><!-- FIXME groups setting! -->
+        <field name="standard_price" position="after">
+          <field name="cost_price"
+                 groups="sale.group_sale_manager"/>
         </field>
       </field>
     </record>

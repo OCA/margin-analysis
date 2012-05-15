@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author:  Alexandre Fayolle, Joel Grand-Guillaume
+#    Author:  Alexandre Fayolle
 #    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,23 +22,17 @@
  'version' : '0.1',
  'author' : 'Camptocamp',
  'maintainer': 'Camptocamp',
- 'category': 'Products',
+ 'category': 'Hidden',
  'complexity': "normal",  # easy, normal, expert
  'depends' : ['product',
               ],
- 'description': """
- Provides an overridable method on product which compute the cost_price field of a product. 
- By default it just return the value of standard_price field, but using the product_cost_incl_bom
- module, it will return the costing from the bom.
- 
- As it is a generic module, you can also setup your own way of computing the cost_price for your 
- product.
- 
- All our modules to compute margin are based on it, so you'll ba able to use them in your own way.
+ 'description': """Provides an overridable method on product which returns the name of
+ the field used to compute the product cost, allowing for customization
+ of product cost computation.
  """,
  'website': 'http://www.camptocamp.com/',
  'init_xml': [],
- 'update_xml': ['product_view.xml'],
+ 'update_xml': [],
  'demo_xml': [],
  'tests': [],
  'installable': True,
