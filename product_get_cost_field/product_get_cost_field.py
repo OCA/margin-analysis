@@ -41,7 +41,7 @@ class Product(Model):
 
     _columns = {
         'cost_price': fields.function(_cost_price,
-                                      methode=True,
+                                      method=True,
                                       string='Cost Price',
                                       digits_compute = dp.get_precision('Sale Price'),
                                       help="The cost is the standard price")
