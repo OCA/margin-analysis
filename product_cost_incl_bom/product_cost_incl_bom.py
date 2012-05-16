@@ -60,7 +60,7 @@ class Product(Model):
             bom_id = bom_obj._bom_find(cursor, user, pr.id, product_uom=None, properties=bom_properties)
 
             if not bom_id: # no BoM: use standard_price
-                res[pr_id] = pr.standard_price
+                res[pr.id] = pr.standard_price
                 continue
 
             bom = bom_obj.browse(cursor, user, bom_id)
