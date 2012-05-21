@@ -24,7 +24,7 @@
  'maintainer': 'Camptocamp',
  'category': 'Hidden',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : ['product',
+ 'depends' : ['product_get_cost_field',
               'account',
               ],
  'description': """Provides an improved way of computing the margin and markup of a product, especially for product with a averaged cost price. XXX
