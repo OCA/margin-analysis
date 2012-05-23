@@ -27,50 +27,78 @@ import decimal_precision as dp
 class product_product(Model):
     _inherit = 'product.product'
 
+    
+
 class account_invoice_line(Model):
     _inherit = 'account.invoice.line'
 
-    _columns = {
-        'product_cost_price': fields.float('Historical Cost Price',
-                                           readonly=True,
-                                           digits_compute=dp.get_precision('Purchase Price'),
-                                           help="The cost price of the product at the time of the creation of the invoice"),
-        'margin_absolute': fields.float('Margin (absolute)',
-                                        readonly=True,
-                                        digits_compute=dp.get_precision('Account'),
-                                        help="The margin on the product in absolute value"),
-        'margin_relative': fields.float('Margin (%)',
-                                        readonly=True,
-                                        digits_compute=dp.get_precision('Account'),
-                                        help="The margin on the product in relative value"),
-        }
+    def _compute_margin(self, cr, uid, ids, field_names,  arg, context):
+        res = {}
+        for obj in self.browse(cr, uid, ids):
+            product = obj.product_id
+            res[obj.id] = self._compute_margin2(cr, uid, product.id, obj.discount, obj.price_unit)
+        print res
+        return res
 
-
-    def _compute_margin(self, cr, uid, product_id, discount, price_unit):
-        product = self.pool.get('product.product').browse(product_id)
+    def _compute_margin2(self, cr, uid, product_id, discount, price_unit):
+        product = self.pool.get('product.product').browse(cr, uid, product_id)
         cost_price = product.cost_price
         discount = (discount or 0.) / 100.
         sale_price = price_unit * (1. - discount)
         return {'product_cost_price': cost_price,
                 'margin_absolute': sale_price - cost_price,
-                'margin_relative': (sale_price - cost_price) / cost_price
+                'margin_relative': 100. * (sale_price - cost_price) / cost_price
                 }
 
     def product_id_change(self, cr, uid, ids, product_id, discount, price_unit, *args, **kwargs):
         result = super(account_invoice_line, self).product_id_change(cr, uid, ids, product_id,
                                                                      *args, **kwargs)
-        margin_attributes = self._compute_margin(cr, uid, product_id, discount, price_unit)
+        margin_attributes = self._compute_margin2(cr, uid, product_id, discount, price_unit)
         result['value'].update(margin_attributes)
         return result
 
     def onchange_discount(self, cr, uid, ids, product_id, discount, price_unit, *args, **kwargs):
+        print "onchange discount"
         result = {}
-        margin_attributes = self._compute_margin(cr, uid, product_id, discount, price_unit)
+        margin_attributes = self._compute_margin2(cr, uid, product_id, discount, price_unit)
         result['value'] = margin_attributes
+        print result
         return result
 
     def onchange_price_unit(self, cr, uid, ids, product_id, discount, price_unit, *args, **kwargs):
+        print "onchange price unit"
         result = {}
-        margin_attributes = self._compute_margin(cr, uid, product_id, discount, price_unit)
+        margin_attributes = self._compute_margin2(cr, uid, product_id, discount, price_unit)
         result['value'] = margin_attributes
+        print result
         return result
+
+    def _recalc_margin(self, cr, uid, ids, context=None):
+        return ids
+
+    _col_store = {'account.invoice.line': (_recalc_margin,
+                                           ['price_unit', 'product_id', 'discount'],
+                                           10)
+                  }
+    _columns = {
+        'product_cost_price': fields.function(_compute_margin, method=True, readonly=True,type='float',
+                                              string='Historical Cost Price',
+                                              multi='product_historical_margin',
+                                              store=_col_store,
+                                              digits_compute=dp.get_precision('Purchase Price'),
+                                              help="The cost price of the product at the time of the creation of the invoice"),
+        'margin_absolute': fields.function(_compute_margin, method=True,
+                                        readonly=True, type='float',
+                                        string='Margin (absolute)',
+                                        multi='product_historical_margin',
+                                        store=_col_store,
+                                        digits_compute=dp.get_precision('Account'),
+                                        help="The margin on the product in absolute value"),
+        'margin_relative': fields.function(_compute_margin, method=True, 
+                                        readonly=True, type='float',
+                                        string='Margin (%)',
+                                        multi='product_historical_margin',
+                                        store=_col_store,
+                                        digits_compute=dp.get_precision('Account'),
+                                        help="The margin on the product in relative value"),
+        }
