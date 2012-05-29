@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author:  Alexandre Fayolle
+#    Author: Alexandre Fayolle
 #    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,26 +18,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Product Historical Margin',
- 'version' : '0.1',
- 'author' : 'Camptocamp',
- 'maintainer': 'Camptocamp',
- 'category': 'Accounting & Finance',
- 'complexity': "normal",  # easy, normal, expert
- 'depends' : ['product_get_cost_field',
-              'account',
-              ],
- 'description': """Provides an improved way of computing the margin and markup of a product, especially for product with a averaged cost price. XXX
- """,
- 'website': 'http://www.camptocamp.com/',
- 'init_xml': [],
- 'update_xml': ["account_invoice_view.xml",
-                #"wizard/historical_margin_view.xml",
-                ],
- 'demo_xml': [],
- 'tests': [],
- 'installable': True,
- 'auto_install': False,
- 'license': 'AGPL-3',
- 'application': False
- }
+
+from . import historical_margin

@@ -19,15 +19,36 @@
 #
 ##############################################################################
 
-from osv.orm import Model
+from openerp.osv.orm import Model
 from osv import fields
 
 import decimal_precision as dp
 
-class product_product(Model):
-    _inherit = 'product.product'
+# TODO: re-enable when the wizard is ready
+## class product_product(Model):
+##     _inherit = 'product_product'
+##     def _compute_margin(self, cr, uid, ids, field_names,  arg, context):
+##         res = {}
+##         for obj in self.browse(cr, uid, ids):
+##             product = obj.product_id
+##             res[obj.id] = self._compute_margin2(cr, uid, product.id, obj.discount, obj.price_unit)
+##         print res
+##         return res
+##     _columns = {
+##         'margin_absolute': fields.function(_compute_margin, method=True,
+##                                         readonly=True, type='float',
+##                                         string='Margin (absolute)',
+##                                         multi='product_historical_margin',
+##                                         digits_compute=dp.get_precision('Account'),
+##                                         help="The margin on the product in absolute value"),
+##         'margin_relative': fields.function(_compute_margin, method=True, 
+##                                         readonly=True, type='float',
+##                                         string='Margin (%)',
+##                                         multi='product_historical_margin',
+##                                         digits_compute=dp.get_precision('Account'),
+##                                         help="The margin on the product in relative value"),
+##         }
 
-    
 
 class account_invoice_line(Model):
     _inherit = 'account.invoice.line'
