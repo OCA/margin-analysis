@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- XXX This file is not processed (not listed in __openerp__.py) -->
+<openerp>
+    <data>
+        <record id="view_historical_margin" model="ir.ui.view">
+            <field name="name">historical_margin.form</field>
+            <field name="model">historical_margin</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Historical Margin">
+                    <group colspan="4">
+                        <field name="start_date" "/>
+                        <field name="end_date"/>
+                    </group>
+                    <separator string="" colspan="4"/>
+                    <group colspan="4" col="6">
+                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                        <button icon="terp-gtk-go-back-rtl" string="Compute margins" name="historical_margin_open_window" type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_historical_margin" model="ir.actions.act_window">
+            <field name="name">Product historical margine</field>
+            <field name="res_model">historical_margin</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_historical_margin"/>
+            <field name="target">new</field>
+            <field name="help">Display the historical margin of your products</field>
+        </record>
+
+        <menuitem icon="STOCK_INDENT" action="action_historical_margin"
+            id="menu_action_account_tree2"
+            parent="account.menu_finance_charts" />
+    </data>
+</openerp>
