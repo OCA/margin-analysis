@@ -69,11 +69,11 @@ class account_invoice_line(Model):
         sale_price = price_unit * (1. - discount)
         logger = logging.getLogger('product_historical_margin')
         if cost_price == 0:
-            logger.error("cost price for %d is 0, cannot compute margin relative", product_id)
-            margin_relative = 0
+            logger.debug("cost price for %d is 0, cannot compute margin relative", product_id)
+            margin_relative = -1.
         else:
             margin_relative = 100. * (sale_price - cost_price) / cost_price
-        logger.info('product %d: cost_price = %f margin_absolute = %f, margin_relative = %f',
+        logger.debug('product %d: cost_price = %f margin_absolute = %f, margin_relative = %f',
                     product_id, cost_price, sale_price - cost_price, margin_relative)
         return {'product_cost_price': cost_price,
                 'margin_absolute': sale_price - cost_price,
