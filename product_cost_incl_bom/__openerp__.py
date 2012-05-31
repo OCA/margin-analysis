@@ -22,7 +22,7 @@
  'version' : '0.1',
  'author' : 'Camptocamp',
  'maintainer': 'Camptocamp',
- 'category': 'Products',
+ 'category': 'Hidden',
  'complexity': "normal",  # easy, normal, expert
  'depends' : ['product_get_cost_field', 
               'mrp'],

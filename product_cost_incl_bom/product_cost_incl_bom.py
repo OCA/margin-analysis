@@ -27,6 +27,7 @@ class Product(Model):
     _inherit = 'product.product'
 
     def _compute_purchase_price(self, cursor, user, ids,
+                                pricelist=None,
                                 product_uom=None,
                                 bom_properties=None):
         '''
@@ -73,15 +74,14 @@ class Product(Model):
             res[pr.id] = price
         return res
 
-    def get_cost_field(self, cr, uid, ids, context=None):
-        return self._cost_price(cr, uid, ids, '', [], context)
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
             context = {}
+        pricelist = context.get('pricelist')
         product_uom = context.get('product_uom')
         bom_properties = context.get('properties')
-        res = self._compute_purchase_price(cr, uid, ids, product_uom, bom_properties)
+        res = self._compute_purchase_price(cr, uid, ids, pricelist, product_uom, bom_properties)
         return res
 
     _columns = {
@@ -89,5 +89,5 @@ class Product(Model):
                                       method=True,
                                       string='Cost Price (incl. BoM)',
                                       digits_compute = dp.get_precision('Sale Price'),
-                                      help="The cost price is the standard price or, if the product has a bom, the sum of all standard price of its components.")
+                                      help="The cost is the standard price")
         }

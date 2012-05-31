@@ -23,7 +23,6 @@ from openerp.osv.orm import Model
 from openerp.osv import fields
 import decimal_precision as dp
 
-
 class Product(Model):
     _inherit = 'product.product'
 
@@ -39,14 +38,11 @@ class Product(Model):
         for product in self.browse(cr, uid, ids):
             res[product.id] = product.standard_price
         return res
-        
-    def get_cost_field(self, cr, uid, ids, context=None):
-        return self._cost_price(cr, uid, ids, '', [], context)
 
     _columns = {
         'cost_price': fields.function(_cost_price,
                                       method=True,
                                       string='Cost Price',
                                       digits_compute = dp.get_precision('Sale Price'),
-                                      help="The cost price is the standard price unless you install the product_cost_incl_bom module.")
+                                      help="The cost is the standard price")
         }

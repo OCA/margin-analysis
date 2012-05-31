@@ -8,13 +8,13 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <field name='product_id' position='attributes'>
-          <attribute name="on_change">product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.address_invoice_id, parent.currency_id, discount, context, parent.company_id)</attribute>
+          <attribute name="on_change">product_id_change(product_id, discount, price_unit, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.address_invoice_id, parent.currency_id, context, parent.company_id)</attribute>
         </field>
         <field name='discount' position='attributes'>
-          <attribute name="on_change">onchange_discount(product_id, discount, price_unit, parent.currency_id)</attribute>
+          <attribute name="on_change">onchange_discount(product_id, discount, price_unit)</attribute>
         </field>
         <field name='price_unit' position='attributes'>
-          <attribute name="on_change">onchange_price_unit(product_id, discount, price_unit, parent.currency_id)</attribute>
+          <attribute name="on_change">onchange_price_unit(product_id, discount, price_unit)</attribute>
         </field>
         <field name="company_id" position="after">
           <field name='product_cost_price' groups="account.group_account_manager" />
@@ -34,10 +34,10 @@
           <attribute name="on_change">product_id_change(product_id, discount, price_unit, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.address_invoice_id, parent.currency_id, context, parent.company_id)</attribute>
         </field>
         <field name='discount' position='attributes'>
-          <attribute name="on_change">onchange_discount(product_id, discount, price_unit, parent.currency_id)</attribute>
+          <attribute name="on_change">onchange_discount(product_id, discount, price_unit)</attribute>
         </field>
         <field name='price_unit' position='attributes'>
-          <attribute name="on_change">onchange_price_unit(product_id, discount, price_unit, parent.currency_id)</attribute>
+          <attribute name="on_change">onchange_price_unit(product_id, discount, price_unit)</attribute>
         </field>
         <field name="discount" position="after">
           <field name='product_cost_price' groups="account.group_account_manager" />
