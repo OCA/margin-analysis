@@ -61,8 +61,12 @@ class account_invoice_line(Model):
         res = {}
         for obj in self.browse(cr, uid, ids):
             product = obj.product_id
-            res[obj.id] = self._compute_margin2(cr, uid, product.id, obj.discount, obj.price_unit, obj.invoice_id.currency_id.id)
-        print res
+            if obj.invoice_id.currency_id is None:
+                currency_id = 0
+            else:
+                currency_id = obj.invoice_id.currency_id.id
+            res[obj.id] = self._compute_margin2(cr, uid, product.id, obj.discount, obj.price_unit,
+                                                currency_id)
         return res
 
     def _convert_to_invoice_currency(self, cursor, user, amount, currency_id=False):
