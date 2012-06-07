@@ -106,14 +106,14 @@ class account_invoice_line(Model):
                 'margin_relative': margin_relative
                 }
 
-    def product_id_change(self, cr, uid, ids, product_id, uos_id, 
-                qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, 
+    def product_id_change(self, cr, uid, ids, product_id, uom,
+                qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False,
                 price_unit=False, address_invoice_id=False,
                 currency_id=False, discount=0, context=None, company_id=None):
-                
+
         result = super(account_invoice_line, self).product_id_change(cr, uid, ids, product_id, uos_id, qty=qty, name=name,
-                        type=type, partner_id=partner_id, fposition_id=fposition_id, price_unit=price_unit, 
-                        address_invoice_id=address_invoice_id, currency_id=currency_id, context=context, 
+                        type=type, partner_id=partner_id, fposition_id=fposition_id, price_unit=price_unit,
+                        address_invoice_id=address_invoice_id, currency_id=currency_id, context=context,
                         company_id=company_id)
         margin_attributes = self._compute_margin2(cr, uid, product_id, discount, price_unit, currency_id)
         result['value'].update(margin_attributes)
