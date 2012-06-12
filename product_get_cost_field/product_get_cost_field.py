@@ -18,6 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
 
 from openerp.osv.orm import Model
 from openerp.osv import fields
@@ -34,12 +35,13 @@ class Product(Model):
 
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
-        print "get cost field _cost_price", field_name, arg, context
+        logger = logging.getLogger('product.get_cost_field')
+        logger.debug("get cost field _cost_price %s, %s, %s", field_name, arg, context)
         res = {}
         for product in self.browse(cr, uid, ids):
             res[product.id] = product.standard_price
         return res
-        
+
     def get_cost_field(self, cr, uid, ids, context=None):
         return self._cost_price(cr, uid, ids, '', [], context)
 
