@@ -51,7 +51,7 @@ class historical_margin(TransientModel):
         ctx['to_date'] = wiz.get('to_date')
         data_pool = self.pool.get('ir.model.data')
         filter_ids = data_pool.get_object_reference(cr, uid, 'product',
-                                                    'product_category_search_view')
+                                                    'product_search_form_view')
         product_view_id = data_pool.get_object_reference(cr, uid,
                                                          'product_historical_margin',
                                                          'view_product_historical_margin')
@@ -60,13 +60,13 @@ class historical_margin(TransientModel):
         else:
             filter_id = 0
         return {
+            'type': 'ir.actions.act_window',
             'name': _('Historical Margins'),
             'context': ctx,
             'view_type': 'tree',
             'view_mode': 'tree',
             'res_model': 'product.product',
-            'type': 'ir.actions.act_window',
-            'view_id': False, 
-            'views': [(product_view_id[1], 'tree')],
+            'view_id': product_view_id[1],
             'search_view_id': filter_id,
+            'target': 'new',
             }
