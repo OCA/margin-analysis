@@ -68,5 +68,4 @@ class historical_margin(TransientModel):
             'res_model': 'product.product',
             'view_id': product_view_id[1],
             'search_view_id': filter_id,
-            'target': 'new',
             }
