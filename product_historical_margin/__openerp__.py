@@ -19,20 +19,22 @@
 #
 ##############################################################################
 {'name' : 'Product Historical Margin',
- 'version' : '0.1',
+ 'version' : '0.2',
  'author' : 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Accounting & Finance',
  'complexity': "normal",  # easy, normal, expert
  'depends' : ['product_get_cost_field',
               'account',
+              'sale',
               ],
  'description': """Provides an improved way of computing the margin and markup of a product, especially for product with a averaged cost price. XXX
  """,
  'website': 'http://www.camptocamp.com/',
  'init_xml': [],
  'update_xml': ["account_invoice_view.xml",
-                #"wizard/historical_margin_view.xml",
+                "wizard/historical_margin_view.xml",
+                "product_view.xml",
                 ],
  'demo_xml': [],
  'tests': [],

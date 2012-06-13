@@ -18,25 +18,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import datetime
+import time
 
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
+from openerp.tools.translate import _
 
 
 class historical_margin(TransientModel):
-    _name = 'historical_margin'
+    _name = 'historical.margin'
     _description = 'Product historical margin'
     _columns = {
-        'start_date': fields.date('Start Date', help='Date of the first invoice to take into account. The earliest existing invoice will be used if left empty'),
-        'end_date': fields.date('End Date', help='Date of the last invoice to take into account. The latest existing invoice will be used if left empty')
+        'from_date': fields.date('From', help='Date of the first invoice to take into account. '
+                                 'The earliest existing invoice will be used if left empty'),
+        'to_date': fields.date('To', help='Date of the last invoice to take into account. '
+                               'The latest existing invoice will be used if left empty')
         }
     _defaults = {
-        'start_date': lambda *a: datetime.date(datetime.date.today().year, 1, 1),
-        #'end_date': lambda *a: datetime.date.today(),
+        'from_date': time.strftime('%Y-01-01'),
+        'to_date': time.strftime('%Y-12-31'),
         }
 
-    def historical_margin_open_window(self, cr, uid, ids, context=None):
+    def action_open_window(self, cr, uid, ids, context=None):
         """
         Open the historical margin view
         """
@@ -44,7 +47,26 @@ class historical_margin(TransientModel):
             context = {}
         wiz = self.read(cr, uid, ids, [], context)[0]
         ctx = context.copy()
-        ctx['start_date']  = wiz.get('start_date')
-        ctx['end_date'] = wiz.get('end_date')
-        # XXX FIXME
-        
+        ctx['from_date']  = wiz.get('from_date')
+        ctx['to_date'] = wiz.get('to_date')
+        data_pool = self.pool.get('ir.model.data')
+        filter_ids = data_pool.get_object_reference(cr, uid, 'product',
+                                                    'product_category_search_view')
+        product_view_id = data_pool.get_object_reference(cr, uid,
+                                                         'product_historical_margin',
+                                                         'view_product_historical_margin')
+        if filter_ids:
+            filter_id = filter_ids[1]
+        else:
+            filter_id = 0
+        return {
+            'name': _('Historical Margins'),
+            'context': ctx,
+            'view_type': 'tree',
+            'view_mode': 'tree',
+            'res_model': 'product.product',
+            'type': 'ir.actions.act_window',
+            'view_id': False, 
+            'views': [(product_view_id[1], 'tree')],
+            'search_view_id': filter_id,
+            }

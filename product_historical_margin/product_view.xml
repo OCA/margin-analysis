@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="view_product_historical_margin_form" model="ir.ui.view">
+      <field name="name">product_historical_margin.form</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref='product.product_normal_form_view'/>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <field name="list_price" position="after">
+          <field name="margin_absolute" groups="base.group_sale_manager"/>
+          <field name="margin_relative" groups="base.group_sale_manager"/>
+        </field>
+      </field>
+    </record>
+
+    <record id="view_product_historical_margin" model="ir.ui.view">
+      <field name="name">product.product.historical_margin.tree</field>
+      <field name="model">product.product</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree string="Historical Margins">
+          <field name="default_code"/>
+          <field name="name"/>
+          <field name="margin_absolute"/>
+          <field name="margin_relative"/>
+        </tree>
+      </field>
+    </record>
+
+  </data>
+</openerp>

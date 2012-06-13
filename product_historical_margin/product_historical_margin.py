@@ -25,33 +25,68 @@ from osv import fields
 
 import decimal_precision as dp
 
-# TODO: re-enable when the wizard is ready
-# Don't Forget to remove supplier from the product margin computation
-# And remove credit note from the computation
+# Don't Forget to remove supplier (in_invoice et in_refund) from the product margin computation
+# And remove out_refund from the computation
+# et ne prendre que les factures paid.
 
-## class product_product(Model):
-##     _inherit = 'product_product'
-##     def _compute_margin(self, cr, uid, ids, field_names,  arg, context):
-##         res = {}
-##         for obj in self.browse(cr, uid, ids):
-##             product = obj.product_id
-##             res[obj.id] = self._compute_margin2(cr, uid, product.id, obj.discount, obj.price_unit)
-##         print res
-##         return res
-##     _columns = {
-##         'margin_absolute': fields.function(_compute_margin, method=True,
-##                                         readonly=True, type='float',
-##                                         string='Margin (absolute)',
-##                                         multi='product_historical_margin',
-##                                         digits_compute=dp.get_precision('Account'),
-##                                         help="The margin on the product in absolute value"),
-##         'margin_relative': fields.function(_compute_margin, method=True, 
-##                                         readonly=True, type='float',
-##                                         string='Margin (%)',
-##                                         multi='product_historical_margin',
-##                                         digits_compute=dp.get_precision('Account'),
-##                                         help="The margin on the product in relative value"),
-##         }
+# TODO: re-enable when the wizard is ready
+class product_product(Model):
+    _inherit = 'product.product'
+    def _compute_margin(self, cr, uid, ids, field_names,  arg, context):
+        res = {}
+        user_obj = self.pool.get('res.users')
+        company_id = user_obj.browse(cr, uid, uid).company_id.id
+
+        for product in self.browse(cr, uid, ids):
+            res[product.id] = {'margin_absolute': 0, 'margin_relative': 0}
+
+        # get information about invoice lines relative to our products
+        # belonging to open or paid invoices in the considered period
+        query = '''SELECT product_id, type,
+                          SUM(quantity),
+                          SUM(quantity*margin_absolute),
+                          SUM(quantity*margin_relative)
+        FROM account_invoice_line AS line INNER JOIN account_invoice AS inv ON (inv.id = line.invoice_id)
+        WHERE %s inv.state IN ('open', 'paid')
+          AND type NOT IN ('in_invoice', 'in_refund')
+          AND product_id IN %%(product_ids)s
+          AND inv.company_id = %%(company_id)s
+        GROUP BY product_id, type
+        HAVING SUM(quantity) != 0
+        '''
+        substs = context.copy()
+        substs['product_ids'] = tuple(res)
+        substs['company_id'] = company_id
+        date_clause = []
+        if 'from_date' in substs:
+            date_clause.append('inv.date_invoice >= %(from_date)s AND')
+        if 'to_date' in substs:
+            date_clause.append('inv.date_invoice <= %(to_date)s AND')
+        query %= ' '.join(date_clause)
+        cr.execute(query, substs)
+        for product_id, inv_type, quantity, m_abs, m_rel in cr.fetchall():
+            if inv_type == 'out_refund':
+                factor = -1.
+            else:
+                factor = 1.
+            res[product_id]['margin_absolute'] += factor * m_abs / quantity
+            res[product_id]['margin_relative'] += factor * m_rel / quantity
+        return res
+
+    _columns = {
+        'margin_absolute': fields.function(_compute_margin, method=True,
+                                        readonly=True, type='float',
+                                        string='Margin (absolute)',
+                                        multi='product_historical_margin',
+                                        digits_compute=dp.get_precision('Account'),
+                                        help="The margin on the product in absolute value"),
+        'margin_relative': fields.function(_compute_margin, method=True,
+                                        readonly=True, type='float',
+                                        string='Margin (%)',
+                                        multi='product_historical_margin',
+                                        digits_compute=dp.get_precision('Account'),
+                                        help="The margin on the product in relative value"),
+        }
 
 
 class account_invoice_line(Model):
@@ -83,7 +118,7 @@ class account_invoice_line(Model):
 
 
     def _compute_margin2(self, cr, uid, product_id, discount, price_unit, currency_id=False):
-        
+
         if not product_id:
             return {'product_cost_price': 0.0,
                     'margin_absolute': 0.0,
@@ -111,7 +146,7 @@ class account_invoice_line(Model):
                 price_unit=False, address_invoice_id=False,
                 currency_id=False, discount=0, context=None, company_id=None):
 
-        result = super(account_invoice_line, self).product_id_change(cr, uid, ids, product_id, uos_id, qty=qty, name=name,
+        result = super(account_invoice_line, self).product_id_change(cr, uid, ids, product_id, uom, qty=qty, name=name,
                         type=type, partner_id=partner_id, fposition_id=fposition_id, price_unit=price_unit,
                         address_invoice_id=address_invoice_id, currency_id=currency_id, context=context,
                         company_id=company_id)
@@ -152,7 +187,7 @@ class account_invoice_line(Model):
                                        ['currency_id'],
                                        10),
                   }
-                  
+
     _columns = {
         'product_cost_price': fields.function(_compute_margin, method=True, readonly=True,type='float',
                                               string='Historical Cost Price',
@@ -167,18 +202,27 @@ class account_invoice_line(Model):
                                         store=_col_store,
                                         digits_compute=dp.get_precision('Account'),
                                         help="The margin on the product in absolute value"),
-        'margin_relative': fields.function(_compute_margin, method=True, 
+        'margin_relative': fields.function(_compute_margin, method=True,
                                         readonly=True, type='float',
                                         string='Margin (%)',
                                         multi='product_historical_margin',
                                         store=_col_store,
                                         digits_compute=dp.get_precision('Account'),
                                         help="The margin on the product in relative value"),
+        'invoice_state': fields.related('invoice_id', 'state', type='selection',
+                                        readonly=True,
+                                        help='optimize queries when computing the margins'),
+        'invoice_date': fields.related('invoice_id', 'date_invoice', type='date', 
+                                        readonly=True,
+                                        help='optimize queries when computing the margins'),
+        'invoice_type': fields.related('invoice_id', 'type', type='selection', 
+                                        readonly=True,
+                                        help='optimize queries when computing the margins'),
         }
 
 # class AccountChangeCurrency(osv.osv_memory):
 #     _inherit = 'account.change.currency'
-#     
+#
 #     def change_currency(self, cr, uid, ids, context=None):
 #         """We copy past here the original method in order to convert as well the cost price
 #         in the new curreny."""
@@ -200,13 +244,13 @@ class account_invoice_line(Model):
 #                 new_price = line.price_unit * rate
 #                 if new_price <= 0:
 #                     raise osv.except_osv(_('Error'), _('New currency is not configured properly !'))
-# 
+#
 #             if invoice.company_id.currency_id.id != invoice.currency_id.id and invoice.company_id.currency_id.id == new_currency:
 #                 old_rate = invoice.currency_id.rate
 #                 if old_rate <= 0:
 #                     raise osv.except_osv(_('Error'), _('Current currency is not configured properly !'))
 #                 new_price = line.price_unit / old_rate
-# 
+#
 #             if invoice.company_id.currency_id.id != invoice.currency_id.id and invoice.company_id.currency_id.id != new_currency:
 #                 old_rate = invoice.currency_id.rate
 #                 if old_rate <= 0:
