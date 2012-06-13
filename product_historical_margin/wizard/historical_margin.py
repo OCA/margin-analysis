@@ -63,7 +63,7 @@ class historical_margin(TransientModel):
             'type': 'ir.actions.act_window',
             'name': _('Historical Margins'),
             'context': ctx,
-            'view_type': 'tree',
+            'view_type': 'form',
             'view_mode': 'tree',
             'res_model': 'product.product',
             'view_id': product_view_id[1],
