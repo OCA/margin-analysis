@@ -34,9 +34,10 @@ class product_product(Model):
     _inherit = 'product.product'
     def _compute_margin(self, cr, uid, ids, field_names,  arg, context):
         res = {}
+        if not ids:
+            return res
         user_obj = self.pool.get('res.users')
         company_id = user_obj.browse(cr, uid, uid).company_id.id
-
         for product in self.browse(cr, uid, ids):
             res[product.id] = {'margin_absolute': 0, 'margin_relative': 0}
 
