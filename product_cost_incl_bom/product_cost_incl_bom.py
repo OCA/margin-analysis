@@ -28,13 +28,10 @@ class Product(Model):
 
     def _compute_purchase_price(self, cursor, user, ids,
                                 product_uom=None,
-                                bom_properties=None,
-                                context=None):
+                                bom_properties=None):
         '''
         Compute the purchase price, taking into account sub products and routing
         '''
-        if context is None:
-            context = {}
         if bom_properties is None:
             bom_properties =  []
         bom_obj = self.pool.get('mrp.bom')
@@ -92,7 +89,5 @@ class Product(Model):
                                       method=True,
                                       string='Cost Price (incl. BoM)',
                                       digits_compute = dp.get_precision('Sale Price'),
-                                      help="The cost price is the standard price or, if the product has a bom, "
-                                      "the sum of all standard price of its components. it take also care of the "
-                                      "bom costing like cost per cylce.")
+                                      help="The cost price is the standard price or, if the product has a bom, the sum of all standard price of its components.")
         }

@@ -26,10 +26,7 @@
  'complexity': "normal",  # easy, normal, expert
  'depends' : ['product_get_cost_field', 
               'mrp'],
- 'description': """
-  Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
-  account the BoM costing (cost per cycle and so...). If no BOM define for a product, the cost_price is always
-  equal to the standard_price field of the product, so we always have a value to base our reporting on.
+ 'description': """Compute product base price by recursively summing parts base prices according to product BOM
 """,
  'website': 'http://www.camptocamp.com/',
  'init_xml': [],
