@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author:  Alexandre Fayolle
+#    Author:  Alexandre Fayolle, Joel Grand-Guillaume
 #    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,33 @@
  'category': 'Accounting & Finance',
  'complexity': "normal",  # easy, normal, expert
  'depends' : ['product_get_cost_field',
+              'product_standard_margin',
               'account',
               'sale',
               ],
- 'description': """Provides an improved way of computing the margin and markup of a product, especially for product with a averaged cost price. XXX
+ 'description': """
+ This module will store in the invoice line all the historical informations to allow you to compute
+ your margin on product. We will always work in company currency and in invoice currency (to respect the OpenERP
+ philosophy, as it is done in accounting entries for example). You now have the possibility to open a list 
+ view of your products and having the margin computed for a given period of time. 
+ 
+ In the product form, you also will have a computed field that show you the info based on all invoice lines
+ historic.
+ 
+ You can use this module in conjonction with the product_cost_incl_bom one to have the right margin 
+ computed from BOM costing.
+ 
+ WARNING:
+ 
+ 1) The amount of the unit price in company currency in the invoice line is converted with the currency
+ rate of the date of the creation/modification of the invoice line (not the invoice date). This choice 
+ has been made mainly because the cost price of the product is known at the invoice creation, but we don't 
+ have it at the date of the invoice (no historical values in the cost price...) !
+ 
+ TODO :
+ 
+ - Add open invoice line from product form
+ 
  """,
  'website': 'http://www.camptocamp.com/',
  'init_xml': [],
