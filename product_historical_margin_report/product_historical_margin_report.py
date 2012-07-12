@@ -81,17 +81,9 @@ class account_invoice_report(osv.osv):
                         end) / cr.rate as price_total,
                     
                     -- *** BEGIN CHG ***
-                    sum(case when ai.type in ('out_refund','in_invoice') then
-                                             -ail.subtotal_cost_price_company
-                                            else
-                                              ail.subtotal_cost_price_company
-                                            end) as subtotal_cost_price_company,
+                    sum(ail.subtotal_cost_price_company) as subtotal_cost_price_company,
                                             
-                    sum(case when ai.type in ('out_refund','in_invoice') then
-                                             -(ail.price_subtotal/cr.rate-ail.subtotal_cost_price_company)
-                                            else
-                                              ail.price_subtotal/cr.rate-ail.subtotal_cost_price_company
-                                            end) as margin_absolute,
+                    sum(ail.price_subtotal/cr.rate-ail.subtotal_cost_price_company) as margin_absolute,
                     -- *** END CHG *** 
                     
                     (case when ai.type in ('out_refund','in_invoice') then

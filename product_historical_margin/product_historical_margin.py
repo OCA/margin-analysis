@@ -59,7 +59,6 @@ class product_product(Model):
         for product_id in ids:
             res[product_id] = {'margin_absolute': 0, 'margin_relative': 0}
             tot_sale[product_id] = 0
-        
         # get information about invoice lines relative to our products
         # belonging to open or paid invoices in the considered period
         query = '''SELECT product_id, type,
@@ -85,12 +84,8 @@ class product_product(Model):
         query %= ' '.join(date_clause)
         cr.execute(query, substs)
         for product_id, inv_type, cost, sale in cr.fetchall():
-            if inv_type == 'out_refund':
-                factor = -1.
-            else:
-                factor = 1.
-            res[product_id]['margin_absolute'] += factor * (sale - cost)
-            tot_sale[product_id] += factor * sale
+            res[product_id]['margin_absolute'] += (sale - cost)
+            tot_sale[product_id] += sale
         for product_id in tot_sale.keys():
             if tot_sale[product_id] == 0:
                 logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product_id)

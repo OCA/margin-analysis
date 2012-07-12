@@ -8,12 +8,6 @@
       <field name="inherit_id" ref='product_standard_margin.sale_markup_product_form'/>
       <field name="type">form</field>
       <field name="arch" type="xml">
-        <!-- FIXME change attrs of theorical to put sale manager instead of extended -->
-        <!-- <xpath expr="/group/group[@colspan='2']" position="attributes">
-                    <attribute name="groups">base.group_sale_manager</attribute>
-                </xpath> -->
-        <!-- <xpath expr="/group/group/field[@name='standard_margin_rate']" position="after">
-        </xpath> -->
         <field name="standard_margin_rate" position="after">
             <field name="margin_absolute" />
             <field name="margin_relative" />
@@ -31,13 +25,12 @@
           <field name="name"/>
           <field name="categ_id" invisible="1"/>
           <field name="variants" groups="product.group_product_variant"/>
-          <field name="uom_id" string="UoM"/>
           <field name="type"/>
+          <field name="state" groups="base.group_extended"/>
           <field name="price" invisible="not context.get('pricelist',False)"/>
-          <field name="cost_price" groups="base.group_extended"/>
           <field name="margin_absolute"/>
           <field name="margin_relative"/>
-          <field name="state" groups="base.group_extended"/>
+          <field name="standard_margin_rate"/>
           <field name="company_id" groups="base.group_multi_company" invisible="1"/>
         </tree>
       </field>
@@ -45,11 +38,13 @@
     
     <act_window
        id="act_product_act_open_invoice_lines"
-       name="Related invoice lines"
-       domain="[('product_id','in',active_ids)]"
+       name="Margin Details"
+       domain="[('product_id','in',active_ids),('invoice_state','in',['open', 'paid']),('invoice_type','in',['out_refund','out_invoice'])]"
        res_model="account.invoice.line"
        src_model="product.product"
+       view_mode="tree,form"
        view_id="view_invoice_line_tree_from_product"
+       context="{'search_default_product':1,'search_default_year':1}"
        />
 
   </data>

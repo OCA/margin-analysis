@@ -39,11 +39,16 @@ class account_invoice_line(Model):
         
         Those values will be stored, so we'll be able to use them in analysis.
         
+        WARNING !! All subtotal in company currency will be with the right sign. For example,
+        if I have a customer refund, the sign will be - For all infos in invoice currency, we 
+        kept the standard logic => always positif.        
+        
         :return dict of dict of the form : 
             {INT Line ID : {
                     float subtotal_cost_price_company,
                     float subtotal_cost_price,
                     float subtotal_company
+                    float margin_absolute
                     }}
         """
         if context is None:
@@ -59,17 +64,24 @@ class account_invoice_line(Model):
             res[line_id] = {
                     'subtotal_cost_price_company': 0.0,
                     'subtotal_cost_price': 0.0,
-                    'subtotal_company': 0.0
+                    'subtotal_company': 0.0,
+                    'margin_absolute': 0.0,
+                    'margin_relative': 0.0,
                     }
         for obj in self.browse(cr, uid, ids):
             product = obj.product_id
-            subtotal_cost_price_company = product.cost_price * obj.quantity
             if obj.invoice_id.currency_id is None:
                 currency_id = company_currency_id
             else:
                 currency_id = obj.invoice_id.currency_id.id
+            if obj.invoice_type in ('out_refund','in_invoice'):
+                factor = -1.
+            else:
+                factor = 1.
+                
+            subtotal_cost_price_company = factor * product.cost_price * obj.quantity
             # Convert price_subtotal from invoice currency to company currency
-            subtotal_company = currency_obj.compute(cr, uid, currency_id,
+            subtotal_company = factor * currency_obj.compute(cr, uid, currency_id,
                                                                   company_currency_id,
                                                                   obj.price_subtotal,
                                                                   round=False,
@@ -80,10 +92,17 @@ class account_invoice_line(Model):
                                                                   subtotal_cost_price_company,
                                                                   round=False,
                                                                   context=context)
+            margin_absolute = subtotal_company - subtotal_cost_price_company
+            if subtotal_company == 0:
+                margin_relative = 999.
+            else:
+                margin_relative = (margin_absolute / subtotal_company) * 100
             res[obj.id] = {
                 'subtotal_cost_price_company': subtotal_cost_price_company,
                 'subtotal_cost_price': subtotal_cost_price,
                 'subtotal_company': subtotal_company,
+                'margin_absolute': margin_absolute,
+                'margin_relative': margin_relative,
             }
             logger.debug("The following values has been computed for product ID %d: subtotal_cost_price=%f"
                 "subtotal_cost_price_company=%f, subtotal_company=%f", product.id, subtotal_cost_price, 
@@ -103,7 +122,7 @@ class account_invoice_line(Model):
         return res
 
     _col_store = {'account.invoice.line': (_recalc_margin,
-                                           ['price_unit', 'product_id', 'discount'],
+                                           ['price_unit', 'product_id', 'discount','invoice_line_tax_id'],
                                            20),
                   'account.invoice':  (_recalc_margin_parent,
                                        ['currency_id'],
@@ -112,34 +131,65 @@ class account_invoice_line(Model):
 
     _columns = {
         'subtotal_cost_price_company': fields.function(_compute_line_values, method=True, readonly=True,type='float',
-                                              string='Total Cost (company currency)',
+                                              string='Cost',
                                               multi='product_historical_margin',
                                               store=_col_store,
                                               digits_compute=dp.get_precision('Account'),
                                               help="The cost subtotal of the line at the time of the creation of the invoice, "
                                               "express in the company currency."),
         'subtotal_cost_price': fields.function(_compute_line_values, method=True, readonly=True,type='float',
-                                              string='Total Cost',
+                                              string='Cost in currency',
                                               multi='product_historical_margin',
                                               store=_col_store,
                                               digits_compute=dp.get_precision('Account'),
                                               help="The cost subtotal of the line at the time of the creation of the invoice, "
                                               "express in the invoice currency."),
         'subtotal_company': fields.function(_compute_line_values, method=True, readonly=True,type='float',
-                                              string='Total Without Tax (company currency)',
+                                              string='Net Sales',
                                               multi='product_historical_margin',
                                               store=_col_store,
                                               digits_compute=dp.get_precision('Account'),
                                               help="The subtotal (VAT excluded) of the line at the time of the creation of the invoice, " 
                                               "express in the company currency (computed with the rate at invoice creation time, as we "
                                               "don't have the cost price of the product at the date of the invoice)."),
+        'margin_absolute': fields.function(_compute_line_values, method=True, readonly=True,type='float',
+                                              string='Real Margin',
+                                              multi='product_historical_margin',
+                                              store=_col_store,
+                                              digits_compute=dp.get_precision('Account'),
+                                              help="The Real Margin [ net sale - cost ] of the line."),
+        'margin_relative': fields.function(_compute_line_values, method=True, readonly=True,type='float',
+                                              string='Real Margin (%)',
+                                              multi='product_historical_margin',
+                                              store=_col_store,
+                                              digits_compute=dp.get_precision('Account'),
+                                              help="The Real Margin % [ (Real Margin / net sale) * 100 ] of the line."
+                                              "If no real margin set, will display 999.0 (if not invoiced yet for example)."),
+        
+        # Those field are here to better report to the user from where the margin is computed
+        # this will allow him to understand why a margin is of that amount using the link
+        # from product to invoice lines
+        'invoice_state': fields.related('invoice_id', 'state', type='selection', 
+                                                selection=[
+                                                    ('draft','Draft'),
+                                                    ('proforma','Pro-forma'),
+                                                    ('proforma2','Pro-forma'),
+                                                    ('open','Open'),
+                                                    ('paid','Paid'),
+                                                    ('cancel','Cancelled')
+                                                    ],
+                                                readonly=True, string="Invoice state",
+                                                help='The parent invoice state'),
         'invoice_type': fields.related('invoice_id', 'type', type='selection', store=True,
-                                        selection=[
-                                            ('out_invoice','Customer Invoice'),
-                                            ('in_invoice','Supplier Invoice'),
-                                            ('out_refund','Customer Refund'),
-                                            ('in_refund','Supplier Refund'),
-                                            ],
-                                        readonly=True, string="Invoice type",
-                                        help='optimize queries when computing the margins'),
+                                                selection=[
+                                                    ('out_invoice','Customer Invoice'),
+                                                    ('in_invoice','Supplier Invoice'),
+                                                    ('out_refund','Customer Refund'),
+                                                    ('in_refund','Supplier Refund'),
+                                                    ],
+                                                readonly=True, string="Invoice type",
+                                                help='The parent invoice type'),
+        'invoice_user_id': fields.related('invoice_id','user_id',type='many2one',relation='res.users',string='Salesman', store=True),
+        'invoice_date': fields.related('invoice_id','date_invoice',type='date',string='Invoice Date'),
+                                                
         }
