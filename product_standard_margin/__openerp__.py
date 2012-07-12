@@ -24,12 +24,13 @@
  'maintainer': 'Camptocamp',
  'category': 'Sales Management',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : ['product_get_cost_field',],
+ 'depends' : ['product_get_cost_field', 'account'],
  'description': """
   Add a field on the product form that compute the standard (or theorical) margin based on the
-  current values of sale and cost price present in the product form.
+  current values of sale and cost price present in the product form. We take care of taxe included
+  or excluded.
   
-  It will just compute it as follow : (Sale Price - Cost Price) / Sale Price
+  It will just compute it as follow : (Sale Price without tax - Cost Price) / Sale Price without tax
   
   Remember that this module can be used in conjonction with product_cost_incl_bom to have the 
   cost price computed from the BOM when a product has one.
@@ -42,7 +43,6 @@
   fields are set as the same as the company currency). We don't take care of it cause otherwise
   we should have added a dependency on sale module.
   
-  2) For now we consider always the prices values are VAT excluded
   
   """,
  'website': 'http://www.camptocamp.com/',
