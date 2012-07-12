@@ -28,11 +28,25 @@ import decimal_precision as dp
 # Don't Forget to remove supplier (in_invoice et in_refund) from the product margin computation
 # And remove out_refund from the computation
 # et ne prendre que les factures paid.
-
-# TODO: re-enable when the wizard is ready
 class product_product(Model):
     _inherit = 'product.product'
     def _compute_margin(self, cr, uid, ids, field_names,  arg, context):
+        """
+        Compute the absolute and relativ margin based on price without tax, and
+        always in company currency. We exclude the (in_invoice, in_refund) from the
+        computation as we only want to see in the product form the margin made on 
+        our sales.
+        The base calculation is made from the informations stored in the invoice line
+        of paid and open invoices.
+        We return 999 as relativ margin if no sale price is define. We made that choice
+        to differenciate the 0.0 margin from null !
+        
+        :return dict of dict of the form : 
+            {INT Product ID : {
+                    float margin_absolute,
+                    float margin_relative
+                    }}
+        """
         res = {}
         tot_sale = {}
         if context is None:

@@ -34,8 +34,17 @@ class account_invoice_line(Model):
 
     def _compute_line_values(self, cr, uid, ids, field_names,  arg, context=None):
         """
-        Compute the values of the differnet field used for margin analysis. This
-        method is called by the function fields them self.
+        Compute cost_price, cost_price in company currency and subtotal in company currency
+        that will be used for margin analysis. This method is called by the function fields.
+        
+        Those values will be stored, so we'll be able to use them in analysis.
+        
+        :return dict of dict of the form : 
+            {INT Line ID : {
+                    float subtotal_cost_price_company,
+                    float subtotal_cost_price,
+                    float subtotal_company
+                    }}
         """
         if context is None:
             context = {}
@@ -103,33 +112,27 @@ class account_invoice_line(Model):
 
     _columns = {
         'subtotal_cost_price_company': fields.function(_compute_line_values, method=True, readonly=True,type='float',
-                                              string='Subtotal Cost (company currency)',
+                                              string='Total Cost (company currency)',
                                               multi='product_historical_margin',
                                               store=_col_store,
                                               digits_compute=dp.get_precision('Account'),
                                               help="The cost subtotal of the line at the time of the creation of the invoice, "
                                               "express in the company currency."),
         'subtotal_cost_price': fields.function(_compute_line_values, method=True, readonly=True,type='float',
-                                              string='Subtotal Cost',
+                                              string='Total Cost',
                                               multi='product_historical_margin',
                                               store=_col_store,
                                               digits_compute=dp.get_precision('Account'),
                                               help="The cost subtotal of the line at the time of the creation of the invoice, "
                                               "express in the invoice currency."),
         'subtotal_company': fields.function(_compute_line_values, method=True, readonly=True,type='float',
-                                              string='Subtotal (company currency)',
+                                              string='Total Without Tax (company currency)',
                                               multi='product_historical_margin',
                                               store=_col_store,
                                               digits_compute=dp.get_precision('Account'),
                                               help="The subtotal (VAT excluded) of the line at the time of the creation of the invoice, " 
                                               "express in the company currency (computed with the rate at invoice creation time, as we "
                                               "don't have the cost price of the product at the date of the invoice)."),
-        # 'invoice_state': fields.related('invoice_id', 'state', type='selection', store=True,
-        #                                 readonly=True,
-        #                                 help='optimize queries when computing the margins'),
-        # 'invoice_date': fields.related('invoice_id', 'date_invoice', type='date', 
-        #                                 readonly=True,
-        #                                 help='optimize queries when computing the margins'),
         'invoice_type': fields.related('invoice_id', 'type', type='selection', store=True,
                                         selection=[
                                             ('out_invoice','Customer Invoice'),
@@ -140,44 +143,3 @@ class account_invoice_line(Model):
                                         readonly=True, string="Invoice type",
                                         help='optimize queries when computing the margins'),
         }
-# TODO : Override this class as well
-#
-# class AccountChangeCurrency(osv.osv_memory):
-#     _inherit = 'account.change.currency'
-#
-#     def change_currency(self, cr, uid, ids, context=None):
-#         """We copy past here the original method in order to convert as well the cost price
-#         in the new curreny."""
-#         res = super (self,AccountChangeCurrency).change_currency(cr,uid,ids,context)
-#         obj_inv = self.pool.get('account.invoice')
-#         obj_inv_line = self.pool.get('account.invoice.line')
-#         obj_currency = self.pool.get('res.currency')
-#         if context is None:
-#             context = {}
-#         data = self.browse(cr, uid, ids, context=context)[0]
-#         new_currency = data.currency_id.id
-#         invoice = obj_inv.browse(cr, uid, context['active_id'], context=context)
-#         if invoice.currency_id.id == new_currency:
-#             return {}
-#         rate = obj_currency.browse(cr, uid, new_currency, context=context).rate
-#         for line in invoice.invoice_line:
-#             new_price = 0
-#             if invoice.company_id.currency_id.id == invoice.currency_id.id:
-#                 new_price = line.price_unit * rate
-#                 if new_price <= 0:
-#                     raise osv.except_osv(_('Error'), _('New currency is not configured properly !'))
-#
-#             if invoice.company_id.currency_id.id != invoice.currency_id.id and invoice.company_id.currency_id.id == new_currency:
-#                 old_rate = invoice.currency_id.rate
-#                 if old_rate <= 0:
-#                     raise osv.except_osv(_('Error'), _('Current currency is not configured properly !'))
-#                 new_price = line.price_unit / old_rate
-#
-#             if invoice.company_id.currency_id.id != invoice.currency_id.id and invoice.company_id.currency_id.id != new_currency:
-#                 old_rate = invoice.currency_id.rate
-#                 if old_rate <= 0:
-#                     raise osv.except_osv(_('Error'), _('Current currency is not configured properly !'))
-#                 new_price = (line.price_unit / old_rate ) * rate
-#             obj_inv_line.write(cr, uid, [line.id], {'price_unit': new_price})
-#         obj_inv.write(cr, uid, [invoice.id], {'currency_id': new_currency}, context=context)
-#         return {'type': 'ir.actions.act_window_close'}

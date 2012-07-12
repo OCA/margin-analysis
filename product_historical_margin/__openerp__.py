@@ -48,9 +48,6 @@
  has been made mainly because the cost price of the product is known at the invoice creation, but we don't 
  have it at the date of the invoice (no historical values in the cost price...) !
  
- TODO :
- 
- - Add open invoice line from product form
  
  """,
  'website': 'http://www.camptocamp.com/',

@@ -46,9 +46,11 @@
     <act_window
        id="act_product_act_open_invoice_lines"
        name="Related invoice lines"
-       domain="[('product_id','=',active_id)]"
+       domain="[('product_id','in',active_ids)]"
        res_model="account.invoice.line"
-       src_model="product.product"/>
+       src_model="product.product"
+       view_id="view_invoice_line_tree_from_product"
+       />
 
   </data>
 </openerp>
