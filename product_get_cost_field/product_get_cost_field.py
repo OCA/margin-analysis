@@ -18,6 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
 
 from openerp.osv.orm import Model
 from openerp.osv import fields
@@ -27,19 +28,16 @@ import decimal_precision as dp
 class Product(Model):
     _inherit = 'product.product'
 
-    ## def get_cost_field(self):
-    ##     """override in subclass if you need to setup a custom way of computing the standard price"""
-    ##     " XXX fonction statique qui renvoie le prix standard en fonction d'une liste d'id de product"
-    ##     return self.standard_price # XXX or a string?
-
-
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
-        print "get cost field _cost_price", field_name, arg, context
+        if context is None:
+            context = {}
+        logger = logging.getLogger('product.get_cost_field')
+        logger.debug("get cost field _cost_price %s, %s, %s", field_name, arg, context)
         res = {}
         for product in self.browse(cr, uid, ids):
             res[product.id] = product.standard_price
         return res
-        
+
     def get_cost_field(self, cr, uid, ids, context=None):
         return self._cost_price(cr, uid, ids, '', [], context)
 

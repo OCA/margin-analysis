@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle
+#    Author: Alexandre Fayolle, Joel Grand-Guillaume
 #    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,4 +20,5 @@
 ##############################################################################
 
 from . import product_historical_margin
-##from . import wizard
+from . import invoice
+from . import wizard

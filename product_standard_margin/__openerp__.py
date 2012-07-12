@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author:  Alexandre Fayolle
+#    Author: Joel Grand-Guillaume
 #    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,25 +18,41 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Product Cost incl. BOM',
- 'version' : '0.1',
+{'name' : 'Markup rate on product and sales',
+ 'version' : '1.0',
  'author' : 'Camptocamp',
  'maintainer': 'Camptocamp',
- 'category': 'Products',
+ 'category': 'Sales Management',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : ['product_get_cost_field', 
-              'mrp'],
+ 'depends' : ['product_get_cost_field', 'account'],
  'description': """
-  Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
-  account the BoM costing (cost per cycle and so...). If no BOM define for a product, the cost_price is always
-  equal to the standard_price field of the product, so we always have a value to base our reporting on.
-""",
+  Add a field on the product form that compute the standard (or theorical) margin based on the
+  current values of sale and cost price present in the product form. We take care of taxe included
+  or excluded.
+  
+  It will just compute it as follow : (Sale Price without tax - Cost Price) / Sale Price without tax
+  
+  Remember that this module can be used in conjonction with product_cost_incl_bom to have the 
+  cost price computed from the BOM when a product has one.
+  
+  WARNING: 
+  
+  1) As this module will base his simple computation on sale and cost prices, it suppose
+  you have them both in the same currency (the price type must of the same currency for both of 
+  them). Remember this is the default OpenERP configuration (price type of all product price 
+  fields are set as the same as the company currency). We don't take care of it cause otherwise
+  we should have added a dependency on sale module.
+  
+  
+  """,
  'website': 'http://www.camptocamp.com/',
  'init_xml': [],
- 'update_xml': [],
+ 'update_xml': ['product_std_margin_view.xml'],
  'demo_xml': [],
  'tests': [],
  'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',
- 'application': False}
+ 'application': True}
+
+

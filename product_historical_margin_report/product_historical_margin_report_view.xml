@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="view_account_invoice_report_tree" model="ir.ui.view">
+        <field name="name">account.invoice.report.tree</field>
+        <field name="model">account.invoice.report</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref='account.view_account_invoice_report_tree'/>
+        <field name="arch" type="xml">
+            <field name="price_total" sum="Total Without Tax" position="after">
+                <field name="subtotal_cost_price_company" sum="Total Cost"/>
+                <field name="margin_absolute" sum="Real Margin"/>
+            </field>
+        </field>
+    </record>
+    
+    <record id="account.view_account_invoice_report_graph" model="ir.ui.view">
+         <field name="name">account.invoice.report.graph</field>
+         <field name="model">account.invoice.report</field>
+         <!-- <field name="inherit_id" ref='account.view_account_invoice_report_graph'/> -->
+         <field name="type">graph</field>
+         <field name="arch" type="xml">
+              <graph string="Invoices Analysis" type="bar">
+                  <!-- <field name="product_id" group="1"/>
+                   <field name="price_total" operator="1"/>
+                  <field name="margin_absolute" operator="+"/> -->
+                  <field name="price_total"/>
+                  <field name="margin_absolute" sum="Real Margin"/>
+                  <field name="subtotal_cost_price_company" sum="Total Cost"/>
+              </graph>
+         </field>
+    </record>
+    
+    <record id="view_account_invoice_report_search" model="ir.ui.view">
+        <field name="name">account.invoice.report.search</field>
+        <field name="model">account.invoice.report</field>
+        <field name="type">search</field>
+        <field name="inherit_id" ref='account.view_account_invoice_report_search'/>
+        <field name="arch" type="xml">
+              <field name="user_id" position="after">
+                   <field name="product_id"/>
+              </field>
+        </field>
+    </record>
+
+
+</data>
+</openerp>

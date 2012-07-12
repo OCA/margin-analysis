@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+      
+    <record id="view_product_historical_margin_form" model="ir.ui.view">
+      <field name="name">product_historical_margin.form</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref='product_standard_margin.sale_markup_product_form'/>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <field name="standard_margin_rate" position="after">
+            <field name="margin_absolute" />
+            <field name="margin_relative" />
+        </field>
+      </field>
+    </record>
+
+    <record id="view_product_historical_margin" model="ir.ui.view">
+      <field name="name">product.product.historical_margin.tree</field>
+      <field name="model">product.product</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree string="Historical Margins">
+          <field name="default_code"/>
+          <field name="name"/>
+          <field name="categ_id" invisible="1"/>
+          <field name="variants" groups="product.group_product_variant"/>
+          <field name="type"/>
+          <field name="state" groups="base.group_extended"/>
+          <field name="price" invisible="not context.get('pricelist',False)"/>
+          <field name="margin_absolute"/>
+          <field name="margin_relative"/>
+          <field name="standard_margin_rate"/>
+          <field name="company_id" groups="base.group_multi_company" invisible="1"/>
+        </tree>
+      </field>
+    </record>
+    
+    <act_window
+       id="act_product_act_open_invoice_lines"
+       name="Margin Details"
+       domain="[('product_id','in',active_ids),('invoice_state','in',['open', 'paid']),('invoice_type','in',['out_refund','out_invoice'])]"
+       res_model="account.invoice.line"
+       src_model="product.product"
+       view_mode="tree,form"
+       view_id="view_invoice_line_tree_from_product"
+       context="{'search_default_product':1,'search_default_year':1}"
+       />
+
+  </data>
+</openerp>
