@@ -11,6 +11,7 @@
                     <group colspan="4">
                         <field name="from_date" />
                         <field name="to_date"/>
+                        <field name="product_ids" invisible="1"/>
                     </group>
                     <separator string="" colspan="4"/>
                     <group colspan="4" col="6">
@@ -21,13 +22,29 @@
             </field>
         </record>
 
-        <act_window name="Product Historical Margins"
+        <record id="action_product_margin_view" model="ir.actions.act_window">
+            <field name="name">Product Historical Margin</field>
+            <field name="res_model">historical.margin</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_historical_margin"/>
+            <field name="target">new</field>
+        </record>
+        
+        
+        <menuitem icon="STOCK_INDENT" action="action_product_margin_view"
+            id="menu_action_product_margin_tree"
+            parent="account.menu_finance_statistic_report_statement" />
+
+        
+        <!-- Remove it for right management <act_window name="Product Historical Margins"
                     res_model="historical.margin"
                     src_model="product.product"
                     view_mode="form"
                     target="new"
                     key2="client_action_multi"
-                    id="historical_margin_act_window"/>
+                    id="historical_margin_act_window"/> -->
+
 
     </data>
 </openerp>

@@ -28,13 +28,9 @@ import decimal_precision as dp
 class Product(Model):
     _inherit = 'product.product'
 
-    ## def get_cost_field(self):
-    ##     """override in subclass if you need to setup a custom way of computing the standard price"""
-    ##     " XXX fonction statique qui renvoie le prix standard en fonction d'une liste d'id de product"
-    ##     return self.standard_price # XXX or a string?
-
-
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
         logger = logging.getLogger('product.get_cost_field')
         logger.debug("get cost field _cost_price %s, %s, %s", field_name, arg, context)
         res = {}
