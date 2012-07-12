@@ -23,6 +23,15 @@ from openerp.osv.orm import Model
 from osv import fields
 import decimal_precision as dp
 
+class account_invoice(Model):
+    _inherit = 'account.invoice'
+
+    def _refund_cleanup_lines(self, cr, uid, lines):
+        for line in lines:
+            del line['invoice_user_id']
+        return super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines)
+
+
 class account_invoice_line(Model):
     """
     The goal on the invoice line model is only to store the minimum needed values to
