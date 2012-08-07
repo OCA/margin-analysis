@@ -79,6 +79,8 @@ class account_invoice_line(Model):
                     }
         for obj in self.browse(cr, uid, ids):
             product = obj.product_id
+            if not product:
+                continue
             if obj.invoice_id.currency_id is None:
                 currency_id = company_currency_id
             else:
