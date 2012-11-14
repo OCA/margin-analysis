@@ -45,14 +45,14 @@ class account_invoice_line(Model):
         """
         Compute cost_price, cost_price in company currency and subtotal in company currency
         that will be used for margin analysis. This method is called by the function fields.
-        
+
         Those values will be stored, so we'll be able to use them in analysis.
-        
+
         WARNING !! All subtotal in company currency will be with the right sign. For example,
-        if I have a customer refund, the sign will be - For all infos in invoice currency, we 
-        kept the standard logic => always positif.        
-        
-        :return dict of dict of the form : 
+        if I have a customer refund, the sign will be - For all infos in invoice currency, we
+        kept the standard logic => always positif.
+
+        :return dict of dict of the form :
             {INT Line ID : {
                     float subtotal_cost_price_company,
                     float subtotal_cost_price,
@@ -89,7 +89,7 @@ class account_invoice_line(Model):
                 factor = -1.
             else:
                 factor = 1.
-                
+
             subtotal_cost_price_company = factor * product.cost_price * obj.quantity
             # Convert price_subtotal from invoice currency to company currency
             subtotal_company = factor * currency_obj.compute(cr, uid, currency_id,
@@ -116,7 +116,7 @@ class account_invoice_line(Model):
                 'margin_relative': margin_relative,
             }
             logger.debug("The following values has been computed for product ID %d: subtotal_cost_price=%f"
-                "subtotal_cost_price_company=%f, subtotal_company=%f", product.id, subtotal_cost_price, 
+                "subtotal_cost_price_company=%f, subtotal_company=%f", product.id, subtotal_cost_price,
                 subtotal_cost_price_company, subtotal_company)
         return res
 
@@ -160,7 +160,7 @@ class account_invoice_line(Model):
                                               multi='product_historical_margin',
                                               store=_col_store,
                                               digits_compute=dp.get_precision('Account'),
-                                              help="The subtotal (VAT excluded) of the line at the time of the creation of the invoice, " 
+                                              help="The subtotal (VAT excluded) of the line at the time of the creation of the invoice, "
                                               "express in the company currency (computed with the rate at invoice creation time, as we "
                                               "don't have the cost price of the product at the date of the invoice)."),
         'margin_absolute': fields.function(_compute_line_values, method=True, readonly=True,type='float',
@@ -176,11 +176,11 @@ class account_invoice_line(Model):
                                               digits_compute=dp.get_precision('Account'),
                                               help="The Real Margin % [ (Real Margin / net sale) * 100 ] of the line."
                                               "If no real margin set, will display 999.0 (if not invoiced yet for example)."),
-        
+
         # Those field are here to better report to the user from where the margin is computed
         # this will allow him to understand why a margin is of that amount using the link
         # from product to invoice lines
-        'invoice_state': fields.related('invoice_id', 'state', type='selection', 
+        'invoice_state': fields.related('invoice_id', 'state', type='selection',
                                                 selection=[
                                                     ('draft','Draft'),
                                                     ('proforma','Pro-forma'),
@@ -202,5 +202,5 @@ class account_invoice_line(Model):
                                                 help='The parent invoice type'),
         'invoice_user_id': fields.related('invoice_id','user_id',type='many2one',relation='res.users',string='Salesman', store=True),
         'invoice_date': fields.related('invoice_id','date_invoice',type='date',string='Invoice Date'),
-                                                
+
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
   <data>
-      
+
     <record id="view_product_historical_margin_form" model="ir.ui.view">
       <field name="name">product_historical_margin.form</field>
       <field name="model">product.product</field>
@@ -35,7 +35,7 @@
         </tree>
       </field>
     </record>
-    
+
     <act_window
        id="act_product_act_open_invoice_lines"
        name="Margin Details"

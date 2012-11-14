@@ -34,14 +34,14 @@ class product_product(Model):
         """
         Compute the absolute and relativ margin based on price without tax, and
         always in company currency. We exclude the (in_invoice, in_refund) from the
-        computation as we only want to see in the product form the margin made on 
+        computation as we only want to see in the product form the margin made on
         our sales.
         The base calculation is made from the informations stored in the invoice line
         of paid and open invoices.
         We return 999 as relativ margin if no sale price is define. We made that choice
         to differenciate the 0.0 margin from null !
-        
-        :return dict of dict of the form : 
+
+        :return dict of dict of the form :
             {INT Product ID : {
                     float margin_absolute,
                     float margin_relative
@@ -64,7 +64,8 @@ class product_product(Model):
         query = '''SELECT product_id, type,
                           SUM(subtotal_cost_price_company),
                           SUM(subtotal_company)
-        FROM account_invoice_line AS line INNER JOIN account_invoice AS inv ON (inv.id = line.invoice_id)
+        FROM account_invoice_line AS line
+        INNER JOIN account_invoice AS inv ON (inv.id = line.invoice_id)
         WHERE %s inv.state IN ('open', 'paid')
           AND type NOT IN ('in_invoice', 'in_refund')
           AND product_id IN %%(product_ids)s

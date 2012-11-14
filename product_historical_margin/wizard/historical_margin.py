@@ -24,11 +24,11 @@ from openerp.osv.orm import TransientModel
 from openerp.osv import fields
 from openerp.tools.translate import _
 
-
+_logger = logging.getLogger(__name__)
 class historical_margin(TransientModel):
     _name = 'historical.margin'
     _description = 'Product historical margin'
-    
+
     def _get_product_ids(self, cr, uid, context=None):
         if context is None: context = {}
         res = False
@@ -36,8 +36,8 @@ class historical_margin(TransientModel):
             context.get('active_ids', False)):
             res = context['active_ids']
         return res
-    
-    
+
+
     _columns = {
         'from_date': fields.date('From', help='Date of the first invoice to take into account. '
                                  'The earliest existing invoice will be used if left empty'),
@@ -55,9 +55,11 @@ class historical_margin(TransientModel):
         """
         Open the historical margin view
         """
-        
+
         if context is None:
             context = {}
+        user_obj = self.pool.get('res.users')
+        company_id = user_obj.browse(cr, uid, uid).company_id.id
         wiz = self.read(cr, uid, ids, [], context)[0]
         ctx = context.copy()
         ctx['from_date']  = wiz.get('from_date')
@@ -73,10 +75,26 @@ class historical_margin(TransientModel):
             filter_id = filter_ids[1]
         else:
             filter_id = 0
-        if product_ids:
-            domain = [('id','in',product_ids)]
-        else:
-            domain = False
+        if not product_ids:
+            _logger.info('no ids supplied. Computing ids of sold products')
+            query = '''SELECT DISTINCT product_id
+        FROM account_invoice_line AS line
+        INNER JOIN account_invoice AS inv ON (inv.id = line.invoice_id)
+        WHERE %s inv.state IN ('open', 'paid')
+          AND type NOT IN ('in_invoice', 'in_refund')
+          AND inv.company_id = %%(company_id)s
+        '''
+            date_clause = []
+            if 'from_date' in ctx:
+                date_clause.append('inv.date_invoice >= %(from_date)s AND')
+            if 'to_date' in ctx:
+                date_clause.append('inv.date_invoice <= %(to_date)s AND')
+            query %= ' '.join(date_clause)
+            ctx['company_id'] = company_id
+            cr.execute(query, ctx)
+            product_ids = [row[0] for row in cr.fetchall()]
+        domain = [('id','in',product_ids)]
+        _logger.info('domains = %s', domain)
         return {
             'type': 'ir.actions.act_window',
             'name': _('Historical Margins'),
