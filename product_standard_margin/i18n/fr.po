@@ -23,7 +23,7 @@ msgstr "Produit"
 #. module: product_standard_margin
 #: field:product.product,standard_margin_rate:0
 msgid "Theorical Margin (%)"
-msgstr "Marge Theorique (%)"
+msgstr "Marge Théorique (%)"
 
 #. module: product_standard_margin
 #: help:product.product,standard_margin_rate:0
@@ -38,7 +38,7 @@ msgstr "Erreur : Code EAN invalide"
 #. module: product_standard_margin
 #: help:product.product,standard_margin:0
 msgid "Theorical Margin is [ sale price (Wo Tax) - cost price ] of the product form (not based on historical values).Take care of tax include and exclude. If no sale price, the margin will be negativ."
-msgstr "Marge théorique [ Vente unitaire HT - coût unitaire ] du produit (ne tient pas compte de la facturation effective).Ce taux tient compte des PV TTC (TVA incluse). Si aucun PV n'a été saisi, la marge sera negative."
+msgstr "Marge théorique [ Vente unitaire HT - coût unitaire ] du produit (ne tient pas compte de la facturation effective). Ce taux tient compte des PV TTC (TVA incluse). Si aucun PV n'a été saisi, la marge sera négative."
 
 #. module: product_standard_margin
 #: view:product.product:0
