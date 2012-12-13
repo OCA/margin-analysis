@@ -99,7 +99,7 @@ msgstr "Date de la 1ère facture à prendre en compte. (Si vide, date de la fact
 #. module: product_historical_margin
 #: constraint:account.invoice:0
 msgid "Error: Invalid Bvr Number (wrong checksum)."
-msgstr "Erreur: No BVR invalide (mauvaise checksum)."
+msgstr "Erreur: N° BVR invalide (mauvaise checksum)."
 
 #. module: product_historical_margin
 #: view:account.invoice.line:0
@@ -130,7 +130,7 @@ msgstr "Coût"
 #. module: product_historical_margin
 #: help:account.invoice.line,invoice_state:0
 msgid "The parent invoice state"
-msgstr "The parent invoice state"
+msgstr "État de la facture parente"
 
 #. module: product_historical_margin
 #: field:account.invoice.line,invoice_type:0
@@ -145,7 +145,7 @@ msgstr "Total HT de la ligne en devise de la société (convertie à la date de 
 #. module: product_historical_margin
 #: field:historical.margin,to_date:0
 msgid "To"
-msgstr "A"
+msgstr "À"
 
 #. module: product_historical_margin
 #: view:account.invoice.line:0
@@ -202,7 +202,7 @@ msgstr "Recherche de ligne de factures"
 #. module: product_historical_margin
 #: field:account.invoice.line,invoice_state:0
 msgid "Invoice state"
-msgstr "Statut de la facture"
+msgstr "État de la facture"
 
 #. module: product_historical_margin
 #: selection:account.invoice.line,invoice_state:0
@@ -212,7 +212,7 @@ msgstr "Annulée"
 #. module: product_historical_margin
 #: help:historical.margin,to_date:0
 msgid "Date of the last invoice to take into account. The latest existing invoice will be used if left empty"
-msgstr "Date de la dernière facture à prendre en compte. (Si vide, date de la facture la plus recente)"
+msgstr "Date de la dernière facture à prendre en compte. (Si vide, date de la facture la plus récente)"
 
 #. module: product_historical_margin
 #: field:account.invoice.line,subtotal_company:0
@@ -250,7 +250,7 @@ msgstr "Regroupé Par..."
 #. module: product_historical_margin
 #: constraint:account.invoice:0
 msgid "Error: BVR reference is required."
-msgstr "Erreur: Réference BVR requise."
+msgstr "Erreur: Référence BVR requise."
 
 #. module: product_historical_margin
 #: view:account.invoice.line:0
@@ -292,7 +292,7 @@ msgstr "Partenaire"
 #. module: product_historical_margin
 #: help:account.invoice.line,subtotal_company:0
 msgid "The subtotal (VAT excluded) of the line at the time of the creation of the invoice, express in the company currency (computed with the rate at invoice creation time, as we don't have the cost price of the product at the date of the invoice)."
-msgstr "Total HT de la ligne en devise de la société convertie à la date de création de la facture (et non la date de facturation car nous n'avons pas le coût d'achat du produit convertie à la date de facturation)."
+msgstr "Total HT de la ligne en devise de la société convertie à la date de création de la facture (et non la date de facturation car nous n'avons pas le coût d'achat du produit converti à la date de facturation)."
 
 #. module: product_historical_margin
 #: selection:account.invoice.line,invoice_state:0
