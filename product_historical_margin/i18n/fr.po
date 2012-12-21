@@ -1,0 +1,311 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* product_historical_margin
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-07 13:39+0000\n"
+"PO-Revision-Date: 2012-11-07 13:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "last month"
+msgstr "mois dernier"
+
+#. module: product_historical_margin
+#: selection:account.invoice.line,invoice_type:0
+msgid "Customer Refund"
+msgstr "Avoir Client"
+
+#. module: product_historical_margin
+#: help:account.invoice.line,margin_relative:0
+msgid "The Real Margin % [ (Real Margin / net sale) * 100 ] of the line.If no real margin set, will display 999.0 (if not invoiced yet for example)."
+msgstr "La marge réelle en % [ (Marge réelle / Ventes HT) * 100 ] de la ligne. En cas de division par 0 (ex: si non encore facturé), le système affiche 999.0."
+
+#. module: product_historical_margin
+#: field:historical.margin,from_date:0
+msgid "From"
+msgstr "De"
+
+#. module: product_historical_margin
+#: field:account.invoice.line,subtotal_cost_price:0
+msgid "Cost in currency"
+msgstr "Coût en devise"
+
+#. module: product_historical_margin
+#: help:product.product,margin_relative:0
+msgid "The Real Margin [ Real Margin / sale price ] of the product in relative value based on historical values computed from open and paid invoices.If no real margin set, will display 999.0 (if not invoiced yet for example)."
+msgstr "La marge réelle en valeur [Ventes HT - Coût d'achat] du produit basée sur les factures établies (ouvertes et payées)."
+
+#. module: product_historical_margin
+#: selection:account.invoice.line,invoice_type:0
+msgid "Supplier Invoice"
+msgstr "Facture Fournisseur"
+
+#. module: product_historical_margin
+#: selection:account.invoice.line,invoice_type:0
+msgid "Customer Invoice"
+msgstr "Facture Client"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "year"
+msgstr "année"
+
+#. module: product_historical_margin
+#: view:historical.margin:0
+msgid "Historical Margin Properties"
+msgstr "Propriétés sur historique des marges"
+
+#. module: product_historical_margin
+#: model:ir.actions.act_window,name:product_historical_margin.action_product_margin_view
+#: model:ir.ui.menu,name:product_historical_margin.menu_action_product_margin_tree
+msgid "Product Historical Margin"
+msgstr "Historique des marges par produit"
+
+#. module: product_historical_margin
+#: view:historical.margin:0
+msgid "Compute margins"
+msgstr "Calcul des marges"
+
+#. module: product_historical_margin
+#: help:account.invoice.line,margin_absolute:0
+msgid "The Real Margin [ net sale - cost ] of the line."
+msgstr "Marge réelle [ Ventes HT - Coût d'achat ] de la ligne."
+
+#. module: product_historical_margin
+#: selection:account.invoice.line,invoice_state:0
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "Invoice Type"
+msgstr "Type de facture"
+
+#. module: product_historical_margin
+#: help:historical.margin,from_date:0
+msgid "Date of the first invoice to take into account. The earliest existing invoice will be used if left empty"
+msgstr "Date de la 1ère facture à prendre en compte. (Si vide, date de la facture la plus ancienne)"
+
+#. module: product_historical_margin
+#: constraint:account.invoice:0
+msgid "Error: Invalid Bvr Number (wrong checksum)."
+msgstr "Erreur: N° BVR invalide (mauvaise checksum)."
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+#: model:ir.model,name:product_historical_margin.model_product_product
+msgid "Product"
+msgstr "Produit"
+
+#. module: product_historical_margin
+#: help:account.invoice.line,subtotal_cost_price:0
+msgid "The cost subtotal of the line at the time of the creation of the invoice, express in the invoice currency."
+msgstr "Total HT de la ligne en devise de facturation."
+
+#. module: product_historical_margin
+#: field:account.invoice.line,invoice_date:0
+msgid "Invoice Date"
+msgstr "Date de facture"
+
+#. module: product_historical_margin
+#: selection:account.invoice.line,invoice_state:0
+msgid "Paid"
+msgstr "Payé"
+
+#. module: product_historical_margin
+#: field:account.invoice.line,subtotal_cost_price_company:0
+msgid "Cost"
+msgstr "Coût"
+
+#. module: product_historical_margin
+#: help:account.invoice.line,invoice_state:0
+msgid "The parent invoice state"
+msgstr "État de la facture parente"
+
+#. module: product_historical_margin
+#: field:account.invoice.line,invoice_type:0
+msgid "Invoice type"
+msgstr "Type de facture"
+
+#. module: product_historical_margin
+#: help:account.invoice.line,subtotal_cost_price_company:0
+msgid "The cost subtotal of the line at the time of the creation of the invoice, express in the company currency."
+msgstr "Total HT de la ligne en devise de la société (convertie à la date de création de la facture en cas de devise)."
+
+#. module: product_historical_margin
+#: field:historical.margin,to_date:0
+msgid "To"
+msgstr "À"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "Account"
+msgstr "Compte"
+
+#. module: product_historical_margin
+#: field:account.invoice.line,margin_relative:0
+#: field:product.product,margin_relative:0
+msgid "Real Margin (%)"
+msgstr "Marge Réelle (%)"
+
+#. module: product_historical_margin
+#: model:ir.actions.act_window,name:product_historical_margin.act_product_act_open_invoice_lines
+msgid "Margin Details"
+msgstr "Détails des marges"
+
+#. module: product_historical_margin
+#: selection:account.invoice.line,invoice_state:0
+msgid "Pro-forma"
+msgstr "Pro-forma"
+
+#. module: product_historical_margin
+#: model:ir.model,name:product_historical_margin.model_historical_margin
+msgid "Product historical margin"
+msgstr "Historique des marges du produit"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "Month-1"
+msgstr "Mois-1"
+
+#. module: product_historical_margin
+#: selection:account.invoice.line,invoice_type:0
+msgid "Supplier Refund"
+msgstr "Avoir Fournisseur"
+
+#. module: product_historical_margin
+#: field:historical.margin,product_ids:0
+msgid "Products"
+msgstr "Produits"
+
+#. module: product_historical_margin
+#: field:account.invoice.line,margin_absolute:0
+#: field:product.product,margin_absolute:0
+msgid "Real Margin"
+msgstr "Marge Réelle"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "Search Invoice Line"
+msgstr "Recherche de ligne de factures"
+
+#. module: product_historical_margin
+#: field:account.invoice.line,invoice_state:0
+msgid "Invoice state"
+msgstr "État de la facture"
+
+#. module: product_historical_margin
+#: selection:account.invoice.line,invoice_state:0
+msgid "Cancelled"
+msgstr "Annulée"
+
+#. module: product_historical_margin
+#: help:historical.margin,to_date:0
+msgid "Date of the last invoice to take into account. The latest existing invoice will be used if left empty"
+msgstr "Date de la dernière facture à prendre en compte. (Si vide, date de la facture la plus récente)"
+
+#. module: product_historical_margin
+#: field:account.invoice.line,subtotal_company:0
+msgid "Net Sales"
+msgstr "Ventes HT"
+
+#. module: product_historical_margin
+#: sql_constraint:account.invoice:0
+msgid "Invoice Number must be unique per Company!"
+msgstr "Le numéro de facture doit être unique par société !"
+
+#. module: product_historical_margin
+#: code:addons/product_historical_margin/wizard/historical_margin.py:82
+#: view:product.product:0
+#, python-format
+msgid "Historical Margins"
+msgstr "Historique des marges"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "current month"
+msgstr "Mois en cours"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+#: field:account.invoice.line,invoice_user_id:0
+msgid "Salesman"
+msgstr "Vendeur"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "Group By..."
+msgstr "Regroupé Par..."
+
+#. module: product_historical_margin
+#: constraint:account.invoice:0
+msgid "Error: BVR reference is required."
+msgstr "Erreur: Référence BVR requise."
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+#: model:ir.model,name:product_historical_margin.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Lignes de facture"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "Month"
+msgstr "Mois"
+
+#. module: product_historical_margin
+#: constraint:product.product:0
+msgid "Error: Invalid ean code"
+msgstr "Erreur : Code EAN invalide"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+#: model:ir.model,name:product_historical_margin.model_account_invoice
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "Year"
+msgstr "Année"
+
+#. module: product_historical_margin
+#: view:historical.margin:0
+msgid "Cancel"
+msgstr "Annulation"
+
+#. module: product_historical_margin
+#: view:account.invoice.line:0
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: product_historical_margin
+#: help:account.invoice.line,subtotal_company:0
+msgid "The subtotal (VAT excluded) of the line at the time of the creation of the invoice, express in the company currency (computed with the rate at invoice creation time, as we don't have the cost price of the product at the date of the invoice)."
+msgstr "Total HT de la ligne en devise de la société convertie à la date de création de la facture (et non la date de facturation car nous n'avons pas le coût d'achat du produit converti à la date de facturation)."
+
+#. module: product_historical_margin
+#: selection:account.invoice.line,invoice_state:0
+msgid "Open"
+msgstr "Ouverte"
+
+#. module: product_historical_margin
+#: help:account.invoice.line,invoice_type:0
+msgid "The parent invoice type"
+msgstr "Type de la facture parente"
+
+#. module: product_historical_margin
+#: help:product.product,margin_absolute:0
+msgid "The Real Margin [ sale price - cost price ] of the product in absolute value based on historical values computed from open and paid invoices."
+msgstr "La marge réelle en valeur [Ventes HT - Coût d'achat] du produit basée sur les factures établies (ouvertes et payées)."
+
