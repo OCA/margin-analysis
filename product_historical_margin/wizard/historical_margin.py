@@ -19,6 +19,7 @@
 #
 ##############################################################################
 import time
+import logging
 
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
