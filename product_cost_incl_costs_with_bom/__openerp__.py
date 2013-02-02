@@ -28,7 +28,7 @@
               ],
  'description': """
  This module adds an Fixed cost field to the product form. So you can calculate a costprice with added costs. 
- This module depends on the module product_cost_incl_bom. If the is a BoM, the added costs are added to the calcyulated cost price of the BoM.
+ This module depends on the module product_cost_incl_bom. If the is a BoM, the added costs are added to the calculated cost price of the BoM.
  """, 
  'website': 'www.endiansolutions.nl',
  'init_xml': [],

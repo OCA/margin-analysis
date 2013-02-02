@@ -28,9 +28,9 @@
             <group col="2" colspan="1">
                 <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}" nolabel="1"/>
                 <button name="%(stock.action_view_change_standard_price)d" string="Update"
-                    type="action" icon="gtk-execute" attrs="{'invisible':[('cost_method','&lt;&gt;','average')]}"/>
+                    type="action" icon="gtk-execute" attrs="{'invisible':[('cost_method','!=','average')]}"/>
             </group>
-          <field name="fix_cost_price" />
+          <field name="fixed_cost_price" />
           <field name="cost_price"/>
           </group>
         </field>
@@ -46,7 +46,7 @@
       <field name="inherit_id" ref="product.product_product_tree_view" />
       <field name="arch" type="xml">
         <field name="cost_price" position="before">
-          <field name="fix_cost_price"/><!-- FIXME groups setting! -->
+          <field name="fixed_cost_price"/>
         </field>
       </field>
     </record>

@@ -34,21 +34,18 @@ class product_product(Model):
         res = self._compute_purchase_price(cr, uid, ids, product_uom,
                                            bom_properties)
         for self_obj in self.browse(cr, uid, ids, context=context):
-            res[self_obj.id] = res[self_obj.id] + self_obj.fix_cost_price
+            res[self_obj.id] = res[self_obj.id] + self_obj.fixed_cost_price
         return res
 
     _columns = {
-        'fix_cost_price': fields.float(
-            'Fix Cost Price', digits_compute = dp.get_precision('Sale Price')),
+        'fixed_cost_price': fields.float(
+            'Fixed Cost Price', digits_compute = dp.get_precision('Sale Price')),
         'cost_price': fields.function(_cost_price,
-                                      method=True,
                                       string='Cost Price (incl. BoM)',
-                                      digits_compute = dp.get_precision('Sale Price'),
-                                      help="The cost price is the standard price or, if the product has a bom, "
-                                      "the sum of all standard price of its components. it take also care of the "
-                                      "bom costing like cost per cylce.")
+                                      digits_compute=dp.get_precision('Sale Price'),
+                                      help="The cost price is the standard price or, if the product has a BoM, "
+                                      "the sum of all standard prices of its components. It also takes care of the "
+                                      "BoM costing like cost per cylce.")
         }
-
-product_product()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
