@@ -2,7 +2,6 @@
 from openerp.osv.orm import Model
 from openerp.osv import fields
 import decimal_precision as dp
-from openerp.tools.translate import _
 import logging
 
 class product_product(Model):
@@ -22,7 +21,7 @@ class product_product(Model):
         'cost_price': fields.function(_cost_price,
                                       string='Cost Price',
                                       digits_compute=dp.get_precision('Sale Price'),
-                                      help=_("The cost price is the standard price unless you install the product_cost_incl_bom module."))
+                                      help="The cost price is the standard price unless you install the product_cost_incl_bom module.")
         }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
