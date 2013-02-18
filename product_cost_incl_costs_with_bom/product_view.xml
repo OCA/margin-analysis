@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model="ir.ui.view" id="product_cost_incl_costs_form">
+      <field name="name">product.product_cost_incl_costs.view.form</field>
+      <field name="type">form</field>
+      <field name="model">product.product</field>
+      <field name="priority" eval="800"/>
+      <field name="inherit_id" ref="product.product_normal_form_view" />
+      <field name="arch" type="xml">
+        <field name="cost_price" position="replace">
+        </field>
+        <field name="list_price" position="replace"/>
+        <label string="Cost Price :" align="1.0" position="replace"/>
+        <field name="standard_price"
+            attrs="{'readonly':[('cost_method','=','average')]}"
+            groups="base.group_extended"
+            position="replace"/>
+        <button name="%(stock.action_view_change_standard_price)d" string="Update"
+                    type="action" icon="gtk-execute"
+                    attrs="{'invisible':[('cost_method','&lt;&gt;','average')]}"
+                    position="replace"/>
+        <field name="cost_method" groups="base.group_extended" position="replace">
+            <group col="2" colspan="2">
+            <field name="list_price"/>
+            <field name="cost_method" groups="base.group_extended" />
+            <label string="Cost Price :" align="1.0"/>
+            <group col="2" colspan="1">
+                <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}" nolabel="1"/>
+                <button name="%(stock.action_view_change_standard_price)d" string="Update"
+                    type="action" icon="gtk-execute" attrs="{'invisible':[('cost_method','!=','average')]}"/>
+            </group>
+          <field name="fixed_cost_price" />
+          <field name="cost_price"/>
+          </group>
+        </field>
+
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_cost_incl_costs_tree">
+      <field name="name">product.product_cost_incl_costs.view.tree</field>
+      <field name="type">tree</field>
+      <field name="model">product.product</field>
+      <field name="priority" eval="80"/>
+      <field name="inherit_id" ref="product.product_product_tree_view" />
+      <field name="arch" type="xml">
+        <field name="cost_price" position="before">
+          <field name="fixed_cost_price"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</openerp>
