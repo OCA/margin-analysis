@@ -34,6 +34,6 @@
  'update_xml': ['product_view.xml'],
  'demo_xml': [],
  'tests': [],
- 'installable': True,
+ 'installable': False,
  'application': False
  }

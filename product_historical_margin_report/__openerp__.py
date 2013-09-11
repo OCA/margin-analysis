@@ -34,7 +34,7 @@
  'update_xml': ['product_historical_margin_report_view.xml'],
  'demo_xml': [],
  'tests': [],
- 'installable': True,
+ 'installable': False,
  'auto_install': False,
  'license': 'AGPL-3',
  'application': True}

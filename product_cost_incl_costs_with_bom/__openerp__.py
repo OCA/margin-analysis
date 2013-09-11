@@ -35,7 +35,7 @@
  'update_xml': ['product_view.xml'],
  'demo_xml': [],
  'tests': [],
- 'installable': True,
+ 'installable': False,
  'license': 'AGPL-3',
  'application': False
  }
