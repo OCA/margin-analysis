@@ -9,8 +9,8 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <field name="standard_margin_rate" position="after">
-            <field name="margin_absolute" />
-            <field name="margin_relative" />
+          <field name="margin_absolute" />
+          <field name="margin_relative" />
         </field>
       </field>
     </record>
