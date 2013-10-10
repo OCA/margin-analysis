@@ -7,13 +7,12 @@
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_normal_form_view" />
       <field name="arch" type="xml">
-          <group colspan="2" col="2" groups="base.group_extended" position="after">
-              <group colspan="2" col="2" groups="base.group_extended">
-                  <separator string="Margin" colspan="2"/>
-                  <field name="standard_margin" />
-                  <field name="standard_margin_rate" />
-              </group>
+        <xpath expr="//field[@name='price_margin']/.." position="after">
+          <group name="Margin" groups="base.group_extended">
+            <field name="standard_margin" />
+            <field name="standard_margin_rate" />
           </group>
+        </xpath>
       </field>
     </record>
 
