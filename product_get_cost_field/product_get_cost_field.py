@@ -28,14 +28,23 @@ import decimal_precision as dp
 class Product(Model):
     _inherit = 'product.product'
 
+    def _compute_purchase_price(self, cr, uid, ids,
+                                context=None):
+        res = {}
+        products = self.browse(cr, uid, ids)
+        if isinstance(ids, (int, long)):
+            res = products.standard_price
+        elif isinstance(ids, list):
+            for product in self.browse(cr, uid, ids, context=context):
+                res[product.id] = product.standard_price
+        return res
+
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
             context = {}
         logger = logging.getLogger('product.get_cost_field')
         logger.debug("get cost field _cost_price %s, %s, %s", field_name, arg, context)
-        res = {}
-        for product in self.browse(cr, uid, ids):
-            res[product.id] = product.standard_price
+        res = self._compute_purchase_price(cr, uid, ids, context=context)
         return res
 
     def get_cost_field(self, cr, uid, ids, context=None):
