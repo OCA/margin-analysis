@@ -24,7 +24,7 @@
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : ['product_get_cost_field', 
+ 'depends' : ['product_get_cost_field',
               'mrp'],
  'description': """
   Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
@@ -36,7 +36,7 @@
  'update_xml': [],
  'demo_xml': [],
  'tests': [],
- 'installable': False,
+ 'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',
  'application': False}
