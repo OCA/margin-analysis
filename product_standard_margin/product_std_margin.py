@@ -21,12 +21,12 @@
 #
 ##############################################################################
 
-from osv import fields
-from osv.orm import Model
+from openerp.osv import orm, fields
 import decimal_precision as dp
 import logging
 
-class Product(Model):
+
+class Product(orm.Model):
     _inherit = 'product.product'
 
     #TODO : compute the margin with default taxes
