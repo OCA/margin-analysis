@@ -4,19 +4,18 @@
     <record id="view_historical_margin" model="ir.ui.view">
       <field name="name">historical.margin.form</field>
       <field name="model">historical.margin</field>
-      <field name="type">form</field>
       <field name="arch" type="xml">
-        <form string="Historical Margin Properties">
-          <group colspan="4">
+        <form string="Historical Margin Properties" version="7.0">
+          <group>
             <field name="from_date" />
             <field name="to_date"/>
             <field name="product_ids" invisible="1"/>
           </group>
-          <separator string="" colspan="4"/>
-          <group colspan="4" col="6">
-            <button icon="gtk-cancel" special="cancel" string="Cancel"/>
-            <button icon="terp-gtk-go-back-rtl" string="Compute margins" name="action_open_window" type="object"/>
-          </group>
+          <footer>
+            <button name="action_open_window" string="Compute margins" type="object" icon="gtk-execute" class="oe_highlight"/>
+            or
+            <button string="Cancel" class="oe_link" special="cancel" />
+          </footer>
         </form>
       </field>
     </record>
@@ -33,7 +32,7 @@
 
     <menuitem icon="STOCK_INDENT" action="action_product_margin_view"
         id="menu_action_product_margin_tree"
-        parent="account.menu_finance_statistic_report_statement" />
+        parent="account.menu_finance_reporting" />
 
 
     <!-- Remove it for right management <act_window name="Product Historical Margins"

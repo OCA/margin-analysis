@@ -41,7 +41,7 @@ class account_invoice_line(Model):
     """
     _inherit = 'account.invoice.line'
 
-    def _compute_line_values(self, cr, uid, ids, field_names,  arg, context=None):
+    def _compute_line_values(self, cr, uid, ids, field_names, arg, context=None):
         """
         Compute cost_price, cost_price in company currency and subtotal in company currency
         that will be used for margin analysis. This method is called by the function fields.
@@ -60,24 +60,24 @@ class account_invoice_line(Model):
                     float margin_absolute
                     }}
         """
-        if context is None:
-            context = {}
         res = {}
         if not ids:
             return res
         logger = logging.getLogger('product_historical_margin')
         user_obj = self.pool.get('res.users')
-        company_currency_id = user_obj.browse(cr, uid, uid).company_id.currency_id.id
         currency_obj = self.pool.get('res.currency')
+
+        company_currency_id = user_obj.browse(cr, uid, uid, context=context).company_id.currency_id.id
+        fields = [
+                'subtotal_cost_price_company',
+                'subtotal_cost_price',
+                'subtotal_company',
+                'margin_absolute',
+                'margin_relative'
+                ]
         for line_id in ids:
-            res[line_id] = {
-                    'subtotal_cost_price_company': 0.0,
-                    'subtotal_cost_price': 0.0,
-                    'subtotal_company': 0.0,
-                    'margin_absolute': 0.0,
-                    'margin_relative': 0.0,
-                    }
-        for obj in self.browse(cr, uid, ids):
+            res[line_id] = dict.fromkeys(fields, 0.0)
+        for obj in self.browse(cr, uid, ids, context=context):
             product = obj.product_id
             if not product:
                 continue
@@ -114,7 +114,7 @@ class account_invoice_line(Model):
                 'subtotal_company': subtotal_company,
                 'margin_absolute': margin_absolute,
                 'margin_relative': margin_relative,
-            }
+                }
             logger.debug("The following values has been computed for product ID %d: subtotal_cost_price=%f"
                 "subtotal_cost_price_company=%f, subtotal_company=%f", product.id, subtotal_cost_price,
                 subtotal_cost_price_company, subtotal_company)
@@ -124,8 +124,6 @@ class account_invoice_line(Model):
         return ids
 
     def _recalc_margin_parent(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
         res=[]
         for inv in self.browse(cr,uid,ids):
             for line in inv.invoice_line:

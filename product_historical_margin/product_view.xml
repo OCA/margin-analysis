@@ -6,11 +6,10 @@
       <field name="name">product_historical_margin.form</field>
       <field name="model">product.product</field>
       <field name="inherit_id" ref='product_standard_margin.sale_markup_product_form'/>
-      <field name="type">form</field>
       <field name="arch" type="xml">
         <field name="standard_margin_rate" position="after">
-          <field name="margin_absolute" />
-          <field name="margin_relative" />
+          <field name="margin_absolute"/>
+          <field name="margin_relative"/>
         </field>
       </field>
     </record>
@@ -18,9 +17,8 @@
     <record id="view_product_historical_margin" model="ir.ui.view">
       <field name="name">product.product.historical_margin.tree</field>
       <field name="model">product.product</field>
-      <field name="type">tree</field>
       <field name="arch" type="xml">
-        <tree string="Historical Margins">
+        <tree string="Historical Margins" create="false">
           <field name="default_code"/>
           <field name="name"/>
           <field name="categ_id" invisible="1"/>
