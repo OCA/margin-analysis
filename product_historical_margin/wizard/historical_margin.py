@@ -34,7 +34,7 @@ class historical_margin(TransientModel):
         if context is None: context = {}
         res = False
         if (context.get('active_model', False) == 'product.product' and
-            context.get('active_ids', False)):
+                context.get('active_ids', False)):
             res = context['active_ids']
         return res
 
@@ -60,11 +60,13 @@ class historical_margin(TransientModel):
         if context is None:
             context = {}
         user_obj = self.pool.get('res.users')
-        company_id = user_obj.browse(cr, uid, uid).company_id.id
-        wiz = self.read(cr, uid, ids, [], context)[0]
+        company_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
+        wiz = self.read(cr, uid, ids, [], context=context)[0]
         ctx = context.copy()
-        ctx['from_date']  = wiz.get('from_date')
-        ctx['to_date'] = wiz.get('to_date')
+        ctx.update(
+            from_date=wiz.get('from_date'),
+            to_date=wiz.get('to_date')
+            )
         product_ids = wiz.get('product_ids')
         data_pool = self.pool.get('ir.model.data')
         filter_ids = data_pool.get_object_reference(cr, uid, 'product',
@@ -79,12 +81,12 @@ class historical_margin(TransientModel):
         if not product_ids:
             _logger.info('no ids supplied. Computing ids of sold products')
             query = '''SELECT DISTINCT product_id
-        FROM account_invoice_line AS line
-        INNER JOIN account_invoice AS inv ON (inv.id = line.invoice_id)
-        WHERE %s inv.state IN ('open', 'paid')
-          AND type NOT IN ('in_invoice', 'in_refund')
-          AND inv.company_id = %%(company_id)s
-        '''
+                    FROM account_invoice_line AS line
+                    INNER JOIN account_invoice AS inv ON (inv.id = line.invoice_id)
+                    WHERE %s inv.state IN ('open', 'paid')
+                      AND type NOT IN ('in_invoice', 'in_refund')
+                      AND inv.company_id = %%(company_id)s
+                    '''
             date_clause = []
             if 'from_date' in ctx:
                 date_clause.append('inv.date_invoice >= %(from_date)s AND')
@@ -100,7 +102,7 @@ class historical_margin(TransientModel):
             'type': 'ir.actions.act_window',
             'name': _('Historical Margins'),
             'context': ctx,
-            'domain':domain,
+            'domain': domain,
             'view_type': 'form',
             'view_mode': 'tree',
             'res_model': 'product.product',
