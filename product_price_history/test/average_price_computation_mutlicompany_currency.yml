@@ -1,0 +1,186 @@
+-
+  Test the following with user admin from first company (EUR)
+-
+  !context
+    uid: 'base.user_root'
+-
+  Create a purchase order for first company EUR
+-
+  !record {model: purchase.order, id: purchase_order_lcost_01}:
+    partner_id: res_partner_supplier_01
+    invoice_method: order
+    location_id: location_stock_01
+    pricelist_id: purchase.list0
+    company_id: base.main_company
+    order_line:
+      - product_id: product_product_j_avg_01
+        price_unit: 100
+        product_qty: 15.0
+-
+ I confirm the order where invoice control is 'Bases on order'.
+-
+  !workflow {model: purchase.order, action: purchase_confirm, ref: purchase_order_lcost_01}
+-
+  Reception is ready to process, make it and check moves value
+-
+  !python {model: stock.partial.picking}: |
+    pick_ids = self.pool.get('purchase.order').browse(cr, uid, ref("purchase_order_lcost_01")).picking_ids
+    partial_id = self.create(cr, uid, {},context={'active_model': 'stock.picking','active_ids': [pick_ids[0].id]})
+    self.do_partial(cr, uid, [partial_id])
+    picking = self.pool.get('stock.picking').browse(cr, uid, [pick_ids[0].id])[0]
+    for move in picking.move_lines:
+      if move.product_id.name == 'Wine J':
+        assert move.price_unit == 100.0,"Technical field price_unit of Wine J stock move should record the purchase price"
+-
+  I check that purchase order is shipped.
+-
+  !python {model: purchase.order}: |
+     assert self.browse(cr, uid, ref("purchase_order_lcost_01")).shipped == True,"Purchase order should be delivered"
+-
+  I check that avg price of products is computed correctly
+-
+  !python {model: product.product}: |
+     xchg_rate_chf = 1.0
+     # computed as : (100 * 15 / 15) * Exchnge rate of 1.3086
+     value_a = round(100.0 * xchg_rate_chf, 2)
+     assert self.browse(cr, uid, ref("product_product_j_avg_01")).standard_price == value_a,"Avg price for product Wine J for first company is wrongly computed"
+-
+  Create a second purchase order for first company EUR
+-
+  !record {model: purchase.order, id: purchase_order_lcost_01bis}:
+    partner_id: res_partner_supplier_01
+    invoice_method: order
+    location_id: location_stock_01
+    pricelist_id: purchase.list0
+    company_id: base.main_company
+    order_line:
+      - product_id: product_product_j_avg_01
+        price_unit: 200
+        product_qty: 15.0
+-
+ I confirm the order where invoice control is 'Bases on order'.
+-
+  !workflow {model: purchase.order, action: purchase_confirm, ref: purchase_order_lcost_01bis}
+-
+  Reception is ready for process, make it and check moves value
+-
+  !python {model: stock.partial.picking}: |
+    pick_ids = self.pool.get('purchase.order').browse(cr, uid, ref("purchase_order_lcost_01bis")).picking_ids
+    partial_id = self.create(cr, uid, {},context={'active_model': 'stock.picking','active_ids': [pick_ids[0].id]})
+    self.do_partial(cr, uid, [partial_id])
+    picking = self.pool.get('stock.picking').browse(cr, uid, [pick_ids[0].id])[0]
+    for move in picking.move_lines:
+      if move.product_id.name == 'Wine J':
+        assert move.price_unit == 200.0,"Technical field price_unit of Wine J stock move should record the purchase price"
+-
+  I check that purchase order is shipped.
+-
+  !python {model: purchase.order}: |
+     assert self.browse(cr, uid, ref("purchase_order_lcost_01bis")).shipped == True,"Purchase order should be delivered"
+-
+  I check that avg price of products is computed correctly
+-
+  !python {model: product.product}: |
+     xchg_rate_chf = 1.0
+     # Value in stock in EUR
+     value_a = round(100.0 * xchg_rate_chf, 2)
+     # computed as : (value_a * 15 + (200 * xchg_rate_chf) * 15) / 30
+     value_abis = round((value_a * 15 + (200 * xchg_rate_chf) * 15) / 30, 2)
+     assert self.browse(cr, uid, ref("product_product_j_avg_01")).standard_price == value_abis,"Avg price for product Wine J for first company is wrongly computed"
+-
+  Test the following with user admin from second company (CHF)
+-
+  !context
+    uid: 'res_users_second_company_01'
+-
+  Create a purchase order for second company CHF
+-
+  !record {model: purchase.order, id: purchase_order_lcost_02}:
+    partner_id: res_partner_supplier_01
+    invoice_method: manual
+    location_id: location_stock_02
+    pricelist_id: product_pricelist_purchchf
+    company_id: res_company_01
+    order_line:
+      - product_id: product_product_j_avg_01
+        price_unit: 50
+        product_qty: 15.0
+-
+ I confirm the order where invoice control is 'Bases on order'.
+-
+  !workflow {model: purchase.order, action: purchase_confirm, ref: purchase_order_lcost_02}
+-
+  Reception is ready for process, make it and check moves value
+-
+  !python {model: stock.partial.picking}: |
+    pick_ids = self.pool.get('purchase.order').browse(cr, uid, ref("purchase_order_lcost_02")).picking_ids
+    partial_id = self.create(cr, uid, {},context={'active_model': 'stock.picking','active_ids': [pick_ids[0].id]})
+    self.do_partial(cr, uid, [partial_id])
+    picking = self.pool.get('stock.picking').browse(cr, uid, [pick_ids[0].id])[0]
+    for move in picking.move_lines:
+      if move.product_id.name == 'Wine J':
+        assert move.price_unit == 50.0,"Technical field price_unit of Wine J stock move should record the purchase price"
+-
+  I check that purchase order is shipped.
+-
+  !python {model: purchase.order}: |
+     assert self.browse(cr, uid, ref("purchase_order_lcost_02")).shipped == True,"Purchase order should be delivered"
+-
+  I check that avg price of products is computed correctly
+-
+  !python {model: product.product}: |
+     # value in USD stored
+     value_a = round(50 * (1.2086 / 1.3086), 2)
+     assert self.browse(cr, uid, ref("product_product_j_avg_01")).standard_price == value_a,"Avg price for product Wine J for second company is wrongly computed"
+-
+  Create a second purchase order for second company CHF
+-
+  !record {model: purchase.order, id: purchase_order_lcost_02bis}:
+    partner_id: res_partner_supplier_01
+    invoice_method: manual
+    location_id: location_stock_02
+    pricelist_id: product_pricelist_purchchf
+    company_id: res_company_01
+    order_line:
+      - product_id: product_product_j_avg_01
+        price_unit: 100
+        product_qty: 15.0
+-
+ I confirm the order where invoice control is 'Bases on order'.
+-
+  !workflow {model: purchase.order, action: purchase_confirm, ref: purchase_order_lcost_02bis}
+-
+  Reception is ready for process, make it and check moves value
+-
+  !python {model: stock.partial.picking}: |
+    pick_ids = self.pool.get('purchase.order').browse(cr, uid, ref("purchase_order_lcost_02bis")).picking_ids
+    partial_id = self.create(cr, uid, {},context={'active_model': 'stock.picking','active_ids': [pick_ids[0].id]})
+    self.do_partial(cr, uid, [partial_id])
+    picking = self.pool.get('stock.picking').browse(cr, uid, [pick_ids[0].id])[0]
+    for move in picking.move_lines:
+      if move.product_id.name == 'Wine J':
+        assert move.price_unit == 100.0,"Technical field price_unit of Wine J stock move should record the purchase price"
+-
+  I check that purchase order is shipped.
+-
+  !python {model: purchase.order}: |
+     assert self.browse(cr, uid, ref("purchase_order_lcost_02bis")).shipped == True,"Purchase order should be delivered"
+-
+  I check that avg price of products is computed correctly
+-
+  !python {model: product.product}: |
+     # Value in stock in USD for first entry (compute as to_currency / from_currency)
+     value_a = round(50 * (1.2086 / 1.3086), 2)
+     # Value in stock in USD for second entry (compute as to_currency / from_currency)
+     value_b = round(100 * (1.2086 / 1.3086), 2)
+     # computed as : (value_a * 15 + value_b * 15) / 30
+     value_abis = round((value_a * 15 + value_b * 15) / 30, 2)
+     assert self.browse(cr, uid, ref("product_product_j_avg_01")).standard_price == value_abis,"Avg price for product Wine J for second company is wrongly computed"
+-
+  I Check that I get all entries in the price history table
+-
+  !python {model: product.price.history}: |
+     num_j = self.search(cr, uid, [('product_id','=',ref("product_product_j_avg_01")),('name','=','standard_price')])
+     # 4 PO, 4 updates of standard_price
+     right_number_j = 4
+     assert len(num_j) == right_number_j,"The number of value in the price history table is correct for product J"

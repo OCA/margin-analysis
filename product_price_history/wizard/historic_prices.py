@@ -28,8 +28,7 @@ class historic_prices(orm.TransientModel):
     _description = 'Product historical prices'
 
     _columns = {
-        'to_date': fields.date(
-            'Date',
+        'to_date': fields.date('Date', 
             help='Date at which the analysis need to be done. '
             'Note that the date is understood as this day at midnight, so you may want to '
             'specify the day after ! No date is the last value.'),
@@ -39,6 +38,7 @@ class historic_prices(orm.TransientModel):
         """
         Open the historical prices view
         """
+
         if context is None:
             context = {}
         user_obj = self.pool.get('res.users')
@@ -46,7 +46,7 @@ class historic_prices(orm.TransientModel):
         ctx = context.copy()
         if wiz.get('to_date'):
             ctx.update(
-                to_date=wiz.get('to_date')
+                date_for_history=wiz.get('to_date')
                 )
         data_pool = self.pool.get('ir.model.data')
         filter_ids = data_pool.get_object_reference(cr, uid, 'product',

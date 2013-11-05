@@ -20,22 +20,21 @@
 #
 ##############################################################################
 
-import logging
-import time
 from openerp.osv import orm, fields
+import time
 import openerp.addons.decimal_precision as dp
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+import logging
 
 # All field name of product that will be historize
 PRODUCT_FIELD_HISTORIZE = ['standard_price', 'list_price']
 
-_logger = logging.getLogger(__name__)
 
 class product_price_history(orm.Model):
     # TODO : Create good index for select
 
     _name = 'product.price.history'
-    _order = 'datetime, company_id asc'
+    _order = 'datetime,company_id asc'
+    _logger = logging.getLogger(__name__)
 
     _columns = {
         'name': fields.char('Field name', size=32, required=True),
@@ -55,12 +54,10 @@ class product_price_history(orm.Model):
                                             context=context)
 
     def _get_default_date(self, cr, uid, context=None):
-        if context is None:
-            context = {}
-        if context.get('to_date'):
-            result = context.get('to_date')
+        if context.get('date_for_history'):
+            result = context.get('date_for_history')
         else:
-            result = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+            result = time.strftime('%Y-%m-%d %H:%M:%S')
         return result
 
     _defaults = {
@@ -69,7 +66,7 @@ class product_price_history(orm.Model):
         }
 
     def _get_historic_price(self, cr, uid, ids, company_id,
-                            datetime=False, field_name=None,
+                            datetime=False, field_name=PRODUCT_FIELD_HISTORIZE,
                             context=None):
         """ Use SQL for performance. Return a dict like:
             {product_id:{'standard_price': Value, 'list_price': Value}}
@@ -78,10 +75,8 @@ class product_price_history(orm.Model):
         res = {}
         if not ids:
             return res
-        if field_name is None:
-            field_name = PRODUCT_FIELD_HISTORIZE
         if not datetime:
-            datetime = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+            datetime = time.strftime('%Y-%m-%d %H:%M:%S')
         sql_wh_clause = """SELECT DISTINCT ON (product_id, name)
             datetime, product_id, name, amount
             FROM product_price_history
@@ -90,21 +85,22 @@ class product_price_history(orm.Model):
             AND company_id = %s
             AND name IN %s
             ORDER BY product_id, name, datetime DESC"""
-        cr.execute(sql_wh_clause, (tuple(ids), datetime,
-                   company_id, tuple(field_name)))
+        cr.execute(sql_wh_clause, (tuple(ids), datetime, 
+            company_id, tuple(field_name)))
         for id in ids:
             res[id] = dict.fromkeys(field_name, 0.0)
         result = cr.dictfetchall()
         for line in result:
             data = {line['name']: line['amount']}
             res[line['product_id']].update(data)
-        _logger.debug("Result of price history is : %s, company_id: %s", res, company_id)
+        self._logger.debug('Prices value `%s`', res)
         return res
 
 
 class product_template(orm.Model):
 
     _inherit = "product.template"
+    _logger = logging.getLogger(__name__)
 
     def _log_price_change(self, cr, uid, product, values, context=None):
         """
@@ -117,29 +113,10 @@ class product_template(orm.Model):
                 data = {
                     'product_id': product,
                     'amount': values[field_name],
-                    'name': field_name,
-                    'company_id': self._get_transaction_company_id(cr, uid,
-                        context=context)
+                    'name': field_name
                     }
                 price_history.create(cr, uid, data, context=context)
-
-    def _get_transaction_company_id(self, cr, uid, context=None):
-        """As it may happend that OpenERP force the uid to 1 to bypass
-        rule (in function field), we may sometimes read the price of the company 
-        of user id 1 instead of the good one. Because we found the real uid and company_id
-        in the context in that case, I return this one. It also allow other module to 
-        give the proper company_id in the context (like it's done in product_standard_margin
-        for example. If company_id not in context, take the one from uid."""
-        res = uid
-        if context == None:
-            context = {}
-        if context.get('company_id'):
-            res = context.get('company_id')
-        else:
-            user_obj = self.pool.get('res.users')
-            res = user_obj.browse(cr, uid, uid, 
-                context=context).company_id.id
-        return res
+                self._logger.debug('RECORD_DICT:`%s`', data)
 
     def create(self, cr, uid, values, context=None):
         """Add the historization at product creation."""
@@ -156,15 +133,18 @@ class product_template(orm.Model):
             context = {}
         if fields:
             fields.append('id')
-        results = super(product_template, self).read(
-            cr, uid, ids, fields=fields, context=context, load=load)
+        results = super(product_template,
+                        self).read(cr, uid, ids,
+                        fields=fields, context=context, load=load)
         # Note if fields is empty => read all, so look at history table
         if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
             date_crit = False
             price_history = self.pool.get('product.price.history')
-            company_id = self._get_transaction_company_id(cr, uid, context=context)
-            if context.get('to_date'):
-                date_crit = context['to_date']
+            user_obj = self.pool.get('res.users')
+            company_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
+            if context.get('date_for_history'):
+                date_crit = context['date_for_history']
+                self._logger.debug('Context:`%s`', context)
             # if fields is empty we read all price fields
             if not fields:
                 price_fields = PRODUCT_FIELD_HISTORIZE
@@ -186,20 +166,10 @@ class product_template(orm.Model):
         of every products with current datetime (or given one in context)"""
         if any([f in PRODUCT_FIELD_HISTORIZE for f in values]):
             for product in self.browse(cr, uid, ids, context=context):
-                self._log_price_change(cr, uid, product.id, values,
-                                       context=context)
+                self._log_price_change(cr, uid, product.id, values, 
+                    context=context)
         return super(product_template, self).write(cr, uid, ids, values,
                                                    context=context)
-
-    def unlink(self, cr, uid, ids, context=None):
-        price_history = self.pool.get('product.price.history')
-        history_ids = price_history.search(cr, uid,
-                                           [('product_id', 'in', ids)],
-                                           context=context)
-        price_history.unlink(cr, uid, history_ids, context=context)
-        res = super(product_template, self).unlink(cr, uid, ids,
-                                                   context=context)
-        return res
 
 
 class price_type(orm.Model):
