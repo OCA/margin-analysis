@@ -1,0 +1,189 @@
+-
+  Create a Partner for second company and second company user
+-
+  !record {model: res.partner, id: res_partner_company_01}:
+    name: Second Company Partner test
+-
+  !record {model: res.partner, id: res_partner_user_second_company_01}:
+    name: Second Company User Partner test
+-
+  Create a second company hanlded in CHF
+-
+  !record {model: res.company, id: res_company_01}:
+    name: Second Company test
+    partner_id: res_partner_company_01
+    currency_id: base.CHF
+-
+  Create a user for second company
+-
+ !record {model: res.users, id: res_users_second_company_01}:
+    login: user second company
+    password: user second company
+    partner_id: res_partner_user_second_company_01
+    company_id: res_company_01
+    company_ids: [res_company_01,base.main_company]
+    groups_id:
+      - base.group_user
+      - base.group_sale_manager
+      - purchase.group_purchase_manager
+      - stock.group_stock_user
+-
+  Create a second set of price type in USD for the second company
+-
+ !record {model: product.price.type, id: list_price_second_cmp}:
+    name: Public Price USD
+    field: list_price
+    currency_id: base.USD
+    company_id: res_company_01
+-
+ !record {model: product.price.type, id: standard_price_second_cmp}:
+    name: Cost Price USD
+    field: standard_price
+    currency_id: base.USD
+    company_id: res_company_01
+-
+  Ensure the price type of first company is in EUR
+-
+ !record {model: product.price.type, id: product.list_price}:
+    name: Public Price EUR
+    field: list_price
+    currency_id: base.EUR
+    company_id: base.main_company
+-
+ !record {model: product.price.type, id: product.standard_price}:
+    name: Cost Price EUR
+    field: standard_price
+    currency_id: base.EUR
+    company_id: base.main_company
+-
+  Set the admin user to first company
+-
+ !record {model: res.users, id: base.user_root}:
+    company_id: base.main_company 
+-
+  Set the currency rate of CHF, EUR and USD (reference EUR)
+-
+ !record {model: res.currency.rate, id: base.rateCHF}:
+    rate: 1.3086
+    currency_id: base.CHF
+    name: !eval time.strftime('%Y-%m-%d')
+-
+ !record {model: res.currency.rate, id: base.rateUSD}:
+    rate: 1.2086
+    currency_id: base.USD
+    name: !eval time.strftime('%Y-%m-%d')
+-
+ !record {model: res.currency.rate, id: base.rateEUR}:
+    rate: 1.0
+    currency_id: base.EUR
+    name: !eval time.strftime('%Y-%m-%d')
+-
+  Ensure the first Company and pricelists are in EUR (rate 1.0)
+-
+ !record {model: res.company, id: base.main_company}:
+    currency_id: base.EUR
+-
+ !record {model: product.pricelist, id: purchase.list0}:
+    name: Purchase Pricelist EUR
+    currency_id: base.EUR 
+    company_id: base.main_company
+-
+ !record {model: product.pricelist, id: product.list0}:
+    name: Public Pricelist EUR
+    currency_id: base.EUR 
+    company_id: base.main_company
+-
+  Create a sale pricelist in CHF for second company (also in CHF)
+-
+ !record {model: product.pricelist, id: product_pricelist_salechf}:
+    name: Public Pricelist CHF
+    type: sale
+    company_id: res_company_01
+    currency_id: base.CHF
+-
+ !record {model: product.pricelist.version, id: product_pricelist_version_salechf}:
+    pricelist_id: product_pricelist_salechf
+    name: Default Public Pricelist Version
+-
+ !record {model: product.pricelist.item, id: product_pricelist_item_salechf}:
+    price_version_id: product_pricelist_version_salechf
+    base: !eval ref('list_price_second_cmp')
+    name: Default Public Pricelist Line
+-
+  Create a purchase pricelist in CHF for second company (also in CHF)
+-
+ !record {model: product.pricelist, id: product_pricelist_purchchf}:
+    name: Purchase Pricelist CHF
+    type: purchase
+    company_id: res_company_01
+    currency_id: base.CHF
+-
+ !record {model: product.pricelist.version, id: product_pricelist_version_purchchf}:
+    pricelist_id: product_pricelist_purchchf
+    name: Default Purchase Pricelist Version
+-
+ !record {model: product.pricelist.item, id: product_pricelist_item_puchchf}:
+    price_version_id: product_pricelist_version_purchchf
+    base: !eval ref('standard_price_second_cmp')
+    name: Default Purchase Pricelist Line
+-
+  Create a stock location for first and second company
+-
+ !record {model: stock.location, id: location_stock_01}:
+    name: Stock first company EUR
+    usage: internal
+    company_id: base.main_company
+-
+ !record {model: stock.location, id: location_stock_02}:
+    name: Stock second company CHF
+    usage: internal
+    company_id: res_company_01
+-
+  Create a warehouse for first and second company
+-
+ !record {model: stock.warehouse, id: wh_stock_01}:
+    name: Warehouse for first company EUR
+    lot_output_id: location_stock_01
+    lot_stock_id: location_stock_01
+    lot_input_id: location_stock_01
+    company_id: base.main_company
+-
+ !record {model: stock.warehouse, id: wh_stock_02}:
+    name: Warehouse for second company CHF
+    lot_output_id: location_stock_02
+    lot_stock_id: location_stock_02
+    lot_input_id: location_stock_02
+    company_id: res_company_01
+-
+  Create a Supplier for PO
+-
+  !record {model: res.partner, id: res_partner_supplier_01}:
+    name: Supplier 1
+    supplier: 1
+-
+  Create a wine product J owned by both company
+-
+  !record {model: product.product, id: product_product_j_avg_01}:
+    categ_id: product.product_category_1
+    cost_method: average
+    name: Wine J
+    type: product
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: False
+-
+  Create a wine product K owned by both company
+-
+  !record {model: product.product, id: product_product_k_avg_01}:
+    categ_id: product.product_category_1
+    cost_method: average
+    name: Wine K
+    type: product
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: False
+-
+  Setup the multi company rules for product, share them between company
+-
+  !record {model: ir.rule, id: product.product_comp_rule}:
+    domain_force: "[(1,'=',1)]"

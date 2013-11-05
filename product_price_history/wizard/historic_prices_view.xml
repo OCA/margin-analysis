@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="view_historical_prices" model="ir.ui.view">
+      <field name="name">historic.prices.form</field>
+      <field name="model">historic.prices</field>
+      <field name="arch" type="xml">
+        <form string="Historical prices" version="7.0">
+          <group>
+            <field name="to_date"/>
+          </group>
+          <footer>
+            <button name="action_open_window" string="Compute prices" type="object" icon="gtk-execute" class="oe_highlight"/>
+            or
+            <button string="Cancel" class="oe_link" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_product_historic_prices_view" model="ir.actions.act_window">
+      <field name="name">Product Historical Prices</field>
+      <field name="res_model">historic.prices</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="view_historical_prices"/>
+      <field name="target">new</field>
+    </record>
+
+    <menuitem action="action_product_historic_prices_view"
+        id="menu_action_product_historic_prices_tree"
+        parent="stock.next_id_61" />
+
+
+  </data>
+</openerp>
