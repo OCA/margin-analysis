@@ -171,6 +171,17 @@ class product_template(orm.Model):
         return super(product_template, self).write(cr, uid, ids, values,
                                                    context=context)
 
+    def unlink(self, cr, uid, ids, context=None):
+        price_history = self.pool.get('price.history')
+        history_ids = price_history.search(cr, uid,
+                                           [('product_id', 'in', ids)],
+                                           context=context)
+        if history_ids:
+            price_history.unlink(cr, uid, history_ids, context=context)
+        res = super(product_template, self).unlink(cr, uid, ids,
+                                                   context=context)
+        return res
+
 
 class price_type(orm.Model):
     """

@@ -69,7 +69,7 @@
     ],
     'test': [
         'test/price_controlling_multicompany.yml',
-        'test/average_price_computation_mutlicompany_currency.yml',
+        'test/avg_price_computation_mutlicompanies_multicurrencies.yml',
         'test/price_historization.yml',
     ],
     'installable': True,
