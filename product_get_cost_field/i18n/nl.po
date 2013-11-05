@@ -35,7 +35,3 @@ msgstr "Product"
 msgid "Cost Price (incl. BoM)"
 msgstr "Kostprijs (incl. kosten)"
 
-#. module: product_get_cost_field
-#: constraint:product.product:0
-msgid "Error: Invalid ean code"
-msgstr "Fout: ongeldige ean code"
