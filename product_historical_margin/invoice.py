@@ -26,10 +26,11 @@ import decimal_precision as dp
 class account_invoice(Model):
     _inherit = 'account.invoice'
 
-    def _refund_cleanup_lines(self, cr, uid, lines):
+    def _refund_cleanup_lines(self, cr, uid, lines, context=None):
         for line in lines:
-            del line['invoice_user_id']
-        return super(account_invoice, self)._refund_cleanup_lines(cr, uid, lines)
+            line.invoice_user_id = False
+        return super(account_invoice, self)._refund_cleanup_lines(cr, uid, 
+          lines, context=context)
 
 
 class account_invoice_line(Model):
