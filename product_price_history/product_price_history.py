@@ -172,7 +172,7 @@ class product_template(orm.Model):
                                                    context=context)
 
     def unlink(self, cr, uid, ids, context=None):
-        price_history = self.pool.get('price.history')
+        price_history = self.pool.get('product.price.history')
         history_ids = price_history.search(cr, uid,
                                            [('product_id', 'in', ids)],
                                            context=context)
