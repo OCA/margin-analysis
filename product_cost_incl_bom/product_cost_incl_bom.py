@@ -27,16 +27,15 @@ class Product(Model):
     _inherit = 'product.product'
 
     def _compute_purchase_price(self, cursor, user, ids,
-                                product_uom=None,
-                                bom_properties=None,
                                 context=None):
         '''
         Compute the purchase price, taking into account sub products and routing
         '''
         if context is None:
             context = {}
-        if bom_properties is None:
-            bom_properties =  []
+        product_uom = context.get('product_uom')
+        bom_properties = context.get('properties', [])
+
         bom_obj = self.pool.get('mrp.bom')
         uom_obj = self.pool.get('product.uom')
 
@@ -45,11 +44,9 @@ class Product(Model):
 
         for pr in self.browse(cursor, user, ids):
 
-            # Workaround for first loading in V5 as some columns are not created
-            #if not hasattr(pr, 'standard_price'): return False
-            bom_id = bom_obj._bom_find(cursor, user, pr.id, product_uom=None, properties=bom_properties)
+            bom_id = bom_obj._bom_find(cursor, user, pr.id, product_uom=product_uom, properties=bom_properties)
             if not bom_id: # no BoM: use standard_price
-                res[pr.id] = pr.standard_price
+                res[pr.id] = super(Product, self)._compute_purchase_price(cursor, user, pr.id, context=context)
                 continue
             bom = bom_obj.browse(cursor, user, bom_id)
             sub_products, routes = bom_obj._bom_explode(cursor, user, bom,
@@ -76,22 +73,19 @@ class Product(Model):
             res[pr.id] = price
         return res
 
-    def get_cost_field(self, cr, uid, ids, context=None):
-        return self._cost_price(cr, uid, ids, '', [], context)
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
             context = {}
-        product_uom = context.get('product_uom')
-        bom_properties = context.get('properties')
-        res = self._compute_purchase_price(cr, uid, ids, product_uom, bom_properties)
+
+        res = self._compute_purchase_price(cr, uid, ids, context=context)
         return res
 
     _columns = {
         'cost_price': fields.function(_cost_price,
                                       method=True,
                                       string='Cost Price (incl. BoM)',
-                                      digits_compute = dp.get_precision('Sale Price'),
+                                      digits_compute=dp.get_precision('Sale Price'),
                                       help="The cost price is the standard price or, if the product has a bom, "
                                       "the sum of all standard price of its components. it take also care of the "
                                       "bom costing like cost per cylce.")
