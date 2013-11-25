@@ -30,7 +30,8 @@ import decimal_precision as dp
 # et ne prendre que les factures paid.
 class product_product(Model):
     _inherit = 'product.product'
-    def _compute_margin(self, cr, uid, ids, field_names,  arg, context):
+
+    def _compute_margin(self, cr, uid, ids, field_names, arg, context=None):
         """
         Compute the absolute and relativ margin based on price without tax, and
         always in company currency. We exclude the (in_invoice, in_refund) from the
@@ -55,15 +56,16 @@ class product_product(Model):
             return res
         user_obj = self.pool.get('res.users')
         logger = logging.getLogger('product_historical_margin')
-        company_id = user_obj.browse(cr, uid, uid).company_id.id
+        company_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
         for product_id in ids:
             res[product_id] = {'margin_absolute': 0, 'margin_relative': 0}
             tot_sale[product_id] = 0
         # get information about invoice lines relative to our products
         # belonging to open or paid invoices in the considered period
-        query = '''SELECT product_id, type,
-                          SUM(subtotal_cost_price_company),
-                          SUM(subtotal_company)
+        query = '''
+        SELECT product_id, type,
+              SUM(subtotal_cost_price_company),
+              SUM(subtotal_company)
         FROM account_invoice_line AS line
         INNER JOIN account_invoice AS inv ON (inv.id = line.invoice_id)
         WHERE %s inv.state IN ('open', 'paid')
@@ -75,8 +77,10 @@ class product_product(Model):
           AND SUM(subtotal_company) != 0
         '''
         substs = context.copy()
-        substs['product_ids'] = tuple(res)
-        substs['company_id'] = company_id
+        substs.update(
+            product_ids=tuple(res),
+            company_id=company_id
+            )
         date_clause = []
         if 'from_date' in substs:
             date_clause.append('inv.date_invoice >= %(from_date)s AND')
@@ -87,7 +91,7 @@ class product_product(Model):
         for product_id, inv_type, cost, sale in cr.fetchall():
             res[product_id]['margin_absolute'] += (sale - cost)
             tot_sale[product_id] += sale
-        for product_id in tot_sale.keys():
+        for product_id in tot_sale:
             if tot_sale[product_id] == 0:
                 logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product_id)
                 res[product_id]['margin_relative'] = 999.
@@ -112,4 +116,3 @@ class product_product(Model):
                                         "based on historical values computed from open and paid invoices."
                                         "If no real margin set, will display 999.0 (if not invoiced yet for example)."),
         }
-
