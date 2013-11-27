@@ -22,6 +22,7 @@ import logging
 from openerp.osv.orm import Model
 from osv import fields
 import decimal_precision as dp
+_logger = logging.getLogger(__name__)
 
 class account_invoice(Model):
     _inherit = 'account.invoice'
@@ -64,7 +65,7 @@ class account_invoice_line(Model):
         res = {}
         if not ids:
             return res
-        logger = logging.getLogger('product_historical_margin')
+        
         user_obj = self.pool.get('res.users')
         currency_obj = self.pool.get('res.currency')
 
@@ -116,7 +117,7 @@ class account_invoice_line(Model):
                 'margin_absolute': margin_absolute,
                 'margin_relative': margin_relative,
                 }
-            logger.debug("The following values has been computed for product ID %d: subtotal_cost_price=%f"
+            _logger.debug("The following values has been computed for product ID %d: subtotal_cost_price=%f"
                 "subtotal_cost_price_company=%f, subtotal_company=%f", product.id, subtotal_cost_price,
                 subtotal_cost_price_company, subtotal_company)
         return res

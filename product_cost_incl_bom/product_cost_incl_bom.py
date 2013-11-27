@@ -22,6 +22,8 @@
 from openerp.osv.orm import Model
 from openerp.osv import fields
 import decimal_precision as dp
+import logging
+_logger = logging.getLogger(__name__)
 
 class Product(Model):
     _inherit = 'product.product'
@@ -77,8 +79,9 @@ class Product(Model):
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
             context = {}
-
         res = self._compute_purchase_price(cr, uid, ids, context=context)
+        _logger.debug("get cost field _cost_price %s, arg: %s, context: %s, result:%s",
+            field_name, arg, context, res)
         return res
 
     _columns = {
