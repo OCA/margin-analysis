@@ -44,7 +44,7 @@ class Product(Model):
         res = {}
         ids = ids or []
 
-        for pr in self.browse(cursor, user, ids):
+        for pr in self.browse(cursor, user, ids, context=context):
 
             bom_id = bom_obj._bom_find(cursor, user, pr.id, product_uom=product_uom, properties=bom_properties)
             if not bom_id: # no BoM: use standard_price
@@ -57,7 +57,7 @@ class Product(Model):
                                                         addthis=True)
             price = 0.
             for sub_product_dict in sub_products:
-                sub_product = self.browse(cursor, user, sub_product_dict['product_id'])
+                sub_product = self.browse(cursor, user, sub_product_dict['product_id'], context=context)
                 std_price = sub_product.standard_price
                 qty = uom_obj._compute_qty(cursor, user,
                                            from_uom_id = sub_product_dict['product_uom'],
@@ -71,7 +71,8 @@ class Product(Model):
                     hour = (wc.time_start + wc.time_stop + cycle * wc.time_cycle) *  (wc.time_efficiency or 1.0)
                     price += wc.costs_cycle * cycle + wc.costs_hour * hour
             price /= bom.product_qty
-            price = uom_obj._compute_price(cursor, user, bom.product_uom.id, price, bom.product_id.uom_id.id)
+            price = uom_obj._compute_price(cursor, user, bom.product_uom.id,
+                price, bom.product_id.uom_id.id, context=context)
             res[pr.id] = price
         return res
 

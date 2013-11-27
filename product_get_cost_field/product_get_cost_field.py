@@ -31,7 +31,7 @@ class Product(Model):
     def _compute_purchase_price(self, cr, uid, ids,
                                 context=None):
         res = {}
-        products = self.browse(cr, uid, ids)
+        products = self.browse(cr, uid, ids, context=context)
         if isinstance(ids, (int, long)):
             res = products.standard_price
         elif isinstance(ids, list):
@@ -48,7 +48,7 @@ class Product(Model):
         return res
 
     def get_cost_field(self, cr, uid, ids, context=None):
-        return self._cost_price(cr, uid, ids, '', [], context)
+        return self._cost_price(cr, uid, ids, '', [], context=context)
 
     _columns = {
         'cost_price': fields.function(_cost_price,
