@@ -98,6 +98,7 @@ class product_price_history(orm.Model):
         for line in result:
             data = {line['name']: line['amount']}
             res[line['product_id']].update(data)
+        _logger.debug("Result of price history is : %s, company_id: %s", res, company_id)
         return res
 
 
@@ -119,6 +120,18 @@ class product_template(orm.Model):
                     'name': field_name
                     }
                 price_history.create(cr, uid, data, context=context)
+
+    def _get_transaction_user_id(self, cr, uid, context=None):
+        """As it may happend that OpenERP force the uid to 1 to bypass
+        rule, we may sometimes read the price of the company of user id 1
+        instead of the good one. Because we found the real uid in the
+        context in that case, I return it here in that case."""
+        res = uid
+        if context == None:
+            context = {}
+        if context.get('uid'):
+            res = context.get('uid')
+        return res
 
     def create(self, cr, uid, values, context=None):
         """Add the historization at product creation."""
@@ -142,7 +155,9 @@ class product_template(orm.Model):
             date_crit = False
             price_history = self.pool.get('product.price.history')
             user_obj = self.pool.get('res.users')
-            company_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
+            transaction_user = self._get_transaction_user_id(cr, uid, context=context)
+            company_id = user_obj.browse(cr, uid, transaction_user, 
+                context=context).company_id.id
             if context.get('date_for_history'):
                 date_crit = context['date_for_history']
             # if fields is empty we read all price fields
