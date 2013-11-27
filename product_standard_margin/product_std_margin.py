@@ -24,7 +24,7 @@
 from openerp.osv import orm, fields
 import decimal_precision as dp
 import logging
-
+_logger = logging.getLogger(__name__)
 
 class Product(orm.Model):
     _inherit = 'product.product'
@@ -67,7 +67,7 @@ class Product(orm.Model):
                  'margin_relative': float}
             }}
         """
-        logger = logging.getLogger('product_standard_margin')
+        
         if context is None:
             context = {}
         res = {}
@@ -81,7 +81,7 @@ class Product(orm.Model):
                     [product.id], context=context)[product.id]
             res[product.id]['standard_margin'] = sale - cost
             if sale == 0:
-                logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product.id)
+                _logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product.id)
                 res[product.id]['standard_margin_rate'] = 999.
             else:
                 res[product.id]['standard_margin_rate'] = (sale - cost) / sale * 100
