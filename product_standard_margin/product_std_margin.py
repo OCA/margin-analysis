@@ -43,7 +43,7 @@ class Product(orm.Model):
         if context is None:
             context = {}
         tax_obj = self.pool.get('account.tax')
-        for prod in self.browse(cr, uid, ids):
+        for prod in self.browse(cr, uid, ids, context=context):
             price = prod.list_price
             taxes = tax_obj.compute_all(cr, uid, prod.taxes_id, price, 1, product=prod.id)
             res[prod.id] = taxes['total']
@@ -75,7 +75,7 @@ class Product(orm.Model):
             return res
         for product in ids:
             res[product] = {'margin_absolute': 0, 'margin_relative': 0}
-        for product in self.browse(cursor, user, ids):
+        for product in self.browse(cursor, user, ids, context=context):
             cost = product.cost_price
             sale = self._amount_tax_excluded(cursor, user,
                     [product.id], context=context)[product.id]
