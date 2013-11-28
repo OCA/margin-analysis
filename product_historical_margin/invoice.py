@@ -205,3 +205,37 @@ class account_invoice_line(Model):
         'invoice_date': fields.related('invoice_id','date_invoice',type='date',string='Invoice Date'),
 
         }
+
+    def read_group(self, cr, uid, domain, fields, groupby, 
+            offset=0, limit=None, context=None, orderby=False):
+        """The percentage of the relative margin has to be recomputed asit is nor 
+        a sum, nor a avg, but a percentage of 2 valuesof the line computed as:
+        margin_relative = margin_absolute / subtotal_company * 100"""
+        if not context:
+            context = {}
+        if groupby:
+            res = super(account_invoice_line, self).read_group(cr, uid,
+                domain, fields, groupby,
+                offset=offset, limit=limit, context=context, orderby=orderby)
+            for re in res:
+                margin_relative = 0.0
+                if re.get('margin_relative', False):
+                    # percentage of margin = (margin_absolute / subtotal_company) * 100
+                    margin_absolute = re.get('margin_absolute', 0)
+                    subtotal_company = re.get('subtotal_company', 0)
+                    if subtotal_company == 0.0:
+                        margin_relative = 999
+                    else:
+                        margin_relative = margin_absolute / subtotal_company * 100
+                    re['margin_relative'] = margin_relative
+                else:
+                    if re.get('__context', False):
+                        margin_absolute = re['__context'].get('margin_absolute', 0)
+                        subtotal_company = re.get('subtotal_company', 0)
+                        if subtotal_company == 0.0:
+                            margin_relative = 999
+                        else:
+                            margin_relative = margin_absolute / subtotal_company * 100
+                if re.get('__context', False):
+                    re['__context']['margin_relative'] = margin_relative
+        return res

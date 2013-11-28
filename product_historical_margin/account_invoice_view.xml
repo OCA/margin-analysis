@@ -26,7 +26,7 @@
           <field name="subtotal_company" sum="Total Net Sales "/>
           <field name="subtotal_cost_price_company" sum="Total Cost"/>
           <field name="margin_absolute" sum="Total Absolute Margin"/>
-          <field name="margin_relative" invisible="context.get('group_by',False)"/>
+          <field name="margin_relative" />
         </tree>
       </field>
     </record>
