@@ -168,6 +168,7 @@ class account_invoice_line(Model):
                                               multi='product_historical_margin',
                                               store=_col_store,
                                               digits_compute=dp.get_precision('Account'),
+                                              group_operator="sum",
                                               help="The Real Margin [ net sale - cost ] of the line."),
         'margin_relative': fields.function(_compute_line_values, method=True, readonly=True,type='float',
                                               string='Real Margin (%)',

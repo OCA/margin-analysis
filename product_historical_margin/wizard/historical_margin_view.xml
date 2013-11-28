@@ -21,7 +21,7 @@
     </record>
 
     <record id="action_product_margin_view" model="ir.actions.act_window">
-      <field name="name">Product Historical Margin</field>
+      <field name="name">Margin per Product</field>
       <field name="res_model">historical.margin</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>

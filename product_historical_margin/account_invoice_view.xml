@@ -25,7 +25,7 @@
           <field name="company_id" invisible="1"/>
           <field name="subtotal_company"/>
           <field name="subtotal_cost_price_company"/>
-          <field name="margin_absolute"/>
+          <field name="margin_absolute" sum="Margin total"/>
           <field name="margin_relative" invisible="context.get('group_by',False)"/>
         </tree>
       </field>
@@ -70,6 +70,21 @@
         </search>
       </field>
     </record>
+
+
+    <record id="action_product_margin_details_view" model="ir.actions.act_window">
+      <field name="name">Margin Details</field>
+      <field name="res_model">account.invoice.line</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree</field>
+      <field name="domain">[('invoice_state','in',['open', 'paid']),('invoice_type','in',['out_refund','out_invoice'])]</field>
+      <field name="context">{'search_default_product':1,'search_default_year':1}</field>
+      <field name="view_id" ref="view_invoice_line_tree_from_product"/>
+    </record>
+
+    <menuitem icon="STOCK_INDENT" action="action_product_margin_details_view"
+        id="menu_action_product_margin_details_tree"
+        parent="account.menu_finance_reporting" />
 
   </data>
 </openerp>
