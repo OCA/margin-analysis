@@ -31,26 +31,11 @@
       </field>
     </record>
 
-
     <record id="view_account_invoice_line_filter" model="ir.ui.view">
       <field name="name">account.invoice.line.select</field>
       <field name="model">account.invoice.line</field>
       <field name="arch" type="xml">
         <search string="Search Invoice Line">
-          <group>
-            <filter icon="terp-go-year" string="Year" 
-                name="year"
-                domain="[('invoice_date','&lt;=', time.strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',time.strftime('%%Y-01-01'))]"
-                help="year"/>
-            <separator orientation="vertical"/>
-            <filter icon="terp-go-month" string="Month"
-                name="month"
-                domain="[('invoice_date','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"
-                help="current month"/>
-            <filter icon="terp-go-month" string="Month-1"
-                domain="[('invoice_date','&lt;=', (datetime.date.today() - relativedelta(day=31, months=1)).strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',(datetime.date.today() - relativedelta(day=1,months=1)).strftime('%%Y-%%m-%%d'))]"
-                help="last month"/>
-            <separator orientation="vertical"/>
             <field name="product_id"/>
             <field name="invoice_type"/>
             <field name="partner_id"/>
@@ -58,7 +43,19 @@
             <field name="invoice_date"/>
             <field name="account_id"/>
             <field name="company_id"/>
-          </group>
+            <filter icon="terp-go-year" string="Year" 
+                name="year"
+                domain="[('invoice_date','&lt;=', time.strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',time.strftime('%%Y-01-01'))]"
+                help="year"/>
+            <separator orientation="vertical"/>
+            <filter icon="terp-go-month" string="Month"
+                name="month"
+                domain="[('invoice_date','&lt;=',(context_today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',(context_today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"
+                help="current month"/>
+            <filter icon="terp-go-month" string="Month-1"
+                domain="[('invoice_date','&lt;=', (context_today() - relativedelta(day=31, months=1)).strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',(context_today() - relativedelta(day=1,months=1)).strftime('%%Y-%%m-%%d'))]"
+                help="last month"/>
+            <separator orientation="vertical"/>
           <newline/>
           <group expand="1" string="Group By...">
             <filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
