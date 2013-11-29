@@ -66,10 +66,13 @@ class account_invoice_line(Model):
         if not ids:
             return res
         
+        if context is None:
+            context = {}
+        ctx = context.copy()
         user_obj = self.pool.get('res.users')
         currency_obj = self.pool.get('res.currency')
-
-        company_currency_id = user_obj.browse(cr, uid, uid, context=context).company_id.currency_id.id
+        product_obj = self.pool.get('product.product')
+       
         fields = [
                 'subtotal_cost_price_company',
                 'subtotal_cost_price',
@@ -80,7 +83,13 @@ class account_invoice_line(Model):
         for line_id in ids:
             res[line_id] = dict.fromkeys(fields, 0.0)
         for obj in self.browse(cr, uid, ids, context=context):
-            product = obj.product_id
+            # The company must be the one of the invoice in case a ir.cron create the invoice
+            # with admin user. We need to pass it in the context as well
+            # if we use also product_price_history with this module
+            company_currency_id = obj.company_id.currency_id.id
+            ctx['company_id'] = obj.company_id.id
+            product = product_obj.read(cr, uid, obj.product_id,
+                                       ['id','cost_price'], context=ctx)
             if not product:
                 continue
             if obj.invoice_id.currency_id is None:
@@ -92,7 +101,7 @@ class account_invoice_line(Model):
             else:
                 factor = 1.
 
-            subtotal_cost_price_company = factor * product.cost_price * obj.quantity
+            subtotal_cost_price_company = factor * product['cost_price'] * obj.quantity
             # Convert price_subtotal from invoice currency to company currency
             subtotal_company = factor * currency_obj.compute(cr, uid, currency_id,
                                                                   company_currency_id,
@@ -118,7 +127,7 @@ class account_invoice_line(Model):
                 'margin_relative': margin_relative,
                 }
             _logger.debug("The following values has been computed for product ID %d: subtotal_cost_price=%f"
-                "subtotal_cost_price_company=%f, subtotal_company=%f", product.id, subtotal_cost_price,
+                "subtotal_cost_price_company=%f, subtotal_company=%f", product['id'], subtotal_cost_price,
                 subtotal_cost_price_company, subtotal_company)
         return res
 
@@ -127,7 +136,7 @@ class account_invoice_line(Model):
 
     def _recalc_margin_parent(self, cr, uid, ids, context=None):
         res=[]
-        for inv in self.browse(cr,uid,ids):
+        for inv in self.browse(cr, uid, ids, context=context):
             for line in inv.invoice_line:
                 res.append(line.id)
         return res
