@@ -44,11 +44,12 @@ class Product(Model):
         res = {}
         ids = ids or []
 
+        product_without_bom_ids = []
         for pr in self.browse(cursor, user, ids, context=context):
 
             bom_id = bom_obj._bom_find(cursor, user, pr.id, product_uom=product_uom, properties=bom_properties)
             if not bom_id: # no BoM: use standard_price
-                res[pr.id] = super(Product, self)._compute_purchase_price(cursor, user, pr.id, context=context)
+                product_without_bom_ids.append(pr.id)
                 continue
             bom = bom_obj.browse(cursor, user, bom_id)
             sub_products, routes = bom_obj._bom_explode(cursor, user, bom,
@@ -74,6 +75,11 @@ class Product(Model):
             price = uom_obj._compute_price(cursor, user, bom.product_uom.id,
                 price, bom.product_id.uom_id.id, context=context)
             res[pr.id] = price
+
+        if product_without_bom_ids:
+            standard_prices = super(Product, self)._compute_purchase_price(
+                cursor, user, product_without_bom_ids, context=context)
+            res.update(standard_prices)
         return res
 
 
