@@ -32,12 +32,10 @@ class Product(Model):
     def _compute_purchase_price(self, cr, uid, ids,
                                 context=None):
         res = {}
-        products = self.browse(cr, uid, ids, context=context)
         if isinstance(ids, (int, long)):
-            res = products.standard_price
-        elif isinstance(ids, list):
-            for product in self.browse(cr, uid, ids, context=context):
-                res[product.id] = product.standard_price
+            ids = [ids]
+        for product in self.browse(cr, uid, ids, context=context):
+            res[product.id] = product.standard_price
         return res
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
