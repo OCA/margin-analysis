@@ -72,6 +72,7 @@ class account_invoice_line(Model):
         user_obj = self.pool.get('res.users')
         currency_obj = self.pool.get('res.currency')
         product_obj = self.pool.get('product.product')
+        company_obj = self.pool.get('res.company')
        
         fields = [
                 'subtotal_cost_price_company',
@@ -86,9 +87,18 @@ class account_invoice_line(Model):
             # The company must be the one of the invoice in case a ir.cron create the invoice
             # with admin user. We need to pass it in the context as well
             # if we use also product_price_history with this module
-            company_currency_id = obj.company_id.currency_id.id
-            ctx['company_id'] = obj.company_id.id
-            product = product_obj.read(cr, uid, obj.product_id,
+            if obj.company_id:
+                company = obj.company_id
+            else:
+                company_id = company_obj._company_default_get(
+                                                              cr,
+                                                              uid,
+                                                              'account.invoice',
+                                                              context=context)
+                company = company_obj.browse(cr, uid, company_id, context=context)
+            company_currency_id = company.currency_id.id
+            ctx['company_id'] = company.id
+            product = product_obj.read(cr, uid, obj.product_id.id,
                                        ['id','cost_price'], context=ctx)
             if not product:
                 continue
