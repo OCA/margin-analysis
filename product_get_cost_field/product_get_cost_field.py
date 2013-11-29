@@ -25,6 +25,7 @@ from openerp.osv import fields
 import decimal_precision as dp
 _logger = logging.getLogger(__name__)
 
+
 class Product(Model):
     _inherit = 'product.product'
 
@@ -43,17 +44,20 @@ class Product(Model):
         if context is None:
             context = {}
         res = self._compute_purchase_price(cr, uid, ids, context=context)
-        _logger.debug("get cost field _cost_price %s, arg: %s, context: %s, result:%s",
-            field_name, arg, context, res)
+        _logger.debug("get cost field _cost_price %s, arg: %s, "
+                      "context: %s, result:%s",
+                      field_name, arg, context, res)
         return res
 
     def get_cost_field(self, cr, uid, ids, context=None):
         return self._cost_price(cr, uid, ids, '', [], context=context)
 
     _columns = {
-        'cost_price': fields.function(_cost_price,
-                                      method=True,
-                                      string='Cost Price',
-                                      digits_compute = dp.get_precision('Sale Price'),
-                                      help="The cost price is the standard price unless you install the product_cost_incl_bom module.")
-        }
+        'cost_price': fields.function(
+            _cost_price,
+            method=True,
+            string='Cost Price',
+            digits_compute=dp.get_precision('Sale Price'),
+            help="The cost price is the standard price unless you install the "
+                 "product_cost_incl_bom module.")
+    }
