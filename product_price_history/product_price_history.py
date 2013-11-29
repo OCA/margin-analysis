@@ -117,20 +117,28 @@ class product_template(orm.Model):
                 data = {
                     'product_id': product,
                     'amount': values[field_name],
-                    'name': field_name
+                    'name': field_name,
+                    'company_id': self._get_transaction_company_id(cr, uid,
+                        context=context)
                     }
                 price_history.create(cr, uid, data, context=context)
 
-    def _get_transaction_user_id(self, cr, uid, context=None):
+    def _get_transaction_company_id(self, cr, uid, context=None):
         """As it may happend that OpenERP force the uid to 1 to bypass
-        rule, we may sometimes read the price of the company of user id 1
-        instead of the good one. Because we found the real uid in the
-        context in that case, I return it here in that case."""
+        rule (in function field), we may sometimes read the price of the company 
+        of user id 1 instead of the good one. Because we found the real uid and company_id
+        in the context in that case, I return this one. It also allow other module to 
+        give the proper company_id in the context (like it's done in product_standard_margin
+        for example. If company_id not in context, take the one from uid."""
         res = uid
         if context == None:
             context = {}
-        if context.get('uid'):
-            res = context.get('uid')
+        if context.get('company_id'):
+            res = context.get('company_id')
+        else:
+            user_obj = self.pool.get('res.users')
+            res = user_obj.browse(cr, uid, uid, 
+                context=context).company_id.id
         return res
 
     def create(self, cr, uid, values, context=None):
@@ -154,10 +162,7 @@ class product_template(orm.Model):
         if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
             date_crit = False
             price_history = self.pool.get('product.price.history')
-            user_obj = self.pool.get('res.users')
-            transaction_user = self._get_transaction_user_id(cr, uid, context=context)
-            company_id = user_obj.browse(cr, uid, transaction_user, 
-                context=context).company_id.id
+            company_id = self._get_transaction_company_id(cr, uid, context=context)
             if context.get('date_for_history'):
                 date_crit = context['date_for_history']
             # if fields is empty we read all price fields
