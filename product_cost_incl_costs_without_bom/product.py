@@ -11,7 +11,7 @@ class product_product(Model):
         if context is None:
             context = {}
         res = {}
-        for product in self.browse(cr, uid, ids, context=context:
+        for product in self.browse(cr, uid, ids, context=context):
             res[product.id] = product.standard_price + product.fixed_cost_price
         return res
 
