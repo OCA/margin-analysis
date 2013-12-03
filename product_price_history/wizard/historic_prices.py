@@ -46,7 +46,7 @@ class historic_prices(orm.TransientModel):
         ctx = context.copy()
         if wiz.get('to_date'):
             ctx.update(
-                date_for_history=wiz.get('to_date')
+                to_date=wiz.get('to_date')
                 )
         data_pool = self.pool.get('ir.model.data')
         filter_ids = data_pool.get_object_reference(cr, uid, 'product',
