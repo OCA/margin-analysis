@@ -57,8 +57,8 @@ class product_price_history(orm.Model):
     def _get_default_date(self, cr, uid, context=None):
         if context is None:
             context = {}
-        if context.get('date_for_history'):
-            result = context.get('date_for_history')
+        if context.get('to_date'):
+            result = context.get('to_date')
         else:
             result = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         return result
@@ -163,8 +163,8 @@ class product_template(orm.Model):
             date_crit = False
             price_history = self.pool.get('product.price.history')
             company_id = self._get_transaction_company_id(cr, uid, context=context)
-            if context.get('date_for_history'):
-                date_crit = context['date_for_history']
+            if context.get('to_date'):
+                date_crit = context['to_date']
             # if fields is empty we read all price fields
             if not fields:
                 price_fields = PRODUCT_FIELD_HISTORIZE
