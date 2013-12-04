@@ -22,6 +22,7 @@ import logging
 from openerp.osv.orm import Model
 from osv import fields
 import decimal_precision as dp
+_logger = logging.getLogger(__name__)
 
 class account_invoice(Model):
     _inherit = 'account.invoice'
@@ -64,11 +65,15 @@ class account_invoice_line(Model):
         res = {}
         if not ids:
             return res
-        logger = logging.getLogger('product_historical_margin')
+        
+        if context is None:
+            context = {}
+        ctx = context.copy()
         user_obj = self.pool.get('res.users')
         currency_obj = self.pool.get('res.currency')
-
-        company_currency_id = user_obj.browse(cr, uid, uid, context=context).company_id.currency_id.id
+        product_obj = self.pool.get('product.product')
+        company_obj = self.pool.get('res.company')
+       
         fields = [
                 'subtotal_cost_price_company',
                 'subtotal_cost_price',
@@ -79,7 +84,22 @@ class account_invoice_line(Model):
         for line_id in ids:
             res[line_id] = dict.fromkeys(fields, 0.0)
         for obj in self.browse(cr, uid, ids, context=context):
-            product = obj.product_id
+            # The company must be the one of the invoice in case a ir.cron create the invoice
+            # with admin user. We need to pass it in the context as well
+            # if we use also product_price_history with this module
+            if obj.company_id:
+                company = obj.company_id
+            else:
+                company_id = company_obj._company_default_get(
+                                                              cr,
+                                                              uid,
+                                                              'account.invoice',
+                                                              context=context)
+                company = company_obj.browse(cr, uid, company_id, context=context)
+            company_currency_id = company.currency_id.id
+            ctx['company_id'] = company.id
+            product = product_obj.read(cr, uid, obj.product_id.id,
+                                       ['id','cost_price'], context=ctx)
             if not product:
                 continue
             if obj.invoice_id.currency_id is None:
@@ -91,7 +111,7 @@ class account_invoice_line(Model):
             else:
                 factor = 1.
 
-            subtotal_cost_price_company = factor * product.cost_price * obj.quantity
+            subtotal_cost_price_company = factor * product['cost_price'] * obj.quantity
             # Convert price_subtotal from invoice currency to company currency
             subtotal_company = factor * currency_obj.compute(cr, uid, currency_id,
                                                                   company_currency_id,
@@ -116,8 +136,8 @@ class account_invoice_line(Model):
                 'margin_absolute': margin_absolute,
                 'margin_relative': margin_relative,
                 }
-            logger.debug("The following values has been computed for product ID %d: subtotal_cost_price=%f"
-                "subtotal_cost_price_company=%f, subtotal_company=%f", product.id, subtotal_cost_price,
+            _logger.debug("The following values has been computed for product ID %d: subtotal_cost_price=%f"
+                "subtotal_cost_price_company=%f, subtotal_company=%f", product['id'], subtotal_cost_price,
                 subtotal_cost_price_company, subtotal_company)
         return res
 
@@ -126,7 +146,7 @@ class account_invoice_line(Model):
 
     def _recalc_margin_parent(self, cr, uid, ids, context=None):
         res=[]
-        for inv in self.browse(cr,uid,ids):
+        for inv in self.browse(cr, uid, ids, context=context):
             for line in inv.invoice_line:
                 res.append(line.id)
         return res
@@ -167,6 +187,7 @@ class account_invoice_line(Model):
                                               multi='product_historical_margin',
                                               store=_col_store,
                                               digits_compute=dp.get_precision('Account'),
+                                              group_operator="sum",
                                               help="The Real Margin [ net sale - cost ] of the line."),
         'margin_relative': fields.function(_compute_line_values, method=True, readonly=True,type='float',
                                               string='Real Margin (%)',
@@ -203,3 +224,37 @@ class account_invoice_line(Model):
         'invoice_date': fields.related('invoice_id','date_invoice',type='date',string='Invoice Date'),
 
         }
+
+    def read_group(self, cr, uid, domain, fields, groupby, 
+            offset=0, limit=None, context=None, orderby=False):
+        """The percentage of the relative margin has to be recomputed asit is nor 
+        a sum, nor a avg, but a percentage of 2 valuesof the line computed as:
+        margin_relative = margin_absolute / subtotal_company * 100"""
+        if not context:
+            context = {}
+        if groupby:
+            res = super(account_invoice_line, self).read_group(cr, uid,
+                domain, fields, groupby,
+                offset=offset, limit=limit, context=context, orderby=orderby)
+            for re in res:
+                margin_relative = 0.0
+                if re.get('margin_relative', False):
+                    # percentage of margin = (margin_absolute / subtotal_company) * 100
+                    margin_absolute = re.get('margin_absolute', 0)
+                    subtotal_company = re.get('subtotal_company', 0)
+                    if subtotal_company == 0.0:
+                        margin_relative = 999
+                    else:
+                        margin_relative = margin_absolute / subtotal_company * 100
+                    re['margin_relative'] = margin_relative
+                else:
+                    if re.get('__context', False):
+                        margin_absolute = re['__context'].get('margin_absolute', 0)
+                        subtotal_company = re.get('subtotal_company', 0)
+                        if subtotal_company == 0.0:
+                            margin_relative = 999
+                        else:
+                            margin_relative = margin_absolute / subtotal_company * 100
+                if re.get('__context', False):
+                    re['__context']['margin_relative'] = margin_relative
+        return res

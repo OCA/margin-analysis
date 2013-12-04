@@ -23,6 +23,7 @@ import logging
 from openerp.osv.orm import Model
 from openerp.osv import fields
 import decimal_precision as dp
+_logger = logging.getLogger(__name__)
 
 
 class Product(Model):
@@ -31,29 +32,30 @@ class Product(Model):
     def _compute_purchase_price(self, cr, uid, ids,
                                 context=None):
         res = {}
-        products = self.browse(cr, uid, ids)
         if isinstance(ids, (int, long)):
-            res = products.standard_price
-        elif isinstance(ids, list):
-            for product in self.browse(cr, uid, ids, context=context):
-                res[product.id] = product.standard_price
+            ids = [ids]
+        for product in self.browse(cr, uid, ids, context=context):
+            res[product.id] = product.standard_price
         return res
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
             context = {}
-        logger = logging.getLogger('product.get_cost_field')
-        logger.debug("get cost field _cost_price %s, %s, %s", field_name, arg, context)
         res = self._compute_purchase_price(cr, uid, ids, context=context)
+        _logger.debug("get cost field _cost_price %s, arg: %s, "
+                      "context: %s, result:%s",
+                      field_name, arg, context, res)
         return res
 
     def get_cost_field(self, cr, uid, ids, context=None):
-        return self._cost_price(cr, uid, ids, '', [], context)
+        return self._cost_price(cr, uid, ids, '', [], context=context)
 
     _columns = {
-        'cost_price': fields.function(_cost_price,
-                                      method=True,
-                                      string='Cost Price',
-                                      digits_compute = dp.get_precision('Sale Price'),
-                                      help="The cost price is the standard price unless you install the product_cost_incl_bom module.")
-        }
+        'cost_price': fields.function(
+            _cost_price,
+            method=True,
+            string='Cost Price',
+            digits_compute=dp.get_precision('Sale Price'),
+            help="The cost price is the standard price unless you install the "
+                 "product_cost_incl_bom module.")
+    }

@@ -22,6 +22,8 @@
 from openerp.osv.orm import Model
 from openerp.osv import fields
 import decimal_precision as dp
+import logging
+_logger = logging.getLogger(__name__)
 
 class Product(Model):
     _inherit = 'product.product'
@@ -42,11 +44,12 @@ class Product(Model):
         res = {}
         ids = ids or []
 
-        for pr in self.browse(cursor, user, ids):
+        product_without_bom_ids = []
+        for pr in self.browse(cursor, user, ids, context=context):
 
             bom_id = bom_obj._bom_find(cursor, user, pr.id, product_uom=product_uom, properties=bom_properties)
             if not bom_id: # no BoM: use standard_price
-                res[pr.id] = super(Product, self)._compute_purchase_price(cursor, user, pr.id, context=context)
+                product_without_bom_ids.append(pr.id)
                 continue
             bom = bom_obj.browse(cursor, user, bom_id)
             sub_products, routes = bom_obj._bom_explode(cursor, user, bom,
@@ -55,7 +58,7 @@ class Product(Model):
                                                         addthis=True)
             price = 0.
             for sub_product_dict in sub_products:
-                sub_product = self.browse(cursor, user, sub_product_dict['product_id'])
+                sub_product = self.browse(cursor, user, sub_product_dict['product_id'], context=context)
                 std_price = sub_product.standard_price
                 qty = uom_obj._compute_qty(cursor, user,
                                            from_uom_id = sub_product_dict['product_uom'],
@@ -69,16 +72,23 @@ class Product(Model):
                     hour = (wc.time_start + wc.time_stop + cycle * wc.time_cycle) *  (wc.time_efficiency or 1.0)
                     price += wc.costs_cycle * cycle + wc.costs_hour * hour
             price /= bom.product_qty
-            price = uom_obj._compute_price(cursor, user, bom.product_uom.id, price, bom.product_id.uom_id.id)
+            price = uom_obj._compute_price(cursor, user, bom.product_uom.id,
+                price, bom.product_id.uom_id.id, context=context)
             res[pr.id] = price
+
+        if product_without_bom_ids:
+            standard_prices = super(Product, self)._compute_purchase_price(
+                cursor, user, product_without_bom_ids, context=context)
+            res.update(standard_prices)
         return res
 
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
             context = {}
-
         res = self._compute_purchase_price(cr, uid, ids, context=context)
+        _logger.debug("get cost field _cost_price %s, arg: %s, context: %s, result:%s",
+            field_name, arg, context, res)
         return res
 
     _columns = {

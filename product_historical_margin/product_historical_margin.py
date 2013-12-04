@@ -24,6 +24,7 @@ from openerp.osv.orm import Model
 from osv import fields
 
 import decimal_precision as dp
+_logger = logging.getLogger(__name__)
 
 # Don't Forget to remove supplier (in_invoice et in_refund) from the product margin computation
 # And remove out_refund from the computation
@@ -55,7 +56,7 @@ class product_product(Model):
         if not ids:
             return res
         user_obj = self.pool.get('res.users')
-        logger = logging.getLogger('product_historical_margin')
+        
         company_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
         for product_id in ids:
             res[product_id] = {'margin_absolute': 0, 'margin_relative': 0}
@@ -93,7 +94,7 @@ class product_product(Model):
             tot_sale[product_id] += sale
         for product_id in tot_sale:
             if tot_sale[product_id] == 0:
-                logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product_id)
+                _logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product_id)
                 res[product_id]['margin_relative'] = 999.
             else:
                 res[product_id]['margin_relative'] = (res[product_id]['margin_absolute'] / tot_sale[product_id]) * 100
