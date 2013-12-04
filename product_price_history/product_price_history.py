@@ -106,22 +106,33 @@ class product_template(orm.Model):
 
     _inherit = "product.template"
 
-    def _log_price_change(self, cr, uid, product, values, context=None):
+    def _log_all_price_changes(self, cr, uid, product, values, context=None):
+        """
+        For each field to historize, call the _log_price_change method
+        @param: values dict of vals used by write and create od product
+        @param: int product ID
+        """
+        for field_name in PRODUCT_FIELD_HISTORIZE:
+            if values.get(field_name): 
+                amount = values[field_name]
+                self._log_price_change(cr, uid, product, field_name, 
+                                       amount, context=context)
+        return True
+
+    def _log_price_change(self, cr, uid, product, field_name, amount, context=None):
         """
         On change of price create a price_history
-        :param product value of new product or product_id
+        :param int product value of new product or product_id
         """
         price_history = self.pool.get('product.price.history')
-        for field_name in PRODUCT_FIELD_HISTORIZE:
-            if values.get(field_name):
-                data = {
-                    'product_id': product,
-                    'amount': values[field_name],
-                    'name': field_name,
-                    'company_id': self._get_transaction_company_id(cr, uid,
-                        context=context)
-                    }
-                price_history.create(cr, uid, data, context=context)
+        data = {
+            'product_id': product,
+            'amount': amount,
+            'name': field_name,
+            'company_id': self._get_transaction_company_id(cr, uid,
+                context=context)
+            }
+        return price_history.create(cr, uid, data, context=context)
 
     def _get_transaction_company_id(self, cr, uid, context=None):
         """As it may happend that OpenERP force the uid to 1 to bypass
@@ -145,7 +156,7 @@ class product_template(orm.Model):
         """Add the historization at product creation."""
         res = super(product_template, self).create(cr, uid, values,
                                                    context=context)
-        self._log_price_change(cr, uid, res, values, context=context)
+        self._log_all_price_changes(cr, uid, res, values, context=context)
         return res
 
     def read(self, cr, uid, ids, fields=None, context=None,
@@ -186,7 +197,7 @@ class product_template(orm.Model):
         of every products with current datetime (or given one in context)"""
         if any([f in PRODUCT_FIELD_HISTORIZE for f in values]):
             for product in self.browse(cr, uid, ids, context=context):
-                self._log_price_change(cr, uid, product.id, values,
+                self._log_all_price_changes(cr, uid, product.id, values,
                                        context=context)
         return super(product_template, self).write(cr, uid, ids, values,
                                                    context=context)
