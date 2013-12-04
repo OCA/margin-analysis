@@ -1,0 +1,210 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* product_price_history
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-05 11:39+0000\n"
+"PO-Revision-Date: 2013-11-05 11:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_price_history
+#: model:stock.location,name:product_price_history.location_stock_02
+msgid "Stock second company CHF"
+msgstr ""
+
+#. module: product_price_history
+#: view:product.price.history:0
+msgid "Group By..."
+msgstr ""
+
+#. module: product_price_history
+#: model:product.pricelist,name:product_price_history.product_pricelist_purchchf
+msgid "Purchase Pricelist CHF"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.model.fields,field_description:product_price_history.field_product_price_history_product_id
+#: view:product.price.history:0
+#: field:product.price.history,product_id:0
+msgid "Product"
+msgstr ""
+
+#. module: product_price_history
+#: model:product.price.type,name:product_price_history.standard_price_second_cmp
+msgid "Cost Price USD"
+msgstr ""
+
+#. module: product_price_history
+#: view:historic.prices:0
+msgid "Compute prices"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.model.fields,field_description:product_price_history.field_product_price_history_company_id
+#: model:ir.model.fields,field_description:product_price_history.field_product_price_type_company_id
+#: view:product.price.history:0
+#: field:product.price.history,company_id:0
+#: field:product.price.type,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: product_price_history
+#: code:addons/product_price_history/wizard/historic_prices.py:63
+#, python-format
+msgid "Historical Prices"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.model.fields,field_description:product_price_history.field_product_price_history_name
+#: field:product.price.history,name:0
+msgid "Field name"
+msgstr ""
+
+#. module: product_price_history
+#: model:product.pricelist.version,name:product_price_history.product_pricelist_version_salechf
+msgid "Default Public Pricelist Version"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.actions.act_window,name:product_price_history.action_product_historic_prices_view
+#: model:ir.ui.menu,name:product_price_history.menu_action_product_historic_prices_tree
+msgid "Product Historical Prices"
+msgstr ""
+
+#. module: product_price_history
+#: field:historic.prices,to_date:0
+#: model:ir.model.fields,field_description:product_price_history.field_historic_prices_to_date
+#: model:ir.model.fields,field_description:product_price_history.field_product_price_history_datetime
+#: view:product.price.history:0
+#: field:product.price.history,datetime:0
+msgid "Date"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.actions.act_window,name:product_price_history.act_product_prices_history_open
+#: model:ir.actions.act_window,name:product_price_history.action_price_history
+#: model:ir.ui.menu,name:product_price_history.menu_product_price_history_action_form
+msgid "Prices History"
+msgstr ""
+
+#. module: product_price_history
+#: model:product.pricelist.version,name:product_price_history.product_pricelist_version_purchchf
+msgid "Default Purchase Pricelist Version"
+msgstr ""
+
+#. module: product_price_history
+#: view:product.price.history:0
+msgid "Search Prices History"
+msgstr ""
+
+#. module: product_price_history
+#: view:product.price.history:0
+msgid "Name"
+msgstr ""
+
+#. module: product_price_history
+#: view:historic.prices:0
+msgid "Historical prices"
+msgstr ""
+
+#. module: product_price_history
+#: model:res.company,overdue_msg:product_price_history.res_company_01
+msgid "Dear Sir/Madam,\n"
+"\n"
+"Our records indicate that some payments on your account are still due. Please find details below.\n"
+"If the amount has already been paid, please disregard this notice. Otherwise, please forward us the total amount stated below.\n"
+"If you have any queries regarding your account, Please contact us.\n"
+"\n"
+"Thank you in advance for your cooperation.\n"
+"Best Regards,"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.model,name:product_price_history.model_product_price_history
+msgid "product.price.history"
+msgstr ""
+
+#. module: product_price_history
+#: view:product.price.history:0
+msgid "Price field"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.model.fields,field_description:product_price_history.field_product_price_history_amount
+#: field:product.price.history,amount:0
+msgid "Amount"
+msgstr ""
+
+#. module: product_price_history
+#: model:product.price.type,name:product_price_history.list_price_second_cmp
+msgid "Public Price USD"
+msgstr ""
+
+#. module: product_price_history
+#: model:stock.location,name:product_price_history.location_stock_01
+msgid "Stock first company EUR"
+msgstr ""
+
+#. module: product_price_history
+#: model:product.pricelist,name:product_price_history.product_pricelist_salechf
+msgid "Public Pricelist CHF"
+msgstr ""
+
+#. module: product_price_history
+#: model:product.template,name:product_price_history.product_product_k_avg_01_product_template
+msgid "Wine K"
+msgstr ""
+
+#. module: product_price_history
+#: model:product.template,name:product_price_history.product_product_j_avg_01_product_template
+msgid "Wine J"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.model,name:product_price_history.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: product_price_history
+#: view:product.price.history:0
+msgid "Historic Prices"
+msgstr ""
+
+#. module: product_price_history
+#: help:historic.prices,to_date:0
+msgid "Date at which the analysis need to be done. Note that the date is understood as this day at midnight, so you may want to specify the day after ! No date is the last value."
+msgstr ""
+
+#. module: product_price_history
+#: view:product.product:0
+msgid "Product Historic Prices"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.model,name:product_price_history.model_historic_prices
+msgid "Product historical prices"
+msgstr ""
+
+#. module: product_price_history
+#: view:historic.prices:0
+msgid "Cancel"
+msgstr ""
+
+#. module: product_price_history
+#: view:historic.prices:0
+msgid "or"
+msgstr ""
+
+#. module: product_price_history
+#: model:ir.model,name:product_price_history.model_product_price_type
+msgid "Price Type"
+msgstr ""
+
