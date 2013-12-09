@@ -19,28 +19,33 @@
 #
 ##############################################################################
 {'name' : 'Product Cost field',
- 'version' : '0.1',
+ 'version' : '1.0',
  'author' : 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : ['product',
+ 'depends' : [
+    'product',
               ],
  'description': """
- Provides an overridable method on product which compute the cost_price field of a product. 
- By default it just return the value of standard_price field, but using the product_cost_incl_bom
- module, it will return the costing from the bom.
+Provides an overridable method on product which compute the cost_price field of a product. 
+By default it just return the value of standard_price field, but using the product_cost_incl_bom
+module, it will return the costing from the bom.
 
- As it is a generic module, you can also setup your own way of computing the cost_price for your 
- product.
+As it is a generic module, you can also setup your own way of computing the cost_price for your 
+product.
 
- All our modules to compute margin are based on it, so you'll ba able to use them in your own way.
+All our modules to compute margin are based on it, so you'll ba able to use them in your own way.
+
  """,
  'website': 'http://www.camptocamp.com/',
- 'init_xml': [],
- 'update_xml': ['product_view.xml'],
- 'demo_xml': [],
- 'tests': [],
+ 'data': [
+    'product_view.xml'
+ ],
+ 'demo': [],
+ 'test': [
+    'test/cost_price_update.yml',
+ ],
  'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',

@@ -50,10 +50,22 @@ class Product(Model):
     def get_cost_field(self, cr, uid, ids, context=None):
         return self._cost_price(cr, uid, ids, '', [], context=context)
 
+    def _get_poduct_from_template(self, cr, uid, ids, context=None):
+        prod_obj = self.pool.get('product.product')
+        prod_ids = prod_obj.search(cr, uid, [('product_tmpl_id','in',ids)], context=context)
+        return prod_ids
+
+    # Trigger on product.product is set to None, otherwise do not trigg
+    # on product creation !
+    _cost_price_triggers = {
+        'product.product': (lambda self, cr, uid, ids, context=None: ids, None, 10),
+        'product.template': (_get_poduct_from_template, ['standard_price'], 10),
+    }
+
     _columns = {
         'cost_price': fields.function(
             _cost_price,
-            method=True,
+            store=_cost_price_triggers,
             string='Cost Price',
             digits_compute=dp.get_precision('Sale Price'),
             help="The cost price is the standard price unless you install the "

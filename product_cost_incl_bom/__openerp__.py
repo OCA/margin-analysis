@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {'name' : 'Product Cost incl. BOM',
- 'version' : '0.1',
+ 'version' : '1.0',
  'author' : 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
@@ -27,15 +27,17 @@
  'depends' : ['product_get_cost_field',
               'mrp'],
  'description': """
-  Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
-  account the BoM costing (cost per cycle and so...). If no BOM define for a product, the cost_price is always
-  equal to the standard_price field of the product, so we always have a value to base our reporting on.
+ Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
+ account the BoM costing (cost per cycle and so...). If no BOM define for a product, the cost_price is always
+ equal to the standard_price field of the product, so we always have a value to base our reporting on.
 """,
  'website': 'http://www.camptocamp.com/',
- 'init_xml': [],
- 'update_xml': [],
- 'demo_xml': [],
- 'tests': [],
+ 'data': [],
+ 'demo': [],
+ 'test': [
+    'test/cost_price_update.yml',
+    'test/cost_price_update_by_bom.yml',
+ ],
  'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',
