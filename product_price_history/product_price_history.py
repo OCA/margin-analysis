@@ -98,7 +98,8 @@ class product_price_history(orm.Model):
         for line in result:
             data = {line['name']: line['amount']}
             res[line['product_id']].update(data)
-        _logger.debug("Result of price history is : %s, company_id: %s", res, company_id)
+        _logger.debug("Result of price history is : %s, company_id: %s",
+                      res, company_id)
         return res
 
 
@@ -117,6 +118,7 @@ class product_template(orm.Model):
                 amount = values[field_name]
                 self._log_price_change(cr, uid, product, field_name, 
                                        amount, context=context)
+                _logger.debug("Log price change (product id: %s): %s, field: %s", product, amount, field_name)
         return True
 
     def _log_price_change(self, cr, uid, product, field_name, amount, context=None):
@@ -159,17 +161,17 @@ class product_template(orm.Model):
         self._log_all_price_changes(cr, uid, res, values, context=context)
         return res
 
-    def read(self, cr, uid, ids, fields=None, context=None,
-             load='_classic_read'):
-        """Override the read to take price values from the related
-        price history table."""
+    def _read_flat(self, cr, uid, ids, fields, 
+                   context=None, load='_classic_read'):
         if context is None:
             context = {}
         if fields:
             fields.append('id')
-        results = super(product_template, self).read(
-            cr, uid, ids, fields=fields, context=context, load=load)
-        # Note if fields is empty => read all, so look at history table
+        results = super(product_template, self)._read_flat(cr, uid, ids,
+                                                       fields,
+                                                       context=context,
+                                                       load=load)
+         # Note if fields is empty => read all, so look at history table
         if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
             date_crit = False
             price_history = self.pool.get('product.price.history')
@@ -191,6 +193,7 @@ class product_template(orm.Model):
                 dict_value = prod_prices[result['id']]
                 result.update(dict_value)
         return results
+
 
     def write(self, cr, uid, ids, values, context=None):
         """Create an entry in the history table for every modified price

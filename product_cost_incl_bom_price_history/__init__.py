@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#
-#    Author:  Joel Grand-Guillaume
+#    
+#    OpenERP, Open Source Management Solution
 #    Copyright 2013 Camptocamp SA
+#    Author: Joel Grand-Guillaume
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -15,30 +16,8 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
-{'name' : 'Product Cost field Report',
- 'version' : '1.0',
- 'author' : 'Camptocamp',
- 'maintainer': 'Camptocamp',
- 'category': 'Products',
- 'complexity': "normal",  # easy, normal, expert
- 'depends' : [
-        'product_get_cost_field',
-        'stock',
-              ],
- 'description': """
-This module override the reporting view of OpenERP to replace the standard_price field used
-by the new cost_price one. This way all reporting of OpenERP will now take this field into 
-account and display the correct result.
- """,
- 'website': 'http://www.camptocamp.com/',
- 'data': [],
- 'demo': [],
- 'test': [],
- 'installable': True,
- 'auto_install': True,
- 'license': 'AGPL-3',
- 'application': False
- }
+
+from . import product
