@@ -100,6 +100,54 @@
     standard_price: 150.0
     list_price: 200.0
 -
+  Create a multilevel bom product
+-
+  !record {model: product.product, id: product_product_multilevel}:
+    categ_id: product.product_category_1
+    name: Multilevel bom product
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 100
+    list_price: 200.0
+-
+  Create a Level A product
+-
+  !record {model: product.product, id: product_product_multilevel_a}:
+    categ_id: product.product_category_1
+    name: Level A bom product
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 100
+    list_price: 200.0
+-
+  Create a Level B bom product
+-
+  !record {model: product.product, id: product_product_multilevel_b}:
+    categ_id: product.product_category_1
+    name: Level B bom product
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 100
+    list_price: 200.0
+-
+  Create a Level C bom product
+-
+  !record {model: product.product, id: product_product_multilevel_c}:
+    categ_id: product.product_category_1
+    name: Level C bom product
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 100
+    list_price: 200.0
+-
   Test the prices of table A and B are updated correctly
 -
   !python {model: product.product}: |
@@ -117,14 +165,19 @@
 #  - Table B
 #     - 3x Plank 20.-
 #     - 4x red wood leg
-#          - 4x wood leg 10.-
-#          - 1x red paint pot 10.-
+#  - Red wood leg
+#     - 1x wood leg 10.-
+#     - 1x red paint pot 10.-
 #   - Chair
 #     - 1x Plank
 #     - 4x wood leg
 #   - Table and Chair
 #     - 1x table
 #     - 4x chair
+#   - Multilvel-bom-product
+#     - 1x Level A
+#        - 1x Level B
+#          - 1x Level C
 
 -
   I create Bill of Materials for the table A
@@ -351,3 +404,34 @@
     product = self.browse(cr, uid, ref('product_product_table_chair_a'))
     assert product.standard_price == 150.0, "14 The standard_price has not been recorded correctly"
     assert product.cost_price == 220.0, "14 The cost_price has not been recorded correctly"
+-
+  I create Bill of Materials for Multilevel bom product
+-
+  !record {model: mrp.bom, id: mrp_bom_multilevel}:
+    company_id: base.main_company
+    name: Multilevel bom product
+    product_id: product_product_multilevel
+    product_qty: 1.0
+    type: normal
+    bom_lines:
+      - company_id: base.main_company
+        name: Level A Bom product
+        product_id: product_product_multilevel_a
+        product_qty: 1.0
+        bom_lines:
+          - company_id: base.main_company
+            name: Level B Bom product
+            product_id: product_product_multilevel_b
+            product_qty: 1.0
+            bom_lines:
+            - company_id: base.main_company
+              name: Level C Bom product
+              product_id: product_product_multilevel_c
+              product_qty: 1.0
+-
+  Test the prices of multilevel bom product are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_multilevel'))
+    assert product.standard_price == 100.0, "15 The standard_price has not been recorded correctly"
+    assert product.cost_price == 100.0, "15 The cost_price has not been recorded correctly"
