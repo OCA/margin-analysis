@@ -19,7 +19,10 @@
 #
 ##############################################################################
 
+from __future__ import division
+
 import logging
+from itertools import chain
 from openerp.osv import orm, fields
 import openerp.addons.decimal_precision as dp
 
@@ -43,6 +46,7 @@ class Product(orm.Model):
 
         res = {}
         ids = ids or []
+        print "_compute_purchase_price with ids %s" % ids
 
         product_without_bom_ids = []
         for pr in self.browse(cr, uid, ids, context=context):
@@ -85,14 +89,12 @@ class Product(orm.Model):
         if product_without_bom_ids:
             standard_prices = super(Product, self)._compute_purchase_price(
                 cr, uid, product_without_bom_ids, context=context)
+            print "cost_price for products without boms gives %s" % standard_prices
             res.update(standard_prices)
         return res
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
-        if context is None:
-            context = {}
-        res = self._compute_purchase_price(cr, uid, ids, context=context)
-        return res
+        return self._compute_purchase_price(cr, uid, ids, context=context)
 
     def _get_bom_product(self, cr, uid, ids, context=None):
         """ return ids of modified product and ids of all product that use
@@ -138,19 +140,31 @@ class Product(orm.Model):
         bom_obj = self.pool.get('mrp.bom')
         bom_ids = bom_obj.search(cr, uid, [('product_id', 'in', ids)],
                                  context=context)
-        if bom_ids:
-            final_bom_ids = bom_ids
-            for bom in bom_obj.browse(cr, uid, bom_ids, context=context):
-                res = _get_parent_bom(bom)
-            final_bom_ids = list(set(res + bom_ids))
-            product_from_bom_ids = self._get_product_id_from_bom(
-                cr, uid, final_bom_ids, context=context)
-            product_ids = list(set(ids + product_from_bom_ids))
+        if not bom_ids:
+            return ids
 
-            # result = self._get_bom_product(cr, uid, product_ids, context=context)
-            # product_ids.extend(result)
-            # #manque condition de sortie
-        return product_ids
+        boms = bom_obj.browse(cr, uid, bom_ids, context=context)
+        parent_bom_ids = set(chain.from_iterable(_get_parent_bom(bom) for
+                                                 bom in boms))
+        bom_ids = set(bom_ids)
+        bom_ids.update(parent_bom_ids)
+        product_ids = set(product_ids)
+        bom_product_ids = self._get_product_id_from_bom(cr, uid, list(bom_ids),
+                                                        context=context)
+        product_ids.update(bom_product_ids)
+
+#         final_bom_ids = bom_ids
+#         for bom in bom_obj.browse(cr, uid, bom_ids, context=context):
+#             res = _get_parent_bom(bom)
+#         final_bom_ids = list(set(res + bom_ids))
+#         product_from_bom_ids = self._get_product_id_from_bom(
+#             cr, uid, final_bom_ids, context=context)
+#         product_ids = list(set(ids + product_from_bom_ids))
+
+        # result = self._get_bom_product(cr, uid, product_ids, context=context)
+        # product_ids.extend(result)
+        # #manque condition de sortie
+        return list(product_ids)
 
     def _get_product(self, cr, uid, ids, context=None):
         """ Return all product impacted from a change in a bom, that means
@@ -176,7 +190,8 @@ class Product(orm.Model):
 
     def _get_product_from_template2(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
-        return prod_obj._get_product_from_template(cr, uid, ids, context=context)
+        res = prod_obj._get_product_from_template(cr, uid, ids, context=context)
+        return res
 
     # Trigger on product.product is set to None, otherwise do not trigg
     # on product creation !
