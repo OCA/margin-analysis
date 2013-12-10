@@ -102,6 +102,38 @@ class product_price_history(orm.Model):
                       res, company_id)
         return res
 
+class product_product(orm.Model):
+    _inherit = "product.product"
+    
+    def _product_value(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        """ Comute the value of product using qty_available and historize 
+        values for the price.
+        @return: Dictionary of values
+        """
+        if context is None:
+            context = {}
+        res = {}
+        for id in ids:
+            res[id] = 0.0
+        products = self.read(cr, uid, ids, 
+                          ['id','qty_available','standard_price'],
+                          context=context)
+        _logger.debug("product value get, result :%s, context: %s", products, context)
+        for product in products:
+            res[product['id']] = product['qty_available'] * product['standard_price']
+        return res
+
+    _columns = {
+        'value_available': fields.function(_product_value,
+            type='float', digits_compute=dp.get_precision('Product Price'),
+            group_operator="sum",
+            string='Value',
+            help="Current value of products available.\n"
+                 "This is using the product historize price."
+                 "In a context with a single Stock Location, this includes "
+                 "goods stored at this Location, or any of its children."),
+    }
+
 
 class product_template(orm.Model):
 

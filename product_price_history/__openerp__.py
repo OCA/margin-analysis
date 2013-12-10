@@ -49,6 +49,11 @@ how to configure OpenERP properly when you have various company, each of them ha
 their product setup in average price and using different currencies. The goal is to share
 the products between all companies, keeping the right price for each of them.
 
+As the prices are now historized, some information aren't revelant anymore in some report. This
+module also hide the price information in those view to avoid having wrong informations. Instead
+you'll find a view that allow you to retrive the product price and stock at a given date to value
+your inventory properly.
+
 Technically, this module updates the definition of field standard_price, list_price 
 of the product and will make them stored in an external table. We override the read, 
 write and create methods to achieve that and don't used ir.property for performance
@@ -62,8 +67,9 @@ in company currency with this module when computing cost of analytic line).
         'demo/product_price_history_purchase_demo.yml',
     ],
     'data': [
-        'product_price_history_view.xml',
         'wizard/historic_prices_view.xml',
+        'product_price_history_view.xml',
+        'report_stock_view.xml',
         'security/ir.model.access.csv',
         'security/product_price_history_security.xml',
     ],

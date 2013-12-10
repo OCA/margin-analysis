@@ -24,8 +24,10 @@
           <field name="variants" groups="product.group_product_variant"/>
           <field name="type"/>
           <field name="state" groups="base.group_extended"/>
+          <field name="qty_available" sum="Total Stock"/>
           <field name="list_price"/>
           <field name="standard_price"/>
+          <field name="value_available" sum="Total Value"/>
           <field name="company_id" groups="base.group_multi_company" invisible="1"/>
         </tree>
       </field>
@@ -83,8 +85,7 @@
     <menuitem action="action_price_history"
             groups="base.group_no_one"
             id="menu_product_price_history_action_form"
-            parent="product.prod_config_main" sequence="2"/>
-
-
+            parent="stock.next_id_61" sequence="2"/>
+    
   </data>
 </openerp>
