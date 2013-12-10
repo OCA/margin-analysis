@@ -83,7 +83,6 @@
             src_model="product.product"/>
 
     <menuitem action="action_price_history"
-            groups="base.group_no_one"
             id="menu_product_price_history_action_form"
             parent="stock.next_id_61" sequence="2"/>
     
