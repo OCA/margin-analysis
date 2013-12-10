@@ -113,9 +113,9 @@ class product_product(Model):
         res = prod_obj._get_bom_product(cr, uid, ids, context=context)
         return res
         
-    def _get_poduct_from_template2(self, cr, uid, ids, context=None):
+    def _get_product_from_template2(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
-        return prod_obj._get_poduct_from_template(cr, uid, ids, context=context)
+        return prod_obj._get_product_from_template(cr, uid, ids, context=context)
 
     # def _set_history_price(self, cr, uid, ids, name, value, arg, context=None):
     #     prod_tpl_obj = self.pool.get('product.template')
@@ -167,7 +167,7 @@ class product_product(Model):
     # on product creation !
     _cost_price_triggers = {
         'product.product': (_get_bom_product2, None, 10),
-        'product.template': (_get_poduct_from_template2, ['standard_price'], 10),
+        'product.template': (_get_product_from_template2, ['standard_price'], 10),
         'mrp.bom': (_get_product2, 
                    [
                      'bom_id',

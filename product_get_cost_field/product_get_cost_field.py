@@ -50,7 +50,7 @@ class Product(Model):
     def get_cost_field(self, cr, uid, ids, context=None):
         return self._cost_price(cr, uid, ids, '', [], context=context)
 
-    def _get_poduct_from_template(self, cr, uid, ids, context=None):
+    def _get_product_from_template(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
         prod_ids = prod_obj.search(cr, uid, [('product_tmpl_id','in',ids)], context=context)
         return prod_ids
@@ -59,7 +59,7 @@ class Product(Model):
     # on product creation !
     _cost_price_triggers = {
         'product.product': (lambda self, cr, uid, ids, context=None: ids, None, 10),
-        'product.template': (_get_poduct_from_template, ['standard_price'], 10),
+        'product.template': (_get_product_from_template, ['standard_price'], 10),
     }
 
     _columns = {
