@@ -40,7 +40,7 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_a'))
     prod_tmpl_id = product.product_tmpl_id.id
-    self.pool.get('product.template').write(cr, uid, prod_tmpl_id, {'standard_price':100})
+    self.pool.get('product.template').write(cr, uid, [prod_tmpl_id], {'standard_price':100})
 -
   Test cost_price is update accordingly
 -

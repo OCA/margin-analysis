@@ -36,8 +36,10 @@ This module make the glue between product_cost_incl_bom and product_price_histor
 to have your cost price computed from the component of the BoM, while having it also
 historized by company.
 
-Technically speaking, it provide a fnct_inv method to the function field that compute
-the cost_price to store the proper value per date and company.
+It display now this value for the inventory valuation provided by product_price_history module.
+
+Technically speaking, the way function field store the values computed for
+the cost_price to store the proper value per date and company in the history table.
 
 """,
     'demo': [
@@ -45,8 +47,9 @@ the cost_price to store the proper value per date and company.
     'data': [
     ],
     'test': [
+        'test/price_historization.yml',
+        'test/cost_price_update.yml',
         'test/price_controlling_multicompany.yml',
-
     ],
     'installable': True,
     'auto_install': True,

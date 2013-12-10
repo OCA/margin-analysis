@@ -150,7 +150,6 @@ class product_template(orm.Model):
                 amount = values[field_name]
                 self._log_price_change(cr, uid, product, field_name, 
                                        amount, context=context)
-                _logger.debug("Log price change (product id: %s): %s, field: %s", product, amount, field_name)
         return True
 
     def _log_price_change(self, cr, uid, product, field_name, amount, context=None):
@@ -166,6 +165,7 @@ class product_template(orm.Model):
             'company_id': self._get_transaction_company_id(cr, uid,
                 context=context)
             }
+        _logger.debug("Log price change (product id: %s): %s, field: %s", product, amount, field_name)
         return price_history.create(cr, uid, data, context=context)
 
     def _get_transaction_company_id(self, cr, uid, context=None):

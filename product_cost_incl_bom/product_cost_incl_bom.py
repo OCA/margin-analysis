@@ -141,7 +141,7 @@ class Product(Model):
          #    return True
 
         res = []
-        product_ids = []
+        product_ids = ids
         bom_obj = self.pool.get('mrp.bom')
         bom_ids = bom_obj.search(cr, uid, [('product_id','in',ids)], 
                                 context=context)
@@ -156,7 +156,6 @@ class Product(Model):
             # result = self._get_bom_product(cr, uid, product_ids, context=context)
             # product_ids.extend(result)
             # #manque condition de sortie
-        
         _logger.debug("trigger on product.product model for product ids %s",product_ids)
         return product_ids
         

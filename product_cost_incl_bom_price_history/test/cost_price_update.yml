@@ -12,21 +12,21 @@
     cost_method: standard
     uom_id: product.product_uom_unit
     uom_po_id: product.product_uom_unit
-    company_id: 0
+    company_id: False
     standard_price: 50.0
     list_price: 75.0
 -
-  Test the prices are updated correctly
+  Test the prices are updated correctly on creation
 -
   !python {model: product.product}: |
-    product = self.browse(cr, uid, ref('product_product_a'))
+    product = self.browse(cr, uid, ref('product_product_a'), context=context)
     assert product.standard_price == 50.0, "01 The standard_price has not been recorded correctly"
     assert product.cost_price == 50.0, "01 The cost_price has not been recorded correctly"
 -
   Modify product A set new prices
 -
   !python {model: product.product}: |
-    self.write(cr, uid, ref('product_product_a'), {'standard_price':70})
+    self.write(cr, uid, ref('product_product_a'), {'standard_price':70.0}, context=context)
 -
   Test price are update accordingly
 -
@@ -40,7 +40,7 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_a'))
     prod_tmpl_id = product.product_tmpl_id.id
-    self.pool.get('product.template').write(cr, uid, [prod_tmpl_id], {'standard_price':100})
+    self.pool.get('product.template').write(cr, uid, [prod_tmpl_id], {'standard_price':100.0}, context=context)
 -
   Test cost_price is update accordingly
 -
