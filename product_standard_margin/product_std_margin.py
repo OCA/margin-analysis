@@ -75,16 +75,16 @@ class Product(orm.Model):
             return res
         for product in ids:
             res[product] = {'margin_absolute': 0, 'margin_relative': 0}
-        for product in self.browse(cursor, user, ids, context=context):
-            cost = product.cost_price
+        for product in self.read(cursor, user, ids, ['id','cost_price'], context=context):
+            cost = product['cost_price']
             sale = self._amount_tax_excluded(cursor, user,
-                    [product.id], context=context)[product.id]
-            res[product.id]['standard_margin'] = sale - cost
+                    [product['id']], context=context)[product['id']]
+            res[product['id']]['standard_margin'] = sale - cost
             if sale == 0:
-                _logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product.id)
-                res[product.id]['standard_margin_rate'] = 999.
+                _logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product['id'])
+                res[product['id']]['standard_margin_rate'] = 999.
             else:
-                res[product.id]['standard_margin_rate'] = (sale - cost) / sale * 100
+                res[product['id']]['standard_margin_rate'] = (sale - cost) / sale * 100
         return res
 
     _columns = {

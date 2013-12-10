@@ -45,14 +45,14 @@ class Product(Model):
         ids = ids or []
 
         product_without_bom_ids = []
-        for pr in self.browse(cr, uid, ids, context=context):
-            bom_id = bom_obj._bom_find(cr, uid, pr.id, product_uom=product_uom, 
+        for pr in self.read(cr, uid, ids, ['id','name'], context=context):
+            bom_id = bom_obj._bom_find(cr, uid, pr['id'], product_uom=product_uom, 
                                        properties=bom_properties)
             if not bom_id: # no BoM: use standard_price
-                product_without_bom_ids.append(pr.id)
+                product_without_bom_ids.append(pr['id'])
                 continue
             _logger.debug("look for product named %s, bom_id is %s",
-            pr.name, bom_id)
+            pr['name'], bom_id)
             bom = bom_obj.browse(cr, uid, bom_id)
             sub_products, routes = bom_obj._bom_explode(cr, uid, bom,
                                                         factor=1,
@@ -62,18 +62,18 @@ class Product(Model):
             _logger.debug("bom_explode_result: %s", sub_products)
             price = 0.
             for sub_product_dict in sub_products:
-                sub_product = self.browse(cr, uid, 
+                sub_product = self.read(cr, uid, 
                                           sub_product_dict['product_id'],
+                                          ['cost_price','uom_po_id','name'],
                                           context=context)
-                std_price = sub_product.cost_price
-                # std_price = sub_product.standard_price
+                std_price = sub_product['cost_price']
                 qty = uom_obj._compute_qty(cr, uid,
                                            from_uom_id = sub_product_dict['product_uom'],
                                            qty         = sub_product_dict['product_qty'],
-                                           to_uom_id   = sub_product.uom_po_id.id)
+                                           to_uom_id   = sub_product['uom_po_id'][0])
                 price += std_price * qty
                 _logger.debug("price (%s) * qty (%s) for subproduct %s is %s",
-                              std_price, qty, sub_product.name, std_price * qty)
+                              std_price, qty, sub_product['name'], std_price * qty)
             if bom.routing_id:
                 for wline in bom.routing_id.workcenter_lines:
                     wc = wline.workcenter_id
@@ -86,9 +86,9 @@ class Product(Model):
             price /= bom.product_qty
             price = uom_obj._compute_price(cr, uid, bom.product_uom.id,
                 price, bom.product_id.uom_id.id)
-            res[pr.id] = price
+            res[pr['id']] = price
             _logger.debug("total price is %s for %s (id:%s)",
-                              price, pr.name, pr.id)
+                              price, pr['name'], pr['id'])
         if product_without_bom_ids:
             standard_prices = super(Product, self)._compute_purchase_price(
                 cr, uid, product_without_bom_ids, context=context)
@@ -168,8 +168,9 @@ class Product(Model):
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
         res = {}
-        for bom in bom_obj.browse(cr, uid, ids, context=context):
-            res[bom.product_id.id] = True
+        for bom in bom_obj.read(cr, uid, ids, ['product_id'],context=context):
+        # for bom in bom_obj.browse(cr, uid, ids, context=context):
+            res[bom['product_id'][0]] = True
         final_res = prod_obj._get_bom_product(cr, uid, res.keys(), context=context)
         _logger.debug("trigger on mrp.bom model for product ids %s",final_res)
         return final_res
@@ -181,8 +182,9 @@ class Product(Model):
         context = context or {}
         bom_obj = self.pool.get('mrp.bom')
         res = {}
-        for bom in bom_obj.browse(cr, uid, ids, context=context):
-            res[bom.product_id.id] = True
+        for bom in bom_obj.read(cr, uid, ids, ['product_id'], context=context):
+        # for bom in bom_obj.browse(cr, uid, ids, context=context):
+            res[bom['product_id'][0]] = True
         return res.keys()
 
     def _get_poduct_from_template2(self, cr, uid, ids, context=None):

@@ -191,8 +191,9 @@ class product_template(orm.Model):
             res = context.get('company_id')
         else:
             user_obj = self.pool.get('res.users')
-            res = user_obj.browse(cr, uid, uid, 
-                context=context).company_id.id
+            res = user_obj.read(cr, uid, uid,
+                                ['company_id'],
+                                context=context)['company_id'][0]
         return res
 
     def create(self, cr, uid, values, context=None):
@@ -242,8 +243,8 @@ class product_template(orm.Model):
         if isinstance(ids, (int, long)):
             ids = [ids]
         if any([f in PRODUCT_FIELD_HISTORIZE for f in values]):
-            for product in self.browse(cr, uid, ids, context=context):
-                self._log_all_price_changes(cr, uid, product.id, values,
+            for id in ids:
+                self._log_all_price_changes(cr, uid, id, values,
                                        context=context)
         return super(product_template, self).write(cr, uid, ids, values,
                                                    context=context)
