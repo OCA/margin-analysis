@@ -20,13 +20,12 @@
 ##############################################################################
 import logging
 
-from openerp.osv.orm import Model
-from openerp.osv import fields
+from openerp.osv import orm, fields
 import decimal_precision as dp
 _logger = logging.getLogger(__name__)
 
 
-class Product(Model):
+class Product(orm.Model):
     _inherit = 'product.product'
 
     def _compute_purchase_price(self, cr, uid, ids,
