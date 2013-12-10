@@ -37,7 +37,6 @@ openerp.addons.product_price_history.product_price_history.PRODUCT_FIELD_HISTORI
 class product_product(Model):
     _inherit = 'product.product'
 
-
     def _set_field_name_values(self, cr, uid, ids, field_name, context):
         field_flag = False
         field_dict = {}

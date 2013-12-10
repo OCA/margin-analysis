@@ -198,6 +198,8 @@ class product_template(orm.Model):
     def write(self, cr, uid, ids, values, context=None):
         """Create an entry in the history table for every modified price
         of every products with current datetime (or given one in context)"""
+        if isinstance(ids, (int, long)):
+            ids = [ids]
         if any([f in PRODUCT_FIELD_HISTORIZE for f in values]):
             for product in self.browse(cr, uid, ids, context=context):
                 self._log_all_price_changes(cr, uid, product.id, values,
