@@ -157,7 +157,7 @@ class product_product(Model):
             prod_prices = price_history._get_historic_price(cr, uid, ids,
                                                             company_id,
                                                             datetime=date_crit,
-                                                            field_name=price_fields,
+                                                            field_names=price_fields,
                                                             context=context)
             for result in results:
                 dict_value = prod_prices[result['id']]
@@ -166,9 +166,6 @@ class product_product(Model):
 
     # Trigger on product.product is set to None, otherwise do not trigg
     # on product creation !
-
-    # TODO : test with last fix : http://bazaar.launchpad.net/~openerp/openobject-server/7.0/revision/5167
-    # May be we don't need None and can use 'standard_price'
     _cost_price_triggers = {
         'product.product': (_get_bom_product2, None, 10),
         'product.template': (_get_poduct_from_template2, ['standard_price'], 10),
