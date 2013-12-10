@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_product_price_history_group_user","product_price_history user","model_product_price_history","base.group_user",1,0,0,0
+"access_product_price_history_group_sale_manager","product_price_history sale manager","model_product_price_history","base.group_sale_manager",1,1,1,1
+"access_product_price_history_stock_manager","product_price_history stock manager","model_product_price_history","stock.group_stock_manager",1,1,1,1
+"access_product_price_history_stock_user","product_price_history stock user","model_product_price_history","stock.group_stock_user",1,1,0,0
+"access_product_price_history_purchase_user","product_price_history purchase user","model_product_price_history","purchase.group_purchase_user",1,0,0,0
+"access_product_price_history_purchase_manager","product_price_history purchase manager","model_product_price_history","purchase.group_purchase_manager",1,1,1,1
