@@ -23,34 +23,19 @@
           <field name="price_subtotal" invisible="1"/>
           <field name="subtotal_cost_price" invisible="1"/>
           <field name="company_id" invisible="1"/>
-          <field name="subtotal_company"/>
-          <field name="subtotal_cost_price_company"/>
-          <field name="margin_absolute"/>
-          <field name="margin_relative" invisible="context.get('group_by',False)"/>
+          <field name="subtotal_company" sum="Total Net Sales "/>
+          <field name="subtotal_cost_price_company" sum="Total Cost"/>
+          <field name="margin_absolute" sum="Total Absolute Margin"/>
+          <field name="margin_relative" />
         </tree>
       </field>
     </record>
-
 
     <record id="view_account_invoice_line_filter" model="ir.ui.view">
       <field name="name">account.invoice.line.select</field>
       <field name="model">account.invoice.line</field>
       <field name="arch" type="xml">
         <search string="Search Invoice Line">
-          <group>
-            <filter icon="terp-go-year" string="Year" 
-                name="year"
-                domain="[('invoice_date','&lt;=', time.strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',time.strftime('%%Y-01-01'))]"
-                help="year"/>
-            <separator orientation="vertical"/>
-            <filter icon="terp-go-month" string="Month"
-                name="month"
-                domain="[('invoice_date','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"
-                help="current month"/>
-            <filter icon="terp-go-month" string="Month-1"
-                domain="[('invoice_date','&lt;=', (datetime.date.today() - relativedelta(day=31, months=1)).strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',(datetime.date.today() - relativedelta(day=1,months=1)).strftime('%%Y-%%m-%%d'))]"
-                help="last month"/>
-            <separator orientation="vertical"/>
             <field name="product_id"/>
             <field name="invoice_type"/>
             <field name="partner_id"/>
@@ -58,7 +43,19 @@
             <field name="invoice_date"/>
             <field name="account_id"/>
             <field name="company_id"/>
-          </group>
+            <filter icon="terp-go-year" string="Year" 
+                name="year"
+                domain="[('invoice_date','&lt;=', time.strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',time.strftime('%%Y-01-01'))]"
+                help="year"/>
+            <separator orientation="vertical"/>
+            <filter icon="terp-go-month" string="Month"
+                name="month"
+                domain="[('invoice_date','&lt;=',(context_today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',(context_today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"
+                help="current month"/>
+            <filter icon="terp-go-month" string="Month-1"
+                domain="[('invoice_date','&lt;=', (context_today() - relativedelta(day=31, months=1)).strftime('%%Y-%%m-%%d')),('invoice_date','&gt;=',(context_today() - relativedelta(day=1,months=1)).strftime('%%Y-%%m-%%d'))]"
+                help="last month"/>
+            <separator orientation="vertical"/>
           <newline/>
           <group expand="1" string="Group By...">
             <filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
@@ -73,6 +70,21 @@
         </search>
       </field>
     </record>
+
+
+    <record id="action_product_margin_details_view" model="ir.actions.act_window">
+      <field name="name">Margin Details</field>
+      <field name="res_model">account.invoice.line</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree</field>
+      <field name="domain">[('invoice_state','in',['open', 'paid']),('invoice_type','in',['out_refund','out_invoice'])]</field>
+      <field name="context">{'search_default_product':1,'search_default_year':1}</field>
+      <field name="view_id" ref="view_invoice_line_tree_from_product"/>
+    </record>
+
+    <menuitem icon="STOCK_INDENT" action="action_product_margin_details_view"
+        id="menu_action_product_margin_details_tree"
+        parent="account.menu_finance_reporting" />
 
   </data>
 </openerp>

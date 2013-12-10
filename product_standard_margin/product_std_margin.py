@@ -24,7 +24,7 @@
 from openerp.osv import orm, fields
 import decimal_precision as dp
 import logging
-
+_logger = logging.getLogger(__name__)
 
 class Product(orm.Model):
     _inherit = 'product.product'
@@ -43,7 +43,7 @@ class Product(orm.Model):
         if context is None:
             context = {}
         tax_obj = self.pool.get('account.tax')
-        for prod in self.browse(cr, uid, ids):
+        for prod in self.browse(cr, uid, ids, context=context):
             price = prod.list_price
             taxes = tax_obj.compute_all(cr, uid, prod.taxes_id, price, 1, product=prod.id)
             res[prod.id] = taxes['total']
@@ -67,7 +67,7 @@ class Product(orm.Model):
                  'margin_relative': float}
             }}
         """
-        logger = logging.getLogger('product_standard_margin')
+        
         if context is None:
             context = {}
         res = {}
@@ -75,13 +75,13 @@ class Product(orm.Model):
             return res
         for product in ids:
             res[product] = {'margin_absolute': 0, 'margin_relative': 0}
-        for product in self.browse(cursor, user, ids):
+        for product in self.browse(cursor, user, ids, context=context):
             cost = product.cost_price
             sale = self._amount_tax_excluded(cursor, user,
                     [product.id], context=context)[product.id]
             res[product.id]['standard_margin'] = sale - cost
             if sale == 0:
-                logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product.id)
+                _logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product.id)
                 res[product.id]['standard_margin_rate'] = 999.
             else:
                 res[product.id]['standard_margin_rate'] = (sale - cost) / sale * 100

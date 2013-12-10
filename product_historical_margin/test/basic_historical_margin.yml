@@ -1,0 +1,129 @@
+-
+  Create a Customer for SO
+-
+  !record {model: res.partner, id: res_partner_customer01}:
+    name: Customer 3
+    customer: 1
+-
+  Create a wine product A with an avg price of 100
+-
+  !record {model: product.product, id: product_product_a_avg_01}:
+    categ_id: product.product_category_1
+    cost_method: standard
+    name: Wine A
+    standard_price: 100.0
+    list_price: 150.0
+    cost_method: average
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+-
+  Create a shop
+-
+  !record {model: sale.shop, id: default_shop}:
+    name: Default test shop
+    company_id: base.main_company
+    payment_default_id: account.account_payment_term_net
+-
+  In order to test process of the Sale Order, I create sale order
+-
+  !record {model: sale.order, id: sale_order_test1}:
+    partner_id: res_partner_customer01
+    note: Invoice Manual
+    order_policy: manual
+    pricelist_id: product.list0
+    shop_id: default_shop
+    order_line:
+      - product_id: product_product_a_avg_01
+        product_uom_qty: 10
+        price_unit: 150.0
+-
+  I confirm the Quotation with "Manual" order policy.
+-
+  !workflow {model: sale.order, action: order_confirm, ref: sale_order_test1}
+-
+  I check that Invoice should not created.
+-
+  !python {model: sale.order}: |
+    sale_order = self.browse(cr, uid, ref("sale_order_test1"))
+    assert len(sale_order.invoice_ids) == False, "Invoice should not created."
+-
+  I create advance invoice where type is 'Invoice all the Sale Order'.
+-
+  !python {model: sale.advance.payment.inv}: |
+    ctx = context.copy()
+    ctx.update({"active_model": 'sale.order', "active_ids": [ref("sale_order_test1")], "active_id":ref("sale_order_test1")})
+    pay_id = self.create(cr, uid, {'advance_payment_method': 'all'})
+    self.create_invoices(cr, uid, [pay_id], context=ctx)
+-
+  I check Invoice which made advance where type is 'Invoice all the Sale Order'.
+-
+  !python {model: sale.order}: |
+    order = self.browse(cr, uid, ref('sale_order_test1'))
+    assert order.invoice_ids, "Invoice should be created after make invoice where type is 'Invoice all the Sale Order'."
+-
+  I open the Invoice.
+-
+  !python {model: sale.order}: |
+    import netsvc
+    wf_service = netsvc.LocalService("workflow")
+    so = self.browse(cr, uid, ref("sale_order_test1"))
+    for invoice in so.invoice_ids:
+      wf_service.trg_validate(uid, 'account.invoice', invoice.id, 'invoice_open', cr)
+-
+  I check that margin of products is computed correctly
+-
+  !python {model: product.product}: |
+     value = 150 * 10 - 100 * 10
+     assert self.browse(cr, uid, ref("product_product_a_avg_01")).margin_absolute == value,"Margin for product Wine A is wrongly computed"
+-
+  In order to test process of the Sale Order, I create a second sale order
+-
+  !record {model: sale.order, id: sale_order_test2}:
+    partner_id: res_partner_customer01
+    note: Invoice Manual
+    order_policy: manual
+    pricelist_id: product.list0
+    shop_id: default_shop
+    order_line:
+      - product_id: product_product_a_avg_01
+        product_uom_qty: 10
+        price_unit: 200
+-
+  I confirm the Quotation with "Manual" order policy.
+-
+  !workflow {model: sale.order, action: order_confirm, ref: sale_order_test2}
+-
+  I check that Invoice should not be created.
+-
+  !python {model: sale.order}: |
+    sale_order = self.browse(cr, uid, ref("sale_order_test2"))
+    assert len(sale_order.invoice_ids) == False, "Invoice should not created."
+-
+  I create advance invoice where type is 'Invoice all the Sale Order'.
+-
+  !python {model: sale.advance.payment.inv}: |
+    ctx = context.copy()
+    ctx.update({"active_model": 'sale.order', "active_ids": [ref("sale_order_test2")], "active_id":ref("sale_order_test2")})
+    pay_id = self.create(cr, uid, {'advance_payment_method': 'all'})
+    self.create_invoices(cr, uid, [pay_id], context=ctx)
+-
+  I check Invoice which made advance where type is 'Invoice all the Sale Order'.
+-
+  !python {model: sale.order}: |
+    order = self.browse(cr, uid, ref('sale_order_test2'))
+    assert order.invoice_ids, "Invoice should be created after make invoice where type is 'Invoice all the Sale Order'."
+-
+  I open the Invoice.
+-
+  !python {model: sale.order}: |
+    import netsvc
+    wf_service = netsvc.LocalService("workflow")
+    so = self.browse(cr, uid, ref("sale_order_test2"))
+    for invoice in so.invoice_ids:
+      wf_service.trg_validate(uid, 'account.invoice', invoice.id, 'invoice_open', cr)
+-
+  I check that margin of products is computed correctly
+-
+  !python {model: product.product}: |
+     value = ((150 - 100) * 10 + (200 - 100) * 10 )
+     assert self.browse(cr, uid, ref("product_product_a_avg_01")).margin_absolute == value,"Margin for product Wine A is wrongly computed"

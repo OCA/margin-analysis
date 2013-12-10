@@ -32,7 +32,7 @@ class product_product(Model):
         product_uom = context.get('product_uom')
         bom_properties = context.get('properties')
         res = self._compute_purchase_price(cr, uid, ids, product_uom,
-                                           bom_properties)
+                                           bom_properties, context=context)
         for self_obj in self.browse(cr, uid, ids, context=context):
             res[self_obj.id] = res[self_obj.id] + self_obj.fixed_cost_price
         return res
