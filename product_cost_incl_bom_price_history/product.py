@@ -151,6 +151,23 @@ class product_product(Model):
                 dict_value = prod_prices[result['id']]
                 result.update(dict_value)
         return results
+    
+    def _product_value(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        """ Override the method to use cost_price instead of standard_price.
+        @return: Dictionary of values
+        """
+        if context is None:
+            context = {}
+        res = {}
+        for id in ids:
+            res[id] = 0.0
+        products = self.read(cr, uid, ids, 
+                          ['id','qty_available','cost_price'],
+                          context=context)
+        _logger.debug("product value get, result :%s, context: %s", products, context)
+        for product in products:
+            res[product['id']] = product['qty_available'] * product['cost_price']
+        return res
 
     # Trigger on product.product is set to None, otherwise do not trigg
     # on product creation !
@@ -177,6 +194,15 @@ class product_product(Model):
               digits_compute=dp.get_precision('Sale Price'),
               help="The cost price is the standard price or, if the product has a bom, "
               "the sum of all standard price of its components. it take also care of the "
-              "bom costing like cost per cylce.")
+              "bom costing like cost per cylce."),
+        'value_available': fields.function(_product_value,
+            type='float', digits_compute=dp.get_precision('Product Price'),
+            group_operator="sum",
+            string='Value',
+            help="Current value of products available.\n"
+                 "This is using the product historize price incl. BoM."
+                 "In a context with a single Stock Location, this includes "
+                 "goods stored at this Location, or any of its children."),
         }
 
+    
