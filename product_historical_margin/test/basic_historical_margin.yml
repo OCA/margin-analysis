@@ -32,7 +32,7 @@
     order_policy: manual
     pricelist_id: product.list0
     shop_id: default_shop
-    order_line: 
+    order_line:
       - product_id: product_product_a_avg_01
         product_uom_qty: 10
         price_unit: 150.0
@@ -84,7 +84,7 @@
     order_policy: manual
     pricelist_id: product.list0
     shop_id: default_shop
-    order_line: 
+    order_line:
       - product_id: product_product_a_avg_01
         product_uom_qty: 10
         price_unit: 200
@@ -93,7 +93,7 @@
 -
   !workflow {model: sale.order, action: order_confirm, ref: sale_order_test2}
 -
-  I check that Invoice should not created.
+  I check that Invoice should not be created.
 -
   !python {model: sale.order}: |
     sale_order = self.browse(cr, uid, ref("sale_order_test2"))
