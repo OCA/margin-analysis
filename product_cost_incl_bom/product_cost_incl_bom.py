@@ -62,6 +62,7 @@ class Product(orm.Model):
                                                         properties=bom_properties,
                                                         addthis=True)
             price = 0.
+            # TODO browse outer loop
             for sub_product_dict in sub_products:
                 sub_product = self.browse(cr, uid,
                                           sub_product_dict['product_id'],
@@ -86,11 +87,13 @@ class Product(orm.Model):
                 cr, uid, bom.product_uom.id,
                 price, bom.product_id.uom_id.id)
             res[pr.id] = price
+            # if pr.perm_read()[0]['xmlid'] == 'product_cost_incl_bom.product_product_table_b':
+            #     import pdb; pdb.set_trace()
         if product_without_bom_ids:
             standard_prices = super(Product, self)._compute_purchase_price(
                 cr, uid, product_without_bom_ids, context=context)
-            print "cost_price for products without boms gives %s" % standard_prices
             res.update(standard_prices)
+        print "cost_price for products gives %s" % dict((p.name, res[p.id]) for p in self.browse(cr, uid, res.keys()))
         return res
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
@@ -122,21 +125,7 @@ class Product(orm.Model):
                 bom_result.extend(_get_parent_bom(bom_record.bom_id))
             return bom_result
 
-         # def _get_product_bom_existing(product_record):
-         #    """
-         #    faire pareil mais regarder pour les produits si a une autre parent bom si 
-         #    pas sortir de la boucle. appeler _get_parent_bom pour savoir ça
-         #    """
-         #    product_result=[]
-         #    bom_obj = self.pool.get('mrp.bom')
-         #    bom_ids = bom_obj.search(cr, uid, [('product_id','=',product.id)], 
-         #                        context=context)
-         #    for bom in bom_obj.browse(cr, uid, bom_ids, context=context):
-         #        res = _get_parent_bom(bom)
-         #    return True
-
         res = []
-        product_ids = []
         bom_obj = self.pool.get('mrp.bom')
         bom_ids = bom_obj.search(cr, uid, [('product_id', 'in', ids)],
                                  context=context)
@@ -147,23 +136,16 @@ class Product(orm.Model):
         parent_bom_ids = set(chain.from_iterable(_get_parent_bom(bom) for
                                                  bom in boms))
         bom_ids = set(bom_ids)
-        bom_ids.update(parent_bom_ids)
-        product_ids = set(product_ids)
-        bom_product_ids = self._get_product_id_from_bom(cr, uid, list(bom_ids),
-                                                        context=context)
+        product_ids = set(ids)
+        # product ids from the other BoMs
+        bom_product_ids = self._get_product_id_from_bom(
+            cr, uid, list(parent_bom_ids), context=context)
         product_ids.update(bom_product_ids)
-
-#         final_bom_ids = bom_ids
-#         for bom in bom_obj.browse(cr, uid, bom_ids, context=context):
-#             res = _get_parent_bom(bom)
-#         final_bom_ids = list(set(res + bom_ids))
-#         product_from_bom_ids = self._get_product_id_from_bom(
-#             cr, uid, final_bom_ids, context=context)
-#         product_ids = list(set(ids + product_from_bom_ids))
-
-        # result = self._get_bom_product(cr, uid, product_ids, context=context)
-        # product_ids.extend(result)
-        # #manque condition de sortie
+        # recurse in the other BoMs to find all the product ids
+        recurs_ids = self._get_bom_product(cr, uid, bom_product_ids,
+                                           context=context)
+        product_ids.update(recurs_ids)
+        print "products: %s " % [x['xmlid'] for x in self.perm_read(cr, uid, list(product_ids))]
         return list(product_ids)
 
     def _get_product(self, cr, uid, ids, context=None):
@@ -196,10 +178,12 @@ class Product(orm.Model):
     # Trigger on product.product is set to None, otherwise do not trigg
     # on product creation !
     _cost_price_triggers = {
-        'product.product': (_get_bom_product, None, 10),
+        # update products before products of boms to have correct prices
+        # on the latters
+        'product.product': (_get_bom_product, None, 5),
         # 'product.product': (_get_bom_product, ['standard_price','bom_ids'], 20),
         'product.template': (_get_product_from_template2,
-                             ['standard_price'], 10),
+                             ['standard_price'], 5),
         'mrp.bom': (_get_product,
                     ['bom_id',
                      'bom_lines',

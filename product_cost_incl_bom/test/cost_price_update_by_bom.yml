@@ -388,6 +388,7 @@
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_b'))
+    import pdb; pdb.set_trace()
     assert product.standard_price == 80.0, "12 The standard_price has not been recorded correctly"
     assert product.cost_price == 80.0, "12 The cost_price has not been recorded correctly"
 -
