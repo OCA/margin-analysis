@@ -18,14 +18,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Product Cost incl. BOM',
- 'version' : '0.1',
- 'author' : 'Camptocamp',
+{'name': 'Product Cost incl. BOM',
+ 'version': '0.1',
+ 'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : ['product_get_cost_field',
-              'mrp'],
+ 'depends': ['product_get_cost_field',
+             'mrp'],
  'description': """
   Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
   account the BoM costing (cost per cycle and so...). If no BOM define for a product, the cost_price is always
