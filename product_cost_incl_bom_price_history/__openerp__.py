@@ -36,11 +36,6 @@ This module make the glue between product_cost_incl_bom and product_price_histor
 to have your cost price computed from the component of the BoM, while having it also
 historized by company.
 
-As the prices are now historized, some information aren't revelant anymore in some report. This
-module also hide the price information in those view to avoid having wrong informations. Instead
-we added a view that allow you to retrive the product price and stock at a given date to value
-your inventory properly.
-
 Technically speaking, it provide a fnct_inv method to the function field that compute
 the cost_price to store the proper value per date and company.
 
@@ -51,7 +46,7 @@ the cost_price to store the proper value per date and company.
     ],
     'test': [
         'test/price_controlling_multicompany.yml',
-        
+
     ],
     'installable': True,
     'auto_install': True,
