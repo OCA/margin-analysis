@@ -117,21 +117,9 @@ class product_product(Model):
     def _get_poduct_from_template2(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
         return prod_obj._get_poduct_from_template(cr, uid, ids, context=context)
-
-    # def _set_history_price(self, cr, uid, ids, name, value, arg, context=None):
-    #     prod_tpl_obj = self.pool.get('product.template')
-    #     import pdb;pdb.set_trace()
-    #     for product in self.browse(cr, uid, ids, context=context):
-    #         prod_tpl_obj._log_price_change(cr, uid, [product.product_tmpl_id.id],
-    #                                        'cost_price', value, context=context)
-    #         _logger.debug("set price history: %s, product_tpl_id: %s, name : %s",
-    #                       value, product.product_tmpl_id.id, product.name)
-    #     return True
     
     def _read_flat(self, cr, uid, ids, fields, 
                    context=None, load='_classic_read'):
-        # if 'cost_price' in fields:
-        #     import pdb;pdb.set_trace()
         if context is None:
             context = {}
         if fields:
@@ -185,7 +173,6 @@ class product_product(Model):
     _columns = {
         'cost_price': fields.function(_cost_price,
               store=_cost_price_triggers,
-              # fnct_inv=_set_history_price, #the price need to be stored in the history table
               string='Cost Price (incl. BoM)',
               digits_compute=dp.get_precision('Sale Price'),
               help="The cost price is the standard price or, if the product has a bom, "
