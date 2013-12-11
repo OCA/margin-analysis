@@ -117,7 +117,7 @@ class Product(orm.Model):
         The topological sort, in this example, when we modify the "Wood
         leg", will returns successively 3 generators::
 
-            [set('Wood Leg')],
+            [set('Wood plank', 'Red Paint Pot', 'Wood Leg')],
             [set('Table A', 'Red wood leg')],
             [set('Table B')]]
 
