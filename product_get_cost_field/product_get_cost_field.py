@@ -33,7 +33,7 @@ class product_product(orm.Model):
         if isinstance(ids, (int, long)):
             ids = [ids]
         for product in self.read(cr, uid, ids,
-                                 ['id','standard_price'],
+                                 ['id', 'standard_price'],
                                  context=context):
             res[product['id']] = product['standard_price']
         return res
@@ -49,7 +49,7 @@ class product_product(orm.Model):
     def _get_product_from_template(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
         prod_ids = prod_obj.search(cr, uid,
-                                   [('product_tmpl_id','in',ids)],
+                                   [('product_tmpl_id', 'in', ids)],
                                    context=context)
         return prod_ids
 
