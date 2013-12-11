@@ -62,6 +62,12 @@ and historization purpose.
 You may want to also use the module analytic_multicurrency from `bzr branch lp:account-analytic/7.0`
 in order to have a proper computation in analytic line as well (standard_price will be converted
 in company currency with this module when computing cost of analytic line).
+
+Contributors
+------------
+
+* Joël Grand-Guillaume <joel.grand-guillaume@camptocamp.com>
+* Yannick Vaucher <yannick.vaucher@camptocamp.com>
 """,
     'demo': [
         'demo/product_price_history_purchase_demo.yml',
