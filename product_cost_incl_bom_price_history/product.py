@@ -115,7 +115,7 @@ class product_product(Model):
         
     def _get_product_from_template2(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
-        return prod_obj._get_poduct_from_template(cr, uid, ids, context=context)
+        return prod_obj._get_product_from_template(cr, uid, ids, context=context)
     
     def _read_flat(self, cr, uid, ids, fields, 
                    context=None, load='_classic_read'):

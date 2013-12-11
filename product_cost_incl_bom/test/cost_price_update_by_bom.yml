@@ -161,19 +161,19 @@
 # The BoM structure will be the following
 #  - Table A
 #     - 2x Plank 20.-
-#     - 4x wood leg 10.-
+#     - 4x Wood leg 10.-
 #  - Table B
 #     - 3x Plank 20.-
-#     - 4x red wood leg
+#     - 4x Red wood leg
 #  - Red wood leg
-#     - 1x wood leg 10.-
-#     - 1x red paint pot 10.-
+#     - 1x Wood leg 10.-
+#     - 1x Red paint pot 10.-
 #   - Chair
 #     - 1x Plank
-#     - 4x wood leg
+#     - 4x Wood leg
 #   - Table and Chair
-#     - 1x table
-#     - 4x chair
+#     - 1x Table
+#     - 4x Chair
 #   - Multilvel-bom-product
 #     - 1x Level A
 #        - 1x Level B

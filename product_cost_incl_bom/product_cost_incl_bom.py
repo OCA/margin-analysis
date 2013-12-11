@@ -29,13 +29,102 @@ import openerp.addons.decimal_precision as dp
 _logger = logging.getLogger(__name__)
 
 
+def topological_sort(data):
+    """ Topological sort on a dict expressing dependencies.
+
+    Recipe from:
+    http://code.activestate.com/recipes/578272-topological-sort/
+    Slightly modified, adapted for Python 2.6
+
+    Dependencies are expressed as a dictionary whose keys are items
+    and whose values are a set of dependent items. Output is a list of
+    sets in topological order. The first set consists of items with no
+    dependences, each subsequent set consists of items that depend upon
+    items in the preceeding sets.
+
+    >>> print '\\n'.join(repr(sorted(x)) for x in toposort2({
+    ...     2: set([11]),
+    ...     9: set([11,8]),
+    ...     10: set([11,3]),
+    ...     11: set([7,5]),
+    ...     8: set([7,3]),
+    ...     }) )
+    [3, 5, 7]
+    [8, 11]
+    [2, 9, 10]
+
+    """
+    # Ignore self dependencies.
+    for k, v in data.items():
+        v.discard(k)
+    # Find all items that don't depend on anything.
+    extra_items_in_deps = set.union(*data.itervalues()) - set(data.iterkeys())
+    # Add empty dependences where needed
+    data.update(dict((item, set()) for item in extra_items_in_deps))
+    while True:
+        ordered = set(item for item, dep in data.iteritems() if not dep)
+        if not ordered:
+            break
+        yield ordered
+        data = dict((item, (dep - ordered))
+                    for item, dep in data.iteritems()
+                    if item not in ordered)
+    assert not data, \
+        "Cyclic dependencies exist among these items " \
+        ":\n%s" % '\n'.join(repr(x) for x in data.iteritems())
+
+
 class Product(orm.Model):
     _inherit = 'product.product'
 
     def _compute_purchase_price(self, cr, uid, ids, context=None):
-        '''
-        Compute the purchase price, taking into account sub products and routing
-        '''
+        """ Compute the purchase price of products
+
+        Take into account the sub products (bills of materials) and the
+        routing.
+
+        As an example, we have such a hierarchy of products::
+
+            - Table A
+                - 2x Plank 20.-
+                - 4x Wood leg 10.-
+            - Table B
+                - 3x Plank 20.-
+                - 4x Red wood leg
+            - Red wood leg
+                - 1x Wood leg 10.-
+                - 1x Red paint pot 10.-
+            - Chair
+                - 1x Plank
+                - 4x Wood leg
+            - Table and Chair
+                - 1x Table Z
+                - 4x Chair Z
+
+        When we update the ``standard_price`` of a "Wood leg", all cost
+        prices of the products upper in the tree must be computed again.
+        Here, that is: "Table A", "Red wood leg", "Chair", "Table B".
+        The price of all theses products are computed at the same
+        time in this function, the effect is that we should take:
+
+        1. to not read the cost price of a product in the browse_record,
+           if it is computed here because it has likely changed, but use
+           the new cost instead
+        2. compute the prices in a topological order, so we start at the
+           leaves of the tree thus we know the prices of all the sub
+           products when we go up the tree
+
+        The topological sort, in this example, when we modify the "Wood
+        leg", will returns successively 3 generators::
+
+            [set('Wood plank', 'Red Paint Pot', 'Wood Leg')],
+            [set('Table A', 'Red wood leg')],
+            [set('Table B')]]
+
+        The first set having no dependencies and the subsequent sets
+        having items that depend upon items in the preceding set.
+
+        """
         if context is None:
             context = {}
         product_uom = context.get('product_uom')
@@ -44,62 +133,94 @@ class Product(orm.Model):
         bom_obj = self.pool.get('mrp.bom')
         uom_obj = self.pool.get('product.uom')
 
-        res = {}
-        ids = ids or []
-        print "_compute_purchase_price with ids %s" % ids
+        computed = {}
+        if not ids:
+            return computed
 
-        product_without_bom_ids = []
-        for pr in self.read(cr, uid, ids, ['id','name'], context=context):
-            bom_id = bom_obj._bom_find(cr, uid, pr['id'],
-                                       product_uom=product_uom, 
+        # keep a map between id and browse_record because we use
+        # the ids in the dependency tree
+        depends = dict((product_id, set()) for product_id in ids)
+        product_bom = {}
+        for product_id in ids:
+            bom_id = bom_obj._bom_find(cr, uid, product_id,
+                                       product_uom=product_uom,
                                        properties=bom_properties)
-            if not bom_id: # no BoM: use standard_price
-                product_without_bom_ids.append(pr['id'])
+            if not bom_id:  # no BoM: use standard_price
                 continue
-            _logger.debug("look for product named %s, bom_id is %s",
-                          pr['name'], bom_id)
-            bom = bom_obj.browse(cr, uid, bom_id)
-            sub_products, routes = bom_obj._bom_explode(cr, uid, bom,
-                                                        factor=1,
-                                                        properties=bom_properties,
-                                                        addthis=True)
-            price = 0.
-            # TODO browse outer loop
-            for sub_product_dict in sub_products:
-                sub_product = self.read(cr, uid, 
-                                        sub_product_dict['product_id'],
-                                        ['cost_price','uom_po_id','name'],
-                                        context=context)
-                std_price = sub_product['cost_price']
+            bom = bom_obj.browse(cr, uid, bom_id, context=context)
+            subproducts, routes = bom_obj._bom_explode(cr, uid, bom,
+                                                       factor=1,
+                                                       properties=bom_properties,
+                                                       addthis=True)
+            # set the dependencies of "product_id"
+            depends[product_id].update([sp['product_id'] for sp in
+                                        subproducts])
+            product_bom[product_id] = {
+                'bom': bom,
+                'subproducts': subproducts
+            }
+
+        # eagerly read all the dependencies products
+        sub_read = self.read(cr, uid,
+                             list(chain.from_iterable(depends.itervalues())),
+                             ['cost_price', 'uom_po_id'], context=context)
+        subproduct_costs = dict((p['id'], p) for p in sub_read)
+
+        ordered = list(chain.from_iterable(topological_sort(depends)))
+
+        # extract all the products not in a bom and get their costs
+        # first, avoid to read them one by one
+        no_bom_ids = [p_id for p_id in ordered if
+                      p_id not in product_bom and
+                      p_id in ids]
+        costs = super(Product, self)._compute_purchase_price(
+            cr, uid, no_bom_ids, context=context)
+        computed.update(costs)
+
+        for product_id in ordered:
+            if not product_id in ids:
+                # the product is a dependency so it appears in the
+                # topological sort, but the cost price should not be
+                # recomputed
+                continue
+            if product_id not in product_bom:
+                # already computed with ``super``
+                continue
+
+            cost = 0.
+            subproduct_infos = product_bom[product_id]['subproducts']
+            for subproduct_info in subproduct_infos:
+                subproduct_id = subproduct_info['product_id']
+                subproduct = subproduct_costs[subproduct_id]
+                # The cost price could have been recomputed in an
+                # earlier iteration.  Thanks to the topological sort,
+                # the subproducts are always computed before their
+                # parents
+                subcost = computed.get(subproduct_id, subproduct['cost_price'])
                 qty = uom_obj._compute_qty(
                     cr, uid,
-                    from_uom_id = sub_product_dict['product_uom'],
-                    qty = sub_product_dict['product_qty'],
-                    to_uom_id   = sub_product['uom_po_id'][0])
+                    from_uom_id=subproduct_info['product_uom'],
+                    qty=subproduct_info['product_qty'],
+                    to_uom_id=subproduct['uom_po_id'][0])
+                cost += subcost * qty
 
-                price += std_price * qty
-                _logger.debug("price (%s) * qty (%s) for subproduct %s is %s",
-                              std_price, qty, sub_product['name'], std_price * qty)
+            bom = product_bom[product_id]['bom']
             if bom.routing_id:
                 for wline in bom.routing_id.workcenter_lines:
                     wc = wline.workcenter_id
                     cycle = wline.cycle_nbr
-                    hour = ((wc.time_start + wc.time_stop + cycle * wc.time_cycle)
-                            * (wc.time_efficiency or 1.0))
-                    price += wc.costs_cycle * cycle + wc.costs_hour * hour
-            price /= bom.product_qty
-            price = uom_obj._compute_price(
+                    hour = ((wc.time_start + wc.time_stop +
+                             cycle * wc.time_cycle) *
+                            (wc.time_efficiency or 1.0))
+                    cost += wc.costs_cycle * cycle + wc.costs_hour * hour
+            cost /= bom.product_qty
+
+            cost = uom_obj._compute_price(
                 cr, uid, bom.product_uom.id,
-                price, bom.product_id.uom_id.id)
-            res[pr['id']] = price
-            _logger.debug("total price is %s for %s (id:%s)",
-                              price, pr['name'], pr['id'])
-        if product_without_bom_ids:
-            standard_prices = super(Product, self)._compute_purchase_price(
-                cr, uid, product_without_bom_ids, context=context)
-            res.update(standard_prices)
-        print "cost_price for products gives %s" % dict((p.name, res[p.id]) for p in self.browse(cr, uid, res.keys()))
-        return res
+                cost, bom.product_id.uom_id.id)
+            computed[product_id] = cost
+
+        return computed
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
         return self._compute_purchase_price(cr, uid, ids, context=context)
@@ -150,7 +271,6 @@ class Product(orm.Model):
         recurs_ids = self._get_bom_product(cr, uid, bom_product_ids,
                                            context=context)
         product_ids.update(recurs_ids)
-        print "products: %s " % [x['xmlid'] for x in self.perm_read(cr, uid, list(product_ids))]
         return list(product_ids)
 
     def _get_product(self, cr, uid, ids, context=None):
@@ -184,8 +304,6 @@ class Product(orm.Model):
     # Trigger on product.product is set to None, otherwise do not trigg
     # on product creation !
     _cost_price_triggers = {
-        # update products before products of boms to have correct prices
-        # on the latters
         'product.product': (_get_bom_product, None, 5),
         'product.template': (_get_product_from_template2,
                              ['standard_price'], 5),
