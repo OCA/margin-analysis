@@ -32,6 +32,8 @@
 This module override the reporting view of OpenERP to replace the standard_price field used
 by the new cost_price one. This way all reporting of OpenERP will now take this field into 
 account and display the correct result.
+
+We're tlaking here about the reporting found under : Reporting -> Warehouse
  """,
  'website': 'http://www.camptocamp.com/',
  'data': [],

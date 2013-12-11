@@ -30,6 +30,29 @@
  Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
  account the BoM costing (cost per cycle and so...). If no BOM define for a product, the cost_price is always
  equal to the standard_price field of the product, so we always have a value to base our reporting on.
+
+ The computed value is stored in the DB and can be used in 3rd party report.
+
+ It makes a quite complex computation to include correct computation of such use case having
+ such a hierarchy of products:
+
+            - Table A
+                - 2x Plank 20.-
+                - 4x Wood leg 10.-
+            - Table B
+                - 3x Plank 20.-
+                - 4x Red wood leg
+            - Red wood leg
+                - 1x Wood leg 10.-
+                - 1x Red paint pot 10.-
+            - Chair
+                - 1x Plank
+                - 4x Wood leg
+            - Table and Chair
+                - 1x Table Z
+                - 4x Chair Z
+Changing the price of Wood leg will update the price of Table A, Table B, Red wood leg, 
+Table & Chair products.
 """,
  'website': 'http://www.camptocamp.com/',
  'data': [],
