@@ -8,9 +8,10 @@
         <form string="Historical prices" version="7.0">
           <group>
             <field name="to_date"/>
+            <field name="location_id"/>
           </group>
           <footer>
-            <button name="action_open_window" string="Compute prices" type="object" icon="gtk-execute" class="oe_highlight"/>
+            <button name="action_open_window" string="Ok" type="object" icon="gtk-execute" class="oe_highlight"/>
             or
             <button string="Cancel" class="oe_link" special="cancel" />
           </footer>
@@ -19,7 +20,7 @@
     </record>
 
     <record id="action_product_historic_prices_view" model="ir.actions.act_window">
-      <field name="name">Product Historical Prices</field>
+      <field name="name">Inventory Valuation</field>
       <field name="res_model">historic.prices</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>

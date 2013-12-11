@@ -115,22 +115,10 @@ class product_product(Model):
         
     def _get_product_from_template2(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
-        return prod_obj._get_product_from_template(cr, uid, ids, context=context)
-
-    # def _set_history_price(self, cr, uid, ids, name, value, arg, context=None):
-    #     prod_tpl_obj = self.pool.get('product.template')
-    #     import pdb;pdb.set_trace()
-    #     for product in self.browse(cr, uid, ids, context=context):
-    #         prod_tpl_obj._log_price_change(cr, uid, [product.product_tmpl_id.id],
-    #                                        'cost_price', value, context=context)
-    #         _logger.debug("set price history: %s, product_tpl_id: %s, name : %s",
-    #                       value, product.product_tmpl_id.id, product.name)
-    #     return True
+        return prod_obj._get_poduct_from_template(cr, uid, ids, context=context)
     
     def _read_flat(self, cr, uid, ids, fields, 
                    context=None, load='_classic_read'):
-        # if 'cost_price' in fields:
-        #     import pdb;pdb.set_trace()
         if context is None:
             context = {}
         if fields:
@@ -144,7 +132,9 @@ class product_product(Model):
         if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
             date_crit = False
             price_history = self.pool.get('product.price.history')
-            company_id = prod_tmpl_obj._get_transaction_company_id(cr, uid, context=context)
+            company_id = prod_tmpl_obj._get_transaction_company_id(cr, 
+                                                                   uid,
+                                                                   context=context)
             if context.get('to_date'):
                 date_crit = context['to_date']
             # if fields is empty we read all price fields
@@ -156,12 +146,29 @@ class product_product(Model):
             prod_prices = price_history._get_historic_price(cr, uid, ids,
                                                             company_id,
                                                             datetime=date_crit,
-                                                            field_name=price_fields,
+                                                            field_names=price_fields,
                                                             context=context)
             for result in results:
                 dict_value = prod_prices[result['id']]
                 result.update(dict_value)
         return results
+    
+    def _product_value(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        """ Override the method to use cost_price instead of standard_price.
+        @return: Dictionary of values
+        """
+        if context is None:
+            context = {}
+        res = {}
+        for id in ids:
+            res[id] = 0.0
+        products = self.read(cr, uid, ids, 
+                          ['id','qty_available','cost_price'],
+                          context=context)
+        _logger.debug("product value get, result :%s, context: %s", products, context)
+        for product in products:
+            res[product['id']] = product['qty_available'] * product['cost_price']
+        return res
 
     # Trigger on product.product is set to None, otherwise do not trigg
     # on product creation !
@@ -184,11 +191,19 @@ class product_product(Model):
     _columns = {
         'cost_price': fields.function(_cost_price,
               store=_cost_price_triggers,
-              # fnct_inv=_set_history_price, #the price need to be stored in the history table
               string='Cost Price (incl. BoM)',
               digits_compute=dp.get_precision('Sale Price'),
               help="The cost price is the standard price or, if the product has a bom, "
               "the sum of all standard price of its components. it take also care of the "
-              "bom costing like cost per cylce.")
+              "bom costing like cost per cylce."),
+        'value_available': fields.function(_product_value,
+            type='float', digits_compute=dp.get_precision('Product Price'),
+            group_operator="sum",
+            string='Value',
+            help="Current value of products available.\n"
+                 "This is using the product historize price incl. BoM."
+                 "In a context with a single Stock Location, this includes "
+                 "goods stored at this Location, or any of its children."),
         }
 
+    

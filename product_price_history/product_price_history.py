@@ -69,7 +69,7 @@ class product_price_history(orm.Model):
         }
 
     def _get_historic_price(self, cr, uid, ids, company_id,
-                            datetime=None, field_name=None,
+                            datetime=False, field_names=None,
                             context=None):
         """ Use SQL for performance. Return a dict like:
             {product_id:{'standard_price': Value, 'list_price': Value}}
@@ -78,15 +78,15 @@ class product_price_history(orm.Model):
         res = {}
         if not ids:
             return res
-        if field_name is None:
-            field_name = PRODUCT_FIELD_HISTORIZE
+        if field_names is None:
+            field_names = PRODUCT_FIELD_HISTORIZE
         select = ("SELECT DISTINCT ON (product_id, name) "
                   "datetime, product_id, name, amount ")
         table = "FROM product_price_history "
         where = ("WHERE product_id IN %s "
                  "AND company_id = %s "
                  "AND name IN %s ")
-        args = [tuple(ids), company_id, tuple(field_name)]
+        args = [tuple(ids), company_id, tuple(field_names)]
         if datetime:
             where += "AND datetime <= %s "
             args.append(datetime)
@@ -95,7 +95,7 @@ class product_price_history(orm.Model):
         order = ("ORDER BY product_id, name, datetime DESC, id DESC ")
         cr.execute(select + table + where + order, args)
         for id in ids:
-            res[id] = dict.fromkeys(field_name, 0.0)
+            res[id] = dict.fromkeys(field_names, 0.0)
         result = cr.dictfetchall()
         for line in result:
             data = {line['name']: line['amount']}
@@ -103,6 +103,38 @@ class product_price_history(orm.Model):
         _logger.debug("Result of price history is : %s, company_id: %s",
                       res, company_id)
         return res
+
+class product_product(orm.Model):
+    _inherit = "product.product"
+    
+    def _product_value(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        """ Comute the value of product using qty_available and historize 
+        values for the price.
+        @return: Dictionary of values
+        """
+        if context is None:
+            context = {}
+        res = {}
+        for id in ids:
+            res[id] = 0.0
+        products = self.read(cr, uid, ids, 
+                          ['id','qty_available','standard_price'],
+                          context=context)
+        _logger.debug("product value get, result :%s, context: %s", products, context)
+        for product in products:
+            res[product['id']] = product['qty_available'] * product['standard_price']
+        return res
+
+    _columns = {
+        'value_available': fields.function(_product_value,
+            type='float', digits_compute=dp.get_precision('Product Price'),
+            group_operator="sum",
+            string='Value',
+            help="Current value of products available.\n"
+                 "This is using the product historize price."
+                 "In a context with a single Stock Location, this includes "
+                 "goods stored at this Location, or any of its children."),
+    }
 
 
 class product_template(orm.Model):
@@ -120,7 +152,6 @@ class product_template(orm.Model):
                 amount = values[field_name]
                 self._log_price_change(cr, uid, product, field_name, 
                                        amount, context=context)
-                _logger.debug("Log price change (product id: %s): %s, field: %s", product, amount, field_name)
         return True
 
     def _log_price_change(self, cr, uid, product, field_name, amount, context=None):
@@ -128,15 +159,25 @@ class product_template(orm.Model):
         On change of price create a price_history
         :param int product value of new product or product_id
         """
+        res = True
         price_history = self.pool.get('product.price.history')
+        company = self._get_transaction_company_id(cr, uid,
+                context=context)
         data = {
             'product_id': product,
             'amount': amount,
             'name': field_name,
-            'company_id': self._get_transaction_company_id(cr, uid,
-                context=context)
+            'company_id': company
             }
-        return price_history.create(cr, uid, data, context=context)
+        prod_prices = price_history._get_historic_price(cr, uid, [product],
+                                                            company,
+                                                            field_names=[field_name],
+                                                            context=context)
+        
+        if prod_prices[product].get(field_name) != amount:
+            _logger.debug("Log price change (product id: %s): %s, field: %s", product, amount, field_name)
+            res = price_history.create(cr, uid, data, context=context)
+        return res
 
     def _get_transaction_company_id(self, cr, uid, context=None):
         """As it may happend that OpenERP force the uid to 1 to bypass
@@ -152,8 +193,9 @@ class product_template(orm.Model):
             res = context.get('company_id')
         else:
             user_obj = self.pool.get('res.users')
-            res = user_obj.browse(cr, uid, uid, 
-                context=context).company_id.id
+            res = user_obj.read(cr, uid, uid,
+                                ['company_id'],
+                                context=context)['company_id'][0]
         return res
 
     def create(self, cr, uid, values, context=None):
@@ -189,7 +231,7 @@ class product_template(orm.Model):
             prod_prices = price_history._get_historic_price(cr, uid, ids,
                                                             company_id,
                                                             datetime=date_crit,
-                                                            field_name=price_fields,
+                                                            field_names=price_fields,
                                                             context=context)
             for result in results:
                 dict_value = prod_prices[result['id']]
@@ -203,13 +245,15 @@ class product_template(orm.Model):
         if isinstance(ids, (int, long)):
             ids = [ids]
         if any([f in PRODUCT_FIELD_HISTORIZE for f in values]):
-            for product in self.browse(cr, uid, ids, context=context):
-                self._log_all_price_changes(cr, uid, product.id, values,
+            for id in ids:
+                self._log_all_price_changes(cr, uid, id, values,
                                        context=context)
         return super(product_template, self).write(cr, uid, ids, values,
                                                    context=context)
 
     def unlink(self, cr, uid, ids, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
         price_history = self.pool.get('product.price.history')
         history_ids = price_history.search(cr, uid,
                                            [('product_id', 'in', ids)],

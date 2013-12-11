@@ -381,29 +381,29 @@
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_a'))
-    assert product.standard_price == 50.0, "02 The standard_price has not been recorded correctly"
-    assert product.cost_price == 60.0, "02 The cost_price has not been recorded correctly"
+    assert product.standard_price == 50.0, "12 The standard_price has not been recorded correctly"
+    assert product.cost_price == 60.0, "12 The cost_price has not been recorded correctly"
 -
   Test the prices of Table B are updated correctly
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_b'))
-    assert product.standard_price == 80.0, "12 The standard_price has not been recorded correctly"
-    assert product.cost_price == 80.0, "12 The cost_price has not been recorded correctly"
+    assert product.standard_price == 80.0, "13 The standard_price has not been recorded correctly"
+    assert product.cost_price == 80.0, "13 The cost_price has not been recorded correctly"
 -
   Test the prices of chair are updated correctly
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_chair_a'))
-    assert product.standard_price == 23.0, "13 The standard_price has not been recorded correctly"
-    assert product.cost_price == 40.0, "13 The cost_price has not been recorded correctly"
+    assert product.standard_price == 23.0, "14 The standard_price has not been recorded correctly"
+    assert product.cost_price == 40.0, "14 The cost_price has not been recorded correctly"
 -
   Test the prices of table and chair are updated correctly
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_chair_a'))
-    assert product.standard_price == 150.0, "14 The standard_price has not been recorded correctly"
-    assert product.cost_price == 220.0, "14 The cost_price has not been recorded correctly"
+    assert product.standard_price == 150.0, "15 The standard_price has not been recorded correctly"
+    assert product.cost_price == 220.0, "15 The cost_price has not been recorded correctly"
 -
   I create Bill of Materials for Multilevel bom product
 -
@@ -433,5 +433,5 @@
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_multilevel'))
-    assert product.standard_price == 100.0, "15 The standard_price has not been recorded correctly"
-    assert product.cost_price == 100.0, "15 The cost_price has not been recorded correctly"
+    assert product.standard_price == 100.0, "16 The standard_price has not been recorded correctly"
+    assert product.cost_price == 100.0, "16 The cost_price has not been recorded correctly"

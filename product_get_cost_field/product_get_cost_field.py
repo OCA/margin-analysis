@@ -33,8 +33,8 @@ class Product(Model):
         res = {}
         if isinstance(ids, (int, long)):
             ids = [ids]
-        for product in self.browse(cr, uid, ids, context=context):
-            res[product.id] = product.standard_price
+        for product in self.read(cr, uid, ids, ['id','standard_price'], context=context):
+            res[product['id']] = product['standard_price']
         return res
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):

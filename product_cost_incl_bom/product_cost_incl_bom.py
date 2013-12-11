@@ -282,18 +282,19 @@ class Product(orm.Model):
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
         res = set()
-        for bom in bom_obj.browse(cr, uid, ids, context=context):
-            res.add(bom.product_id.id)
+        for bom in bom_obj.read(cr, uid, ids, ['product_id'],context=context):
+            res.add(bom['product_id'][0])
         final_res = prod_obj._get_bom_product(cr, uid, list(res),
                                               context=context)
+        _logger.debug("trigger on mrp.bom model for product ids %s",final_res)
         return final_res
 
     def _get_product_id_from_bom(self, cr, uid, ids, context=None):
         """ Return a list of product ids from bom """
         bom_obj = self.pool.get('mrp.bom')
         res = set()
-        for bom in bom_obj.browse(cr, uid, ids, context=context):
-            res.add(bom.product_id.id)
+        for bom in bom_obj.read(cr, uid, ids, ['product_id'], context=context):
+            res.add(bom['product_id'][0])
         return list(res)
 
     def _get_product_from_template2(self, cr, uid, ids, context=None):
@@ -305,7 +306,6 @@ class Product(orm.Model):
     # on product creation !
     _cost_price_triggers = {
         'product.product': (_get_bom_product, None, 5),
-        # 'product.product': (_get_bom_product, ['standard_price','bom_ids'], 20),
         'product.template': (_get_product_from_template2,
                              ['standard_price'], 5),
         'mrp.bom': (_get_product,
