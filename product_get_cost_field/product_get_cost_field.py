@@ -20,20 +20,21 @@
 ##############################################################################
 import logging
 
-from openerp.osv.orm import Model
-from openerp.osv import fields
+from openerp.osv import orm, fields
 import decimal_precision as dp
 _logger = logging.getLogger(__name__)
 
 
-class Product(Model):
+class product_product(orm.Model):
     _inherit = 'product.product'
 
     def _compute_purchase_price(self, cr, uid, ids, context=None):
         res = {}
         if isinstance(ids, (int, long)):
             ids = [ids]
-        for product in self.read(cr, uid, ids, ['id','standard_price'], context=context):
+        for product in self.read(cr, uid, ids,
+                                 ['id','standard_price'],
+                                 context=context):
             res[product['id']] = product['standard_price']
         return res
 
@@ -47,7 +48,9 @@ class Product(Model):
 
     def _get_product_from_template(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
-        prod_ids = prod_obj.search(cr, uid, [('product_tmpl_id','in',ids)], context=context)
+        prod_ids = prod_obj.search(cr, uid,
+                                   [('product_tmpl_id','in',ids)],
+                                   context=context)
         return prod_ids
 
     # Trigger on product.product is set to None, otherwise do not trigg

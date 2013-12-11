@@ -107,7 +107,8 @@ class product_price_history(orm.Model):
 class product_product(orm.Model):
     _inherit = "product.product"
     
-    def _product_value(self, cr, uid, ids, field_names=None, arg=False, context=None):
+    def _product_value(self, cr, uid, ids,
+                       field_names=None, arg=False, context=None):
         """ Comute the value of product using qty_available and historize 
         values for the price.
         @return: Dictionary of values
@@ -120,7 +121,8 @@ class product_product(orm.Model):
         products = self.read(cr, uid, ids, 
                           ['id','qty_available','standard_price'],
                           context=context)
-        _logger.debug("product value get, result :%s, context: %s", products, context)
+        _logger.debug("product value get, result :%s, context: %s",
+                      products, context)
         for product in products:
             res[product['id']] = product['qty_available'] * product['standard_price']
         return res
@@ -169,23 +171,27 @@ class product_template(orm.Model):
             'name': field_name,
             'company_id': company
             }
-        prod_prices = price_history._get_historic_price(cr, uid, [product],
-                                                            company,
-                                                            field_names=[field_name],
-                                                            context=context)
+        p_prices = price_history._get_historic_price(cr, uid, [product],
+                                                     company,
+                                                     field_names=[field_name],
+                                                     context=context)
         
-        if prod_prices[product].get(field_name) != amount:
-            _logger.debug("Log price change (product id: %s): %s, field: %s", product, amount, field_name)
+        if p_prices[product].get(field_name) != amount:
+            _logger.debug("Log price change (product id: %s): %s, field: %s",
+                          product, amount, field_name)
             res = price_history.create(cr, uid, data, context=context)
         return res
 
     def _get_transaction_company_id(self, cr, uid, context=None):
-        """As it may happend that OpenERP force the uid to 1 to bypass
+        """
+        As it may happend that OpenERP force the uid to 1 to bypass
         rule (in function field), we may sometimes read the price of the company 
-        of user id 1 instead of the good one. Because we found the real uid and company_id
-        in the context in that case, I return this one. It also allow other module to 
-        give the proper company_id in the context (like it's done in product_standard_margin
-        for example. If company_id not in context, take the one from uid."""
+        of user id 1 instead of the good one. Because we found the real uid 
+        and company_id in the context in that case, I return this one. It also
+        allow other module to give the proper company_id in the context
+        (like it's done in product_standard_margin for example).
+        If company_id not in context, take the one from uid.
+        """
         res = uid
         if context == None:
             context = {}
@@ -218,30 +224,32 @@ class product_template(orm.Model):
          # Note if fields is empty => read all, so look at history table
         if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
             date_crit = False
-            price_history = self.pool.get('product.price.history')
-            company_id = self._get_transaction_company_id(cr, uid, context=context)
+            p_history = self.pool.get('product.price.history')
+            company_id = self._get_transaction_company_id(cr, uid,
+                                                          context=context)
             if context.get('to_date'):
                 date_crit = context['to_date']
             # if fields is empty we read all price fields
             if not fields:
-                price_fields = PRODUCT_FIELD_HISTORIZE
+                p_fields = PRODUCT_FIELD_HISTORIZE
             # Otherwise we filter on price fields asked in read
             else:
-                price_fields = [f for f in PRODUCT_FIELD_HISTORIZE if f in fields]
-            prod_prices = price_history._get_historic_price(cr, uid, ids,
-                                                            company_id,
-                                                            datetime=date_crit,
-                                                            field_names=price_fields,
-                                                            context=context)
+                p_fields = [f for f in PRODUCT_FIELD_HISTORIZE if f in fields]
+            prod_prices = p_history._get_historic_price(cr, uid, ids,
+                                                        company_id,
+                                                        datetime=date_crit,
+                                                        field_names=p_fields,
+                                                        context=context)
             for result in results:
                 dict_value = prod_prices[result['id']]
                 result.update(dict_value)
         return results
 
-
     def write(self, cr, uid, ids, values, context=None):
-        """Create an entry in the history table for every modified price
-        of every products with current datetime (or given one in context)"""
+        """
+        Create an entry in the history table for every modified price
+        of every products with current datetime (or given one in context)
+        """
         if isinstance(ids, (int, long)):
             ids = [ids]
         if any([f in PRODUCT_FIELD_HISTORIZE for f in values]):

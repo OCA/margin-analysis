@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Alexandre Fayolle, Joel Grand-Guillaume
-#    Copyright 2012 Camptocamp SA
+#    Copyright 2013 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -30,7 +30,11 @@ class historic_prices(orm.TransientModel):
 
     def _default_location(self, cr, uid, ids, context=None):
         try:
-            location = self.pool.get('ir.model.data').get_object(cr, uid, 'stock', 'stock_location_stock')
+            ir_model = self.pool.get('ir.model.data')
+            location = ir_model.get_object(cr,
+                                           uid,
+                                           'stock',
+                                           'stock_location_stock')
             with mute_logger('openerp.osv.orm'):
                 location.check_access_rule('read', context=context)
             location_id = location.id
@@ -42,8 +46,8 @@ class historic_prices(orm.TransientModel):
         'location_id': fields.many2one('stock.location', 
             'Location',
             required=True,
-            help='The location where you want the valuation (this will include all the '
-                 'child locations.'),
+            help='The location where you want the valuation (this will '
+                 'include all the child locations.'),
         'to_date': fields.datetime(
             'Date',
             help='Date at which the analysis need to be done.'),
@@ -60,7 +64,12 @@ class historic_prices(orm.TransientModel):
             context = {}
         location_id = context.get('location')
         location_obj = self.pool.get('stock.location')
-        child_location_ids = location_obj.search(cr, uid, [('location_id', 'child_of', [location_id])])
+        child_location_ids = location_obj.search(cr, uid,
+                                                 [
+                                                    ('location_id',
+                                                     'child_of',
+                                                     [location_id])
+                                                 ])
         location_ids = child_location_ids or [location_id]
         stop_date = context.get('to_date', time.strftime('%Y-%m-%d %H:%M:%S'))
         sql_req = """
@@ -130,12 +139,12 @@ class historic_prices(orm.TransientModel):
                 )
         displayed_ids = self._get_product_qty(cr, uid, context=ctx)
         domain = [('id','in',displayed_ids)]
-        data_pool = self.pool.get('ir.model.data')
-        filter_ids = data_pool.get_object_reference(cr, uid, 'product',
-                                                    'product_search_form_view')
-        product_view_id = data_pool.get_object_reference(cr, uid,
-                                                         'product_price_history',
-                                                         'view_product_price_history')
+        d_obj = self.pool.get('ir.model.data')
+        filter_ids = d_obj.get_object_reference(cr, uid, 'product',
+                                               'product_search_form_view')
+        product_view_id = d_obj.get_object_reference(cr, uid,
+                                                     'product_price_history',
+                                                     'view_product_price_history')
         if filter_ids:
             filter_id = filter_ids[1]
         else:

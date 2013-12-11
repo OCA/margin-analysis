@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle
+#    Author: Alexandre Fayolle, Guewen Baconnier, Joel Grand-Guillaume
 #    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -74,7 +74,7 @@ def topological_sort(data):
         ":\n%s" % '\n'.join(repr(x) for x in data.iteritems())
 
 
-class Product(orm.Model):
+class product_product(orm.Model):
     _inherit = 'product.product'
 
     def _compute_purchase_price(self, cr, uid, ids, context=None):
@@ -136,6 +136,7 @@ class Product(orm.Model):
         computed = {}
         if not ids:
             return computed
+        _logger.debug("_compute_purchase_price with ids %s" % ids)
 
         # keep a map between id and browse_record because we use
         # the ids in the dependency tree
@@ -173,7 +174,7 @@ class Product(orm.Model):
         no_bom_ids = [p_id for p_id in ordered if
                       p_id not in product_bom and
                       p_id in ids]
-        costs = super(Product, self)._compute_purchase_price(
+        costs = super(product_product, self)._compute_purchase_price(
             cr, uid, no_bom_ids, context=context)
         computed.update(costs)
 
@@ -268,7 +269,8 @@ class Product(orm.Model):
             cr, uid, list(parent_bom_ids), context=context)
         product_ids.update(bom_product_ids)
         # recurse in the other BoMs to find all the product ids
-        recurs_ids = self._get_bom_product(cr, uid, bom_product_ids,
+        recurs_ids = self._get_bom_product(cr, uid,
+                                           bom_product_ids,
                                            context=context)
         product_ids.update(recurs_ids)
         return list(product_ids)
@@ -281,11 +283,12 @@ class Product(orm.Model):
         bom_obj = self.pool.get('mrp.bom')
         prod_obj = self.pool.get('product.product')
         res = set()
-        for bom in bom_obj.read(cr, uid, ids, ['product_id'],context=context):
+        for bom in bom_obj.read(cr, uid, ids, ['product_id'], context=context):
             res.add(bom['product_id'][0])
-        final_res = prod_obj._get_bom_product(cr, uid, list(res),
+        final_res = prod_obj._get_bom_product(cr, uid,
+                                              list(res),
                                               context=context)
-        _logger.debug("trigger on mrp.bom model for product ids %s",final_res)
+        _logger.debug("trigger on mrp.bom model for product ids %s", final_res)
         return final_res
 
     def _get_product_id_from_bom(self, cr, uid, ids, context=None):

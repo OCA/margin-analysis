@@ -19,8 +19,7 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model
-from openerp.osv import fields
+from openerp.osv import orm, fields
 import decimal_precision as dp
 import openerp
 from openerp.addons.product_price_history.product_price_history import PRODUCT_FIELD_HISTORIZE
@@ -34,7 +33,7 @@ _logger = logging.getLogger(__name__)
 openerp.addons.product_price_history.product_price_history.PRODUCT_FIELD_HISTORIZE.append('cost_price')
 
 
-class product_product(Model):
+class product_product(orm.Model):
     _inherit = 'product.product'
 
     def _set_field_name_values(self, cr, uid, ids, field_name, context):
@@ -42,7 +41,8 @@ class product_product(Model):
         field_dict = {}
         prod_tpl_obj = self.pool.get('product.template')
         if self._log_access:
-            cr.execute('select id,write_date from '+self._table+' where id IN %s', (tuple(ids),))
+            cr.execute('select id,write_date from '+
+                       self._table+' where id IN %s', (tuple(ids),))
             res = cr.fetchall()
             for r in res:
                 if r[1]:
@@ -67,7 +67,9 @@ class product_product(Model):
                     if field_name in field_dict[r]:
                         result.pop(r)
         for id, value in result.items():
-            tpl_id = self.read(cr, uid, id, ['product_tmpl_id'], context=context)['product_tmpl_id']
+            tpl_id = self.read(cr, uid, id,
+                               ['product_tmpl_id'],
+                               context=context)['product_tmpl_id']
             _logger.debug("set price history: %s, product_tpl_id: %s, context: %s",
                               value,
                               tpl_id,
@@ -79,11 +81,12 @@ class product_product(Model):
         return True
 
     def _store_set_values(self, cr, uid, ids, fields, context):
-        """Override the method to have the proper computation in case of cost_price history.
-           Calls the fields.function's "implementation function" for all ``fields``, 
-           on records with ``ids`` (taking care of respecting ``multi`` attributes), 
-           and stores the resulting values in the database directly.
-           """
+        """
+        Override the method to have the proper computation in case of cost_price history.
+        Calls the fields.function's "implementation function" for all ``fields``, 
+        on records with ``ids`` (taking care of respecting ``multi`` attributes), 
+        and stores the resulting values in the database directly.
+        """
         if not ids:
             return True
         if 'cost_price' in fields:
@@ -93,14 +96,18 @@ class product_product(Model):
         _logger.debug("call _store_set_values, ids %s, fields: %s",
                               ids,
                               fields)
-        res = super(product_product, self)._store_set_values(cr, uid, ids, fields, context)
+        res = super(product_product, self)._store_set_values(cr,
+                                                             uid,
+                                                             ids,
+                                                             fields,
+                                                             context)
         return res
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
         res = super(product_product, self)._cost_price(cr, uid, ids,
-                                               field_name,
-                                               arg,
-                                               context=context)
+                                                       field_name,
+                                                       arg,
+                                                       context=context)
         return res
     
     def _get_product2(self, cr, uid, ids, context=None):
@@ -115,7 +122,9 @@ class product_product(Model):
         
     def _get_product_from_template2(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
-        return prod_obj._get_product_from_template(cr, uid, ids, context=context)
+        return prod_obj._get_product_from_template(cr, uid, 
+                                                   ids,
+                                                   context=context)
     
     def _read_flat(self, cr, uid, ids, fields, 
                    context=None, load='_classic_read'):
@@ -123,7 +132,7 @@ class product_product(Model):
             context = {}
         if fields:
             fields.append('id')
-        prod_tmpl_obj = self.pool.get('product.template')
+        pt_obj = self.pool.get('product.template')
         results = super(product_product, self)._read_flat(cr, uid, ids,
                                                        fields,
                                                        context=context,
@@ -132,9 +141,9 @@ class product_product(Model):
         if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
             date_crit = False
             price_history = self.pool.get('product.price.history')
-            company_id = prod_tmpl_obj._get_transaction_company_id(cr, 
-                                                                   uid,
-                                                                   context=context)
+            company_id = pt_obj._get_transaction_company_id(cr, 
+                                                            uid,
+                                                            context=context)
             if context.get('to_date'):
                 date_crit = context['to_date']
             # if fields is empty we read all price fields
@@ -143,7 +152,8 @@ class product_product(Model):
             # Otherwise we filter on price fields asked in read
             else:
                 price_fields = [f for f in PRODUCT_FIELD_HISTORIZE if f in fields]
-            prod_prices = price_history._get_historic_price(cr, uid, ids,
+            prod_prices = price_history._get_historic_price(cr, uid,
+                                                            ids,
                                                             company_id,
                                                             datetime=date_crit,
                                                             field_names=price_fields,
@@ -153,7 +163,8 @@ class product_product(Model):
                 result.update(dict_value)
         return results
     
-    def _product_value(self, cr, uid, ids, field_names=None, arg=False, context=None):
+    def _product_value(self, cr, uid, ids, field_names=None, 
+                       arg=False, context=None):
         """ Override the method to use cost_price instead of standard_price.
         @return: Dictionary of values
         """
@@ -165,7 +176,8 @@ class product_product(Model):
         products = self.read(cr, uid, ids, 
                           ['id','qty_available','cost_price'],
                           context=context)
-        _logger.debug("product value get, result :%s, context: %s", products, context)
+        _logger.debug("product value get, result :%s, context: %s",
+                      products, context)
         for product in products:
             res[product['id']] = product['qty_available'] * product['cost_price']
         return res
