@@ -23,10 +23,10 @@ from openerp.tools.translate import _
 import time
 from openerp.tools import mute_logger
 
+
 class historic_prices(orm.TransientModel):
     _name = 'historic.prices'
     _description = 'Product historical prices'
-
 
     def _default_location(self, cr, uid, ids, context=None):
         try:
@@ -43,7 +43,8 @@ class historic_prices(orm.TransientModel):
         return location_id or False
 
     _columns = {
-        'location_id': fields.many2one('stock.location', 
+        'location_id': fields.many2one(
+            'stock.location',
             'Location',
             required=True,
             help='The location where you want the valuation (this will '
@@ -51,13 +52,13 @@ class historic_prices(orm.TransientModel):
         'to_date': fields.datetime(
             'Date',
             help='Date at which the analysis need to be done.'),
-        }
+    }
     _defaults = {
         'location_id': _default_location,
     }
 
     def _get_product_qty(self, cr, uid, context=None):
-        """Return all product ids that have a qty at the given location for 
+        """Return all product ids that have a qty at the given location for
         the given date in the context. Use SQL for performance here.
         """
         if context == None:
@@ -65,11 +66,10 @@ class historic_prices(orm.TransientModel):
         location_id = context.get('location')
         location_obj = self.pool.get('stock.location')
         child_location_ids = location_obj.search(cr, uid,
-                                                 [
-                                                    ('location_id',
-                                                     'child_of',
-                                                     [location_id])
-                                                 ])
+                                                 [('location_id',
+                                                   'child_of',
+                                                   [location_id])
+                                                  ])
         location_ids = child_location_ids or [location_id]
         stop_date = context.get('to_date', time.strftime('%Y-%m-%d %H:%M:%S'))
         sql_req = """
@@ -116,8 +116,8 @@ class historic_prices(orm.TransientModel):
                     HAVING SUM(qty) <> 0"""
         cr.execute(sql_req,
                    {'location_ids': tuple(location_ids),
-                    'stop_date': stop_date,}
-                    )
+                    'stop_date': stop_date,
+                    })
         res = dict(cr.fetchall())
         return res.keys()
 
@@ -138,10 +138,10 @@ class historic_prices(orm.TransientModel):
                 to_date=wiz.get('to_date')
                 )
         displayed_ids = self._get_product_qty(cr, uid, context=ctx)
-        domain = [('id','in',displayed_ids)]
+        domain = [('id', 'in', displayed_ids)]
         d_obj = self.pool.get('ir.model.data')
         filter_ids = d_obj.get_object_reference(cr, uid, 'product',
-                                               'product_search_form_view')
+                                                'product_search_form_view')
         product_view_id = d_obj.get_object_reference(cr, uid,
                                                      'product_price_history',
                                                      'view_product_price_history')

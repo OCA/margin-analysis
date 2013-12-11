@@ -31,9 +31,9 @@ PRODUCT_FIELD_HISTORIZE = ['standard_price', 'list_price']
 
 _logger = logging.getLogger(__name__)
 
+
 class product_price_history(orm.Model):
     # TODO : Create good index for select
-
     _name = 'product.price.history'
     _order = 'datetime, company_id asc'
 
@@ -46,7 +46,7 @@ class product_price_history(orm.Model):
         'datetime': fields.datetime('Date'),
         'amount': fields.float('Amount',
                                digits_compute=dp.get_precision('Product Price')),
-        }
+    }
 
     def _get_default_company(self, cr, uid, context=None):
         company = self.pool.get('res.company')
@@ -66,7 +66,7 @@ class product_price_history(orm.Model):
     _defaults = {
         'company_id': _get_default_company,
         'datetime': _get_default_date,
-        }
+    }
 
     def _get_historic_price(self, cr, uid, ids, company_id,
                             datetime=False, field_names=None,
@@ -104,12 +104,13 @@ class product_price_history(orm.Model):
                       res, company_id)
         return res
 
+
 class product_product(orm.Model):
     _inherit = "product.product"
-    
+
     def _product_value(self, cr, uid, ids,
                        field_names=None, arg=False, context=None):
-        """ Comute the value of product using qty_available and historize 
+        """ Comute the value of product using qty_available and historize
         values for the price.
         @return: Dictionary of values
         """
@@ -118,9 +119,9 @@ class product_product(orm.Model):
         res = {}
         for id in ids:
             res[id] = 0.0
-        products = self.read(cr, uid, ids, 
-                          ['id','qty_available','standard_price'],
-                          context=context)
+        products = self.read(cr, uid, ids,
+                             ['id', 'qty_available', 'standard_price'],
+                             context=context)
         _logger.debug("product value get, result :%s, context: %s",
                       products, context)
         for product in products:
@@ -128,7 +129,8 @@ class product_product(orm.Model):
         return res
 
     _columns = {
-        'value_available': fields.function(_product_value,
+        'value_available': fields.function(
+            _product_value,
             type='float', digits_compute=dp.get_precision('Product Price'),
             group_operator="sum",
             string='Value',
@@ -140,7 +142,6 @@ class product_product(orm.Model):
 
 
 class product_template(orm.Model):
-
     _inherit = "product.template"
 
     def _log_all_price_changes(self, cr, uid, product, values, context=None):
@@ -150,9 +151,9 @@ class product_template(orm.Model):
         @param: int product ID
         """
         for field_name in PRODUCT_FIELD_HISTORIZE:
-            if values.get(field_name): 
+            if values.get(field_name):
                 amount = values[field_name]
-                self._log_price_change(cr, uid, product, field_name, 
+                self._log_price_change(cr, uid, product, field_name,
                                        amount, context=context)
         return True
 
@@ -164,18 +165,18 @@ class product_template(orm.Model):
         res = True
         price_history = self.pool.get('product.price.history')
         company = self._get_transaction_company_id(cr, uid,
-                context=context)
+                                                   context=context)
         data = {
             'product_id': product,
             'amount': amount,
             'name': field_name,
             'company_id': company
-            }
+        }
         p_prices = price_history._get_historic_price(cr, uid, [product],
                                                      company,
                                                      field_names=[field_name],
                                                      context=context)
-        
+
         if p_prices[product].get(field_name) != amount:
             _logger.debug("Log price change (product id: %s): %s, field: %s",
                           product, amount, field_name)
@@ -185,15 +186,15 @@ class product_template(orm.Model):
     def _get_transaction_company_id(self, cr, uid, context=None):
         """
         As it may happend that OpenERP force the uid to 1 to bypass
-        rule (in function field), we may sometimes read the price of the company 
-        of user id 1 instead of the good one. Because we found the real uid 
+        rule (in function field), we may sometimes read the price of the company
+        of user id 1 instead of the good one. Because we found the real uid
         and company_id in the context in that case, I return this one. It also
         allow other module to give the proper company_id in the context
         (like it's done in product_standard_margin for example).
         If company_id not in context, take the one from uid.
         """
         res = uid
-        if context == None:
+        if context is None:
             context = {}
         if context.get('company_id'):
             res = context.get('company_id')
@@ -255,7 +256,7 @@ class product_template(orm.Model):
         if any([f in PRODUCT_FIELD_HISTORIZE for f in values]):
             for id in ids:
                 self._log_all_price_changes(cr, uid, id, values,
-                                       context=context)
+                                            context=context)
         return super(product_template, self).write(cr, uid, ids, values,
                                                    context=context)
 
@@ -279,7 +280,6 @@ class price_type(orm.Model):
         Here, we add the company field to allow having various price type for
         various company, may be even in different currency.
     """
-
     _inherit = "product.price.type"
 
     _columns = {
@@ -294,4 +294,4 @@ class price_type(orm.Model):
                                             context=context)
     _defaults = {
         'company_id': _get_default_company,
-        }
+    }
