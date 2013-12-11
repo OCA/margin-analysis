@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author:  Alexandre Fayolle, Guewen Baconnier, Joel Grand-Guillaume
+#    Author:  Alexandre Fayolle
 #    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -27,14 +27,17 @@
  'depends' : ['product_get_cost_field',
               'mrp'],
  'description': """
- Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
- account the BoM costing (cost per cycle and so...). If no BOM define for a product, the cost_price is always
- equal to the standard_price field of the product, so we always have a value to base our reporting on.
+Product Cost including BOM costs
+================================
 
- The computed value is stored in the DB and can be used in 3rd party report.
+Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
+account the BoM costing (cost per cycle and so...). If no BOM define for a product, the cost_price is always
+equal to the standard_price field of the product, so we always have a value to base our reporting on.
 
- It makes a quite complex computation to include correct computation of such use case having
- such a hierarchy of products:
+The computed value is stored in the DB and can be used in 3rd party report.
+
+It makes a quite complex computation to include correct computation of such use case having
+such a hierarchy of products:
 
             - Table A
                 - 2x Plank 20.-
@@ -53,6 +56,15 @@
                 - 4x Chair Z
 Changing the price of Wood leg will update the price of Table A, Table B, Red wood leg, 
 Table & Chair products.
+
+Contributors
+------------
+
+* Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+* Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Guewen Baconnier <guewen.baconnier@camptocamp.com>
+* Joël Grand-Guillaume <joel.grand-guillaume@camptocamp.com>
+
 """,
  'website': 'http://www.camptocamp.com/',
  'data': [],
