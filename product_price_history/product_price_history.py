@@ -80,18 +80,20 @@ class product_price_history(orm.Model):
             return res
         if field_names is None:
             field_names = PRODUCT_FIELD_HISTORIZE
-        if not datetime:
-            datetime = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-        sql_wh_clause = """SELECT DISTINCT ON (product_id, name)
-            datetime, product_id, name, amount
-            FROM product_price_history
-            WHERE product_id IN %s
-            AND datetime <= %s
-            AND company_id = %s
-            AND name IN %s
-            ORDER BY product_id, name, datetime DESC"""
-        cr.execute(sql_wh_clause, (tuple(ids), datetime,
-                   company_id, tuple(field_names)))
+        select = ("SELECT DISTINCT ON (product_id, name) "
+                  "datetime, product_id, name, amount ")
+        table = "FROM product_price_history "
+        where = ("WHERE product_id IN %s "
+                 "AND company_id = %s "
+                 "AND name IN %s ")
+        args = [tuple(ids), company_id, tuple(field_names)]
+        if datetime:
+            where += "AND datetime <= %s "
+            args.append(datetime)
+        # at end, sort by ID desc if several entries are created
+        # on the same datetime
+        order = ("ORDER BY product_id, name, datetime DESC, id DESC ")
+        cr.execute(select + table + where + order, args)
         for id in ids:
             res[id] = dict.fromkeys(field_names, 0.0)
         result = cr.dictfetchall()
@@ -203,16 +205,16 @@ class product_template(orm.Model):
         self._log_all_price_changes(cr, uid, res, values, context=context)
         return res
 
-    def _read_flat(self, cr, uid, ids, fields, 
+    def _read_flat(self, cr, uid, ids, fields,
                    context=None, load='_classic_read'):
         if context is None:
             context = {}
         if fields:
             fields.append('id')
         results = super(product_template, self)._read_flat(cr, uid, ids,
-                                                       fields,
-                                                       context=context,
-                                                       load=load)
+                                                           fields,
+                                                           context=context,
+                                                           load=load)
          # Note if fields is empty => read all, so look at history table
         if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
             date_crit = False

@@ -37,7 +37,6 @@ openerp.addons.product_price_history.product_price_history.PRODUCT_FIELD_HISTORI
 class product_product(Model):
     _inherit = 'product.product'
 
-
     def _set_field_name_values(self, cr, uid, ids, field_name, context):
         field_flag = False
         field_dict = {}
@@ -114,7 +113,7 @@ class product_product(Model):
         res = prod_obj._get_bom_product(cr, uid, ids, context=context)
         return res
         
-    def _get_poduct_from_template2(self, cr, uid, ids, context=None):
+    def _get_product_from_template2(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
         return prod_obj._get_poduct_from_template(cr, uid, ids, context=context)
     
@@ -133,7 +132,9 @@ class product_product(Model):
         if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
             date_crit = False
             price_history = self.pool.get('product.price.history')
-            company_id = prod_tmpl_obj._get_transaction_company_id(cr, uid, context=context)
+            company_id = prod_tmpl_obj._get_transaction_company_id(cr, 
+                                                                   uid,
+                                                                   context=context)
             if context.get('to_date'):
                 date_crit = context['to_date']
             # if fields is empty we read all price fields
@@ -173,7 +174,7 @@ class product_product(Model):
     # on product creation !
     _cost_price_triggers = {
         'product.product': (_get_bom_product2, None, 10),
-        'product.template': (_get_poduct_from_template2, ['standard_price'], 10),
+        'product.template': (_get_product_from_template2, ['standard_price'], 10),
         'mrp.bom': (_get_product2, 
                    [
                      'bom_id',

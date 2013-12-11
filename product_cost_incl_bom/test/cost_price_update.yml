@@ -26,7 +26,7 @@
   Modify product A set new prices
 -
   !python {model: product.product}: |
-    self.write(cr, uid, ref('product_product_a'), {'standard_price':70})
+    self.write(cr, uid, ref('product_product_a'), {'standard_price': 70})
 -
   Test price are update accordingly
 -
@@ -48,4 +48,3 @@
     product = self.browse(cr, uid, ref('product_product_a'))
     assert product.standard_price == 100.0, "03 The standard_price has not been recorded correctly"
     assert product.cost_price == 100.0, "03 The cost_price has not been recorded correctly"
-
