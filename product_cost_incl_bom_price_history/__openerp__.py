@@ -41,6 +41,11 @@ It display now this value for the inventory valuation provided by product_price_
 Technically speaking, the way function field store the values computed for
 the cost_price to store the proper value per date and company in the history table.
 
+Contributors
+------------
+
+* Joël Grand-Guillaume <joel.grand-guillaume@camptocamp.com>
+
 """,
     'demo': [
     ],
