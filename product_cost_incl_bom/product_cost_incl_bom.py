@@ -152,8 +152,7 @@ class Product(orm.Model):
                                                        factor=1,
                                                        properties=bom_properties,
                                                        addthis=True)
-            # set the dependencies, filter the dependencies whose price
-            # do not change (not in the "ids" list)
+            # set the dependencies of "product_id"
             depends[product_id].update([sp['product_id'] for sp in
                                         subproducts])
             product_bom[product_id] = {
