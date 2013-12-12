@@ -212,7 +212,7 @@ class product_product(orm.Model):
             _cost_price,
             store=_cost_price_triggers,
             string='Cost Price (incl. BoM)',
-            digits_compute=dp.get_precision('Sale Price'),
+            digits_compute=dp.get_precision('Product Price'),
             help="The cost price is the standard price or, if the product has "
                  "a bom, the sum of all standard price of its components. it "
                  "take also care of the bom costing like cost per cylce."),

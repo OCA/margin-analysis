@@ -45,7 +45,9 @@ Contributors
 
  """,
  'website': 'http://www.camptocamp.com/',
- 'data': [],
+ 'data': [
+    'product_stock_view.xml',
+ ],
  'demo': [],
  'test': [],
  'installable': True,
