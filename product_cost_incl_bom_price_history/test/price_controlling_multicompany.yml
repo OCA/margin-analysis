@@ -1,0 +1,58 @@
+-
+  Test the following with user admin from first company (EUR)
+-
+  !context
+    uid: 'base.user_root'
+-
+  Create a wine A product owned by both company and set price for first company (EUR)
+-
+  !record {model: product.product, id: product_product_a_avg_01}:
+    categ_id: product.product_category_1
+    name: Wine A
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 50.0
+    list_price: 75.0
+-
+  Test the prices are those set for the first company (EUR)
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_a_avg_01'))
+    assert product.standard_price == 50.0, "The standard_price has not been recorded correctly for first company"
+    assert product.cost_price == 50.0, "The cost_price has not been recorded correctly for first company"
+    assert product.list_price == 75.0, "The list_price has not been recorded correctly for first company"
+-
+  Test the following with user second_user from second company (CHF)
+-
+  !context
+    uid: 'product_price_history.res_users_second_company_01'
+-
+  Modify product A owned by both company and set price in USD for second company (CHF)
+-
+  !python {model: product.product}: |
+    self.write(cr, uid, ref('product_product_a_avg_01'), {'standard_price':70,'list_price':90})
+-
+  Test the USD prices are those set for the second company (CHF)
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_a_avg_01'))
+    assert product.standard_price == 70.0, "The standard_price has not been recorded correctly for first company"
+    assert product.cost_price == 70.0, "The cost_price has not been recorded correctly for first company"
+    assert product.list_price == 90.0, "The list_price has not been recorded correctly for first company"
+-
+  Test the following with user admin from first company (EUR)
+-
+  !context
+    uid: 'base.user_root'
+-
+  Test the prices are still the same for first company (EUR)
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_a_avg_01'))
+    assert product.standard_price == 50.0, "The standard_price has not been recorded correctly for first company"
+    assert product.cost_price == 50.0, "The cost_price has not been recorded correctly for first company"
+    assert product.list_price == 75.0, "The list_price has not been recorded correctly for first company"
+
+

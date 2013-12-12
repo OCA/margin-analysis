@@ -1,0 +1,54 @@
+-
+  Test the following with user admin from first company (EUR)
+-
+  !context
+    uid: 'base.user_root'
+-
+  Modify product K at first day of year and set price in EUR for first company (EUR)
+-
+  !python {model: product.product}: |
+    import time
+    ctx = context
+    ctx.update({'to_date':time.strftime('%Y-01-01 %H:%M:%S')})
+    self.write(cr, uid, ref('product_price_history.product_product_k_avg_01'), {'standard_price':70,'list_price':90}, context=ctx)
+-
+  Test the EUR prices are those just set on the first day of year
+-
+  !python {model: product.product}: |
+    import time
+    ctx = context
+    ctx.update({'to_date':time.strftime('%Y-01-01 %H:%M:%S')})
+    product = self.browse(cr, uid, ref('product_price_history.product_product_k_avg_01'), context=ctx)
+    assert product.standard_price == 70.0, "The standard_price has not been recorded correctly for first company"
+    assert product.cost_price == 70.0, "The cost_price has not been recorded correctly for first company"
+    assert product.list_price == 90.0, "The list_price has not been recorded correctly for first company"
+-
+  Modify product K at 3rd day of year and set price in EUR for first company (EUR)
+-
+  !python {model: product.product}: |
+    import time
+    ctx = context
+    ctx.update({'to_date':time.strftime('%Y-01-03 %H:%M:%S')})
+    self.write(cr, uid, ref('product_price_history.product_product_k_avg_01'), {'standard_price':80,'list_price':100}, context=ctx)
+-
+  Test the EUR prices 2nd day of year
+-
+  !python {model: product.product}: |
+    import time
+    ctx = context
+    ctx.update({'to_date':time.strftime('%Y-01-02 %H:%M:%S')})
+    product = self.browse(cr, uid, ref('product_price_history.product_product_k_avg_01'),context=ctx)
+    assert product.standard_price == 70.0, "The standard_price has not been retrieved correctly for first company"
+    assert product.cost_price == 70.0, "The cost_price has not been retrieved correctly for first company"
+    assert product.list_price == 90.0, "The list_price has not been retrieved correctly for first company"
+-
+  Test the EUR prices 3rd day of year
+-
+  !python {model: product.product}: |
+    import time
+    ctx = context
+    ctx.update({'to_date':time.strftime('%Y-01-03 %H:%M:%S')})
+    product = self.browse(cr, uid, ref('product_price_history.product_product_k_avg_01'),context=ctx)
+    assert product.standard_price == 80.0, "The standard_price has not been retrieved correctly for first company"
+    assert product.cost_price == 80.0, "The cost_price has not been retrieved correctly for first company"
+    assert product.list_price == 100.0, "The list_price has not been retrieved correctly for first company"

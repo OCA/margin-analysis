@@ -25,36 +25,47 @@ import decimal_precision as dp
 _logger = logging.getLogger(__name__)
 
 
-class Product(orm.Model):
+class product_product(orm.Model):
     _inherit = 'product.product'
 
-    def _compute_purchase_price(self, cr, uid, ids,
-                                context=None):
+    def _compute_purchase_price(self, cr, uid, ids, context=None):
         res = {}
         if isinstance(ids, (int, long)):
             ids = [ids]
-        for product in self.browse(cr, uid, ids, context=context):
-            res[product.id] = product.standard_price
+        for product in self.read(cr, uid, ids,
+                                 ['id', 'standard_price'],
+                                 context=context):
+            res[product['id']] = product['standard_price']
         return res
 
     def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
             context = {}
-        res = self._compute_purchase_price(cr, uid, ids, context=context)
-        _logger.debug("get cost field _cost_price %s, arg: %s, "
-                      "context: %s, result:%s",
-                      field_name, arg, context, res)
-        return res
+        return self._compute_purchase_price(cr, uid, ids, context=context)
 
     def get_cost_field(self, cr, uid, ids, context=None):
         return self._cost_price(cr, uid, ids, '', [], context=context)
 
+    def _get_product_from_template(self, cr, uid, ids, context=None):
+        prod_obj = self.pool.get('product.product')
+        prod_ids = prod_obj.search(cr, uid,
+                                   [('product_tmpl_id', 'in', ids)],
+                                   context=context)
+        return prod_ids
+
+    # Trigger on product.product is set to None, otherwise do not trigg
+    # on product creation !
+    _cost_price_triggers = {
+        'product.product': (lambda self, cr, uid, ids, context=None: ids, None, 10),
+        'product.template': (_get_product_from_template, ['standard_price'], 10),
+    }
+
     _columns = {
         'cost_price': fields.function(
             _cost_price,
-            method=True,
+            store=_cost_price_triggers,
             string='Cost Price',
-            digits_compute=dp.get_precision('Sale Price'),
+            digits_compute=dp.get_precision('Product Price'),
             help="The cost price is the standard price unless you install the "
                  "product_cost_incl_bom module.")
     }

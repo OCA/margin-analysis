@@ -1,4 +1,9 @@
 -
+  Setup the multi company rules for company, share them between company
+-
+  !record {model: ir.rule, id: base.multi_company_default_rule}:
+    domain_force: "[(1,'=',1)]"
+-
   Test the following with user admin from first company (EUR)
 -
   !context

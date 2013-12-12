@@ -1,0 +1,437 @@
+-
+  Test the following with user admin
+-
+  !context
+    uid: 'base.user_root'
+-
+  Create a table A product
+-
+  !record {model: product.product, id: product_product_table_a}:
+    categ_id: product.product_category_1
+    name: Table A
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 50.0
+    list_price: 75.0
+-
+  Create a table B product
+-
+  !record {model: product.product, id: product_product_table_b}:
+    categ_id: product.product_category_1
+    name: Table B
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 80.0
+    list_price: 120.0
+-
+  Create a wood plank product
+-
+  !record {model: product.product, id: product_product_plank_a}:
+    categ_id: product.product_category_1
+    name: Wood plank
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 20.0
+    list_price: 15.0
+-
+  Create a red paint pot product
+-
+  !record {model: product.product, id: product_product_red_paint_a}:
+    categ_id: product.product_category_1
+    name: Red Paint Pot
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 10.0
+    list_price: 15.0
+-
+  Create a wood table leg product
+-
+  !record {model: product.product, id: product_product_w_leg_a}:
+    categ_id: product.product_category_1
+    name: Table wood Leg
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 10.0
+    list_price: 15.0
+-
+  Create a red wood table leg product
+-
+  !record {model: product.product, id: product_product_red_w_leg_a}:
+    categ_id: product.product_category_1
+    name: Red table wood Leg
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 15.0
+    list_price: 20.0
+-
+  Create a Chair product
+-
+  !record {model: product.product, id: product_product_chair_a}:
+    categ_id: product.product_category_1
+    name: Chair
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 23.0
+    list_price: 33.0
+-
+  Create a table and Chair product
+-
+  !record {model: product.product, id: product_product_table_chair_a}:
+    categ_id: product.product_category_1
+    name: Table and Chair
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 150.0
+    list_price: 200.0
+-
+  Create a multilevel bom product
+-
+  !record {model: product.product, id: product_product_multilevel}:
+    categ_id: product.product_category_1
+    name: Multilevel bom product
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 100
+    list_price: 200.0
+-
+  Create a Level A product
+-
+  !record {model: product.product, id: product_product_multilevel_a}:
+    categ_id: product.product_category_1
+    name: Level A bom product
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 100
+    list_price: 200.0
+-
+  Create a Level B bom product
+-
+  !record {model: product.product, id: product_product_multilevel_b}:
+    categ_id: product.product_category_1
+    name: Level B bom product
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 100
+    list_price: 200.0
+-
+  Create a Level C bom product
+-
+  !record {model: product.product, id: product_product_multilevel_c}:
+    categ_id: product.product_category_1
+    name: Level C bom product
+    cost_method: standard
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 100
+    list_price: 200.0
+-
+  Test the prices of table A and B are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_a'))
+    assert product.standard_price == 50.0, "01a The standard_price has not been recorded correctly"
+    assert product.cost_price == 50.0, "01a The cost_price has not been recorded correctly"
+    product = self.browse(cr, uid, ref('product_product_table_b'))
+    assert product.standard_price == 80.0, "01b The standard_price has not been recorded correctly"
+    assert product.cost_price == 80.0, "01b The cost_price has not been recorded correctly"
+# 
+# The BoM structure will be the following
+#  - Table A
+#     - 2x Plank 20.-
+#     - 4x Wood leg 10.-
+#  - Table B
+#     - 3x Plank 20.-
+#     - 4x Red wood leg
+#  - Red wood leg
+#     - 1x Wood leg 10.-
+#     - 1x Red paint pot 10.-
+#   - Chair
+#     - 1x Plank
+#     - 4x Wood leg
+#   - Table and Chair
+#     - 1x Table
+#     - 4x Chair
+#   - Multilvel-bom-product
+#     - 1x Level A
+#        - 1x Level B
+#          - 1x Level C
+
+-
+  I create Bill of Materials for the table A
+-
+  !record {model: mrp.bom, id: mrp_bom_table_a}:
+    company_id: base.main_company
+    name: Table A
+    product_id: product_product_table_a
+    product_qty: 1.0
+    type: normal
+    bom_lines:
+      - company_id: base.main_company
+        name: Plank
+        product_id: product_product_plank_a
+        product_qty: 2.0
+      - company_id: base.main_company
+        name: Wood Leg
+        product_id: product_product_w_leg_a
+        product_qty: 4.0
+-
+  Test the prices of table A are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_a'))
+    assert product.standard_price == 50.0, "02 The standard_price has not been recorded correctly"
+    assert product.cost_price == 80.0, "02 The cost_price has not been recorded correctly"
+-
+  I create Bill of Materials for Red wood leg
+-
+  !record {model: mrp.bom, id: mrp_bom_red_leg}:
+    company_id: base.main_company
+    name: Red wood leg
+    product_id: product_product_red_w_leg_a
+    product_qty: 1.0
+    type: normal
+    bom_lines:
+      - company_id: base.main_company
+        name: Paint pot
+        product_id: product_product_red_paint_a
+        product_qty: 1.0
+      - company_id: base.main_company
+        name: Wood Leg
+        product_id: product_product_w_leg_a
+        product_qty: 1.0
+-
+  Test the prices of Red Wood leg are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_red_w_leg_a'))
+    assert product.standard_price == 15.0, "03 The standard_price has not been recorded correctly"
+    assert product.cost_price == 20.0, "03 The cost_price has not been recorded correctly"
+-
+  I create Bill of Materials for the table B
+-
+  !record {model: mrp.bom, id: mrp_bom_table_b}:
+    company_id: base.main_company
+    name: Table B
+    product_id: product_product_table_b
+    product_qty: 1.0
+    type: normal
+-
+  Add the plank
+-
+  !record {model: mrp.bom, id: mrp_bom_table_b_plank}:
+    company_id: base.main_company
+    name: Plank
+    product_id: product_product_plank_a
+    product_qty: 3.0
+    bom_id: mrp_bom_table_b
+-
+  Add the Red wood leg
+-
+  !record {model: mrp.bom, id: mrp_bom_table_b_red_w_leg}:
+    company_id: base.main_company
+    name: Red Wood Leg
+    product_id: product_product_red_w_leg_a
+    product_qty: 4.0
+    bom_id: mrp_bom_table_b
+-
+  Test the prices of Table B are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_b'))
+    assert product.standard_price == 80.0, "04 The standard_price has not been recorded correctly"
+    assert product.cost_price == 140.0, "04 The cost_price has not been recorded correctly"
+-
+  I modify Bill of Materials for the table B by adding 4 wood leg
+-
+  !record {model: mrp.bom, id: mrp_bom_table_b_w_leg}:
+    company_id: base.main_company
+    name: Wood Leg
+    product_id: product_product_w_leg_a
+    product_qty: 4.0
+    bom_id: mrp_bom_table_b
+-
+  Test the prices of Table B are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_b'))
+    assert product.standard_price == 80.0, "05 The standard_price has not been recorded correctly"
+
+    assert product.cost_price == 180.0, "05 The cost_price has not been recorded correctly"
+-
+  I modify Bill of Materials for the table B by removing 4 wood leg
+-
+  !python {model: mrp.bom}: |
+    self.unlink(cr, uid, [ref('mrp_bom_table_b_w_leg')])
+-
+  Test the prices of Table B are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_b'))
+    assert product.standard_price == 80.0, "06 The standard_price has not been recorded correctly"
+    assert product.cost_price == 140.0, "06 The cost_price has not been recorded correctly"
+-
+  I modify Bill of Materials for the table B by changing plank qty
+-
+  !record {model: mrp.bom, id: mrp_bom_table_b_plank}:
+    company_id: base.main_company
+    name: Plank
+    product_id: product_product_plank_a
+    product_qty: 1.0
+    bom_id: mrp_bom_table_b
+-
+  Test the prices of Table B are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_b'))
+    assert product.standard_price == 80.0, "07 The standard_price has not been recorded correctly"
+    assert product.cost_price == 100.0, "07 The cost_price has not been recorded correctly"
+-
+  I create Bill of Materials for the Chair
+-
+  !record {model: mrp.bom, id: mrp_bom_chair_a}:
+    company_id: base.main_company
+    name: Chair
+    product_id: product_product_chair_a
+    product_qty: 1.0
+    type: normal
+    bom_lines:
+      - company_id: base.main_company
+        name: Plank
+        product_id: product_product_plank_a
+        product_qty: 1.0
+      - company_id: base.main_company
+        name: Wood Leg
+        product_id: product_product_w_leg_a
+        product_qty: 4.0
+-
+  Test the prices of chair are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_chair_a'))
+    assert product.standard_price == 23.0, "08 The standard_price has not been recorded correctly"
+    assert product.cost_price == 60.0, "08 The cost_price has not been recorded correctly"
+-
+  I create Bill of Materials for the table and Chair
+-
+  !record {model: mrp.bom, id: mrp_bom_table_chair_a}:
+    company_id: base.main_company
+    name: Table and Chair
+    product_id: product_product_table_chair_a
+    product_qty: 1.0
+    type: normal
+    bom_lines:
+      - company_id: base.main_company
+        name: Table
+        product_id: product_product_table_a
+        product_qty: 1.0
+      - company_id: base.main_company
+        name: Chair
+        product_id: product_product_chair_a
+        product_qty: 4.0
+-
+  Test the prices of table and chair are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_chair_a'))
+    assert product.standard_price == 150.0, "09 The standard_price has not been recorded correctly"
+    assert product.cost_price == 320.0, "09 The cost_price has not been recorded correctly"
+-
+  Modify the wood table leg product by changing std price
+-
+  !record {model: product.product, id: product_product_w_leg_a}:
+    standard_price: 5.0
+-
+  Test the prices of wood leg are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_w_leg_a'))
+    assert product.standard_price == 5.0, "10 The standard_price has not been recorded correctly"
+    assert product.cost_price == 5.0, "10 The cost_price has not been recorded correctly"
+-
+  Test the prices of Red Wood leg are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_red_w_leg_a'))
+    assert product.standard_price == 15.0, "11 The standard_price has not been recorded correctly"
+-
+  Test the prices of table A are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_a'))
+    assert product.standard_price == 50.0, "12 The standard_price has not been recorded correctly"
+    assert product.cost_price == 60.0, "12 The cost_price has not been recorded correctly"
+-
+  Test the prices of Table B are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_b'))
+    assert product.standard_price == 80.0, "13 The standard_price has not been recorded correctly"
+    assert product.cost_price == 80.0, "13 The cost_price has not been recorded correctly"
+-
+  Test the prices of chair are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_chair_a'))
+    assert product.standard_price == 23.0, "14 The standard_price has not been recorded correctly"
+    assert product.cost_price == 40.0, "14 The cost_price has not been recorded correctly"
+-
+  Test the prices of table and chair are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_table_chair_a'))
+    assert product.standard_price == 150.0, "15 The standard_price has not been recorded correctly"
+    assert product.cost_price == 220.0, "15 The cost_price has not been recorded correctly"
+-
+  I create Bill of Materials for Multilevel bom product
+-
+  !record {model: mrp.bom, id: mrp_bom_multilevel}:
+    company_id: base.main_company
+    name: Multilevel bom product
+    product_id: product_product_multilevel
+    product_qty: 1.0
+    type: normal
+    bom_lines:
+      - company_id: base.main_company
+        name: Level A Bom product
+        product_id: product_product_multilevel_a
+        product_qty: 1.0
+        bom_lines:
+          - company_id: base.main_company
+            name: Level B Bom product
+            product_id: product_product_multilevel_b
+            product_qty: 1.0
+            bom_lines:
+            - company_id: base.main_company
+              name: Level C Bom product
+              product_id: product_product_multilevel_c
+              product_qty: 1.0
+-
+  Test the prices of multilevel bom product are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_multilevel'))
+    assert product.standard_price == 100.0, "16 The standard_price has not been recorded correctly"
+    assert product.cost_price == 100.0, "16 The cost_price has not been recorded correctly"
