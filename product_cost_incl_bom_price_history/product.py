@@ -32,7 +32,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 # Add the field cost_price to the list of historized field per company
-openerp.addons.product_price_history.product_price_history.PRODUCT_FIELD_HISTORIZE.append('cost_price')
+PRODUCT_FIELD_HISTORIZE.append('cost_price')
 
 
 class product_product(orm.Model):

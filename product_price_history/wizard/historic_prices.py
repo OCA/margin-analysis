@@ -61,7 +61,7 @@ class historic_prices(orm.TransientModel):
         """Return all product ids that have a qty at the given location for
         the given date in the context. Use SQL for performance here.
         """
-        if context == None:
+        if context is None:
             context = {}
         location_id = context.get('location')
         location_obj = self.pool.get('stock.location')
@@ -127,7 +127,6 @@ class historic_prices(orm.TransientModel):
         """
         if context is None:
             context = {}
-        user_obj = self.pool.get('res.users')
         wiz = self.read(cr, uid, ids, [], context=context)[0]
         ctx = context.copy()
         ctx.update(

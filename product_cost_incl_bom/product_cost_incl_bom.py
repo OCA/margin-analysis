@@ -42,7 +42,7 @@ def topological_sort(data):
     dependences, each subsequent set consists of items that depend upon
     items in the preceeding sets.
 
-    >>> print '\\n'.join(repr(sorted(x)) for x in toposort2({
+    >>> print '\\n'.join(repr(sorted(x)) for x in topological_sort({
     ...     2: set([11]),
     ...     9: set([11,8]),
     ...     10: set([11,3]),
@@ -252,7 +252,6 @@ class product_product(orm.Model):
                 bom_result.extend(_get_parent_bom(bom_record.bom_id))
             return bom_result
 
-        res = []
         bom_obj = self.pool.get('mrp.bom')
         bom_ids = bom_obj.search(cr, uid, [('product_id', 'in', ids)],
                                  context=context)

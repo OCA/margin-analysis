@@ -19,7 +19,7 @@
 #
 ##############################################################################
 from openerp import tools
-from openerp.osv import orm, fields
+from openerp.osv import orm
 
 
 class report_stock_move(orm.Model):
