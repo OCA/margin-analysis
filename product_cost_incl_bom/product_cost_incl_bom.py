@@ -138,8 +138,6 @@ class product_product(orm.Model):
             return computed
         _logger.debug("_compute_purchase_price with ids %s" % ids)
 
-        # keep a map between id and browse_record because we use
-        # the ids in the dependency tree
         depends = dict((product_id, set()) for product_id in ids)
         product_bom = {}
         for product_id in ids:
