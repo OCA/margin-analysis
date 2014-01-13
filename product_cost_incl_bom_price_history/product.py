@@ -21,11 +21,9 @@
 
 from openerp.osv import orm, fields
 import decimal_precision as dp
-import openerp
 from openerp.addons.product_price_history.product_price_history import (
     PRODUCT_FIELD_HISTORIZE
 )
-from openerp import SUPERUSER_ID
 import time
 from datetime import datetime, timedelta
 import logging
@@ -60,7 +58,7 @@ class product_product(orm.Model):
                                     if not field_flag:
                                         field_flag = True
         if self._columns[field_name]._multi:
-            raise ValueError('multi is not supported on the cost_price field')
+            raise ValueError('multi is not supported on the %s field' % field_name)
         # use admin user for accessing objects having rules defined on
         # store fields
         result = self._columns[field_name].get(cr, self, ids,
@@ -71,16 +69,12 @@ class product_product(orm.Model):
                 if r in field_dict.keys():
                     if field_name in field_dict[r]:
                         result.pop(r)
-        for id, value in result.items():
-            tpl_id = self.read(cr, uid, id,
-                               ['product_tmpl_id'],
-                               context=context)['product_tmpl_id']
-            _logger.debug("set price history: %s, product_tpl_id: %s, "
-                          "context: %s",
-                          value,
-                          tpl_id,
-                          context)
-            prod_tpl_obj._log_price_change(cr, uid, id,
+        prods = self.read(cr, uid, result.keys(), ['product_tmpl_id'],
+                          context=context, load='_classic_write')
+        tmpls = dict((row['id'], row['product_tmpl_id']) for row in prods)
+        for prod_id, value in result.iteritems():
+            tmpl_id = tmpls[prod_id]
+            prod_tpl_obj._log_price_change(cr, uid, tmpl_id,
                                            field_name,
                                            value,
                                            context=context)
@@ -101,9 +95,6 @@ class product_product(orm.Model):
             fields = list(set(fields))
             fields.remove('cost_price')
             self._set_field_name_values(cr, uid, ids, 'cost_price', context)
-        _logger.debug("call _store_set_values, ids %s, fields: %s",
-                      ids,
-                      fields)
         res = super(product_product, self)._store_set_values(cr,
                                                              uid,
                                                              ids,
@@ -204,8 +195,6 @@ class product_product(orm.Model):
         products = self.read(cr, uid, ids,
                              ['id', 'qty_available', 'cost_price'],
                              context=context)
-        _logger.debug("product value get, result :%s, context: %s",
-                      products, context)
         for product in products:
             res[product['id']] = product['qty_available'] * product['cost_price']
         return res
