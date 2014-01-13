@@ -138,37 +138,57 @@ class product_product(orm.Model):
                    context=None, load='_classic_read'):
         if context is None:
             context = {}
-        if fields:
+        if not fields:
+            fields = []
+        else:
+            fields = fields[:]  # avoid to modify the callee's list
+        if fields and not 'id' in fields:
             fields.append('id')
         pt_obj = self.pool.get('product.template')
+
+        historized_fields = [f for f in fields if f in PRODUCT_FIELD_HISTORIZE]
+        remove_tmpl_field = False
+        if fields and not 'product_tmpl_id' in fields and historized_fields:
+            remove_tmpl_field = True
+            fields.append('product_tmpl_id')
+
         results = super(product_product, self)._read_flat(cr, uid, ids,
                                                           fields,
                                                           context=context,
                                                           load=load)
          # Note if fields is empty => read all, so look at history table
-        if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
+        if not fields or historized_fields:
             date_crit = False
             price_history = self.pool.get('product.price.history')
             company_id = pt_obj._get_transaction_company_id(cr, uid,
                                                             context=context)
             if context.get('to_date'):
                 date_crit = context['to_date']
-            # if fields is empty we read all price fields
-            if not fields:
-                price_fields = PRODUCT_FIELD_HISTORIZE
-            # Otherwise we filter on price fields asked in read
+            if load == '_classic_write':
+                # list of ids
+                tmpl_ids = [row['product_tmpl_id'] for row in results]
             else:
-                price_fields = [f for f in PRODUCT_FIELD_HISTORIZE
-                                if f in fields]
-            prod_prices = price_history._get_historic_price(cr, uid,
-                                                            ids,
-                                                            company_id,
-                                                            datetime=date_crit,
-                                                            field_names=price_fields,
-                                                            context=context)
+                # list of (id, name)
+                tmpl_ids = [row['product_tmpl_id'][0] for row in results]
+            prod_prices = price_history._get_historic_price(
+                cr, uid,
+                tmpl_ids,
+                company_id,
+                datetime=date_crit,
+                field_names=historized_fields or PRODUCT_FIELD_HISTORIZE,
+                context=context)
             for result in results:
-                dict_value = prod_prices[result['id']]
+                if load == '_classic_write':
+                    tmpl_id = result['product_tmpl_id']
+                else:
+                    tmpl_id = result['product_tmpl_id'][0]
+                dict_value = prod_prices[tmpl_id]
                 result.update(dict_value)
+
+        if remove_tmpl_field:
+            for row in results:
+                # this field was not asked by the callee
+                del row['product_tmpl_id']
         return results
 
     def _product_value(self, cr, uid, ids, field_names=None,
