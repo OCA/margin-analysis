@@ -25,8 +25,11 @@ from openerp.tools import mute_logger
 
 
 class historic_prices(orm.TransientModel):
+    """ Will display an inventory valuation of the stock with quantity > 0
+        at the given date.
+    """
     _name = 'historic.prices'
-    _description = 'Product historical prices'
+    _description = 'Inventory Valuation'
 
     def _default_location(self, cr, uid, ids, context=None):
         try:
@@ -159,3 +162,4 @@ class historic_prices(orm.TransientModel):
             'domain': domain,
             'search_view_id': filter_id,
             }
+

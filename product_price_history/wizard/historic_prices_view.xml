@@ -32,6 +32,5 @@
         id="menu_action_product_historic_prices_tree"
         parent="stock.next_id_61" />
 
-
   </data>
 </openerp>
