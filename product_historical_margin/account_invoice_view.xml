@@ -31,6 +31,34 @@
       </field>
     </record>
 
+    <record id="view_invoice_line_form_from_product" model="ir.ui.view">
+      <field name="name">account.invoice.line.from.product.form</field>
+      <field name="model">account.invoice.line</field>
+      <field name="arch" type="xml">
+        <form string="Invoice Line" create="false">
+          <field name="invoice_type"/>
+          <field name="partner_id"/>
+          <field name="invoice_user_id"/>
+          <field name="invoice_id"/>
+          <field name="invoice_date"/>
+          <field name="name" invisible="1"/>
+          <field name="product_id"/>
+          <field name="account_id" invisible="1"/>
+          <field name="quantity"/>
+          <field name="uos_id"/>
+          <field name="price_unit" invisible="1"/>
+          <field name="discount" invisible="1"/>
+          <field name="price_subtotal" invisible="1"/>
+          <field name="subtotal_cost_price" invisible="1"/>
+          <field name="company_id" invisible="1"/>
+          <field name="subtotal_company" sum="Total Net Sales "/>
+          <field name="subtotal_cost_price_company" sum="Total Cost"/>
+          <field name="margin_absolute" sum="Total Absolute Margin"/>
+          <field name="margin_relative" />
+        </form>
+      </field>
+    </record>
+
     <record id="view_account_invoice_line_filter" model="ir.ui.view">
       <field name="name">account.invoice.line.select</field>
       <field name="model">account.invoice.line</field>
