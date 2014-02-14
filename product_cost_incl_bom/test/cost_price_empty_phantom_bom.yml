@@ -1,0 +1,16 @@
+-
+  I create a phantom BOM without lines for product_34
+-
+  !record {model: mrp.bom, id: mrp_bom_product_34}:
+    company_id: base.main_company
+    name: product 4
+    product_id: product.product_product_34
+    product_qty: 1.0
+    type: phantom
+-
+  Test the prices of product_34 are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product.product_product_34'))
+    assert product.standard_price == 38, "02 The standard_price has not been recorded correctly %s" % product.standard_price
+    assert product.cost_price == 38.0, "02 The cost_price has not been recorded correctly %s"  % product.cost_price
