@@ -148,7 +148,8 @@ class product_product(orm.Model):
                 continue
             bom = bom_obj.browse(cr, uid, bom_id, context=context)
             if bom.type == 'phantom' and not bom.bom_lines:
-                continue
+                continue # work around lp:1281054 calling _bom_explode in that
+                         # case will cause an infinite recursion
             subproducts, routes = bom_obj._bom_explode(cr, uid, bom,
                                                        factor=1,
                                                        properties=bom_properties,
