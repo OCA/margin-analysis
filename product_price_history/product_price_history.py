@@ -22,7 +22,7 @@
 
 import logging
 import time
-from openerp.osv import orm, fields
+from openerp.osv import orm, fields, expression
 import openerp.addons.decimal_precision as dp
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -140,6 +140,19 @@ class product_product(orm.Model):
                  "goods stored at this Location, or any of its children."),
     }
 
+    def open_product_historic_prices(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        prod_tpl_obj = self.pool.get('product.template')
+        prod_tpl_ids = []
+        for product in self.browse(cr, uid, ids, context=context):
+            if product.product_tmpl_id.id not in prod_tpl_ids:
+                prod_tpl_ids.append(product.product_tmpl_id.id)
+        res = self.pool.get('ir.actions.act_window').for_xml_id(cr, uid, 
+            'product_price_history', 'action_price_history', context=context)
+        res['domain'] = expression.AND([res.get('domain', []), 
+            [('product_id', 'in', prod_tpl_ids)]])
+        return res
 
 class product_template(orm.Model):
     _inherit = "product.template"

@@ -21,11 +21,9 @@
 
 from openerp.osv import orm, fields
 import decimal_precision as dp
-import openerp
 from openerp.addons.product_price_history.product_price_history import (
     PRODUCT_FIELD_HISTORIZE
 )
-from openerp import SUPERUSER_ID
 import time
 from datetime import datetime, timedelta
 import logging
@@ -60,7 +58,7 @@ class product_product(orm.Model):
                                     if not field_flag:
                                         field_flag = True
         if self._columns[field_name]._multi:
-            raise ValueError('multi is not supported on the cost_price field')
+            raise ValueError('multi is not supported on the %s field' % field_name)
         # use admin user for accessing objects having rules defined on
         # store fields
         result = self._columns[field_name].get(cr, self, ids,
@@ -71,16 +69,12 @@ class product_product(orm.Model):
                 if r in field_dict.keys():
                     if field_name in field_dict[r]:
                         result.pop(r)
-        for id, value in result.items():
-            tpl_id = self.read(cr, uid, id,
-                               ['product_tmpl_id'],
-                               context=context)['product_tmpl_id']
-            _logger.debug("set price history: %s, product_tpl_id: %s, "
-                          "context: %s",
-                          value,
-                          tpl_id,
-                          context)
-            prod_tpl_obj._log_price_change(cr, uid, id,
+        prods = self.read(cr, uid, result.keys(), ['product_tmpl_id'],
+                          context=context, load='_classic_write')
+        tmpls = dict((row['id'], row['product_tmpl_id']) for row in prods)
+        for prod_id, value in result.iteritems():
+            tmpl_id = tmpls[prod_id]
+            prod_tpl_obj._log_price_change(cr, uid, tmpl_id,
                                            field_name,
                                            value,
                                            context=context)
@@ -101,9 +95,6 @@ class product_product(orm.Model):
             fields = list(set(fields))
             fields.remove('cost_price')
             self._set_field_name_values(cr, uid, ids, 'cost_price', context)
-        _logger.debug("call _store_set_values, ids %s, fields: %s",
-                      ids,
-                      fields)
         res = super(product_product, self)._store_set_values(cr,
                                                              uid,
                                                              ids,
@@ -138,37 +129,57 @@ class product_product(orm.Model):
                    context=None, load='_classic_read'):
         if context is None:
             context = {}
-        if fields:
+        if not fields:
+            fields = []
+        else:
+            fields = fields[:]  # avoid to modify the callee's list
+        if fields and not 'id' in fields:
             fields.append('id')
         pt_obj = self.pool.get('product.template')
+
+        historized_fields = [f for f in fields if f in PRODUCT_FIELD_HISTORIZE]
+        remove_tmpl_field = False
+        if fields and not 'product_tmpl_id' in fields and historized_fields:
+            remove_tmpl_field = True
+            fields.append('product_tmpl_id')
+
         results = super(product_product, self)._read_flat(cr, uid, ids,
                                                           fields,
                                                           context=context,
                                                           load=load)
          # Note if fields is empty => read all, so look at history table
-        if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
+        if not fields or historized_fields:
             date_crit = False
             price_history = self.pool.get('product.price.history')
             company_id = pt_obj._get_transaction_company_id(cr, uid,
                                                             context=context)
             if context.get('to_date'):
                 date_crit = context['to_date']
-            # if fields is empty we read all price fields
-            if not fields:
-                price_fields = PRODUCT_FIELD_HISTORIZE
-            # Otherwise we filter on price fields asked in read
+            if load == '_classic_write':
+                # list of ids
+                tmpl_ids = [row['product_tmpl_id'] for row in results]
             else:
-                price_fields = [f for f in PRODUCT_FIELD_HISTORIZE
-                                if f in fields]
-            prod_prices = price_history._get_historic_price(cr, uid,
-                                                            ids,
-                                                            company_id,
-                                                            datetime=date_crit,
-                                                            field_names=price_fields,
-                                                            context=context)
+                # list of (id, name)
+                tmpl_ids = [row['product_tmpl_id'][0] for row in results]
+            prod_prices = price_history._get_historic_price(
+                cr, uid,
+                tmpl_ids,
+                company_id,
+                datetime=date_crit,
+                field_names=historized_fields or PRODUCT_FIELD_HISTORIZE,
+                context=context)
             for result in results:
-                dict_value = prod_prices[result['id']]
+                if load == '_classic_write':
+                    tmpl_id = result['product_tmpl_id']
+                else:
+                    tmpl_id = result['product_tmpl_id'][0]
+                dict_value = prod_prices[tmpl_id]
                 result.update(dict_value)
+
+        if remove_tmpl_field:
+            for row in results:
+                # this field was not asked by the callee
+                del row['product_tmpl_id']
         return results
 
     def _product_value(self, cr, uid, ids, field_names=None,
@@ -184,8 +195,6 @@ class product_product(orm.Model):
         products = self.read(cr, uid, ids,
                              ['id', 'qty_available', 'cost_price'],
                              context=context)
-        _logger.debug("product value get, result :%s, context: %s",
-                      products, context)
         for product in products:
             res[product['id']] = product['qty_available'] * product['cost_price']
         return res

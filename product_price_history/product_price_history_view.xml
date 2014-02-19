@@ -56,10 +56,10 @@
                 <field name="product_id"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <group expand="0" string="Group By...">
-                    <filter string="Date" icon="terp-go-month" domain="[]" context="{'group_by':'datetime'}"/>
-                    <filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
-                    <filter string="Name" domain="[]" context="{'group_by':'name'}"/>
-                    <filter string="Company" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    <filter string="Date" name="group_date" icon="terp-go-month" domain="[]" context="{'group_by':'datetime'}"/>
+                    <filter string="Product" name="group_product_id" domain="[]" context="{'group_by':'product_id'}"/>
+                    <filter string="Name" domain="[]" name="group_name" context="{'group_by':'name'}"/>
+                    <filter string="Company" domain="[]" name="group_company_id" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
                 </group>
             </search>
 
@@ -73,18 +73,34 @@
         <field name="view_type">form</field>
         <field name="view_id" ref="view_product_price_history_from_product"/>
         <field name="search_view_id" ref="view_product_price_history_filter"/>
+        <field name="context">{'search_default_group_product_id':1,'search_default_group_name': 1,'group_by':[]}</field>
     </record>
 
-    <act_window
-            context="{'search_default_product_id': [active_id], 'default_product_id': active_id}"
-            id="act_product_prices_history_open"
-            name="Prices History"
-            res_model="product.price.history"
-            src_model="product.product"/>
 
     <menuitem action="action_price_history"
             id="menu_product_price_history_action_form"
             parent="stock.next_id_61" sequence="2"/>
+
+   <!--  <act_window
+            context="{'search_default_product_id': [active_id], 'default_product_id': active_id}"
+            id="act_product_prices_history_open"
+            name="Prices History"
+            res_model="product.price.history"
+            src_model="product.product"/> -->
+
+    <record id="product_search_form_view_stock" model="ir.ui.view">
+        <field name="name">product.product.price_history.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <div class="oe_right oe_button_box" name="buttons" position="inside">
+                <button name="open_product_historic_prices"
+                            string="Prices History" groups="product.group_costing_method"
+                            type="object" />
+            </div>
+        </field>
+    </record>
+
     
   </data>
 </openerp>
