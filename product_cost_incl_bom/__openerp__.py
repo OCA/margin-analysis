@@ -72,6 +72,7 @@ Contributors
  'test': [
     'test/cost_price_update.yml',
     'test/cost_price_update_by_bom.yml',
+    'test/cost_price_empty_phantom_bom.yml',
  ],
  'installable': True,
  'auto_install': False,
