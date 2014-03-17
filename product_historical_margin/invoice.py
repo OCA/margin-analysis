@@ -98,10 +98,10 @@ class account_invoice_line(Model):
                 company = company_obj.browse(cr, uid, company_id, context=context)
             company_currency_id = company.currency_id.id
             ctx['company_id'] = company.id
+            if not obj.product_id:
+                continue
             product = product_obj.read(cr, uid, obj.product_id.id,
                                        ['id','cost_price'], context=ctx)
-            if not product:
-                continue
             if obj.invoice_id.currency_id is None:
                 currency_id = company_currency_id
             else:
