@@ -53,3 +53,35 @@
     product = self.browse(cr, uid, ref('product_product_k_avg_01'),context=ctx)
     assert product.standard_price == 80.0, "The standard_price has not been retrieved correctly for first company"
     assert product.list_price == 100.0, "The list_price has not been retrieved correctly for first company"
+-
+  Modify product K with a price now and one in the future
+-
+  !python {model: product.product}: |
+    from datetime import datetime, timedelta
+    ctx = context.copy()
+    self.write(cr, uid, ref('product_product_k_avg_01'),
+               {'standard_price': 90,'list_price': 110}, context=ctx)
+    the_future = datetime.now() + timedelta(days=30)
+    ctx.update({'to_date': the_future.strftime('%Y-%m-%d %H:%M:%S')})
+    self.write(cr, uid, ref('product_product_k_avg_01'),
+               {'standard_price': 99,'list_price': 120}, context=ctx)
+-
+  Test that the default price is the price for now
+-
+  !python {model: product.product}: |
+    import time
+    ctx = context.copy()
+    product = self.browse(cr, uid, ref('product_product_k_avg_01'),context=ctx)
+    assert product.standard_price == 90.0, "The standard_price has not been retrieved correctly for now"
+    assert product.list_price == 110.0, "The list_price has not been retrieved correctly for now"
+-
+  Test that the price read from the future is the one inserted in the future
+-
+  !python {model: product.product}: |
+    from datetime import datetime, timedelta
+    ctx = context.copy()
+    the_future = datetime.now() + timedelta(days=30)
+    ctx.update({'to_date': the_future.strftime('%Y-%m-%d %H:%M:%S')})
+    product = self.browse(cr, uid, ref('product_product_k_avg_01'),context=ctx)
+    assert product.standard_price == 99.0, "The standard_price has not been retrieved correctly for the future"
+    assert product.list_price == 120.0, "The list_price has not been retrieved correctly for the future"
