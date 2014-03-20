@@ -4,7 +4,7 @@
   !record {model: ir.rule, id: base.multi_company_default_rule}:
     domain_force: "[(1,'=',1)]"
 -
-  Share the partners
+  Share the partners otherwise the user 'res_users_second_company_01' cannot create the picking
 -
   !record {model: ir.rule, id: base.res_partner_rule}:
     domain_force: "[(1,'=',1)]"
