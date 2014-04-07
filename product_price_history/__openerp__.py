@@ -22,7 +22,7 @@
 
 {
     "name" : "Product Price History",
-    "version" : "1.2",
+    "version" : "1.2.1",
     "author" : "Camptocamp",
     "category" : "Generic Modules/Inventory Control",
     "depends" : ["product",

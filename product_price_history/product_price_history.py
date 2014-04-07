@@ -80,16 +80,16 @@ class product_price_history(orm.Model):
             return res
         if field_names is None:
             field_names = PRODUCT_FIELD_HISTORIZE
+        if not datetime:
+            datetime = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         select = ("SELECT DISTINCT ON (product_id, name) "
                   "datetime, product_id, name, amount ")
         table = "FROM product_price_history "
         where = ("WHERE product_id IN %s "
                  "AND company_id = %s "
-                 "AND name IN %s ")
-        args = [tuple(ids), company_id, tuple(field_names)]
-        if datetime:
-            where += "AND datetime <= %s "
-            args.append(datetime)
+                 "AND name IN %s "
+                 "AND datetime <= %s ")
+        args = [tuple(ids), company_id, tuple(field_names), datetime]
         # at end, sort by ID desc if several entries are created
         # on the same datetime
         order = ("ORDER BY product_id, name, datetime DESC, id DESC ")
@@ -257,6 +257,7 @@ class product_template(orm.Model):
             for result in results:
                 dict_value = prod_prices[result['id']]
                 result.update(dict_value)
+
         return results
 
     def write(self, cr, uid, ids, values, context=None):
