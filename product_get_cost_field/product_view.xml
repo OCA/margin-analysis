@@ -19,8 +19,11 @@
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_product_tree_view" />
       <field name="arch" type="xml">
-        <field name="standard_price" position="replace"> 
+        <field name="standard_price" position="after">
           <field name="cost_price"/>
+        </field>
+        <field name="standard_price" position="attributes">
+          <attribute name="invisible">1</attribute>
         </field>
       </field>
     </record>
