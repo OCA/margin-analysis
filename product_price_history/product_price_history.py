@@ -33,9 +33,20 @@ _logger = logging.getLogger(__name__)
 
 
 class product_price_history(orm.Model):
-    # TODO : Create good index for select
     _name = 'product.price.history'
     _order = 'datetime, company_id asc'
+
+    def _auto_init(self, cr, context=None):
+        res = super(product_price_history, self)._auto_init(cr,
+                                                            context=context)
+        cr.execute("SELECT indexname "
+                   "FROM pg_indexes "
+                   "WHERE indexname = 'product_price_history_all_index'")
+        if not cr.fetchone():
+            cr.execute("CREATE INDEX product_price_history_all_index "
+                       "ON product_price_history "
+                       "(product_id, company_id, name, datetime)")
+        return res
 
     _columns = {
         'name': fields.char('Field name', size=32, required=True),
