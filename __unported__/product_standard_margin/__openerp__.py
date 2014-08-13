@@ -48,7 +48,7 @@
  'init_xml': [],
  'data': ['product_std_margin_view.xml'],
  'tests': [],
- 'installable': True,
+ 'installable': False,
  'auto_install': False,
  'license': 'AGPL-3',
  'application': True}

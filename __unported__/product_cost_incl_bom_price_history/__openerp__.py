@@ -56,7 +56,7 @@ Contributors
         'test/cost_price_update.yml',
         'test/price_controlling_multicompany.yml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
     'active': False,
 }

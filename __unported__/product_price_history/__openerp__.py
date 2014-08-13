@@ -84,7 +84,7 @@ Contributors
         'test/avg_price_computation_mutlicompanies_multicurrencies.yml',
         'test/price_historization.yml',
     ],
-    'installable': True,
+    'installable': False,
     'active': False,
 }
 

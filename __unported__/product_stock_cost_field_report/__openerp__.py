@@ -50,7 +50,7 @@ Contributors
  ],
  'demo': [],
  'test': [],
- 'installable': True,
+ 'installable': False,
  'auto_install': True,
  'license': 'AGPL-3',
  'application': False
