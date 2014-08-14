@@ -18,16 +18,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Product Historial Margin Report',
- 'version' : '1.0',
- 'author' : 'Camptocamp',
+{'name': 'Product Historial Margin Report',
+ 'version': '1.0',
+ 'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Sales Management',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : ['product_historical_margin', 'account'],
+ 'depends': ['product_historical_margin', 'account'],
  'description': """
   This module provide the margin infos in the invoice line analysis.
-  
   """,
  'website': 'http://www.camptocamp.com/',
  'init_xml': [],
@@ -37,6 +36,5 @@
  'installable': False,
  'auto_install': False,
  'license': 'AGPL-3',
- 'application': True}
-
-
+ 'application': True
+ }

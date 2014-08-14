@@ -20,21 +20,27 @@
 ##############################################################################
 
 import tools
-from osv import fields,osv
+from openerp.osv import fields, orm
 
-# TODO: use another table name and provide another improved analysis with different 
-# graph view on margin
-class account_invoice_report(osv.osv):
+# TODO: use another table name and provide another improved analysis with
+# different graph view on margin
+
+
+class account_invoice_report(orm.Model):
     _inherit = "account.invoice.report"
     _columns = {
-        'subtotal_cost_price_company': fields.float('Total Cost', readonly=True),
-        'margin_absolute': fields.float('Real Margin', readonly=True),
-        
-        # TODO: The conversion is right here, just rename it in the view the field to be consistenet with 
-        # product historical margin
-        # 'subtotal_company': fields.float('Total Without Tax (company currency)', readonly=True),
+        'subtotal_cost_price_company': fields.float('Total Cost',
+                                                    readonly=True),
+        'margin_absolute': fields.float('Real Margin',
+                                        readonly=True),
+
+        # TODO: The conversion is right here, just rename it in the view the
+        # field to be consistenet with product historical margin
+        # 'subtotal_company': fields.float(
+        #      'Total Without Tax (company currency)',
+        #       readonly=True),
     }
-    
+
     def init(self, cr):
         tools.drop_view_if_exists(cr, 'account_invoice_report')
         cr.execute("""
@@ -49,7 +55,11 @@ class account_invoice_report(osv.osv):
                     ai.payment_term as payment_term,
                     ai.period_id as period_id,
                     (case when u.uom_type not in ('reference') then
-                        (select name from product_uom where uom_type='reference' and active and category_id=u.category_id LIMIT 1)
+                        (select name
+                         from product_uom
+                         where uom_type='reference'
+                           and active
+                           and category_id=u.category_id LIMIT 1)
                     else
                         u.name
                     end) as uom_name,
@@ -79,13 +89,15 @@ class account_invoice_report(osv.osv):
                         else
                           ail.price_subtotal
                         end) / cr.rate as price_total,
-                    
+
                     -- *** BEGIN CHG ***
-                    sum(ail.subtotal_cost_price_company) as subtotal_cost_price_company,
-                                            
-                    sum(ail.price_subtotal/cr.rate-ail.subtotal_cost_price_company) as margin_absolute,
-                    -- *** END CHG *** 
-                    
+                    sum(ail.subtotal_cost_price_company)
+                        as subtotal_cost_price_company,
+
+                    sum(ail.price_subtotal/cr.rate-ail.subtotal_cost_price_company)
+                        as margin_absolute,
+                    -- *** END CHG ***
+
                     (case when ai.type in ('out_refund','in_invoice') then
                       sum(-ail.price_subtotal)
                     else
@@ -100,15 +112,31 @@ class account_invoice_report(osv.osv):
                      / cr.rate as price_average,
 
                     cr.rate as currency_rate,
-                    sum((select extract(epoch from avg(date_trunc('day',aml.date_created)-date_trunc('day',l.create_date)))/(24*60*60)::decimal(16,2)
+                    sum((select extract(epoch
+                                        from avg(date_trunc('day',
+                                                             aml.date_created)
+                                                 - date_trunc('day',
+                                                              l.create_date)
+                                                 )
+                                         ) / (24*60*60)::decimal(16,2)
                         from account_move_line as aml
-                        left join account_invoice as a ON (a.move_id=aml.move_id)
-                        left join account_invoice_line as l ON (a.id=l.invoice_id)
+                        left join account_invoice as a
+                            ON (a.move_id=aml.move_id)
+                        left join account_invoice_line as l
+                            ON (a.id=l.invoice_id)
                         where a.id=ai.id)) as delay_to_pay,
-                    sum((select extract(epoch from avg(date_trunc('day',a.date_due)-date_trunc('day',a.date_invoice)))/(24*60*60)::decimal(16,2)
+                    sum((select extract(epoch
+                                        from avg(date_trunc('day',
+                                                            a.date_due)
+                                                 - date_trunc('day',
+                                                              a.date_invoice)
+                                                 )
+                                        )/(24*60*60)::decimal(16,2)
                         from account_move_line as aml
-                        left join account_invoice as a ON (a.move_id=aml.move_id)
-                        left join account_invoice_line as l ON (a.id=l.invoice_id)
+                        left join account_invoice as a
+                            ON (a.move_id=aml.move_id)
+                        left join account_invoice_line as l
+                            ON (a.id=l.invoice_id)
                         where a.id=ai.id)) as due_delay,
                     (case when ai.type in ('out_refund','in_invoice') then
                       -ai.residual
@@ -130,8 +158,15 @@ class account_invoice_report(osv.osv):
                 left join product_template pt on (pt.id=pr.product_tmpl_id)
                 left join product_uom u on (u.id=ail.uos_id),
                 res_currency_rate cr
-                where cr.id in (select id from res_currency_rate cr2  where (cr2.currency_id = ai.currency_id)
-                and ((ai.date_invoice is not null and cr.name <= ai.date_invoice) or (ai.date_invoice is null and cr.name <= NOW())) limit 1)
+                where cr.id in (select id
+                                from res_currency_rate cr2
+                                where (cr2.currency_id = ai.currency_id)
+                                  and ((ai.date_invoice is not null
+                                        and cr.name <= ai.date_invoice)
+                                       or
+                                        (ai.date_invoice is null
+                                         and cr.name <= NOW()))
+                                limit 1)
                 group by ail.product_id,
                     ai.date_invoice,
                     ai.id,

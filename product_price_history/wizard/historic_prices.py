@@ -41,7 +41,7 @@ class historic_prices(orm.TransientModel):
             with mute_logger('openerp.osv.orm'):
                 location.check_access_rule('read', context=context)
             location_id = location.id
-        except (ValueError, orm.except_orm), e:
+        except (ValueError, orm.except_orm):
             return False
         return location_id or False
 
@@ -101,7 +101,8 @@ class historic_prices(orm.TransientModel):
                                            product_id
                                       FROM stock_move
                                      WHERE location_id IN %(location_ids)s
-                                       AND location_dest_id NOT IN %(location_ids)s
+                                       AND location_dest_id NOT IN
+                                           %(location_ids)s
                                        AND state = 'done'
                                        AND date <= %(stop_date)s
                                      GROUP BY product_id) AS s_out
@@ -144,9 +145,11 @@ class historic_prices(orm.TransientModel):
         d_obj = self.pool.get('ir.model.data')
         filter_ids = d_obj.get_object_reference(cr, uid, 'product',
                                                 'product_search_form_view')
-        product_view_id = d_obj.get_object_reference(cr, uid,
-                                                     'product_price_history',
-                                                     'view_product_price_history')
+        product_view_id = d_obj.get_object_reference(
+            cr, uid,
+            'product_price_history',
+            'view_product_price_history'
+            )
         if filter_ids:
             filter_id = filter_ids[1]
         else:
@@ -162,4 +165,3 @@ class historic_prices(orm.TransientModel):
             'domain': domain,
             'search_view_id': filter_id,
             }
-

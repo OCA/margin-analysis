@@ -18,18 +18,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Product Cost field',
- 'version' : '0.1',
- 'author' : 'Grishma Shukla',
+{'name': 'Product Cost field',
+ 'version': '0.1',
+ 'author': 'Grishma Shukla',
  'maintainer': 'Endian Solutions',
  'category': 'Products',
- 'complexity': "normal",  
- 'depends' : ['product_cost_incl_bom',
-              ],
+ 'complexity': "normal",
+ 'depends': ['product_cost_incl_bom',
+             ],
  'description': """
- This module adds an Fixed cost field to the product form. So you can calculate a costprice with added costs. 
- This module depends on the module product_cost_incl_bom. If the is a BoM, the added costs are added to the calculated cost price of the BoM.
- """, 
+ This module adds an Fixed cost field to the product form. So you can calculate
+ a costprice with added costs.
+
+ This module depends on the module product_cost_incl_bom. If the is a BoM, the
+ added costs are added to the calculated cost price of the BoM.
+ """,
  'website': 'www.endiansolutions.nl',
  'init_xml': [],
  'update_xml': ['product_view.xml'],

@@ -20,28 +20,32 @@
 ##############################################################################
 import logging
 
-from openerp.osv.orm import Model
-from osv import fields
+from openerp.osv import fields, orm
 
 import decimal_precision as dp
 _logger = logging.getLogger(__name__)
 
-# Don't Forget to remove supplier (in_invoice et in_refund) from the product margin computation
+# Don't Forget to remove supplier (in_invoice et in_refund) from the product
+# margin computation
 # And remove out_refund from the computation
-# et ne prendre que les factures paid.
-class product_product(Model):
+# and only consider paid invoices.
+
+
+class product_product(orm.Model):
     _inherit = 'product.product'
 
     def _compute_margin(self, cr, uid, ids, field_names, arg, context=None):
         """
         Compute the absolute and relativ margin based on price without tax, and
-        always in company currency. We exclude the (in_invoice, in_refund) from the
-        computation as we only want to see in the product form the margin made on
-        our sales.
-        The base calculation is made from the informations stored in the invoice line
-        of paid and open invoices.
-        We return 999 as relativ margin if no sale price is define. We made that choice
-        to differenciate the 0.0 margin from null !
+        always in company currency. We exclude the (in_invoice, in_refund) from
+        the computation as we only want to see in the product form the margin
+        made on our sales.
+
+        The base calculation is made from the informations stored in the
+        invoice line of paid and open invoices.
+
+        We return 999 as relative margin if no sale price is define. We made
+        that choice to differenciate the 0.0 margin from null !
 
         :return dict of dict of the form :
             {INT Product ID : {
@@ -56,10 +60,12 @@ class product_product(Model):
         if not ids:
             return res
         user_obj = self.pool.get('res.users')
-        
-        company_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
+
+        company_id = user_obj.browse(cr, uid, uid,
+                                     context=context).company_id.id
         for product_id in ids:
-            res[product_id] = {'margin_absolute': 0, 'margin_relative': 0}
+            res[product_id] = {'margin_absolute': 0,
+                               'margin_relative': 0}
             tot_sale[product_id] = 0
         # get information about invoice lines relative to our products
         # belonging to open or paid invoices in the considered period
@@ -93,27 +99,37 @@ class product_product(Model):
             res[product_id]['margin_absolute'] += (sale - cost)
             tot_sale[product_id] += sale
         for product_id in tot_sale:
+            _res = res[product_id]
             if tot_sale[product_id] == 0:
-                _logger.debug("Sale price for product ID %d is 0, cannot compute margin rate...", product_id)
-                res[product_id]['margin_relative'] = 999.
+                _logger.debug("Sale price for product ID %d is 0, "
+                              "cannot compute margin rate...",
+                              product_id)
+                _res['margin_relative'] = 999.
             else:
-                res[product_id]['margin_relative'] = (res[product_id]['margin_absolute'] / tot_sale[product_id]) * 100
+                _res['margin_relative'] = (_res['margin_absolute']
+                                           / tot_sale[product_id]) * 100
         return res
 
     _columns = {
-        'margin_absolute': fields.function(_compute_margin, method=True,
-                                        readonly=True, type='float',
-                                        string='Real Margin',
-                                        multi='product_historical_margin',
-                                        digits_compute=dp.get_precision('Sale Price'),
-                                        help="The Real Margin [ sale price - cost price ] of the product in absolute value "
-                                        "based on historical values computed from open and paid invoices."),
-        'margin_relative': fields.function(_compute_margin, method=True,
-                                        readonly=True, type='float',
-                                        string='Real Margin (%)',
-                                        multi='product_historical_margin',
-                                        digits_compute=dp.get_precision('Sale Price'),
-                                        help="The Real Margin [ Real Margin / sale price ] of the product in relative value "
-                                        "based on historical values computed from open and paid invoices."
-                                        "If no real margin set, will display 999.0 (if not invoiced yet for example)."),
+        'margin_absolute': fields.function(
+            _compute_margin, method=True,
+            readonly=True, type='float',
+            string='Real Margin',
+            multi='product_historical_margin',
+            digits_compute=dp.get_precision('Sale Price'),
+            help="The Real Margin [ sale price - cost price ] of the product "
+                 "in absolute value based on historical values computed from "
+                 "open and paid invoices."
+            ),
+        'margin_relative': fields.function(
+            _compute_margin, method=True,
+            readonly=True, type='float',
+            string='Real Margin (%)',
+            multi='product_historical_margin',
+            digits_compute=dp.get_precision('Sale Price'),
+            help="The Real Margin [ Real Margin / sale price ] of the product "
+                 "in relative value based on historical values computed from "
+                 "open and paid invoices. If no real margin set, will display "
+                 "999.0 (if not invoiced yet for example)."
+            ),
         }

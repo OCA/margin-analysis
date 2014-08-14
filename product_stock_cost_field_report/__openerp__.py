@@ -18,25 +18,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Product Cost field Report',
- 'version' : '1.0',
- 'author' : 'Camptocamp',
+{'name': 'Product Cost field Report',
+ 'version': '1.0',
+ 'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : [
-        'product_get_cost_field',
-        'stock',
-              ],
+ 'depends': ['product_get_cost_field',
+             'stock',
+             ],
  'description': """
 Product Cost field Report
 =========================
 
-This module override the reporting view of OpenERP to replace the standard_price field used
-by the new cost_price one. This way all reporting of OpenERP will now take this field into 
-account and display the correct result.
+This module override the reporting view of OpenERP to replace the
+standard_price field used by the new cost_price one. This way all reporting of
+OpenERP will now take this field into account and display the correct result.
 
-We're talking here about the reporting found under : Reporting -> Warehouse
+We're talking here about the reporting found under: Reporting -> Warehouse
 
 Contributors
 ------------
@@ -45,9 +44,8 @@ Contributors
 
  """,
  'website': 'http://www.camptocamp.com/',
- 'data': [
-    'product_stock_view.xml',
- ],
+ 'data': ['product_stock_view.xml',
+          ],
  'demo': [],
  'test': [],
  'installable': True,
