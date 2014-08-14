@@ -18,21 +18,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Product Cost field',
- 'version' : '1.0.1',
- 'author' : 'Camptocamp',
+{'name': 'Product Cost field',
+ 'version': '1.0.1',
+ 'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
- 'depends' : [
-    'product',
-              ],
+ 'depends': [
+     'product',
+     ],
  'description': """
 Product Cost field
 ==================
 
-Provides an overridable method on product which compute the cost_price field
-of a product. By default it just return the value of standard_price field, but
+Provides an overridable method on product which compute the cost_price field of
+a product. By default it just return the value of standard_price field, but
 using the product_cost_incl_bom module, it will return the costing from the
 bom.
 
@@ -48,16 +48,15 @@ Contributors
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Joël Grand-Guillaume <joel.grand-guillaume@camptocamp.com>
-
  """,
  'website': 'http://www.camptocamp.com/',
  'data': [
-    'product_view.xml'
- ],
+     'product_view.xml'
+     ],
  'demo': [],
  'test': [
-    'test/cost_price_update.yml',
- ],
+     'test/cost_price_update.yml',
+     ],
  'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',

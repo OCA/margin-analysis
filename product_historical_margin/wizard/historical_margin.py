@@ -26,25 +26,33 @@ from openerp.osv import fields
 from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
+
+
 class historical_margin(TransientModel):
     _name = 'historical.margin'
     _description = 'Product historical margin'
 
     def _get_product_ids(self, cr, uid, context=None):
-        if context is None: context = {}
+        if context is None:
+            context = {}
         res = False
-        if (context.get('active_model', False) == 'product.product' and
-                context.get('active_ids', False)):
+        if context.get('active_model') == 'product.product' \
+           and context.get('active_ids'):
             res = context['active_ids']
         return res
 
-
     _columns = {
-        'from_date': fields.date('From', help='Date of the first invoice to take into account. '
-                                 'The earliest existing invoice will be used if left empty'),
-        'to_date': fields.date('To', help='Date of the last invoice to take into account. '
-                               'The latest existing invoice will be used if left empty'),
-        'product_ids': fields.many2many('product.product', string='Products'),
+        'from_date': fields.date(
+            'From',
+            help='Date of the first invoice to take into account. '
+            'The earliest existing invoice will be used if left empty'
+            ),
+        'to_date': fields.date(
+            'To', help='Date of the last invoice to take into account. '
+            'The latest existing invoice will be used if left empty'
+            ),
+        'product_ids': fields.many2many(
+            'product.product', string='Products'),
         }
     _defaults = {
         'from_date': time.strftime('%Y-01-01'),
@@ -60,7 +68,8 @@ class historical_margin(TransientModel):
         if context is None:
             context = {}
         user_obj = self.pool.get('res.users')
-        company_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
+        company_id = user_obj.browse(cr, uid, uid,
+                                     context=context).company_id.id
         wiz = self.read(cr, uid, ids, [], context=context)[0]
         ctx = context.copy()
         ctx.update(
@@ -69,11 +78,15 @@ class historical_margin(TransientModel):
             )
         product_ids = wiz.get('product_ids')
         data_pool = self.pool.get('ir.model.data')
-        filter_ids = data_pool.get_object_reference(cr, uid, 'product',
-                                                    'product_search_form_view')
-        product_view_id = data_pool.get_object_reference(cr, uid,
-                                                         'product_historical_margin',
-                                                         'view_product_historical_margin')
+        filter_ids = data_pool.get_object_reference(
+            cr, uid, 'product',
+            'product_search_form_view'
+            )
+        product_view_id = data_pool.get_object_reference(
+            cr, uid,
+            'product_historical_margin',
+            'view_product_historical_margin'
+            )
         if filter_ids:
             filter_id = filter_ids[1]
         else:
@@ -82,7 +95,8 @@ class historical_margin(TransientModel):
             _logger.info('no ids supplied. Computing ids of sold products')
             query = '''SELECT DISTINCT product_id
                     FROM account_invoice_line AS line
-                    INNER JOIN account_invoice AS inv ON (inv.id = line.invoice_id)
+                    INNER JOIN account_invoice AS inv
+                               ON (inv.id = line.invoice_id)
                     WHERE %s inv.state IN ('open', 'paid')
                       AND type NOT IN ('in_invoice', 'in_refund')
                       AND inv.company_id = %%(company_id)s
@@ -96,7 +110,7 @@ class historical_margin(TransientModel):
             ctx['company_id'] = company_id
             cr.execute(query, ctx)
             product_ids = [row[0] for row in cr.fetchall()]
-        domain = [('id','in',product_ids)]
+        domain = [('id', 'in', product_ids)]
         _logger.info('domains = %s', domain)
         return {
             'type': 'ir.actions.act_window',

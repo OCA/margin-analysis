@@ -21,25 +21,26 @@
 ##############################################################################
 
 {
-    "name" : "Product Cost incl. BoM and Price History",
-    "version" : "1.2",
-    "author" : "Camptocamp",
-    "category" : "Generic Modules/Inventory Control",
-    "depends" : ["product_cost_incl_bom",
-                 "product_price_history",
-                 ],
+    "name": "Product Cost incl. BoM and Price History",
+    "version": "1.2",
+    "author": "Camptocamp",
+    "category": "Generic Modules/Inventory Control",
+    "depends": ["product_cost_incl_bom",
+                "product_price_history",
+                ],
     "description": """
 Product Cost incl. BoM and Price History
 ========================================
 
-This module make the glue between product_cost_incl_bom and product_price_history and allow
-to have your cost price computed from the component of the BoM, while having it also
-historized by company.
+This module make the glue between product_cost_incl_bom and
+product_price_history and allow to have your cost price computed from the
+component of the BoM, while having it also historized by company.
 
-It display now this value for the inventory valuation provided by product_price_history module.
+It display now this value for the inventory valuation provided by
+product_price_history module.
 
-Technically speaking, the way function field store the values computed for
-the cost_price to store the proper value per date and company in the history table.
+Technically speaking, the way function field store the values computed for the
+cost_price to store the proper value per date and company in the history table.
 
 Contributors
 ------------
@@ -55,10 +56,8 @@ Contributors
         'test/price_historization.yml',
         'test/cost_price_update.yml',
         'test/price_controlling_multicompany.yml',
-    ],
+        ],
     'installable': True,
     'auto_install': True,
     'active': False,
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -56,8 +56,11 @@ class product_product(orm.Model):
     # Trigger on product.product is set to None, otherwise do not trigg
     # on product creation !
     _cost_price_triggers = {
-        'product.product': (lambda self, cr, uid, ids, context=None: ids, None, 10),
-        'product.template': (_get_product_from_template, ['standard_price'], 10),
+        'product.product': (lambda self, cr, uid, ids, context=None:
+                            ids, None, 10),
+        'product.template': (_get_product_from_template,
+                             ['standard_price'],
+                             10),
     }
 
     _columns = {

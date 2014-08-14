@@ -69,12 +69,12 @@ CREATE OR REPLACE view report_stock_move AS (
             -- *** BEGIN of changes ***
             sum(
                 (CASE WHEN sp.type in ('in') THEN
-                         (sm.product_qty * pu.factor / pu2.factor) * pp.cost_price
+                      (sm.product_qty * pu.factor / pu2.factor) * pp.cost_price
                       ELSE 0.0
                 END)
                 -
                 (CASE WHEN sp.type in ('out') THEN
-                         (sm.product_qty * pu.factor / pu2.factor) * pp.cost_price
+                      (sm.product_qty * pu.factor / pu2.factor) * pp.cost_price
                       ELSE 0.0
                 END)
             ) as value
@@ -119,9 +119,18 @@ CREATE OR REPLACE view report_stock_inventory AS (
         m.company_id,
         m.state as state, m.prodlot_id as prodlot_id,
         -- *** BEGIN of changes ***
-        coalesce(sum(-pp.cost_price * m.product_qty * pu.factor / pu2.factor)::decimal, 0.0) as value,
+        coalesce(sum(-pp.cost_price
+                     * m.product_qty
+                     * pu.factor
+                     / pu2.factor)::decimal,
+                  0.0)
+            as value,
         -- *** END OF CHANGES ***
-        coalesce(sum(-m.product_qty * pu.factor / pu2.factor)::decimal, 0.0) as product_qty
+        coalesce(sum(-m.product_qty
+                     * pu.factor
+                     / pu2.factor)::decimal,
+                 0.0)
+            as product_qty
     FROM
         stock_move m
             LEFT JOIN stock_picking p ON (m.picking_id=p.id)
@@ -143,13 +152,22 @@ CREATE OR REPLACE view report_stock_inventory AS (
         to_char(m.date, 'YYYY') as year,
         to_char(m.date, 'MM') as month,
         m.partner_id as partner_id, m.location_dest_id as location_id,
-        m.product_id as product_id, pt.categ_id as product_categ_id, l.usage as location_type, l.scrap_location as scrap_location,
+        m.product_id as product_id,
+        pt.categ_id as product_categ_id,
+        l.usage as location_type,
+        l.scrap_location as scrap_location,
         m.company_id,
         m.state as state, m.prodlot_id as prodlot_id,
         -- *** BEGIN of changes ***
-        coalesce(sum(pp.cost_price * m.product_qty * pu.factor / pu2.factor)::decimal, 0.0) as value,
+        coalesce(sum(pp.cost_price
+                     * m.product_qty
+                     * pu.factor / pu2.factor)::decimal,
+                  0.0) as value,
         -- *** END OF CHANGES ***
-        coalesce(sum(m.product_qty * pu.factor / pu2.factor)::decimal, 0.0) as product_qty
+        coalesce(sum(m.product_qty
+                     * pu.factor
+                     / pu2.factor)::decimal,
+                 0.0) as product_qty
     FROM
         stock_move m
             LEFT JOIN stock_picking p ON (m.picking_id=p.id)

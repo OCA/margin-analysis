@@ -2,7 +2,7 @@
 from openerp.osv.orm import Model
 from openerp.osv import fields
 import decimal_precision as dp
-import logging
+
 
 class product_product(Model):
     _inherit = 'product.product'
@@ -17,11 +17,16 @@ class product_product(Model):
 
     _columns = {
         'fixed_cost_price': fields.float(
-            'Fixed Cost Price', digits_compute = dp.get_precision('Sale Price')),
-        'cost_price': fields.function(_cost_price,
-                                      string='Cost Price',
-                                      digits_compute=dp.get_precision('Sale Price'),
-                                      help="The cost price is the standard price unless you install the product_cost_incl_bom module.")
+            'Fixed Cost Price',
+            digits_compute=dp.get_precision('Sale Price')
+            ),
+        'cost_price': fields.function(
+            _cost_price,
+            string='Cost Price',
+            digits_compute=dp.get_precision('Sale Price'),
+            help="The cost price is the standard price unless you install the "
+                 "product_cost_incl_bom module."
+            )
         }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

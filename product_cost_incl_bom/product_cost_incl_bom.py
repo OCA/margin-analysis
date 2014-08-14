@@ -148,12 +148,14 @@ class product_product(orm.Model):
                 continue
             bom = bom_obj.browse(cr, uid, bom_id, context=context)
             if bom.type == 'phantom' and not bom.bom_lines:
-                continue # work around lp:1281054 calling _bom_explode in that
-                         # case will cause an infinite recursion
-            subproducts, routes = bom_obj._bom_explode(cr, uid, bom,
-                                                       factor=1,
-                                                       properties=bom_properties,
-                                                       addthis=True)
+                # work around lp:1281054 calling _bom_explode in
+                # that case will cause an infinite recursion
+                continue
+            subproducts, routes = bom_obj._bom_explode(
+                cr, uid, bom,
+                factor=1,
+                properties=bom_properties,
+                addthis=True)
             # set the dependencies of "product_id"
             depends[product_id].update([sp['product_id'] for sp in
                                         subproducts])
@@ -180,7 +182,7 @@ class product_product(orm.Model):
         computed.update(costs)
 
         for product_id in ordered:
-            if not product_id in ids:
+            if product_id not in ids:
                 # the product is a dependency so it appears in the
                 # topological sort, but the cost price should not be
                 # recomputed
@@ -301,7 +303,8 @@ class product_product(orm.Model):
 
     def _get_product_from_template2(self, cr, uid, ids, context=None):
         prod_obj = self.pool.get('product.product')
-        res = prod_obj._get_product_from_template(cr, uid, ids, context=context)
+        res = prod_obj._get_product_from_template(cr, uid, ids,
+                                                  context=context)
         return res
 
     # Trigger on product.product is set to None, otherwise do not trigg

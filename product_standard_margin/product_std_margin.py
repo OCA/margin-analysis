@@ -30,7 +30,7 @@ _logger = logging.getLogger(__name__)
 class Product(orm.Model):
     _inherit = 'product.product'
 
-    #TODO : compute the margin with default taxes
+    # TODO : compute the margin with default taxes
     def _amount_tax_excluded(self, cr, uid, ids, context=None):
         """ Compute the list price total without tax
 
@@ -48,7 +48,11 @@ class Product(orm.Model):
         tax_obj = self.pool.get('account.tax')
         for prod in self.browse(cr, uid, ids, context=context):
             price = prod.list_price
-            taxes = tax_obj.compute_all(cr, uid, prod.taxes_id, price, 1, product=prod.id)
+            taxes = tax_obj.compute_all(cr, uid,
+                                        prod.taxes_id,
+                                        price,
+                                        1,
+                                        product=prod.id)
             res[prod.id] = taxes['total']
         return res
 
@@ -86,13 +90,15 @@ class Product(orm.Model):
             sale = self._amount_tax_excluded(cr, user,
                                              [product['id']],
                                              context=context)[product['id']]
-            res[product['id']]['standard_margin'] = sale - cost
+            _res = res[product['id']]
+            _res['standard_margin'] = sale - cost
             if sale == 0:
                 _logger.debug("Sale price for product ID %d is 0, cannot "
-                              "compute margin rate...", product['id'])
-                res[product['id']]['standard_margin_rate'] = 999.
+                              "compute margin rate...",
+                              product['id'])
+                _res['standard_margin_rate'] = 999.
             else:
-                res[product['id']]['standard_margin_rate'] = (sale - cost) / sale * 100
+                _res['standard_margin_rate'] = (sale - cost) / sale * 100
         return res
 
     _columns = {

@@ -58,7 +58,8 @@ class product_product(orm.Model):
                                     if not field_flag:
                                         field_flag = True
         if self._columns[field_name]._multi:
-            raise ValueError('multi is not supported on the %s field' % field_name)
+            raise ValueError('multi is not supported on the %s field'
+                             % field_name)
         # use admin user for accessing objects having rules defined on
         # store fields
         result = self._columns[field_name].get(cr, self, ids,
@@ -133,13 +134,13 @@ class product_product(orm.Model):
             fields = []
         else:
             fields = fields[:]  # avoid to modify the callee's list
-        if fields and not 'id' in fields:
+        if fields and 'id' not in fields:
             fields.append('id')
         pt_obj = self.pool.get('product.template')
 
         historized_fields = [f for f in fields if f in PRODUCT_FIELD_HISTORIZE]
         remove_tmpl_field = False
-        if fields and not 'product_tmpl_id' in fields and historized_fields:
+        if fields and 'product_tmpl_id' not in fields and historized_fields:
             remove_tmpl_field = True
             fields.append('product_tmpl_id')
 
@@ -147,7 +148,7 @@ class product_product(orm.Model):
                                                           fields,
                                                           context=context,
                                                           load=load)
-         # Note if fields is empty => read all, so look at history table
+        # Note if fields is empty => read all, so look at history table
         if not fields or historized_fields:
             date_crit = False
             price_history = self.pool.get('product.price.history')
@@ -196,7 +197,8 @@ class product_product(orm.Model):
                              ['id', 'qty_available', 'cost_price'],
                              context=context)
         for product in products:
-            res[product['id']] = product['qty_available'] * product['cost_price']
+            res[product['id']] = (product['qty_available']
+                                  * product['cost_price'])
         return res
 
     # Trigger on product.product is set to None, otherwise do not trigg

@@ -55,8 +55,10 @@ class product_price_history(orm.Model):
         'product_id': fields.many2one('product.template', 'Product',
                                       required=True),
         'datetime': fields.datetime('Date'),
-        'amount': fields.float('Amount',
-                               digits_compute=dp.get_precision('Product Price')),
+        'amount': fields.float(
+            'Amount',
+            digits_compute=dp.get_precision('Product Price')
+            ),
     }
 
     def _get_default_company(self, cr, uid, context=None):
@@ -136,7 +138,8 @@ class product_product(orm.Model):
         _logger.debug("product value get, result :%s, context: %s",
                       products, context)
         for product in products:
-            res[product['id']] = product['qty_available'] * product['standard_price']
+            res[product['id']] = (product['qty_available']
+                                  * product['standard_price'])
         return res
 
     _columns = {
@@ -154,16 +157,23 @@ class product_product(orm.Model):
     def open_product_historic_prices(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        prod_tpl_obj = self.pool.get('product.template')
         prod_tpl_ids = []
         for product in self.browse(cr, uid, ids, context=context):
             if product.product_tmpl_id.id not in prod_tpl_ids:
                 prod_tpl_ids.append(product.product_tmpl_id.id)
-        res = self.pool.get('ir.actions.act_window').for_xml_id(cr, uid, 
-            'product_price_history', 'action_price_history', context=context)
-        res['domain'] = expression.AND([res.get('domain', []), 
-            [('product_id', 'in', prod_tpl_ids)]])
+        res = self.pool.get('ir.actions.act_window').for_xml_id(
+            cr, uid,
+            'product_price_history',
+            'action_price_history',
+            context=context
+            )
+        res['domain'] = expression.AND(
+            [res.get('domain', []),
+             [('product_id', 'in', prod_tpl_ids)],
+             ]
+            )
         return res
+
 
 class product_template(orm.Model):
     _inherit = "product.template"
@@ -181,7 +191,11 @@ class product_template(orm.Model):
                                        amount, context=context)
         return True
 
-    def _log_price_change(self, cr, uid, product, field_name, amount, context=None):
+    def _log_price_change(self, cr, uid,
+                          product,
+                          field_name,
+                          amount,
+                          context=None):
         """
         On change of price create a price_history
         :param int product value of new product or product_id
@@ -209,12 +223,13 @@ class product_template(orm.Model):
 
     def _get_transaction_company_id(self, cr, uid, context=None):
         """
-        As it may happend that OpenERP force the uid to 1 to bypass
-        rule (in function field), we may sometimes read the price of the company
-        of user id 1 instead of the good one. Because we found the real uid
-        and company_id in the context in that case, I return this one. It also
-        allow other module to give the proper company_id in the context
-        (like it's done in product_standard_margin for example).
+        As it may happend that OpenERP force the uid to 1 to bypass rule (in
+        function field), we may sometimes read the price of the company of user
+        id 1 instead of the good one. Because we found the real uid and
+        company_id in the context in that case, I return this one. It also
+        allow other module to give the proper company_id in the context (like
+        it's done in product_standard_margin for example).
+
         If company_id not in context, take the one from uid.
         """
         res = uid
@@ -246,7 +261,7 @@ class product_template(orm.Model):
                                                            fields,
                                                            context=context,
                                                            load=load)
-         # Note if fields is empty => read all, so look at history table
+        # Note if fields is empty => read all, so look at history table
         if not fields or any([f in PRODUCT_FIELD_HISTORIZE for f in fields]):
             date_crit = False
             p_history = self.pool.get('product.price.history')
