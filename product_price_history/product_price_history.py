@@ -323,8 +323,7 @@ class price_type(orm.Model):
     _inherit = "product.price.type"
 
     _columns = {
-        'company_id': fields.many2one('res.company', 'Company',
-                                      required=True),
+        'company_id': fields.many2one('res.company', 'Company'),
     }
 
     def _get_default_company(self, cr, uid, context=None):
