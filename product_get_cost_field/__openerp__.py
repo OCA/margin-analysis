@@ -19,27 +19,34 @@
 #
 ##############################################################################
 {'name': 'Product Cost field',
- 'version': '1.0.1',
+ 'version': '1.1',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Products',
- 'complexity': "normal",  # easy, normal, expert
  'depends': [
      'product',
      ],
  'description': """
-Product Cost field
-==================
+Product Cost
+============
 
-Provides an overridable method on product which compute the cost_price field of
-a product. By default it just return the value of standard_price field, but
-using the product_cost_incl_bom module, it will return the costing from the
-bom.
+This module brings a clear distinction between the product's value and the
+cost price. The "Value" is the cost which goes in the accounting at the time
+of the yearly inventory.
+The "Cost Price" on the other hand is the cost that we have to support in
+order to produce or acquire the goods.
+Depending on your business, both prices may or may not be the same.
+
+This module adds a new cost_price field and provides an overridable method on
+product to compute it.
+By default it just returns the value of the standard_price field ("Value"),
+but optionally it could include the costing from the bill of materials
+(see product_cost_incl_bom module).
 
 As it is a generic module, you can also setup your own way of computing the
 cost_price for your product.
 
-All our modules to compute margin are based on it, so you'll ba able to use
+All OCA modules to compute margins are based on it, so you'll be able to use
 them in your own way.
 
 Contributors
@@ -53,12 +60,8 @@ Contributors
  'data': [
      'product_view.xml'
      ],
- 'demo': [],
  'test': [
      'test/cost_price_update.yml',
      ],
- 'installable': True,
- 'auto_install': False,
  'license': 'AGPL-3',
- 'application': False
  }

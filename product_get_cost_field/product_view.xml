@@ -3,27 +3,33 @@
   <data>
     <record model="ir.ui.view" id="product_get_cost_field_form">
       <field name="name">product.get_cost_field.view.form</field>
-      <field name="type">form</field>
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_normal_form_view" />
       <field name="arch" type="xml">
-          <field name="cost_method" groups="product.group_costing_method" position="after">
-              <field name="cost_price"/> 
+        <!-- Add the cost price -->
+        <field name="cost_method" position="before">
+            <field name="cost_price"/> 
+        </field>
+        <!-- Rename "Cost" to "Inventory Value" -->
+        <field name="standard_price" position="attributes">
+          <attribute name="string">Inventory Value</attribute>
+        </field>
+        <field name="cost_method" position="attributes">
+            <attribute name="string">Valuation Method</attribute>
         </field>
       </field>
     </record>
 
     <record model="ir.ui.view" id="product_get_cost_field_tree">
       <field name="name">product.get_cost_field.view.tree</field>
-      <field name="type">tree</field>
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_product_tree_view" />
       <field name="arch" type="xml">
-        <field name="standard_price" position="after">
+        <field name="standard_price" position="before">
           <field name="cost_price"/>
         </field>
         <field name="standard_price" position="attributes">
-          <attribute name="invisible">1</attribute>
+          <attribute name="string">Inventory Value</attribute>
         </field>
       </field>
     </record>
