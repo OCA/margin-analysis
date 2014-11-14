@@ -222,11 +222,14 @@ class product_product(orm.Model):
         'cost_price': fields.function(
             _cost_price,
             store=_cost_price_triggers,
-            string='Cost Price (incl. BoM)',
+            string='Replenishment cost',
             digits_compute=dp.get_precision('Product Price'),
-            help="The cost price is the standard price or, if the product has "
-                 "a bom, the sum of all standard price of its components. it "
-                 "take also care of the bom costing like cost per cylce."),
+            help="The cost that you have to support in order to produce or "
+                 "acquire the goods. Depending on the modules installed, "
+                 "this cost may be computed based on various pieces of "
+                 "information, for example Bills of Materials or latest "
+                 "Purchases. By default, the Replenishment cost is the same "
+                 "as the Cost Price."),
         'value_available': fields.function(
             _product_value,
             type='float', digits_compute=dp.get_precision('Product Price'),

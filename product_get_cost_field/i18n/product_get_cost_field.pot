@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-05 15:57+0000\n"
-"PO-Revision-Date: 2013-11-05 15:57+0000\n"
+"POT-Creation-Date: 2014-10-30 16:51+0000\n"
+"PO-Revision-Date: 2014-10-30 16:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,18 +16,19 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_get_cost_field
-#: help:product.product,cost_price:0
-msgid "The cost price is the standard price or, if the product has a bom, the sum of all standard price of its components. it take also care of the bom costing like cost per cylce."
+#: field:product.product,cost_price:0
+msgid "Replenishment cost"
 msgstr ""
 
 #. module: product_get_cost_field
+#: code:_description:0
 #: model:ir.model,name:product_get_cost_field.model_product_product
+#, python-format
 msgid "Product"
 msgstr ""
 
 #. module: product_get_cost_field
-#: model:ir.model.fields,field_description:product_get_cost_field.field_product_product_cost_price
-#: field:product.product,cost_price:0
-msgid "Cost Price (incl. BoM)"
+#: help:product.product,cost_price:0
+msgid "The cost that you have to support in order to produce or acquire the goods. Depending on the modules installed, this cost may be computed based on various pieces of information, for example Bills of Materials or latest Purchases. By default, the Replenishment cost is the same as the Cost Price."
 msgstr ""
 

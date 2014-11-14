@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name': 'Product Cost field Report',
+{'name': 'Replenishment Cost Report',
  'version': '1.0',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
@@ -28,12 +28,13 @@
              'stock',
              ],
  'description': """
-Product Cost field Report
+Replenishment Cost Report
 =========================
 
 This module override the reporting view of OpenERP to replace the
-standard_price field used by the new cost_price one. This way all reporting of
-OpenERP will now take this field into account and display the correct result.
+Cost price field used with the Replenishment cost one. This way all reporting
+of OpenERP will now take this field into account and display the correct
+result.
 
 We're talking here about the reporting found under: Reporting -> Warehouse
 
