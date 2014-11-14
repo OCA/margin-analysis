@@ -25,6 +25,7 @@ from openerp.tools import mute_logger
 
 
 class historic_prices(orm.TransientModel):
+
     """ Will display an inventory valuation of the stock with quantity > 0
         at the given date.
     """
@@ -139,7 +140,7 @@ class historic_prices(orm.TransientModel):
         if wiz.get('to_date'):
             ctx.update(
                 to_date=wiz.get('to_date')
-                )
+            )
         displayed_ids = self._get_product_qty(cr, uid, context=ctx)
         domain = [('id', 'in', displayed_ids)]
         d_obj = self.pool.get('ir.model.data')
@@ -149,7 +150,7 @@ class historic_prices(orm.TransientModel):
             cr, uid,
             'product_price_history',
             'view_product_price_history'
-            )
+        )
         if filter_ids:
             filter_id = filter_ids[1]
         else:
@@ -164,4 +165,4 @@ class historic_prices(orm.TransientModel):
             'view_id': product_view_id[1],
             'domain': domain,
             'search_view_id': filter_id,
-            }
+        }

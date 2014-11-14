@@ -26,7 +26,7 @@
  'complexity': "normal",  # easy, normal, expert
  'depends': [
      'product',
-     ],
+ ],
  'description': """
 Product Cost field
 ==================
@@ -52,11 +52,11 @@ Contributors
  'website': 'http://www.camptocamp.com/',
  'data': [
      'product_view.xml'
-     ],
+ ],
  'demo': [],
  'test': [
      'test/cost_price_update.yml',
-     ],
+ ],
  'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',

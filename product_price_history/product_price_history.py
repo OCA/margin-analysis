@@ -58,7 +58,7 @@ class product_price_history(orm.Model):
         'amount': fields.float(
             'Amount',
             digits_compute=dp.get_precision('Product Price')
-            ),
+        ),
     }
 
     def _get_default_company(self, cr, uid, context=None):
@@ -166,12 +166,12 @@ class product_product(orm.Model):
             'product_price_history',
             'action_price_history',
             context=context
-            )
+        )
         res['domain'] = expression.AND(
             [res.get('domain', []),
              [('product_id', 'in', prod_tpl_ids)],
              ]
-            )
+        )
         return res
 
 
@@ -314,6 +314,7 @@ class product_template(orm.Model):
 
 
 class price_type(orm.Model):
+
     """
         The price type is used to points which field in the product form
         is a price and in which currency is this price expressed.

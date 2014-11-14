@@ -33,10 +33,11 @@ class account_invoice(orm.Model):
         return super(account_invoice, self)._refund_cleanup_lines(
             cr, uid,
             lines, context=context
-            )
+        )
 
 
 class account_invoice_line(orm.Model):
+
     """
     The goal on the invoice line model is only to store the minimum needed
     values to allow analysis and computation of margin at product level.
@@ -137,7 +138,7 @@ class account_invoice_line(orm.Model):
                 subtotal_cost_price_company,
                 round=False,
                 context=context
-                )
+            )
             margin_absolute = subtotal_company - subtotal_cost_price_company
             if subtotal_company == 0:
                 margin_relative = 999.
@@ -149,7 +150,7 @@ class account_invoice_line(orm.Model):
                 'subtotal_company': subtotal_company,
                 'margin_absolute': margin_absolute,
                 'margin_relative': margin_relative,
-                }
+            }
             _logger.debug("The following values has been computed for "
                           "product ID %d: subtotal_cost_price=%f "
                           "subtotal_cost_price_company=%f, "
@@ -204,7 +205,7 @@ class account_invoice_line(orm.Model):
             digits_compute=dp.get_precision('Account'),
             help="The cost subtotal of the line at the time of the creation "
                  "of the invoice, express in the invoice currency."
-            ),
+        ),
         'subtotal_company': fields.function(
             _compute_line_values,
             method=True,
@@ -219,7 +220,7 @@ class account_invoice_line(orm.Model):
                  "currency (computed with the rate at invoice creation time, "
                  "as we don't have the cost price of the product at the date "
                  "of the invoice)."
-            ),
+        ),
         'margin_absolute': fields.function(
             _compute_line_values,
             method=True,
@@ -231,7 +232,7 @@ class account_invoice_line(orm.Model):
             digits_compute=dp.get_precision('Account'),
             group_operator="sum",
             help="The Real Margin [ net sale - cost ] of the line."
-            ),
+        ),
         'margin_relative': fields.function(
             _compute_line_values,
             method=True,
@@ -244,7 +245,7 @@ class account_invoice_line(orm.Model):
             help="The Real Margin % [ (Real Margin / net sale) * 100 ] "
                  "of the line. If no real margin set, will display 999.0 "
                  "(if not invoiced yet for example)."
-            ),
+        ),
         # Those field are here to better report to the user from where the
         # margin is computed this will allow him to understand why a margin is
         # of that amount using the link from product to invoice lines
@@ -258,11 +259,11 @@ class account_invoice_line(orm.Model):
                 ('open', 'Open'),
                 ('paid', 'Paid'),
                 ('cancel', 'Cancelled')
-                ],
+            ],
             readonly=True,
             string="Invoice state",
             help='The parent invoice state'
-            ),
+        ),
         'invoice_type': fields.related(
             'invoice_id', 'type',
             type='selection',
@@ -272,25 +273,25 @@ class account_invoice_line(orm.Model):
                 ('in_invoice', 'Supplier Invoice'),
                 ('out_refund', 'Customer Refund'),
                 ('in_refund', 'Supplier Refund'),
-                ],
+            ],
             readonly=True,
             string="Invoice type",
             help='The parent invoice type'
-            ),
+        ),
         'invoice_user_id': fields.related(
             'invoice_id', 'user_id',
             type='many2one',
             relation='res.users',
             string='Salesman',
             store=True
-            ),
+        ),
         'invoice_date': fields.related(
             'invoice_id', 'date_invoice',
             type='date',
             string='Invoice Date'
-            ),
+        ),
 
-        }
+    }
 
     def read_group(self, cr, uid, domain, fields, groupby,
                    offset=0, limit=None, context=None, orderby=False):

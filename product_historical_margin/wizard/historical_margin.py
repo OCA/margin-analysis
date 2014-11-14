@@ -46,19 +46,19 @@ class historical_margin(TransientModel):
             'From',
             help='Date of the first invoice to take into account. '
             'The earliest existing invoice will be used if left empty'
-            ),
+        ),
         'to_date': fields.date(
             'To', help='Date of the last invoice to take into account. '
             'The latest existing invoice will be used if left empty'
-            ),
+        ),
         'product_ids': fields.many2many(
             'product.product', string='Products'),
-        }
+    }
     _defaults = {
         'from_date': time.strftime('%Y-01-01'),
         'to_date': time.strftime('%Y-12-31'),
         'product_ids': _get_product_ids,
-        }
+    }
 
     def action_open_window(self, cr, uid, ids, context=None):
         """
@@ -75,18 +75,18 @@ class historical_margin(TransientModel):
         ctx.update(
             from_date=wiz.get('from_date'),
             to_date=wiz.get('to_date')
-            )
+        )
         product_ids = wiz.get('product_ids')
         data_pool = self.pool.get('ir.model.data')
         filter_ids = data_pool.get_object_reference(
             cr, uid, 'product',
             'product_search_form_view'
-            )
+        )
         product_view_id = data_pool.get_object_reference(
             cr, uid,
             'product_historical_margin',
             'view_product_historical_margin'
-            )
+        )
         if filter_ids:
             filter_id = filter_ids[1]
         else:
@@ -122,4 +122,4 @@ class historical_margin(TransientModel):
             'res_model': 'product.product',
             'view_id': product_view_id[1],
             'search_view_id': filter_id,
-            }
+        }
