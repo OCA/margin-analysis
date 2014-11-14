@@ -42,7 +42,7 @@ class product_product(Model):
         'fixed_cost_price': fields.float(
             'Fixed Cost Price',
             digits_compute=dp.get_precision('Sale Price')
-            ),
+        ),
         'cost_price': fields.function(
             _cost_price,
             string='Cost Price (incl. BoM)',
@@ -51,6 +51,6 @@ class product_product(Model):
                  "has a BoM, the sum of all standard prices of its "
                  "components. It also takes care of the BoM costing like cost "
                  "per cycle.")
-        }
+    }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -79,12 +79,12 @@ Contributors
         'report_stock_view.xml',
         'security/ir.model.access.csv',
         'security/product_price_history_security.xml',
-        ],
+    ],
     'test': [
         'test/price_controlling_multicompany.yml',
         'test/avg_price_computation_mutlicompanies_multicurrencies.yml',
         'test/price_historization.yml',
-        ],
+    ],
     'installable': True,
     'active': False,
 }

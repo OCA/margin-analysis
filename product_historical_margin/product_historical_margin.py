@@ -87,7 +87,7 @@ class product_product(orm.Model):
         substs.update(
             product_ids=tuple(res),
             company_id=company_id
-            )
+        )
         date_clause = []
         if 'from_date' in substs:
             date_clause.append('inv.date_invoice >= %(from_date)s AND')
@@ -120,7 +120,7 @@ class product_product(orm.Model):
             help="The Real Margin [ sale price - cost price ] of the product "
                  "in absolute value based on historical values computed from "
                  "open and paid invoices."
-            ),
+        ),
         'margin_relative': fields.function(
             _compute_margin, method=True,
             readonly=True, type='float',
@@ -131,5 +131,5 @@ class product_product(orm.Model):
                  "in relative value based on historical values computed from "
                  "open and paid invoices. If no real margin set, will display "
                  "999.0 (if not invoiced yet for example)."
-            ),
-        }
+        ),
+    }

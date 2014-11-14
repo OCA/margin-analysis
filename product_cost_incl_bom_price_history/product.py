@@ -236,4 +236,4 @@ class product_product(orm.Model):
                  "This is using the product historize price incl. BoM."
                  "In a context with a single Stock Location, this includes "
                  "goods stored at this Location, or any of its children."),
-        }
+    }
