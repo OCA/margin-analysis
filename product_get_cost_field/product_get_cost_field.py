@@ -60,14 +60,25 @@ class product_product(orm.Model):
                                    context=context)
         return prod_ids
 
+    def _get_product_from_product(self, cr, uid, ids, context=None):
+        """Products we need to update when a product is updated
+        
+        Trivial here but other modules introduce BoMs in the computation
+        for example"""
+        return ids
+
     # Trigger on product.product is set to None, otherwise do not trigger
     # on product creation !
     _cost_price_triggers = {
-        'product.product': (lambda self, cr, uid, ids, context=None:
-                            ids, None, 10),
-        'product.template': (_get_product_from_template,
-                             ['standard_price'],
-                             10),
+        'product.product': (
+            lambda self, cr, uid, ids, context=None:
+                self._get_product_from_product(cr, uid, ids, context=context),
+            None, 10),
+        'product.template': (
+            lambda self, cr, uid, ids, context=None:
+                self.pool['product.product']._get_product_from_template(
+                    cr, uid, ids, context=context),
+            ['standard_price'], 10),
     }
 
     _columns = {

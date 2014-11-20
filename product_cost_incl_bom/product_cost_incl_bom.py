@@ -29,6 +29,26 @@ import openerp.addons.decimal_precision as dp
 _logger = logging.getLogger(__name__)
 
 
+# This is defined as a function, not a method, because we're going to inject
+# it directly via product_product.__init__(), and that's how
+# fields.function.__init__() sees it usually
+def _get_product(self, cr, uid, ids, context=None):
+    """ Return all product impacted from a change in a bom, that means
+    current product and all parent that is composed by it.
+
+    """
+    bom_obj = self.pool.get('mrp.bom')
+    prod_obj = self.pool.get('product.product')
+    res = set()
+    for bom in bom_obj.read(cr, uid, ids, ['product_id'], context=context):
+        res.add(bom['product_id'][0])
+    final_res = prod_obj._get_product_from_product(cr, uid,
+                                          list(res),
+                                          context=context)
+    _logger.debug("trigger on mrp.bom model for product ids %s", final_res)
+    return final_res
+
+
 def topological_sort(data):
     """ Topological sort on a dict expressing dependencies.
 
@@ -144,7 +164,7 @@ class product_product(orm.Model):
             bom_id = bom_obj._bom_find(cr, uid, product_id,
                                        product_uom=product_uom,
                                        properties=bom_properties)
-            if not bom_id:  # no BoM: use standard_price
+            if not bom_id:  # no BoM: use cost computed in the superclass
                 continue
             bom = bom_obj.browse(cr, uid, bom_id, context=context)
             if bom.type == 'phantom' and not bom.bom_lines:
@@ -177,6 +197,8 @@ class product_product(orm.Model):
         no_bom_ids = [p_id for p_id in ordered if
                       p_id not in product_bom and
                       p_id in ids]
+        _logger.debug("Products without a BoM (cost won't be recomputed): %s"
+                      % no_bom_ids)
         costs = super(product_product, self)._compute_purchase_price(
             cr, uid, no_bom_ids, context=context)
         computed.update(costs)
@@ -190,9 +212,10 @@ class product_product(orm.Model):
             if product_id not in product_bom:
                 # already computed with ``super``
                 continue
-
             cost = 0.
             subproduct_infos = product_bom[product_id]['subproducts']
+            _logger.debug("Computing cost of %s (%s)" % (product_id,
+                                                         subproduct_infos))
             for subproduct_info in subproduct_infos:
                 subproduct_id = subproduct_info['product_id']
                 subproduct = subproduct_costs[subproduct_id]
@@ -201,6 +224,8 @@ class product_product(orm.Model):
                 # the subproducts are always computed before their
                 # parents
                 subcost = computed.get(subproduct_id, subproduct['cost_price'])
+                _logger.debug('Cost of component %s: %s' % (subproduct_id,
+                                                            subcost))
                 qty = uom_obj._compute_qty(
                     cr, uid,
                     from_uom_id=subproduct_info['product_uom'],
@@ -213,8 +238,8 @@ class product_product(orm.Model):
                 for wline in bom.routing_id.workcenter_lines:
                     wc = wline.workcenter_id
                     cycle = wline.cycle_nbr
-                    hour = ((wc.time_start + wc.time_stop +
-                             cycle * wc.time_cycle) *
+                    hour = ((wc.time_start + wc.time_stop + 
+                             cycle * wc.time_cycle) * 
                             (wc.time_efficiency or 1.0))
                     cost += wc.costs_cycle * cycle + wc.costs_hour * hour
             cost /= bom.product_qty
@@ -224,12 +249,10 @@ class product_product(orm.Model):
                 cost, bom.product_id.uom_id.id)
             computed[product_id] = cost
 
+        _logger.debug("Costs with BoM: %s" % computed)
         return computed
 
-    def _cost_price(self, cr, uid, ids, field_name, arg, context=None):
-        return self._compute_purchase_price(cr, uid, ids, context=context)
-
-    def _get_bom_product(self, cr, uid, ids, context=None):
+    def _get_product_from_product(self, cr, uid, ids, context=None):
         """ return ids of modified product and ids of all product that use
         as sub-product one of this ids.
 
@@ -259,6 +282,7 @@ class product_product(orm.Model):
         bom_ids = bom_obj.search(cr, uid, [('product_id', 'in', ids)],
                                  context=context)
         if not bom_ids:
+            _logger.debug("No BoM, not extending the product list")
             return ids
 
         boms = bom_obj.browse(cr, uid, bom_ids, context=context)
@@ -271,27 +295,12 @@ class product_product(orm.Model):
             cr, uid, list(parent_bom_ids), context=context)
         product_ids.update(bom_product_ids)
         # recurse in the other BoMs to find all the product ids
-        recurs_ids = self._get_bom_product(cr, uid,
+        recurs_ids = self._get_product_from_product(cr, uid,
                                            bom_product_ids,
                                            context=context)
         product_ids.update(recurs_ids)
+        _logger.debug("Extended Products from %s to %s" % (ids, product_ids))
         return list(product_ids)
-
-    def _get_product(self, cr, uid, ids, context=None):
-        """ Return all product impacted from a change in a bom, that means
-        current product and all parent that is composed by it.
-
-        """
-        bom_obj = self.pool.get('mrp.bom')
-        prod_obj = self.pool.get('product.product')
-        res = set()
-        for bom in bom_obj.read(cr, uid, ids, ['product_id'], context=context):
-            res.add(bom['product_id'][0])
-        final_res = prod_obj._get_bom_product(cr, uid,
-                                              list(res),
-                                              context=context)
-        _logger.debug("trigger on mrp.bom model for product ids %s", final_res)
-        return final_res
 
     def _get_product_id_from_bom(self, cr, uid, ids, context=None):
         """ Return a list of product ids from bom """
@@ -301,40 +310,24 @@ class product_product(orm.Model):
             res.add(bom['product_id'][0])
         return list(res)
 
-    def _get_product_from_template2(self, cr, uid, ids, context=None):
-        prod_obj = self.pool.get('product.product')
-        res = prod_obj._get_product_from_template(cr, uid, ids,
-                                                  context=context)
-        return res
+    # Initialization (no context)
+    def __init__(self, pool, cr):
+        """Add a new trigger to update the cost based on BoMs
 
-    # Trigger on product.product is set to None, otherwise do not trigg
-    # on product creation !
-    _cost_price_triggers = {
-        'product.product': (_get_bom_product, None, 5),
-        'product.template': (_get_product_from_template2,
-                             ['standard_price'], 5),
-        'mrp.bom': (_get_product,
-                    ['bom_id',
-                     'bom_lines',
-                     'product_id',
-                     'product_uom',
-                     'product_qty',
-                     'product_uos',
-                     'product_uos_qty',
-                     ],
-                    10)
-    }
-
-    _columns = {
-        'cost_price': fields.function(
-            _cost_price,
-            store=_cost_price_triggers,
-            string='Replenishment cost',
-            digits_compute=dp.get_precision('Product Price'),
-            help="The cost that you have to support in order to produce or "
-                 "acquire the goods. Depending on the modules installed, "
-                 "this cost may be computed based on various pieces of "
-                 "information, for example Bills of Materials or latest "
-                 "Purchases. By default, the Replenishment cost is the same "
-                 "as the Cost Price.")
-    }
+        Doing it in __init__ is more modular than copying and pasting the field
+        definition in _columns.
+        """
+        # TODO: new API in v8 probably let us do it in a simpler way
+        s = super(product_product, self)
+        s._cost_price_triggers['mrp.bom'] = (
+            _get_product,
+            ['bom_id',
+             'bom_lines',
+             'product_id',
+             'product_uom',
+             'product_qty',
+             'product_uos',
+             'product_uos_qty',
+            ],
+            10)
+        s.__init__(pool, cr)
