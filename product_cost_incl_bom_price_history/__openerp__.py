@@ -21,20 +21,20 @@
 ##############################################################################
 
 {
-    "name": "Product Cost incl. BoM and Price History",
-    "version": "1.2",
+    "name": "Replenishment Cost incl. BoM and Price History",
+    "version": "1.3",
     "author": "Camptocamp",
     "category": "Generic Modules/Inventory Control",
     "depends": ["product_cost_incl_bom",
                 "product_price_history",
                 ],
     "description": """
-Product Cost incl. BoM and Price History
-========================================
+Replenishment Cost incl. BoM and Price History
+==============================================
 
 This module make the glue between product_cost_incl_bom and
-product_price_history and allow to have your cost price computed from the
-component of the BoM, while having it also historized by company.
+product_price_history and allow to have your Replenishment cost computed from
+the component of the BoM, while having it also historized by company.
 
 It display now this value for the inventory valuation provided by
 product_price_history module.

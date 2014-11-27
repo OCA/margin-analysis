@@ -27,7 +27,7 @@ class report_stock_move(orm.Model):
 
     def init(self, cr):
         """
-        Override the SQL view tpo replace standard_price by cost_price
+        Override the SQL view to replace standard_price by cost_price
         """
         tools.drop_view_if_exists(cr, 'report_stock_move')
         cr.execute("""
@@ -104,7 +104,7 @@ class report_stock_inventory(orm.Model):
 
     def init(self, cr):
         """
-        Override the SQL view tpo replace standard_price by cost_price
+        Override the SQL view to replace standard_price by cost_price
         """
         tools.drop_view_if_exists(cr, 'report_stock_inventory')
         cr.execute("""

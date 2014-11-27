@@ -107,7 +107,7 @@ class product_product(orm.Model):
         The price of all theses products are computed at the same
         time in this function, the effect is that we should take:
 
-        1. to not read the cost price of a product in the browse_record,
+        1. to not read the cost of a product in the browse_record,
            if it is computed here because it has likely changed, but use
            the new cost instead
         2. compute the prices in a topological order, so we start at the
@@ -184,7 +184,7 @@ class product_product(orm.Model):
         for product_id in ordered:
             if product_id not in ids:
                 # the product is a dependency so it appears in the
-                # topological sort, but the cost price should not be
+                # topological sort, but the cost should not be
                 # recomputed
                 continue
             if product_id not in product_bom:
@@ -196,7 +196,7 @@ class product_product(orm.Model):
             for subproduct_info in subproduct_infos:
                 subproduct_id = subproduct_info['product_id']
                 subproduct = subproduct_costs[subproduct_id]
-                # The cost price could have been recomputed in an
+                # The cost could have been recomputed in an
                 # earlier iteration.  Thanks to the topological sort,
                 # the subproducts are always computed before their
                 # parents
@@ -329,10 +329,12 @@ class product_product(orm.Model):
         'cost_price': fields.function(
             _cost_price,
             store=_cost_price_triggers,
-            string='Cost Price (incl. BoM)',
+            string='Replenishment cost',
             digits_compute=dp.get_precision('Product Price'),
-            help="The cost price is the standard price or, if the "
-                 "product has a bom, the sum of all standard price "
-                 "of its components. it take also care of the bom "
-                 "costing like cost per cycle.")
+            help="The cost that you have to support in order to produce or "
+                 "acquire the goods. Depending on the modules installed, "
+                 "this cost may be computed based on various pieces of "
+                 "information, for example Bills of Materials or latest "
+                 "Purchases. By default, the Replenishment cost is the same "
+                 "as the Cost Price.")
     }
