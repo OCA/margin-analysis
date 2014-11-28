@@ -15,6 +15,7 @@
     company_id: 0
     standard_price: 50.0
     list_price: 75.0
+    supply_method: produce
 -
   Test the prices are updated correctly
 -
