@@ -185,7 +185,7 @@ class product_template(orm.Model):
         @param: int product ID
         """
         for field_name in PRODUCT_FIELD_HISTORIZE:
-            if values.get(field_name):
+            if field_name in values:
                 amount = values[field_name]
                 self._log_price_change(cr, uid, product, field_name,
                                        amount, context=context)
