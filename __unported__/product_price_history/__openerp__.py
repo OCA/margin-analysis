@@ -24,6 +24,7 @@
     "name" : "Product Price History",
     "version" : "1.2.2",
     "author" : "Camptocamp",
+    "license": "AGPL-3",
     "category" : "Generic Modules/Inventory Control",
     "depends" : ["product",
                  "purchase",
