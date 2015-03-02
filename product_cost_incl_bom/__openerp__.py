@@ -20,7 +20,7 @@
 ##############################################################################
 {'name' : 'Product Cost incl. BOM',
  'version' : '0.1',
- 'author' : 'Camptocamp',
+ 'author' : "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert
