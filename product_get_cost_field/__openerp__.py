@@ -20,7 +20,7 @@
 ##############################################################################
 {'name': 'Replenishment cost',
  'version': '1.0.3',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'depends': [

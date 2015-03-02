@@ -20,7 +20,7 @@
 ##############################################################################
 {'name': 'Replenishment Cost incl. BOM',
  'version': '1.1',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Products',
  'complexity': "normal",  # easy, normal, expert

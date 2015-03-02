@@ -23,7 +23,7 @@
 {
     "name": "Replenishment Cost incl. BoM and Price History",
     "version": "1.3",
-    "author": "Camptocamp",
+    "author": "Camptocamp,Odoo Community Association (OCA)",
     "category": "Generic Modules/Inventory Control",
     "depends": ["product_cost_incl_bom",
                 "product_price_history",

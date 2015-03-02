@@ -20,7 +20,7 @@
 ##############################################################################
 {'name': 'Markup rate on product and sales',
  'version': '1.0',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Sales Management',
  'complexity': "normal",  # easy, normal, expert
