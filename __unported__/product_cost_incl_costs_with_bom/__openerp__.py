@@ -20,7 +20,7 @@
 ##############################################################################
 {'name' : 'Product Cost field',
  'version' : '0.1',
- 'author' : 'Grishma Shukla',
+ 'author' : "Grishma Shukla,Odoo Community Association (OCA)",
  'maintainer': 'Endian Solutions',
  'category': 'Products',
  'complexity': "normal",  
