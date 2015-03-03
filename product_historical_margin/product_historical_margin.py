@@ -106,8 +106,8 @@ class product_product(orm.Model):
                               product_id)
                 _res['margin_relative'] = 999.
             else:
-                _res['margin_relative'] = (_res['margin_absolute']
-                                           / tot_sale[product_id]) * 100
+                margin = 100 * _res['margin_absolute'] / tot_sale[product_id]
+                _res['margin_relative'] = margin
         return res
 
     _columns = {

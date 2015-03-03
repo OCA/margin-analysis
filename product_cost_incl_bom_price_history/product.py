@@ -197,8 +197,8 @@ class product_product(orm.Model):
                              ['id', 'qty_available', 'cost_price'],
                              context=context)
         for product in products:
-            res[product['id']] = (product['qty_available']
-                                  * product['cost_price'])
+            res[product['id']] = (product['qty_available'] *
+                                  product['cost_price'])
         return res
 
     # Trigger on product.product is set to None, otherwise do not trigg
