@@ -138,8 +138,8 @@ class product_product(orm.Model):
         _logger.debug("product value get, result :%s, context: %s",
                       products, context)
         for product in products:
-            res[product['id']] = (product['qty_available']
-                                  * product['standard_price'])
+            res[product['id']] = (product['qty_available'] *
+                                  product['standard_price'])
         return res
 
     _columns = {

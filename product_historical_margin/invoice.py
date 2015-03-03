@@ -117,16 +117,16 @@ class account_invoice_line(orm.Model):
             else:
                 factor = 1.
 
-            subtotal_cost_price_company = (factor
-                                           * product['cost_price']
-                                           * obj.quantity)
+            subtotal_cost_price_company = (factor *
+                                           product['cost_price'] *
+                                           obj.quantity)
             # Convert price_subtotal from invoice currency to company currency
-            subtotal_company = (factor
-                                * currency_obj.compute(cr, uid, currency_id,
-                                                       company_currency_id,
-                                                       obj.price_subtotal,
-                                                       round=False,
-                                                       context=context)
+            subtotal_company = (factor *
+                                currency_obj.compute(cr, uid, currency_id,
+                                                     company_currency_id,
+                                                     obj.price_subtotal,
+                                                     round=False,
+                                                     context=context)
                                 )
             # Compute the subtotal_cost_price values from company currency in
             # invoice currency
