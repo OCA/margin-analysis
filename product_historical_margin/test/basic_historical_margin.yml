@@ -30,6 +30,7 @@
     partner_id: res_partner_customer01
     note: Invoice Manual
     order_policy: manual
+    picking_policy: direct
     pricelist_id: product.list0
     shop_id: default_shop
     order_line:
@@ -82,6 +83,7 @@
     partner_id: res_partner_customer01
     note: Invoice Manual
     order_policy: manual
+    picking_policy: direct
     pricelist_id: product.list0
     shop_id: default_shop
     order_line:

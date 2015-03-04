@@ -10,6 +10,7 @@
     categ_id: product.product_category_1
     name: Wine A01
     cost_method: standard
+    supply_method: buy
     uom_id: product.product_uom_unit
     uom_po_id: product.product_uom_unit
     company_id: 0
