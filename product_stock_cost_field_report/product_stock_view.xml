@@ -2,30 +2,17 @@
 <openerp>
   <data>
 
-    <!-- Remove cost price to move it -->
-    <record model="ir.ui.view" id="product_get_cost_field.product_get_cost_field_form">
-      <field name="name">product.get_cost_field.view.form</field>
-      <field name="type">form</field>
-      <field name="model">product.product</field>
-      <field name="inherit_id" ref="product.product_normal_form_view" />
-      <field name="arch" type="xml">
-          <field name="cost_method" groups="product.group_costing_method" position="after">
-        </field>
-      </field>
-    </record>
-
     <record id="view_product_standard_price_form" model="ir.ui.view">
         <field name="name">product.product.standard.price.form.inherit</field>
         <field name="model">product.product</field>
-        <field name="priority">20</field>
-        <field name="inherit_id" ref="stock.view_product_standard_price_form"/>
+        <field name="inherit_id" ref="product_get_cost_field.product_get_cost_field_form"/>
         <field name="arch" type="xml">
-            <label for="standard_price" position="before">
+            <field name="cost_price" position="replace" version="7.0">
                 <label for="cost_price" align="1.0" groups="base.group_user"/>
                 <div groups="base.group_user">
                     <field name="cost_price" nolabel="1"/>
                 </div>
-            </label>
+            </field>
         </field>
     </record>
 
