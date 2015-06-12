@@ -230,14 +230,14 @@ class product_template(orm.Model):
         allow other module to give the proper company_id in the context (like
         it's done in product_standard_margin for example).
 
+        If force_company is in context, use it in prioriy.
+
         If company_id not in context, take the one from uid.
         """
-        res = uid
         if context is None:
             context = {}
-        if context.get('company_id'):
-            res = context.get('company_id')
-        else:
+        res = context.get('force_company') or context.get('company_id')
+        if not res:
             user_obj = self.pool.get('res.users')
             res = user_obj.read(cr, uid, uid,
                                 ['company_id'],
