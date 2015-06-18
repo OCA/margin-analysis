@@ -214,7 +214,6 @@ class product_product(orm.Model):
                     wc = wline.workcenter_id
                     cycle = wline.cycle_nbr
                     hour = wline.hour_nbr
-
                     cost += wc.costs_cycle * cycle + wc.costs_hour * hour
             cost /= bom.product_qty
 
