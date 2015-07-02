@@ -107,12 +107,14 @@ class ProductProduct(orm.Model):
         return pp_ids
 
     _margin_triggers = {
-        'product.product': (lambda self, cr, uid, ids, context=None:
-                            ids, None, 10),
-        'account.tax': (_get_product_margin_change_from_tax, [
-                            'type', 'price_include', 'amount',
-                            'include_base_amount', 'child_depend'],
-                             10),
+        'product.product': (
+            lambda self, cr, uid, ids, context=None:
+                ids, None, 10),
+        'account.tax': (
+            _get_product_margin_change_from_tax, [
+                'type', 'price_include', 'amount',
+                'include_base_amount', 'child_depend'],
+            10),
     }
 
     _columns = {
