@@ -27,7 +27,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class Product(orm.Model):
+class ProductProduct(orm.Model):
     _inherit = 'product.product'
 
     # TODO : compute the margin with default taxes
@@ -71,19 +71,13 @@ class Product(orm.Model):
 
         :return dict of dict of the form :
             {INT Product ID : {
-                {'margin_absolute': float,
-                 'margin_relative': float}
+                {'standard_margin': float,
+                 'standard_margin_rate': float}
             }}
 
         """
-
-        if context is None:
-            context = {}
-        res = {}
-        if not ids:
-            return res
-        for product in ids:
-            res[product] = {'margin_absolute': 0, 'margin_relative': 0}
+        context = context and context or {}
+        res = {id: {} for id in ids}
         for product in self.read(cr, user, ids,
                                  ['id', 'cost_price'], context=context):
             cost = product['cost_price']
@@ -103,7 +97,6 @@ class Product(orm.Model):
 
     def _get_product_margin_change_from_tax(self, cr, uid, ids, context=None):
         """Find the products to trigger when a Tax changes"""
-        # self may be product template so we need to lookup the pool
         pt_obj = self.pool['product.template']
         pp_obj = self.pool['product.product']
         pt_ids = pt_obj.search(cr, uid, [
