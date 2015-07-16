@@ -27,7 +27,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class Product(orm.Model):
+class ProductProduct(orm.Model):
     _inherit = 'product.product'
 
     # TODO : compute the margin with default taxes
@@ -71,19 +71,13 @@ class Product(orm.Model):
 
         :return dict of dict of the form :
             {INT Product ID : {
-                {'margin_absolute': float,
-                 'margin_relative': float}
+                {'standard_margin': float,
+                 'standard_margin_rate': float}
             }}
 
         """
-
-        if context is None:
-            context = {}
-        res = {}
-        if not ids:
-            return res
-        for product in ids:
-            res[product] = {'margin_absolute': 0, 'margin_relative': 0}
+        context = context and context or {}
+        res = {id: {} for id in ids}
         for product in self.read(cr, user, ids,
                                  ['id', 'cost_price'], context=context):
             cost = product['cost_price']
@@ -101,9 +95,32 @@ class Product(orm.Model):
                 _res['standard_margin_rate'] = (sale - cost) / sale * 100
         return res
 
+    def _get_product_margin_change_from_tax(self, cr, uid, ids, context=None):
+        """Find the products to trigger when a Tax changes"""
+        pt_obj = self.pool['product.template']
+        pp_obj = self.pool['product.product']
+        pt_ids = pt_obj.search(cr, uid, [
+            '|', ('taxes_id', 'in', ids),
+            ('supplier_taxes_id', 'in', ids)], context=context)
+        pp_ids = pp_obj.search(
+            cr, uid, [('product_tmpl_id', 'in', pt_ids)], context=context)
+        return pp_ids
+
+    _margin_triggers = {
+        'product.product': (
+            lambda self, cr, uid, ids, context=None:
+                ids, None, 10),
+        'account.tax': (
+            _get_product_margin_change_from_tax, [
+                'type', 'price_include', 'amount',
+                'include_base_amount', 'child_depend'],
+            10),
+    }
+
     _columns = {
         'standard_margin': fields.function(
             _compute_margin,
+            store=_margin_triggers,
             method=True,
             string='Theorical Margin',
             digits_compute=dp.get_precision('Sale Price'),
@@ -114,6 +131,7 @@ class Product(orm.Model):
                  'the margin will be negativ.'),
         'standard_margin_rate': fields.function(
             _compute_margin,
+            store=_margin_triggers,
             method=True,
             string='Theorical Margin (%)',
             digits_compute=dp.get_precision('Sale Price'),
