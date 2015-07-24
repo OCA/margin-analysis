@@ -35,7 +35,6 @@ class ProductProduct(Model):
 
     replenishment_cost = fields.Float(
         compute=_get_replenishment_cost,
-        string='Replenishment cost',
         digits_compute=dp.get_precision('Product Price'),
         help="The cost that you have to support in order to produce or "
              "acquire the goods. Depending on the modules installed, "
