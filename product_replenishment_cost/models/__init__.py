@@ -19,4 +19,4 @@
 #
 ##############################################################################
 
-from . import models
+from . import product_get_cost_field
