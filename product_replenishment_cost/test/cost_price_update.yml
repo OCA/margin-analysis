@@ -1,0 +1,50 @@
+-
+  Test the following with user admin
+-
+  !context
+    uid: 'base.user_root'
+-
+  Create a wine A product
+-
+  !record {model: product.product, id: product_product_a}:
+    categ_id: product.product_category_1
+    name: Wine A01
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    company_id: 0
+    standard_price: 50.0
+    list_price: 75.0
+-
+  Test the prices are updated correctly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_a'))
+    assert product.standard_price == 50.0, "01 The standard_price has not been recorded correctly"
+    assert product.replenishment_cost == 50.0, "01 The replenishment_cost has not been recorded correctly"
+-
+  Modify product A set new prices
+-
+  !python {model: product.product}: |
+    self.write(cr, uid, ref('product_product_a'), {'standard_price':70})
+-
+  Test price are update accordingly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_a'))
+    assert product.standard_price == 70.0, "02 The standard_price has not been recorded correctly"
+    assert product.replenishment_cost == 70.0, "02 The replenishment_cost has not been recorded correctly"
+-
+  Modify product A using the template object and set new prices
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_a'))
+    prod_tmpl_id = product.product_tmpl_id.id
+    self.pool.get('product.template').write(cr, uid, [prod_tmpl_id], {'standard_price':100})
+-
+  Test replenishment_cost is update accordingly
+-
+  !python {model: product.product}: |
+    product = self.browse(cr, uid, ref('product_product_a'))
+    assert product.standard_price == 100.0, "03 The standard_price has not been recorded correctly"
+    assert product.replenishment_cost == 100.0, "03 The replenishment_cost has not been recorded correctly"
+
