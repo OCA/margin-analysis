@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* product_get_cost_field
+# 	* product_replenishment_cost
 #
 msgid ""
 msgstr ""
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 1.5.4\n"
 
-#. module: product_get_cost_field
+#. module: product_replenishment_cost
 #: help:product.product,cost_price:0
 msgid ""
 "The cost price is the standard price or, if the product has a bom, the sum "
@@ -25,12 +25,12 @@ msgid ""
 "costing like cost per cylce."
 msgstr "Dit is de kostprijs, inclusief eventuele kosten."
 
-#. module: product_get_cost_field
-#: model:ir.model,name:product_get_cost_field.model_product_product
+#. module: product_replenishment_cost
+#: model:ir.model,name:product_replenishment_cost.model_product_product
 msgid "Product"
 msgstr "Product"
 
-#. module: product_get_cost_field
+#. module: product_replenishment_cost
 #: field:product.product,cost_price:0
 msgid "Cost Price (incl. BoM)"
 msgstr "Kostprijs (incl. kosten)"
