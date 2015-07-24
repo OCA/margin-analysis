@@ -50,7 +50,9 @@
   """,
  'website': 'http://www.camptocamp.com/',
  'init_xml': [],
- 'data': ['product_std_margin_view.xml'],
+ 'data': [
+    'views/view.xml',
+],
  'tests': [],
  'installable': True,
  'auto_install': False,
