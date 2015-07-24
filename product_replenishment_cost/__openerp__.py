@@ -50,7 +50,8 @@ Contributors
  """,
  'website': 'http://www.camptocamp.com/',
  'data': [
-     'product_view.xml'
+     'views/view.xml',
+     'demo/res_groups.yml',
      ],
  'test': [
      'test/cost_price_update.yml',
