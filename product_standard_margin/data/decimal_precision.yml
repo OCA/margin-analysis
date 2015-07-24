@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Joel Grand-Guillaume
-#    Copyright 2012 Camptocamp SA
+#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
+#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,19 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'Product Margin and Margin Rate',
-    'version': '2.0',
-    'author': 'Camptocamp,GRAP,Odoo Community Association (OCA)',
-    'category': 'Product',
-    'depends': [
-        'product_replenishment_cost',
-        'account',
-    ],
-    'website': 'http://www.camptocamp.com/',
-    'data': [
-        'data/decimal_precision.yml',
-        'views/view.xml',
-    ],
-    'license': 'AGPL-3',
-}
+
+- !record {model: decimal.precision, id: product_margin_precision}:
+    name: Product Margin Precision
+    digits: 2
