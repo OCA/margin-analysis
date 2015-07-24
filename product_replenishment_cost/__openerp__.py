@@ -18,28 +18,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Product Cost field',
- 'version' : '1.0.1',
- 'author' : "Camptocamp,Odoo Community Association (OCA)",
+{'name': 'Replenishment cost',
+ 'version': '1.0.3',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Products',
- 'complexity': "normal",  # easy, normal, expert
- 'depends' : [
-    'product',
-              ],
+ 'depends': [
+     'product',
+     ],
  'description': """
-Product Cost field
-==================
+Product Replenishment Cost
+==========================
 
-Provides an overridable method on product which compute the cost_price field
-of a product. By default it just return the value of standard_price field, but
+Provides an overridable method on product which compute the Replenishment cost
+of a product. By default it just returns the value of "Cost price" field, but
 using the product_cost_incl_bom module, it will return the costing from the
 bom.
 
 As it is a generic module, you can also setup your own way of computing the
 cost_price for your product.
 
-All our modules to compute margin are based on it, so you'll ba able to use
+All OCA modules to compute margins are based on it, so you'll be able to use
 them in your own way.
 
 Contributors
@@ -48,18 +47,13 @@ Contributors
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Joël Grand-Guillaume <joel.grand-guillaume@camptocamp.com>
-
  """,
  'website': 'http://www.camptocamp.com/',
  'data': [
-    'product_view.xml'
- ],
- 'demo': [],
+     'product_view.xml'
+     ],
  'test': [
-    'test/cost_price_update.yml',
- ],
- 'installable': False,
- 'auto_install': False,
+     'test/cost_price_update.yml',
+     ],
  'license': 'AGPL-3',
- 'application': False
  }

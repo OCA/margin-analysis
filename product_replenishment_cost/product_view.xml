@@ -7,6 +7,7 @@
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_normal_form_view" />
       <field name="arch" type="xml">
+        <!-- Add the Replenishment cost -->
           <field name="cost_method" groups="product.group_costing_method" position="after">
               <field name="cost_price"/> 
         </field>
