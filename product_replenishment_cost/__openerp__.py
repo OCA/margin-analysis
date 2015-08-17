@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle, Joel Grand-Guillaume
+#    Author:  Alexandre Fayolle
 #    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,5 +18,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from . import product_get_cost_field
+{
+    'name': 'Replenishment cost',
+    'version': '2.0',
+    'author': "Camptocamp,GRAP,Odoo Community Association (OCA)",
+    'category': 'Products',
+    'depends': [
+        'product',
+    ],
+    'website': 'http://www.camptocamp.com/',
+    'data': [
+        'views/view.xml',
+        'demo/res_groups.yml',
+    ],
+    'test': [
+        'test/cost_price_update.yml',
+    ],
+    'license': 'AGPL-3',
+}
