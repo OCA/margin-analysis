@@ -35,10 +35,8 @@ class ProductProduct(Model):
         'taxes_id.price_include', 'taxes_id.amount',
         'taxes_id.include_base_amount', 'taxes_id.child_depend')
     def _get_margin(self):
-        tax_obj = self.pool['account.tax']
         for product in self:
-            product.list_price_vat_excl = tax_obj.compute_all(
-                self.env.cr, self.env.uid, product.taxes_id,
+            product.list_price_vat_excl = product.taxes_id.compute_all(
                 product.list_price, 1, product=product.id)['total']
 
             product.standard_margin =\
