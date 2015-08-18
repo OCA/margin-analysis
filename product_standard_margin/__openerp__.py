@@ -18,5 +18,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import product_std_margin
-
+{
+    'name': 'Product Margin and Margin Rate',
+    'version': '2.0',
+    'author': 'Camptocamp,GRAP,Odoo Community Association (OCA)',
+    'category': 'Product',
+    'depends': [
+        'product_replenishment_cost',
+        'account',
+    ],
+    'website': 'http://www.camptocamp.com/',
+    'data': [
+        'data/decimal_precision.yml',
+        'views/view.xml',
+    ],
+    'license': 'AGPL-3',
+}
