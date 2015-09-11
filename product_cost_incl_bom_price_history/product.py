@@ -111,8 +111,8 @@ class product_product(orm.Model):
         return res
 
     def _get_product2(self, cr, uid, ids, context=None):
-        mrp_obj = self.pool.get('mrp.bom')
-        res = mrp_obj._get_product(cr, uid, ids, context=context)
+        prod_obj = self.pool.get('product.product')
+        res = prod_obj._get_product(cr, uid, ids, context=context)
         return res
 
     def _get_bom_product2(self, cr, uid, ids, context=None):
