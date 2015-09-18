@@ -213,9 +213,7 @@ class product_product(orm.Model):
                 for wline in bom.routing_id.workcenter_lines:
                     wc = wline.workcenter_id
                     cycle = wline.cycle_nbr
-                    hour = ((wc.time_start + wc.time_stop +
-                             cycle * wc.time_cycle) *
-                            (wc.time_efficiency or 1.0))
+                    hour = wline.hour_nbr
                     cost += wc.costs_cycle * cycle + wc.costs_hour * hour
             cost /= bom.product_qty
 
