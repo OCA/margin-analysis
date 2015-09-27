@@ -27,7 +27,7 @@
  'depends': ['product_get_cost_field',
              'product_standard_margin',
              'account',
-             'sale',
+             'sale_stock',
              ],
  'description': """
  This module will store in the invoice line all the historical informations to

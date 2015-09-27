@@ -32,6 +32,7 @@
     order_policy: manual
     pricelist_id: product.list0
     shop_id: default_shop
+    picking_policy: one
     order_line:
       - product_id: product_product_a_avg_01
         product_uom_qty: 10
