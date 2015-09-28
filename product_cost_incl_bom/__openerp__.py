@@ -26,6 +26,8 @@
  'complexity': "normal",  # easy, normal, expert
  'depends': ['product_get_cost_field',
              'mrp',
+             #XXX OK so we're just hijacking the whole thing...
+             'product_cost_purchase',
              ],
  'description': """
 Replenishment Cost including BOM costs
