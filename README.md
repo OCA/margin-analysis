@@ -15,8 +15,8 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[product_replenishment_cost](product_replenishment_cost/) | 2.0 | Replenishment cost
-[product_standard_margin](product_standard_margin/) | 2.0 | Product Margin and Margin Rate
+[product_replenishment_cost](product_replenishment_cost/) | 8.0.2.0.0 | Replenishment cost
+[product_standard_margin](product_standard_margin/) | 8.0.2.0.0 | Product Margin and Margin Rate
 
 Unported addons
 ---------------
