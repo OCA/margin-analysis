@@ -33,4 +33,5 @@
         'views/view.xml',
     ],
     'license': 'AGPL-3',
+    'installable': False,
 }
