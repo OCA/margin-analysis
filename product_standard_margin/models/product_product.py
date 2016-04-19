@@ -45,8 +45,8 @@ class ProductProduct(Model):
                 product.standard_margin_rate = 999.
             else:
                 product.standard_margin_rate = (
-                    (product.list_price_vat_excl
-                        - product.replenishment_cost) /
+                    (product.list_price_vat_excl -
+                        product.replenishment_cost) /
                     product.list_price_vat_excl * 100)
 
     # Column Section
