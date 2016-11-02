@@ -29,7 +29,7 @@ class ProductProduct(Model):
     _inherit = 'product.product'
 
     @api.one
-    @api.depends('product_tmpl_id.standard_price')
+    @api.depends('product_tmpl_id.standard_price', 'standard_price')
     def _get_replenishment_cost(self):
         self.replenishment_cost = self.standard_price
 
