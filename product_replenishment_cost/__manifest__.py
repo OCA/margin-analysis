@@ -19,21 +19,21 @@
 #
 ##############################################################################
 {
-    'name': 'Replenishment cost',
-    'version': '8.0.2.0.0',
+    'name': 'Replenishment Cost',
+    'version': '9.0.1.0.0',
     'author': "Camptocamp,GRAP,Odoo Community Association (OCA)",
+    'license': 'AGPL-3',
     'category': 'Products',
     'depends': [
         'product',
     ],
     'website': 'http://www.camptocamp.com/',
     'data': [
-        'views/view.xml',
+        'views/product_view.xml',
         'demo/res_groups.yml',
     ],
     'test': [
         'test/cost_price_update.yml',
     ],
-    'license': 'AGPL-3',
-    'installable': False,
+    'installable': True,
 }
