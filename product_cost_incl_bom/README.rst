@@ -2,20 +2,34 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==========================
-Product Replenishment Cost
-==========================
+================================
+Product Cost including BOM costs
+================================
 
-Provides an overridable method on product which compute the Replenishment cost
-of a product. By default it just returns the value of "Cost price" field, but
-using the product_cost_incl_bom module, it will return the costing from the
-bom.
+Compute product cost price by recursively summing parts cost prices according to product BOM. It takes into
+account the BoM costing (cost per cycle and so...). If no BOM define for a product, the cost_price is always
+equal to the standard_price field of the product, so we always have a value to base our reporting on.
 
-As it is a generic module, you can also setup your own way of computing the
-replenishment_cost for your product.
+It makes a quite complex computation to include correct computation of such use case having
+such a hierarchy of products:
 
-All OCA modules to compute margins are based on it, so you'll be able to use
-them in your own way.
+            - Table A
+                - 2x Plank 20.-
+                - 4x Wood leg 10.-
+            - Table B
+                - 3x Plank 20.-
+                - 4x Red wood leg
+            - Red wood leg
+                - 1x Wood leg 10.-
+                - 1x Red paint pot 10.-
+            - Chair
+                - 1x Plank
+                - 4x Wood leg
+            - Table and Chair
+                - 1x Table Z
+                - 4x Chair Z
+Changing the price of Wood leg will update the price of Table A, Table B, Red wood leg, 
+Table & Chair products.
 
 * Go to ...
 
@@ -32,7 +46,7 @@ check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed `feedback
 <https://github.com/OCA/
 margin-analysis/issues/new?body=module:%20
-product_replenishment_cost%0Aversion:%20
+product_cost_incl_bom%0Aversion:%20
 8.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Credits
@@ -50,7 +64,6 @@ Contributors
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Joël Grand-Guillaume <joel.grand-guillaume@camptocamp.com>
-* Sylvain Le Gal (https://twitter.com/legalsylvain)
 * Sodexis <dev@sodexis.com>
 
 Maintainer

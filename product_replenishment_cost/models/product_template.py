@@ -3,20 +3,23 @@
 # © 2016 Sodexis
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import fields, api
-from openerp.models import Model
-
+from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
 
 
-class ProductProduct(Model):
-    _inherit = 'product.product'
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
 
     @api.multi
-    @api.depends('product_tmpl_id.standard_price')
+    @api.depends('standard_price')
     def _compute_replenishment_cost(self):
-        for product in self:
-            product.replenishment_cost = product.standard_price
+        for template in self:
+            replenishment_cost = 0.0
+            variants = template.product_variant_ids
+            if variants:
+                variant_costs = variants.mapped('replenishment_cost')
+                replenishment_cost = sum(variant_costs) / len(variant_costs)
+            template.replenishment_cost = replenishment_cost
 
     replenishment_cost = fields.Float(
         compute='_compute_replenishment_cost',

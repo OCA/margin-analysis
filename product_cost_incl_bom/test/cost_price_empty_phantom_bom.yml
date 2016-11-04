@@ -3,8 +3,9 @@
 -
   !record {model: mrp.bom, id: mrp_bom_product_34}:
     company_id: base.main_company
-    name: product 4
+    name: product 34
     product_id: product.product_product_34
+    product_tmpl_id: product.product_product_34_product_template
     product_qty: 1.0
     type: phantom
 -
@@ -12,5 +13,5 @@
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product.product_product_34'))
-    assert product.standard_price == 38, "02 The standard_price has not been recorded correctly %s" % product.standard_price
-    assert product.cost_price == 38.0, "02 The cost_price has not been recorded correctly %s"  % product.cost_price
+    assert product.standard_price == 38, "01 The standard_price has not been recorded correctly"
+    assert product.replenishment_cost == 38, "01 The replenishment_cost has not been recorded correctly"

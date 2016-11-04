@@ -153,11 +153,11 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_a'))
     assert product.standard_price == 50.0, "01a The standard_price has not been recorded correctly"
-    assert product.cost_price == 50.0, "01a The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 50.0, "01a The replenishment_cost has not been recorded correctly"
     product = self.browse(cr, uid, ref('product_product_table_b'))
     assert product.standard_price == 80.0, "01b The standard_price has not been recorded correctly"
-    assert product.cost_price == 80.0, "01b The cost_price has not been recorded correctly"
-# 
+    assert product.replenishment_cost == 80.0, "01b The replenishment_cost has not been recorded correctly"
+#
 # The BoM structure will be the following
 #  - Table A
 #     - 2x Plank 20.-
@@ -186,16 +186,13 @@
     company_id: base.main_company
     name: Table A
     product_id: product_product_table_a
+    product_tmpl_id: product_product_table_a_product_template
     product_qty: 1.0
     type: normal
-    bom_lines:
-      - company_id: base.main_company
-        name: Plank
-        product_id: product_product_plank_a
+    bom_line_ids:
+      - product_id: product_product_plank_a
         product_qty: 2.0
-      - company_id: base.main_company
-        name: Wood Leg
-        product_id: product_product_w_leg_a
+      - product_id: product_product_w_leg_a
         product_qty: 4.0
 -
   Test the prices of table A are updated correctly
@@ -203,7 +200,7 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_a'))
     assert product.standard_price == 50.0, "02 The standard_price has not been recorded correctly"
-    assert product.cost_price == 80.0, "02 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 80.0, "02 The replenishment_cost has not been recorded correctly"
 -
   I create Bill of Materials for Red wood leg
 -
@@ -211,16 +208,13 @@
     company_id: base.main_company
     name: Red wood leg
     product_id: product_product_red_w_leg_a
+    product_tmpl_id: product_product_red_paint_a_product_template
     product_qty: 1.0
     type: normal
-    bom_lines:
-      - company_id: base.main_company
-        name: Paint pot
-        product_id: product_product_red_paint_a
+    bom_line_ids:
+      - product_id: product_product_red_paint_a
         product_qty: 1.0
-      - company_id: base.main_company
-        name: Wood Leg
-        product_id: product_product_w_leg_a
+      - product_id: product_product_w_leg_a
         product_qty: 1.0
 -
   Test the prices of Red Wood leg are updated correctly
@@ -228,7 +222,7 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_red_w_leg_a'))
     assert product.standard_price == 15.0, "03 The standard_price has not been recorded correctly"
-    assert product.cost_price == 20.0, "03 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 20.0, "03 The replenishment_cost has not been recorded correctly"
 -
   I create Bill of Materials for the table B
 -
@@ -236,23 +230,20 @@
     company_id: base.main_company
     name: Table B
     product_id: product_product_table_b
+    product_tmpl_id: product_product_table_b_product_template
     product_qty: 1.0
     type: normal
 -
   Add the plank
 -
-  !record {model: mrp.bom, id: mrp_bom_table_b_plank}:
-    company_id: base.main_company
-    name: Plank
+  !record {model: mrp.bom.line, id: mrp_bom_table_b_plank}:
     product_id: product_product_plank_a
     product_qty: 3.0
     bom_id: mrp_bom_table_b
 -
   Add the Red wood leg
 -
-  !record {model: mrp.bom, id: mrp_bom_table_b_red_w_leg}:
-    company_id: base.main_company
-    name: Red Wood Leg
+  !record {model: mrp.bom.line, id: mrp_bom_table_b_red_w_leg}:
     product_id: product_product_red_w_leg_a
     product_qty: 4.0
     bom_id: mrp_bom_table_b
@@ -262,13 +253,11 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_b'))
     assert product.standard_price == 80.0, "04 The standard_price has not been recorded correctly"
-    assert product.cost_price == 140.0, "04 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 140.0, "04 The replenishment_cost has not been recorded correctly"
 -
   I modify Bill of Materials for the table B by adding 4 wood leg
 -
-  !record {model: mrp.bom, id: mrp_bom_table_b_w_leg}:
-    company_id: base.main_company
-    name: Wood Leg
+  !record {model: mrp.bom.line, id: mrp_bom_table_b_w_leg}:
     product_id: product_product_w_leg_a
     product_qty: 4.0
     bom_id: mrp_bom_table_b
@@ -277,13 +266,13 @@
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_b'))
+    product.refresh()
     assert product.standard_price == 80.0, "05 The standard_price has not been recorded correctly"
-
-    assert product.cost_price == 180.0, "05 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 180.0, "05 The replenishment_cost has not been recorded correctly"
 -
   I modify Bill of Materials for the table B by removing 4 wood leg
 -
-  !python {model: mrp.bom}: |
+  !python {model: mrp.bom.line}: |
     self.unlink(cr, uid, [ref('mrp_bom_table_b_w_leg')])
 -
   Test the prices of Table B are updated correctly
@@ -291,13 +280,11 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_b'))
     assert product.standard_price == 80.0, "06 The standard_price has not been recorded correctly"
-    assert product.cost_price == 140.0, "06 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 140.0, "06 The replenishment_cost has not been recorded correctly"
 -
   I modify Bill of Materials for the table B by changing plank qty
 -
-  !record {model: mrp.bom, id: mrp_bom_table_b_plank}:
-    company_id: base.main_company
-    name: Plank
+  !record {model: mrp.bom.line, id: mrp_bom_table_b_plank}:
     product_id: product_product_plank_a
     product_qty: 1.0
     bom_id: mrp_bom_table_b
@@ -306,8 +293,9 @@
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_b'))
+    product.refresh()
     assert product.standard_price == 80.0, "07 The standard_price has not been recorded correctly"
-    assert product.cost_price == 100.0, "07 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 100.0, "07 The replenishment_cost has not been recorded correctly"
 -
   I create Bill of Materials for the Chair
 -
@@ -315,16 +303,13 @@
     company_id: base.main_company
     name: Chair
     product_id: product_product_chair_a
+    product_tmpl_id: product_product_chair_a_product_template
     product_qty: 1.0
     type: normal
-    bom_lines:
-      - company_id: base.main_company
-        name: Plank
-        product_id: product_product_plank_a
+    bom_line_ids:
+      - product_id: product_product_plank_a
         product_qty: 1.0
-      - company_id: base.main_company
-        name: Wood Leg
-        product_id: product_product_w_leg_a
+      - product_id: product_product_w_leg_a
         product_qty: 4.0
 -
   Test the prices of chair are updated correctly
@@ -332,7 +317,7 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_chair_a'))
     assert product.standard_price == 23.0, "08 The standard_price has not been recorded correctly"
-    assert product.cost_price == 60.0, "08 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 60.0, "08 The replenishment_cost has not been recorded correctly"
 -
   I create Bill of Materials for the table and Chair
 -
@@ -340,16 +325,13 @@
     company_id: base.main_company
     name: Table and Chair
     product_id: product_product_table_chair_a
+    product_tmpl_id: product_product_table_chair_a_product_template
     product_qty: 1.0
     type: normal
-    bom_lines:
-      - company_id: base.main_company
-        name: Table
-        product_id: product_product_table_a
+    bom_line_ids:
+      - product_id: product_product_table_a
         product_qty: 1.0
-      - company_id: base.main_company
-        name: Chair
-        product_id: product_product_chair_a
+      - product_id: product_product_chair_a
         product_qty: 4.0
 -
   Test the prices of table and chair are updated correctly
@@ -357,7 +339,7 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_chair_a'))
     assert product.standard_price == 150.0, "09 The standard_price has not been recorded correctly"
-    assert product.cost_price == 320.0, "09 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 320.0, "09 The replenishment_cost has not been recorded correctly"
 -
   Modify the wood table leg product by changing std price
 -
@@ -369,7 +351,7 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_w_leg_a'))
     assert product.standard_price == 5.0, "10 The standard_price has not been recorded correctly"
-    assert product.cost_price == 5.0, "10 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 5.0, "10 The replenishment_cost has not been recorded correctly"
 -
   Test the prices of Red Wood leg are updated correctly
 -
@@ -382,28 +364,28 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_a'))
     assert product.standard_price == 50.0, "12 The standard_price has not been recorded correctly"
-    assert product.cost_price == 60.0, "12 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 60.0, "12 The replenishment_cost has not been recorded correctly"
 -
   Test the prices of Table B are updated correctly
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_b'))
     assert product.standard_price == 80.0, "13 The standard_price has not been recorded correctly"
-    assert product.cost_price == 80.0, "13 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 80.0, "13 The replenishment_cost has not been recorded correctly"
 -
   Test the prices of chair are updated correctly
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_chair_a'))
     assert product.standard_price == 23.0, "14 The standard_price has not been recorded correctly"
-    assert product.cost_price == 40.0, "14 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 40.0, "14 The replenishment_cost has not been recorded correctly"
 -
   Test the prices of table and chair are updated correctly
 -
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_table_chair_a'))
     assert product.standard_price == 150.0, "15 The standard_price has not been recorded correctly"
-    assert product.cost_price == 220.0, "15 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 220.0, "15 The replenishment_cost has not been recorded correctly"
 -
   I create Bill of Materials for Multilevel bom product
 -
@@ -411,22 +393,17 @@
     company_id: base.main_company
     name: Multilevel bom product
     product_id: product_product_multilevel
+    product_tmpl_id: product_product_multilevel_product_template
     product_qty: 1.0
     type: normal
-    bom_lines:
-      - company_id: base.main_company
-        name: Level A Bom product
-        product_id: product_product_multilevel_a
+    bom_line_ids:
+      - product_id: product_product_multilevel_a
         product_qty: 1.0
-        bom_lines:
-          - company_id: base.main_company
-            name: Level B Bom product
-            product_id: product_product_multilevel_b
+        child_line_ids:
+          - product_id: product_product_multilevel_b
             product_qty: 1.0
-            bom_lines:
-            - company_id: base.main_company
-              name: Level C Bom product
-              product_id: product_product_multilevel_c
+            child_line_ids:
+            - product_id: product_product_multilevel_c
               product_qty: 1.0
 -
   Test the prices of multilevel bom product are updated correctly
@@ -434,4 +411,4 @@
   !python {model: product.product}: |
     product = self.browse(cr, uid, ref('product_product_multilevel'))
     assert product.standard_price == 100.0, "16 The standard_price has not been recorded correctly"
-    assert product.cost_price == 100.0, "16 The cost_price has not been recorded correctly"
+    assert product.replenishment_cost == 100.0, "16 The replenishment_cost has not been recorded correctly"
