@@ -11,6 +11,7 @@ This project aim to deal with modules related to manage Financial controlling an
  - ...
 
 [//]: # (addons)
+
 Unported addons
 ---------------
 addon | version | summary
