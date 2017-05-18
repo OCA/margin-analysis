@@ -2,7 +2,7 @@
 # Copyright 2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo import _, api, exceptions, fields, models, tools
+from odoo import api, fields, models, tools
 
 
 class SaleOrderLine(models.Model):
@@ -35,10 +35,6 @@ class SaleOrderLine(models.Model):
     @api.multi
     def action_add_cost_on_product(self):
         self.ensure_one()
-        if not self.product_id:
-            raise exceptions.UserError(
-                _('The line has no product, cannot set a cost price.')
-            )
         action_xmlid = ('sale_line_cost_control.'
                         'action_change_product_cost')
         action = self.env.ref(action_xmlid).read()[0]
