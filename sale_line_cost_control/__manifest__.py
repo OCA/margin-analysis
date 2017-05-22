@@ -9,10 +9,11 @@
  'license': 'AGPL-3',
  'category': 'Sales',
  'depends': ['sale',
+             'sale_margin',
              ],
  'website': 'https://www.camptocamp.com',
  'data': ['views/sale_views.xml',
-          'wizards/change_product_cost_views.xml',
+          'wizards/set_sale_line_purchase_price_views.xml',
           ],
  'installable': True,
  }
