@@ -32,8 +32,10 @@ class SetSaleLinePurchasePrice(models.TransientModel):
     def confirm_purchase_price(self):
         self.ensure_one()
         company = self.env.user.company_id
-        # TODO: use rate of order's date
-        cost = self.currency_id.compute(self.purchase_price,
+        currency_at_date = self.currency_id.with_context(
+            date=self.line_id.order_id.date_order
+        )
+        cost = currency_at_date.compute(self.purchase_price,
                                         company.currency_id)
         self.line_id.purchase_price = cost
 
