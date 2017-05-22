@@ -6,22 +6,30 @@
 Sale Lines Cost Control
 =======================
 
-This module improves cost controlling on sales order lines.
+This modules modifies the visibility of the Cost prices on Sales Order lines.
 Specifically, it:
 
-* adds a checkbox on the lines indicating if the cost is missing on the product
-* shows the linked product's standard price on the details of a line (form view)
-* adds a button to set a cost price on the product directly from the sale line
+* hides the cost price on lines for normal users
+* add a new group allowing to see the cost price on lines
+* add a new button on lines without cost to set the current price
+
+It allows to correct the cost of new products when users should not have
+the permission to see the cost price.
+
 
 Configuration
 =============
 
-No configuration is needed
+No configuration is needed.
+Users that must see the cost prices must have the "Cost Prices in Sales Orders"
+group. This group can be added as inherited group in a more general group such
+as "Sales / Manager".
 
 Usage
 =====
 
-New fields and a button have been added on the sales order lines.
+The sales order view has been modified according to the description above.
+There is no special usage.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -45,6 +53,9 @@ Credits
 
 Images
 ------
+
+.. image:: ./images/order-lines.png
+.. image:: ./images/change-cost.png
 
 * Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
