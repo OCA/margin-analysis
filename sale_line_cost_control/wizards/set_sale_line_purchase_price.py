@@ -14,6 +14,7 @@ class SetSaleLinePurchasePrice(models.TransientModel):
         string='Sale Line',
         readonly=True,
         required=True,
+        default=lambda s: s._default_line_id()
     )
     purchase_price = fields.Float(
         string='Cost',
@@ -26,7 +27,17 @@ class SetSaleLinePurchasePrice(models.TransientModel):
         comodel_name='res.currency',
         string="Currency",
         required=True,
+        default=lambda s: s._default_currency_id()
     )
+
+    def _default_line_id(self):
+        assert self.env.context['active_model'] == 'sale.order.line'
+        line_id = self.env.context.get('active_id')
+        return line_id
+
+    def _default_currency_id(self):
+        company = self.env.user.company_id
+        return company.currency_id.id
 
     @api.multi
     def confirm_purchase_price(self):
@@ -38,16 +49,3 @@ class SetSaleLinePurchasePrice(models.TransientModel):
         cost = currency_at_date.compute(self.purchase_price,
                                         company.currency_id)
         self.line_id.purchase_price = cost
-
-    @api.model
-    def default_get(self, fields_list):
-        _super = super(SetSaleLinePurchasePrice, self)
-        values = _super.default_get(fields_list)
-        assert self.env.context['active_model'] == 'sale.order.line'
-        line_id = self.env.context.get('active_id')
-        line = self.env['sale.order.line'].browse(line_id)
-        values.update({
-            'line_id': line.id,
-            'currency_id': line.order_id.currency_id.id,
-        })
-        return values
