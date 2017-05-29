@@ -7,9 +7,9 @@
     <field name="arch" type="xml">
       <xpath expr="//field[@name='order_line']/tree/field[@name='purchase_price']" position="after">
         <field name="purchase_price_missing" invisible="1"/>
-        <button type="object"
+        <button type="action"
             class="btn-link oe_read_only"
-            name="action_set_purchase_price_on_line"
+            name="%(action_set_sale_line_purchase_price)d"
             attrs="{'invisible': [('purchase_price_missing', '=', False)]}"
             groups="base.group_user"
             string="Set Cost"

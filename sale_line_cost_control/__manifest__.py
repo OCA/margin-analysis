@@ -13,8 +13,8 @@
              ],
  'website': 'https://www.camptocamp.com',
  'data': ['security/security.xml',
-          'views/sale_views.xml',
           'wizards/set_sale_line_purchase_price_views.xml',
+          'views/sale_views.xml',
           ],
  'installable': True,
  }

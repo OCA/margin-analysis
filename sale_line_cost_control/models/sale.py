@@ -22,10 +22,3 @@ class SaleOrderLine(models.Model):
                 line.purchase_price,
                 precision_digits=precision
             )
-
-    @api.multi
-    def action_set_purchase_price_on_line(self):
-        self.ensure_one()
-        action_xmlid = ('sale_line_cost_control.'
-                        'action_set_sale_line_purchase_price')
-        return self.env.ref(action_xmlid).read()[0]

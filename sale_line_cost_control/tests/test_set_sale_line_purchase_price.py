@@ -20,16 +20,6 @@ class TestSetSaleLinePurchasePrice(SaleCommon):
         self.assertEqual(15., line.purchase_price)
 
 
-class TestActionSaleLine(SaleCommon):
-
-    def test_action(self):
-        sale = self._create_sale()
-        line = sale.order_line[0]
-        action = line.action_set_purchase_price_on_line()
-        self.assertEqual('set.sale.line.purchase.price',
-                         action['res_model'])
-
-
 class TestChangeCostWithCurrency(SaleCommon):
 
     def _create_rate(self, currency, rate, days_ago=1):
