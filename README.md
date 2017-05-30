@@ -12,6 +12,13 @@ This project aim to deal with modules related to manage Financial controlling an
 
 [//]: # (addons)
 
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[product_replenishment_cost](product_replenishment_cost/) | 9.0.1.0.0 | Replenishment Cost
+
+
 Unported addons
 ---------------
 addon | version | summary
@@ -23,7 +30,6 @@ addon | version | summary
 [product_historical_margin](product_historical_margin/) | 0.2 (unported) | Product Historical Margin
 [product_historical_margin_report](product_historical_margin_report/) | 1.0 (unported) | Product Historial Margin Report
 [product_price_history](product_price_history/) | 1.2.2 (unported) | Product Price History
-[product_replenishment_cost](product_replenishment_cost/) | 8.0.2.0.0 (unported) | Replenishment cost
 [product_standard_margin](product_standard_margin/) | 8.0.2.0.0 (unported) | Product Margin and Margin Rate
 [product_stock_cost_field_report](product_stock_cost_field_report/) | 1.0 (unported) | Product Cost field Report
 
