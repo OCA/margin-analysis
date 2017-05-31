@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_set_sale_line_purchase_price" model="ir.ui.view">
+    <field name="name">Set Cost</field>
+    <field name="model">set.sale.line.purchase.price</field>
+    <field name="arch" type="xml">
+      <form string="Set Cost">
+        <group name="cost">
+          <label for="purchase_price"/>
+          <div>
+            <field name="purchase_price" class="oe_inline"/>
+            <field name="currency_id" class="oe_inline"/>
+          </div>
+        </group>
+        <footer>
+          <button name="confirm_purchase_price" string="Save Cost" type="object" class="btn-primary"/>
+          <button string="Cancel" class="btn-default" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record model="ir.actions.act_window" id="action_set_sale_line_purchase_price">
+    <field name="name">Set Cost</field>
+    <field name="res_model">set.sale.line.purchase.price</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+
+</odoo>
