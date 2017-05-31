@@ -6,7 +6,7 @@
     <field name="model">set.sale.line.purchase.price</field>
     <field name="arch" type="xml">
       <form string="Set Cost">
-        <group>
+        <group name="cost">
           <label for="purchase_price"/>
           <div>
             <field name="purchase_price" class="oe_inline"/>
