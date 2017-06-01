@@ -12,6 +12,13 @@ This project aim to deal with modules related to manage Financial controlling an
 
 [//]: # (addons)
 
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[sale_line_cost_control](sale_line_cost_control/) | 10.0.1.0.0 | Sales Lines Cost Control
+
+
 Unported addons
 ---------------
 addon | version | summary
