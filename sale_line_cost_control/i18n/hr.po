@@ -1,0 +1,114 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * sale_line_cost_control
+# 
+# Translators:
+# Bole <bole@dajmi5.com>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-01 05:56+0000\n"
+"PO-Revision-Date: 2017-07-01 05:56+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2018\n"
+"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. module: sale_line_cost_control
+#: model:ir.ui.view,arch_db:sale_line_cost_control.view_set_sale_line_purchase_price
+msgid "Cancel"
+msgstr "Otkaži"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price_purchase_price
+msgid "Cost"
+msgstr "Trošak"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,help:sale_line_cost_control.field_set_sale_line_purchase_price_purchase_price
+msgid ""
+"Cost of the product template used for standard stock valuation in accounting"
+" and used as a base price on purchase orders. Expressed in the default unit "
+"of measure of the product."
+msgstr ""
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price_create_uid
+msgid "Created by"
+msgstr "Kreirao"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price_create_date
+msgid "Created on"
+msgstr "Kreirano"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price_currency_id
+msgid "Currency"
+msgstr "Valuta"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price_display_name
+msgid "Display Name"
+msgstr "Naziv"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price_id
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price___last_update
+msgid "Last Modified on"
+msgstr "Zadnje modificirano"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price_write_uid
+msgid "Last Updated by"
+msgstr "Zadnje ažurirao"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price_write_date
+msgid "Last Updated on"
+msgstr "Zadnje ažurirano"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_sale_order_line_purchase_price_missing
+msgid "Missing Cost"
+msgstr "Nedostaje trošak"
+
+#. module: sale_line_cost_control
+#: model:ir.model.fields,field_description:sale_line_cost_control.field_set_sale_line_purchase_price_line_id
+msgid "Sale Line"
+msgstr "Stavka prodaje"
+
+#. module: sale_line_cost_control
+#: model:ir.model,name:sale_line_cost_control.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Stavka prodajnog naloga"
+
+#. module: sale_line_cost_control
+#: model:ir.ui.view,arch_db:sale_line_cost_control.view_set_sale_line_purchase_price
+msgid "Save Cost"
+msgstr "Ušteda troška"
+
+#. module: sale_line_cost_control
+#: model:ir.actions.act_window,name:sale_line_cost_control.action_set_sale_line_purchase_price
+#: model:ir.ui.view,arch_db:sale_line_cost_control.sale_margin_sale_order_line_tree
+#: model:ir.ui.view,arch_db:sale_line_cost_control.view_set_sale_line_purchase_price
+msgid "Set Cost"
+msgstr ""
+
+#. module: sale_line_cost_control
+#: model:res.groups,name:sale_line_cost_control.group_sale_show_standard_price
+msgid "Show Cost Prices in Sales Orders"
+msgstr ""
+
+#. module: sale_line_cost_control
+#: model:ir.model,name:sale_line_cost_control.model_set_sale_line_purchase_price
+msgid "set.sale.line.purchase.price"
+msgstr "set.sale.line.purchase.price"
