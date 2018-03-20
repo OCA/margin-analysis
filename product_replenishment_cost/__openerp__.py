@@ -29,6 +29,8 @@
     'website': 'http://www.camptocamp.com/',
     'data': [
         'views/view.xml',
+    ],
+    'demo': [
         'demo/res_groups.yml',
     ],
     'test': [
