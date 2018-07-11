@@ -1,2 +1,5 @@
-To grant Sales Margin view privileges to a user, go to *Settings > Users &
-Companies > Users*, select the user and set *Show Sale Margin* on.
+To grant Sales Margin view privileges to a user:
+
+#. Go to *Settings > Users & Companies > Users*.
+#. Select the user.
+#. Set *Show Sale Margin* on.

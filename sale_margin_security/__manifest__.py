@@ -1,4 +1,4 @@
-# Copyright 2017 Tecnativa - Sergio Teruel
+# Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Sale Margin Security",
