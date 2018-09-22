@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo11-addon-sale_margin_security',
+        'odoo11-addon-sale_report_margin',
     ],
     classifiers=[
         'Programming Language :: Python',
