@@ -43,7 +43,7 @@ class SaleOrderLine(models.Model):
             for move in moves:
                 delivered_qty += move.product_qty
                 cost_price += move.product_qty * abs(move.price_unit)
-            average_price = cost_price / (delivered_qty or 1.0)
+            average_price = delivered_qty and cost_price / delivered_qty or 0.0
             vals['purchase_price_delivery'] = tools.float_round(
                 average_price, precision_rounding=rounding)
             if line.qty_delivered == line.product_uom_qty:
@@ -51,7 +51,7 @@ class SaleOrderLine(models.Model):
             elif line.product_uom_qty:
                 vals['margin_delivered'] = (
                     line.qty_delivered * line.margin / line.product_uom_qty)
-            vals['margin_delivered_percent'] = (
+            vals['margin_delivered_percent'] = delivered_qty and (
                 (line.price_reduce - vals['purchase_price_delivery']) /
-                line.price_reduce * 100.0)
+                line.price_reduce * 100.0) or 0.0
             line.update(vals)
