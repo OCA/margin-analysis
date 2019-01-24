@@ -45,7 +45,7 @@ class SaleOrderLine(models.Model):
                 cost_price += move.product_qty * abs(move.price_unit)
             qty = delivered_qty or line.product_uom_qty
             average_price = qty and (
-                cost_price or line.purchase_price) / qty or 0.0
+                cost_price and cost_price / qty or line.purchase_price) or 0.0
             vals['purchase_price_delivery'] = tools.float_round(
                 average_price, precision_digits=digits)
             if line.qty_delivered == line.product_uom_qty:
