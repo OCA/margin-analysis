@@ -30,6 +30,8 @@ class SaleOrderLine(models.Model):
     def _compute_margin_delivered(self):
         digits = self.env['decimal.precision'].precision_get('Product Price')
         for line in self.filtered('price_reduce'):
+            if not line.qty_delivered and not line.product_uom_qty:
+                continue
             vals = {
                 'margin_delivered': 0.0,
                 'margin_delivered_percent': 0.0,
@@ -44,15 +46,14 @@ class SaleOrderLine(models.Model):
                 delivered_qty += move.product_qty
                 cost_price += move.product_qty * abs(move.price_unit)
             qty = delivered_qty or line.product_uom_qty
-            average_price = qty and (
-                cost_price and cost_price / qty or line.purchase_price) or 0.0
+            average_price = (cost_price / qty) or line.purchase_price
             vals['purchase_price_delivery'] = tools.float_round(
                 average_price, precision_digits=digits)
-            if line.qty_delivered == line.product_uom_qty:
-                vals['margin_delivered'] = line.margin
-            elif line.product_uom_qty:
+            if line.qty_delivered:
                 vals['margin_delivered'] = (
                     line.qty_delivered * line.margin / line.product_uom_qty)
+            else:
+                vals['margin_delivered'] = line.margin
             vals['margin_delivered_percent'] = qty and (
                 (line.price_reduce - vals['purchase_price_delivery']) /
                 line.price_reduce * 100.0) or 0.0
