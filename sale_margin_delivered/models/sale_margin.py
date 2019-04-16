@@ -32,29 +32,27 @@ class SaleOrderLine(models.Model):
         for line in self.filtered('price_reduce'):
             if not line.qty_delivered and not line.product_uom_qty:
                 continue
-            vals = {
-                'margin_delivered': 0.0,
-                'margin_delivered_percent': 0.0,
-                'purchase_price_delivery': line.purchase_price,
-            }
-            delivered_qty = 0.0
-            cost_price = 0.0
-            moves = line.move_ids.filtered(lambda x: (
-                x.state == 'done' and x.picking_code == 'outgoing'
-            ))
-            for move in moves:
-                delivered_qty += move.product_qty
-                cost_price += move.product_qty * abs(move.price_unit)
-            qty = delivered_qty or line.product_uom_qty
-            average_price = (cost_price / qty) or line.purchase_price
-            vals['purchase_price_delivery'] = tools.float_round(
-                average_price, precision_digits=digits)
+            qty = line.qty_delivered or line.product_uom_qty
+            line.purchase_price_delivery = line.purchase_price
+            line.margin_delivered = line.margin
             if line.qty_delivered:
-                vals['margin_delivered'] = (
+                cost_price = 0.0
+                moves = line.move_ids.filtered(
+                    lambda x: (
+                        x.state == 'done' and (
+                            x.picking_code == 'outgoing' or (
+                                x.picking_code == 'incoming' and x.to_refund))
+                    ))
+                for move in moves:
+                    cost_price += move.product_qty * move.price_unit
+                average_price = (abs(cost_price) /
+                                 line.qty_delivered) or line.purchase_price
+                line.purchase_price_delivery = tools.float_round(
+                    average_price, precision_digits=digits)
+                line.margin_delivered = (
                     line.qty_delivered * line.margin / line.product_uom_qty)
-            else:
-                vals['margin_delivered'] = line.margin
-            vals['margin_delivered_percent'] = qty and (
-                (line.price_reduce - vals['purchase_price_delivery']) /
+            # compute percent margin based on delivered quantities or ordered
+            # quantities
+            line.margin_delivered_percent = qty and (
+                (line.price_reduce - line.purchase_price_delivery) /
                 line.price_reduce * 100.0) or 0.0
-            line.update(vals)
