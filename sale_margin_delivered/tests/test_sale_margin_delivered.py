@@ -4,7 +4,7 @@ from datetime import datetime
 from odoo.tests import SavepointCase
 
 
-class TestSaleMarginCostExtra(SavepointCase):
+class TestSaleMarginDelivered(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
@@ -46,6 +46,7 @@ class TestSaleMarginCostExtra(SavepointCase):
                 (0, 0, {
                     'product_id': self.product.id,
                     'product_uom_qty': 6,
+                    'product_uom': self.product.uom_po_id.id,
                 })
             ],
             'partner_id': self.partner.id,
@@ -81,3 +82,47 @@ class TestSaleMarginCostExtra(SavepointCase):
         order_line.product_uom_qty = 0.0
         self.assertEqual(order_line.margin_delivered, 0.0)
         self.assertEqual(order_line.margin_delivered_percent, 0)
+
+    def _create_return(self, picking, to_refund=False):
+        return_wiz = self.env['stock.return.picking'].with_context(
+            active_id=picking.id
+        ).create({})
+        return_wiz.product_return_moves.write({
+            'quantity': 3.0,
+            'to_refund': to_refund,
+        })
+        new_picking_id, pick_type_id = return_wiz._create_returns()
+        return self.env['stock.picking'].browse(new_picking_id)
+
+    def _validate_so_picking(self, sale_order):
+        picking = sale_order.picking_ids
+        picking.action_assign()
+        picking.move_line_ids.qty_done = 6.0
+        picking.action_done()
+        return picking
+
+    def test_sale_margin_delivered_return_to_refund(self):
+        sale_order = self._new_sale_order()
+        sale_order.action_confirm()
+        picking = self._validate_so_picking(sale_order)
+        picking_return = self._create_return(picking, to_refund=True)
+        picking_return.move_line_ids.qty_done = 3.0
+        picking_return.action_done()
+        order_line = sale_order.order_line[:1]
+        self.assertEqual(order_line.margin_delivered, 30.0)
+        self.assertEqual(order_line.margin_delivered_percent, 50.0)
+        self.assertEqual(
+            order_line.purchase_price_delivery, order_line.purchase_price)
+
+    def test_sale_margin_delivered_return_no_refund(self):
+        sale_order = self._new_sale_order()
+        sale_order.action_confirm()
+        picking = self._validate_so_picking(sale_order)
+        picking_return = self._create_return(picking, to_refund=False)
+        picking_return.move_line_ids.qty_done = 3.0
+        picking_return.action_done()
+        order_line = sale_order.order_line[:1]
+        self.assertEqual(order_line.margin_delivered, 60.0)
+        self.assertEqual(order_line.margin_delivered_percent, 50.0)
+        self.assertEqual(
+            order_line.purchase_price_delivery, order_line.purchase_price)
