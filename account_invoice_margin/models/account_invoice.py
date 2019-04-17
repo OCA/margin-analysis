@@ -53,12 +53,6 @@ class AccountInvoiceLine(models.Model):
     def _onchange_product_id_account_invoice_margin(self):
         if self.invoice_id.type in ['out_invoice', 'out_refund']:
             purchase_price = self.product_id.standard_price
-            if any(self.product_id.supplier_taxes_id.mapped('price_include')):
-                taxes = self.product_id.supplier_taxes_id.compute_all(
-                    purchase_price, self.invoice_id.currency_id, 1,
-                    product=self.product_id,
-                    partner=self.invoice_id.partner_id)
-                purchase_price = taxes['total_excluded']
             if self.uom_id != self.product_id.uom_id:
                 purchase_price = self.product_id.uom_id._compute_price(
                     purchase_price, self.uom_id)
