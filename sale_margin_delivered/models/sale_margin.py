@@ -49,8 +49,9 @@ class SaleOrderLine(models.Model):
                                  line.qty_delivered) or line.purchase_price
                 line.purchase_price_delivery = tools.float_round(
                     average_price, precision_digits=digits)
-                line.margin_delivered = (
-                    line.qty_delivered * line.margin / line.product_uom_qty)
+                line.margin_delivered = line.qty_delivered * (
+                    line.price_reduce - line.purchase_price_delivery
+                )
             # compute percent margin based on delivered quantities or ordered
             # quantities
             line.margin_delivered_percent = qty and (
