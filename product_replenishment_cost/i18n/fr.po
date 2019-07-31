@@ -16,19 +16,23 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_replenishment_cost
-#: field:product.product,cost_price:0
-msgid "Replenishment cost"
-msgstr "Coût de réapprovisionnement"
-
-#. module: product_replenishment_cost
-#: code:_description:0
 #: model:ir.model,name:product_replenishment_cost.model_product_product
-#, python-format
 msgid "Product"
 msgstr "Article"
 
 #. module: product_replenishment_cost
-#: help:product.product,cost_price:0
+#: model:ir.model.fields,field_description:product_replenishment_cost.field_delivery_carrier_replenishment_cost
+#: model:ir.model.fields,field_description:product_replenishment_cost.field_prestashop_delivery_carrier_replenishment_cost
+#: model:ir.model.fields,field_description:product_replenishment_cost.field_prestashop_product_combination_replenishment_cost
+#: model:ir.model.fields,field_description:product_replenishment_cost.field_product_product_replenishment_cost
+msgid "Replenishment cost"
+msgstr "Coût de réapprovisionnement"
+
+#. module: product_replenishment_cost
+#: model:ir.model.fields,help:product_replenishment_cost.field_delivery_carrier_replenishment_cost
+#: model:ir.model.fields,help:product_replenishment_cost.field_prestashop_delivery_carrier_replenishment_cost
+#: model:ir.model.fields,help:product_replenishment_cost.field_prestashop_product_combination_replenishment_cost
+#: model:ir.model.fields,help:product_replenishment_cost.field_product_product_replenishment_cost
 msgid "The cost that you have to support in order to produce or acquire the goods. Depending on the modules installed, this cost may be computed based on various pieces of information, for example Bills of Materials or latest Purchases. By default, the Replenishment cost is the same as the Cost Price."
 msgstr "Le coût que vous devez prendre en charge pour produire ou acquerir la marchandise. Selon les modules installés, le calcul de ce coût peut s'appuyer sur diverses informations : par exemple les nomenclatures ou les derniers achats. Par défaut, le coût de réapprovisionnement est le même que le Prix de revient."
 
