@@ -20,17 +20,30 @@
 ##############################################################################
 {
     'name': 'Replenishment Cost',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'author': "Camptocamp,GRAP,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'category': 'Products',
     'depends': [
         'product',
+        'sales_team',
     ],
-    'website': 'http://www.camptocamp.com/',
+    'description': """
+Provides an overridable method on product which compute the Replenishment cost
+of a product. By default it just returns the value of "Cost price" field, but
+using the product_cost_incl_bom module, it will return the costing from the
+bom.
+
+As it is a generic module, you can also setup your own way of computing the
+replenishment_cost for your product.
+
+All OCA modules to compute margins are based on it, so you'll be able to use
+them in your own way.
+""",
+    'website': 'https://github.com/OCA/margin-analysis',
     'data': [
         'views/product_view.xml',
-        'demo/res_groups.yml',
+        'demo/res_groups.xml',
     ],
     'test': [
         'test/cost_price_update.yml',
