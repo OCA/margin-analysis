@@ -29,13 +29,13 @@ class ProductProduct(Model):
     _inherit = 'product.product'
 
     @api.one
-    @api.depends('product_tmpl_id.standard_price')
+    @api.depends('product_tmpl_id.standard_price', 'standard_price')
     def _get_replenishment_cost(self):
         self.replenishment_cost = self.standard_price
 
     replenishment_cost = fields.Float(
         string='Replenishment cost', compute='_get_replenishment_cost',
-        store=True, digits_compute=dp.get_precision('Product Price'),
+        store=True, digits=dp.get_precision('Product Price'),
         help="The cost that you have to support in order to produce or "
              "acquire the goods. Depending on the modules installed, "
              "this cost may be computed based on various pieces of "

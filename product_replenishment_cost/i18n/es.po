@@ -37,5 +37,5 @@ msgstr "Coste de reposición"
 #: model:ir.model.fields,help:product_replenishment_cost.field_prestashop_product_combination_replenishment_cost
 #: model:ir.model.fields,help:product_replenishment_cost.field_product_product_replenishment_cost
 msgid "The cost that you have to support in order to produce or acquire the goods. Depending on the modules installed, this cost may be computed based on various pieces of information, for example Bills of Materials or latest Purchases. By default, the Replenishment cost is the same as the Cost Price."
-msgstr "El costo que tiene que pagar para producir o adquirir los bienes. Dependiendo de los módulos instalados, este costo puede calcularse en función de diversos datos, por ejemplo, listas de materiales o compras más recientes. De forma predeterminada, el costo de reposición es el mismo que el precio de costo."
+msgstr "El coste que tiene que pagar para producir o adquirir los bienes. Dependiendo de los módulos instalados, este coste puede calcularse en función de diversos datos, por ejemplo, listas de materiales o compras más recientes. De forma predeterminada, el coste de reposición es el mismo que el precio de coste."
 
