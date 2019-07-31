@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from openerp import fields, api
-from openerp.models import Model
+from odoo import fields, api
+from odoo.models import Model
 
-import openerp.addons.decimal_precision as dp
+import odoo.addons.decimal_precision as dp
 
 
 class ProductProduct(Model):
@@ -34,8 +34,8 @@ class ProductProduct(Model):
         self.replenishment_cost = self.standard_price
 
     replenishment_cost = fields.Float(
-        compute=_get_replenishment_cost, store=True,
-        digits_compute=dp.get_precision('Product Price'),
+        string='Replenishment cost', compute='_get_replenishment_cost',
+        store=True, digits=dp.get_precision('Product Price'),
         help="The cost that you have to support in order to produce or "
              "acquire the goods. Depending on the modules installed, "
              "this cost may be computed based on various pieces of "
