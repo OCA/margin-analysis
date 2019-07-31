@@ -16,7 +16,16 @@ class SaleCommon(test_sale_common.TestSale):
 
         self.company = self.env.ref('base.main_company')
         self.base_currency = self.env.ref('base.EUR')
-        self.company.currency_id = self.base_currency
+        # Set company currency by SQL to avoid error 'You cannot change the
+        # currency of the company since some journal items already exist'
+        self.env.cr.execute("""
+            UPDATE res_company
+            SET currency_id = %s
+            WHERE id = %s
+        """, (
+            self.company.id,
+            self.base_currency.id
+        ))
 
     def _create_sale(self):
         sale = self.env['sale.order'].sudo(self.user).create({
