@@ -20,17 +20,17 @@
 ##############################################################################
 {
     'name': 'Replenishment Cost',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'author': "Camptocamp,GRAP,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'category': 'Products',
     'depends': [
         'product',
     ],
-    'website': 'http://www.camptocamp.com/',
+    'website': 'https://github.com/OCA/margin-analysis',
     'data': [
         'views/product_view.xml',
-        'demo/res_groups.yml',
+        'demo/res_groups.xml',
     ],
     'test': [
         'test/cost_price_update.yml',
