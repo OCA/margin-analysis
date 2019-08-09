@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-margin-analysis Odoo addons",
     version=version,
     install_requires=[
+        'odoo10-addon-product_replenishment_cost',
         'odoo10-addon-sale_line_cost_control',
     ],
     classifiers=[

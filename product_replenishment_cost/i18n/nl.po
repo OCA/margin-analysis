@@ -11,6 +11,7 @@ msgstr ""
 "Last-Translator: Erwin van der Ploeg | Endian Solutions "
 "<erwin@endiansolutions.nl>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,20 +19,20 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #. module: product_replenishment_cost
-#: help:product.product,cost_price:0
-msgid ""
-"The cost price is the standard price or, if the product has a bom, the sum "
-"of all standard price of its components. it take also care of the bom "
-"costing like cost per cylce."
-msgstr "Dit is de kostprijs, inclusief eventuele kosten."
-
-#. module: product_replenishment_cost
 #: model:ir.model,name:product_replenishment_cost.model_product_product
 msgid "Product"
 msgstr "Product"
 
 #. module: product_replenishment_cost
-#: field:product.product,cost_price:0
-msgid "Cost Price (incl. BoM)"
+#: model:ir.model.fields,field_description:product_replenishment_cost.field_product_product_replenishment_cost
+msgid "Replenishment cost"
 msgstr "Kostprijs (incl. kosten)"
 
+#. module: product_replenishment_cost
+#: model:ir.model.fields,help:product_replenishment_cost.field_product_product_replenishment_cost
+msgid ""
+"The cost that you have to support in order to produce or acquire the goods. "
+"Depending on the modules installed, this cost may be computed based on "
+"various pieces of information, for example Bills of Materials or latest "
+"Purchases. By default, the Replenishment cost is the same as the Cost Price."
+msgstr "Dit is de kostprijs, inclusief eventuele kosten."
