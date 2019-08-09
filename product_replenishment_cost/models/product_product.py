@@ -1,23 +1,8 @@
-# -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Alexandre Fayolle
-#    Copyright 2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright (C) 2012 - Today: Camptocamp SA
+# Copyright (C) 2016 - Today: GRAP (http://www.grap.coop)
+# @author: Alexandre Fayolle
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 
 from odoo import fields, api
 from odoo.models import Model
@@ -28,13 +13,13 @@ import odoo.addons.decimal_precision as dp
 class ProductProduct(Model):
     _inherit = 'product.product'
 
-    @api.one
     @api.depends('product_tmpl_id.standard_price', 'standard_price')
-    def _get_replenishment_cost(self):
-        self.replenishment_cost = self.standard_price
+    def _compute_replenishment_cost(self):
+        for product in self:
+            product.replenishment_cost = product.standard_price
 
     replenishment_cost = fields.Float(
-        string='Replenishment cost', compute='_get_replenishment_cost',
+        string='Replenishment cost', compute='_compute_replenishment_cost',
         store=True, digits=dp.get_precision('Product Price'),
         help="The cost that you have to support in order to produce or "
              "acquire the goods. Depending on the modules installed, "
