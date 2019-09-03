@@ -1,13 +1,13 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* product_standard_margin
+#	* product_standard_margin
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-14 18:35+0000\n"
-"PO-Revision-Date: 2012-11-07 14:35+0000\n"
+"POT-Creation-Date: 2019-07-31 09:33+0000\n"
+"PO-Revision-Date: 2019-07-31 09:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,16 +21,12 @@ msgstr ""
 #: model:ir.model.fields,help:product_standard_margin.field_prestashop_product_combination_standard_margin_rate
 #: model:ir.model.fields,help:product_standard_margin.field_product_product_standard_margin_rate
 msgid "Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product form (not based on historical values).Take care of tax include and exclude.. If no sale price set, will display 999.0"
-msgstr ""
-"Taux de marge théorique [ (PV unitaire - Coût unitaire ) / PV unitaire du "
-"formulaire Produit] (ne tient pas compte de la facturation effective). Ce "
-"taux tient compte des PV TTC (TVA incluse). Si aucun PV n'a été saisi, le "
-"taux sera de 999.0"
+msgstr "El porcentaje se calcula con [ Margen teórico / Precio de venta sin impuestos ] de la ficha del producto (no se basa en valores históricos). Cuidado con los impuestos incluidos o excluidos. Si el precio de venta no está establecido, se muestra 999.0"
 
 #. module: product_standard_margin
 #: model:ir.model,name:product_standard_margin.model_product_product
 msgid "Product"
-msgstr "Produit"
+msgstr "Producto"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_delivery_carrier_list_price_vat_excl
@@ -38,7 +34,7 @@ msgstr "Produit"
 #: model:ir.model.fields,field_description:product_standard_margin.field_prestashop_product_combination_list_price_vat_excl
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product_list_price_vat_excl
 msgid "Sale Price VAT Excluded"
-msgstr "Sale Price VAT Excluded"
+msgstr "Precio de Venta sin impuestos"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_delivery_carrier_standard_margin
@@ -46,7 +42,7 @@ msgstr "Sale Price VAT Excluded"
 #: model:ir.model.fields,field_description:product_standard_margin.field_prestashop_product_combination_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product_standard_margin
 msgid "Theorical Margin"
-msgstr "Marge Théorique"
+msgstr "Margen Teórico"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_delivery_carrier_standard_margin_rate
@@ -54,7 +50,7 @@ msgstr "Marge Théorique"
 #: model:ir.model.fields,field_description:product_standard_margin.field_prestashop_product_combination_standard_margin_rate
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product_standard_margin_rate
 msgid "Theorical Margin (%)"
-msgstr "Marge Théorique (%)"
+msgstr "Margen Teórico (%)"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_delivery_carrier_standard_margin
@@ -62,8 +58,5 @@ msgstr "Marge Théorique (%)"
 #: model:ir.model.fields,help:product_standard_margin.field_prestashop_product_combination_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product_standard_margin
 msgid "Theorical Margin is [ sale price (Wo Tax) - cost price ] of the product form (not based on historical values). Take care of tax include and exclude. If no sale price, the margin will be negativ."
-msgstr ""
-"Marge théorique [ Vente unitaire HT - coût unitaire ] du produit (ne tient "
-"pas compte de la facturation effective). Ce taux tient compte des PV TTC "
-"(TVA incluse). Si aucun PV n'a été saisi, la marge sera négative."
+msgstr "El margen teórico se calcula con [ Precio de Venta sin impuestoss - Precio de coste ] de la ficha de producto (no se basa en valores históricos). Cuidado con los impuestos incluidos o excluidos. Si el precio de venta no está establecido, el margen quedará en negativo."
 

@@ -20,18 +20,26 @@
 ##############################################################################
 {
     'name': 'Product Margin and Margin Rate',
-    'version': '8.0.2.0.0',
+    'version': '10.0.1.0.0',
     'author': 'Camptocamp,GRAP,Odoo Community Association (OCA)',
+    'description': """
+Add a field on the product form that compute the standard (or theorical)
+margin based on the current values of sale and replenishment cost present in
+the product form. We take care of taxe included or excluded.
+""",
     'category': 'Product',
     'depends': [
         'product_replenishment_cost',
         'account',
     ],
-    'website': 'http://www.camptocamp.com/',
+    'website': 'https://github.com/OCA/margin-analysis',
+    'demo': [
+        'demo/product_product.xml',
+    ],
     'data': [
-        'data/decimal_precision.yml',
-        'views/view.xml',
+        'data/decimal_precision.xml',
+        'views/product_view.xml',
     ],
     'license': 'AGPL-3',
-    'installable': False,
+    'installable': True,
 }

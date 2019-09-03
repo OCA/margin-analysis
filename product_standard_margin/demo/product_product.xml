@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 PlanetaTIC - Marc Poch <mpoch@planetatic.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record id="product_non_profit_wine" model="product.product">
+        <field name="name">Non-profit Wine</field>
+        <field name="type">consu</field>
+        <field name="uom_id" ref="product.product_uom_unit" />
+        <field name="uom_po_id" ref="product.product_uom_unit" />
+        <field name="standard_price">10.0</field>
+        <field name="list_price">10.0</field>
+    </record>
+
+    <record id="product_free_wine" model="product.product">
+        <field name="name">Free Wine</field>
+        <field name="type">consu</field>
+        <field name="uom_id" ref="product.product_uom_unit" />
+        <field name="uom_po_id" ref="product.product_uom_unit" />
+        <field name="standard_price">10.0</field>
+        <field name="list_price">0.0</field>
+    </record>
+
+    <record id="product_wine" model="product.product">
+        <field name="name">Wine</field>
+        <field name="type">consu</field>
+        <field name="uom_id" ref="product.product_uom_unit" />
+        <field name="uom_po_id" ref="product.product_uom_unit" />
+        <field name="standard_price">5.0</field>
+        <field name="list_price">10.0</field>
+    </record>
+
+</odoo>
