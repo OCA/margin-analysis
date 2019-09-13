@@ -63,17 +63,51 @@ class ProductProduct(Model):
         )
 
     standard_margin = fields.Float(
-        compute='_get_margin', string='Theorical Margin', store=True,
+        compute='_get_margin', string='Margin', store=True,
         digits=dp.get_precision('Product Price'),
-        help='Theorical Margin is [ sale price (Wo Tax) - cost price ] '
+        help='Margin is [ sale price (Wo Tax) - cost price ] '
              'of the product form (not based on historical values). '
              'Take care of tax include and exclude. If no sale price, '
              'the margin will be negativ.')
 
     standard_margin_rate = fields.Float(
-        compute='_get_margin', string='Theorical Margin (%)', store=True,
+        compute='_get_margin', string='Margin (%)', store=True,
         digits=dp.get_precision('Product Margin Precision'),
-        help='Markup rate is [ Theorical Margin / sale price (Wo Tax) ] '
+        help='Markup rate is [ Margin / sale price (Wo Tax) ] '
              'of the product form (not based on historical values).'
-             'Take care of tax include and exclude.. If no sale price '
+             'Take care of tax include and exclude. If no sale price '
              'set, will display 999.0')
+
+
+class ProductTemplate(Model):
+    _inherit = 'product.template'
+
+    standard_margin = fields.Float(
+        compute='_compute_standard_margin', string='Margin',
+        store=True, digits=dp.get_precision('Product Price'),
+        help='Margin is [ sale price (Wo Tax) - cost price ] '
+             'of the product form (not based on historical values). '
+             'Take care of tax include and exclude. If no sale price, '
+             'the margin will be negativ.')
+
+    standard_margin_rate = fields.Float(
+        compute='_compute_standard_margin', string='Margin (%)',
+        store=True, digits=dp.get_precision('Product Price'),
+        help='Markup rate is [ Margin / sale price (Wo Tax) ] '
+             'of the product form (not based on historical values).'
+             'Take care of tax include and exclude. If no sale price '
+             'set, will display 999.0')
+
+    @api.multi
+    @api.depends('product_variant_ids', 'product_variant_ids.standard_margin')
+    def _compute_standard_margin(self):
+        unique_variants = self.filtered(
+            lambda template: len(template.product_variant_ids) == 1)
+        for template in unique_variants:
+            template.standard_margin = \
+                template.product_variant_ids.standard_margin
+            template.standard_margin_rate = \
+                template.product_variant_ids.standard_margin_rate
+        for template in (self - unique_variants):
+            template.standard_margin = 0.0
+            template.standard_margin_rate = 0.0
