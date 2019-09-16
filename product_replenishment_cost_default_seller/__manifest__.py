@@ -8,7 +8,7 @@
     'author': "PlanetaTIC,Odoo Community Association (OCA)",
     'category': 'Products',
     'depends': [
-        'product',
+        'product_replenishment_cost',
     ],
     'description': """Replenishment cost default seller""",
     'website': 'https://github.com/OCA/margin-analysis',

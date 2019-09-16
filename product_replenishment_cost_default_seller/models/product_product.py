@@ -13,7 +13,7 @@ class ProductProduct(Model):
 
     @api.one
     @api.depends('product_tmpl_id.standard_price', 'standard_price',
-                 'seller_ids', 'seller_ids.price')
+                 'product_tmpl_id.seller_ids.price')
     def _get_replenishment_cost(self):
         if self.seller_ids:
             self.replenishment_cost = self.seller_ids[0].price
