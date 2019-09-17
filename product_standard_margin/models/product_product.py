@@ -109,5 +109,5 @@ class ProductTemplate(Model):
             template.standard_margin_rate = \
                 template.product_variant_ids.standard_margin_rate
         for template in (self - unique_variants):
-            template.standard_margin = 0.0
-            template.standard_margin_rate = 0.0
+            template.standard_margin = 999.
+            template.standard_margin_rate = 999.
