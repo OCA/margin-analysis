@@ -42,3 +42,29 @@ class ProductProduct(Model):
              "information, for example Bills of Materials or latest "
              "Purchases. By default, the Replenishment cost is the same "
              "as the Cost Price.")
+
+
+class ProductTemplate(Model):
+    _inherit = 'product.template'
+
+    replenishment_cost = fields.Float(
+        string='Replenishment cost', compute='_compute_replenishment_cost',
+        store=True, digits=dp.get_precision('Product Price'),
+        help="The cost that you have to support in order to produce or "
+             "acquire the goods. Depending on the modules installed, "
+             "this cost may be computed based on various pieces of "
+             "information, for example Bills of Materials or latest "
+             "Purchases. By default, the Replenishment cost is the same "
+             "as the Cost Price.")
+
+    @api.multi
+    @api.depends('product_variant_ids',
+                 'product_variant_ids.replenishment_cost')
+    def _compute_replenishment_cost(self):
+        unique_variants = self.filtered(
+            lambda template: len(template.product_variant_ids) == 1)
+        for template in unique_variants:
+            template.replenishment_cost = \
+                template.product_variant_ids.replenishment_cost
+        for template in (self - unique_variants):
+            template.replenishment_cost = 0.0
