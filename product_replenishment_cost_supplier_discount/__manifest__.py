@@ -19,5 +19,5 @@
     'test': [],
     'license': 'AGPL-3',
     'installable': True,
-    'auto_instalable': True,
+    'auto_install': True,
 }
