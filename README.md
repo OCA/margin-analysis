@@ -9,5 +9,3 @@ This project aim to deal with modules related to manage Financial controlling an
  - Compute cost based on BoM
  - Compute standard and historical margin
  - ...
-
-
