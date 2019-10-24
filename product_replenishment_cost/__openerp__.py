@@ -30,6 +30,8 @@
     'website': 'http://www.camptocamp.com/',
     'data': [
         'views/product_view.xml',
+    ],
+    'demo': [
         'demo/res_groups.yml',
     ],
     'test': [
