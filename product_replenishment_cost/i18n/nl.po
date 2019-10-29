@@ -24,12 +24,12 @@ msgid "Product"
 msgstr "Product"
 
 #. module: product_replenishment_cost
-#: model:ir.model.fields,field_description:product_replenishment_cost.field_product_product_replenishment_cost
+#: model:ir.model.fields,field_description:product_replenishment_cost.field_product_product__replenishment_cost
 msgid "Replenishment cost"
 msgstr "Kostprijs (incl. kosten)"
 
 #. module: product_replenishment_cost
-#: model:ir.model.fields,help:product_replenishment_cost.field_product_product_replenishment_cost
+#: model:ir.model.fields,help:product_replenishment_cost.field_product_product__replenishment_cost
 msgid ""
 "The cost that you have to support in order to produce or acquire the goods. "
 "Depending on the modules installed, this cost may be computed based on "
