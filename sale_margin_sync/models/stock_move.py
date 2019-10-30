@@ -15,8 +15,6 @@ class StockMove(models.Model):
         return res
 
     def sale_margin_sync(self):
-        for move in self:
-            if (move.state != 'done' or not move.sale_line_id or
-                    not move._is_out()):
-                continue
+        for move in self.filtered(lambda m: (
+                m.state == 'done' and m.sale_line_id and m._is_out())):
             move.sale_line_id.purchase_price = -move.price_unit
