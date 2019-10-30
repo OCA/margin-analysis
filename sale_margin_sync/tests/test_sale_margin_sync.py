@@ -13,6 +13,7 @@ class TestSaleMarginSync(SavepointCase):
         cls.product = cls.env['product.product'].create({
             'name': 'test_product',
             'type': 'product',
+            'standard_price': 70,
         })
         cls.env['stock.quant'].create({
             'product_id': cls.product.id,
@@ -39,3 +40,12 @@ class TestSaleMarginSync(SavepointCase):
         move.price_unit = -80.0
         self.assertEqual(so_line.purchase_price, 80.0)
         self.assertEqual(so_line.margin, 200.0)
+
+    def test_sale_margin_sync_unvalidated_move(self):
+        self.order.action_confirm()
+        so_line = self.order.order_line[:1]
+        move = so_line.move_ids[:1]
+        move.quantity_done = 10
+        move.price_unit = -80.0
+        self.assertEqual(so_line.purchase_price, 70.0)
+        self.assertEqual(so_line.margin, 300.0)
