@@ -7,6 +7,9 @@ class TestSaleMarginSync(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.pricelist = cls.env['product.pricelist'].create({
+            'name': 'Pricelist for testing sale_margin_sync',
+        })
         cls.partner = cls.env['res.partner'].create({
             'name': 'Test',
         })
@@ -28,7 +31,7 @@ class TestSaleMarginSync(SavepointCase):
                 'product_uom': cls.product.uom_id.id,
                 'price_unit': 100.00,
             })],
-            'pricelist_id': cls.env.ref('product.list0').id,
+            'pricelist_id': cls.pricelist.id,
         })
 
     def test_sale_margin_sync(self):
