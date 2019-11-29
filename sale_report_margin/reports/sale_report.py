@@ -12,9 +12,13 @@ class SaleReport(models.Model):
         readonly=True,
     )
 
-    def _select(self):
-        select_str = super(SaleReport, self)._select()
-        select_str += """,
-            SUM(l.purchase_price / COALESCE(cr.rate, 1.0)) as purchase_price
-        """
-        return select_str
+    def _query(self, with_clause='', fields=None, groupby='', from_clause=''):
+        if fields is None:
+            fields = {}
+        fields.update({
+            "purchase_price":
+                " ,SUM(l.purchase_price / COALESCE(s.currency_rate, 1.0))"
+                "AS purchase_price",
+        })
+        return super()._query(with_clause=with_clause, fields=fields,
+                              groupby=groupby, from_clause=from_clause)
