@@ -7,20 +7,20 @@ Sale Margin Delivered
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Production/Stable
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github
-    :target: https://github.com/OCA/margin-analysis/tree/11.0/sale_margin_delivered
+    :target: https://github.com/OCA/margin-analysis/tree/12.0/sale_margin_delivered
     :alt: OCA/margin-analysis
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/margin-analysis-11-0/margin-analysis-11-0-sale_margin_delivered
+    :target: https://translation.odoo-community.org/projects/margin-analysis-12-0/margin-analysis-12-0-sale_margin_delivered
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/132/11.0
+    :target: https://runbot.odoo-community.org/runbot/132/12.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -41,10 +41,11 @@ Companies > Users*, select the user and set *Show Sale Margin* on.
 Usage
 =====
 
-#. Place a new *Sale Order* and add a line with an stockable product. Set a
+#. Go to *Sales > Orders > Quotations*.
+#. Create a new *Sales Order* and add a line with an stockable product. Set a
    quantity higher than one.
-#. Confirm the *Sale Order* and deliver just a partial amount of product in the
-   picking.
+#. Confirm the *Sales Order* and deliver just a partial amount of product in
+   the picking.
 #. Go to *Sales > Reporting > Sales* and unfold the *Order Reference* dimension
    and the *Margin* and *Margin Delivered* to compare them.
 
@@ -56,8 +57,8 @@ deliver 2 of 3 units. Then, the reported margins would be:
 `margin`: 45 (3 * 15)
 `margin_delivered`: 30 (2 * 15)
 
-Additionaly, you can check the margin and the margin percent in the sale order
-line.
+Additionally, you can check the margin and the margin percent in the sales
+order line.
 
 Bug Tracker
 ===========
@@ -65,7 +66,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/margin-analysis/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20sale_margin_delivered%0Aversion:%2011.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20sale_margin_delivered%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -80,8 +81,11 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Sergio Teruel <sergio.teruel@tecnativa.com>
-* David Vidal <david.vidal@tecnativa.com>
+
+* `Tecnativa <https://www.tecnativa.com>`_:
+
+    * Sergio Teruel <sergio.teruel@tecnativa.com>
+    * David Vidal <david.vidal@tecnativa.com>
 
 Maintainers
 ~~~~~~~~~~~
@@ -96,6 +100,14 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/11.0/sale_margin_delivered>`_ project on GitHub.
+.. |maintainer-sergio-teruel| image:: https://github.com/sergio-teruel.png?size=40px
+    :target: https://github.com/sergio-teruel
+    :alt: sergio-teruel
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-sergio-teruel| 
+
+This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/12.0/sale_margin_delivered>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
