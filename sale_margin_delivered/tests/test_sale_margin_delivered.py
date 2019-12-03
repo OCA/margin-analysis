@@ -10,7 +10,7 @@ class TestSaleMarginDelivered(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.SaleOrder = cls.env['sale.order']
-        cls.product_uom_id = cls.env.ref('product.product_uom_unit')
+        cls.product_uom_id = cls.env.ref('uom.product_uom_unit')
         cls.product = cls.env['product.product'].create({
             'name': 'test',
             'type': 'product',
