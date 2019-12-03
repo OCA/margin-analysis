@@ -26,7 +26,8 @@ class SaleOrderLine(models.Model):
         store=True,
     )
 
-    @api.depends('margin', 'qty_delivered', 'product_uom_qty')
+    @api.depends('margin', 'qty_delivered', 'product_uom_qty',
+                 'move_ids.price_unit')
     def _compute_margin_delivered(self):
         digits = self.env['decimal.precision'].precision_get('Product Price')
         for line in self.filtered('price_reduce'):
