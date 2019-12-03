@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo12-addon-product_replenishment_cost',
         'odoo12-addon-sale_margin_sync',
+        'odoo12-addon-sale_report_margin',
     ],
     classifiers=[
         'Programming Language :: Python',
