@@ -4,12 +4,14 @@
 {
     "name": "Account Invoice Margin",
     "summary": "Show margin in invoices",
-    "version": "11.0.1.1.0",
+    "version": "12.0.1.0.0",
     "category": "Account",
     "website": "http://www.tecnativa.com",
     "author": "Tecnativa, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
+    "development_status": "Production/Stable",
+    "maintainers": ["sergio-teruel"],
     "application": False,
     "installable": True,
     "depends": [
