@@ -4,7 +4,7 @@
 {
     "name": "Account Invoice Margin",
     "summary": "Show margin in invoices",
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.1.0",
     "category": "Account",
     "website": "http://www.tecnativa.com",
     "author": "Tecnativa, "
