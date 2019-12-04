@@ -1,12 +1,11 @@
 # © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import SavepointCase, tagged
 
 
+@tagged('post_install', '-at_install')
 class TestAccountInvoiceMargin(SavepointCase):
-    at_install = False
-    post_install = True
 
     @classmethod
     def setUpClass(cls):
@@ -41,8 +40,8 @@ class TestAccountInvoiceMargin(SavepointCase):
         cls.product = cls.env["product.product"].create({
             "name": "test product",
             "categ_id": cls.product_categ.id,
-            "uom_id": cls.env.ref('product.product_uom_unit').id,
-            "uom_po_id": cls.env.ref('product.product_uom_unit').id,
+            "uom_id": cls.env.ref('uom.product_uom_unit').id,
+            "uom_po_id": cls.env.ref('uom.product_uom_unit').id,
             "default_code": "test-margin",
             "list_price": 200.00,
             "standard_price": 100.00,
@@ -76,11 +75,11 @@ class TestAccountInvoiceMargin(SavepointCase):
     def test_invoice_margin_uom(self):
         inv_line = self.invoice.invoice_line_ids
         inv_line.write({
-            'uom_id': self.env.ref('product.product_uom_dozen').id,
+            'uom_id': self.env.ref('uom.product_uom_dozen').id,
         })
         inv_line._onchange_uom_id()
         inv_line._onchange_product_id_account_invoice_margin()
-        self.assertEqual(inv_line.margin, -10000.00)
+        self.assertEqual(inv_line.margin, 12000.00)
 
     def test_invoice_refund(self):
         new_invoice = self.invoice.refund()

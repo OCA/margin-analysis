@@ -31,7 +31,6 @@ class AccountInvoiceLine(models.Model):
         string='Cost',
     )
 
-    @api.multi
     @api.depends('purchase_price', 'price_subtotal')
     def _compute_margin(self):
         applicable = self.filtered(
