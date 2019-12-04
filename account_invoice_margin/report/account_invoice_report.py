@@ -10,9 +10,9 @@ class AccountInvoiceReport(models.Model):
     margin = fields.Float(string='Margin', readonly=True)
 
     def _select(self):
-        select_str = super(AccountInvoiceReport, self)._select()
+        select_str = super()._select()
         return '%s, sub.margin' % select_str
 
     def _sub_select(self):
-        select_str = super(AccountInvoiceReport, self)._sub_select()
+        select_str = super()._sub_select()
         return '%s, SUM(ail.margin_signed) AS margin' % select_str
