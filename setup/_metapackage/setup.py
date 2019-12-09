@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-margin-analysis Odoo addons",
     version=version,
     install_requires=[
+        'odoo12-addon-account_invoice_margin',
         'odoo12-addon-product_replenishment_cost',
         'odoo12-addon-sale_margin_delivered',
         'odoo12-addon-sale_margin_security',
