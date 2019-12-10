@@ -8,7 +8,9 @@ class SaleOrder(models.Model):
 
     percent = fields.Float(
         string='Percent',
-        compute='_compute_percent')
+        compute='_compute_percent',
+        digits=(16, 2),
+        )
 
     @api.depends('margin', 'amount_untaxed')
     def _compute_percent(self):
