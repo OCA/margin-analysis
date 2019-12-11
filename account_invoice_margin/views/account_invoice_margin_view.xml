@@ -51,6 +51,10 @@
                     <field name="margin"/>
                     <field name="margin_percent"/>
             </xpath>
+            <field name="amount_untaxed" position="before">
+                <field name="margin"/>
+                <field name="margin_percent"/>
+            </field>
         </field>
     </record>
 
@@ -79,6 +83,19 @@
                 <field name="margin"/>
                 <field name="margin_percent"/>
             </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_invoice_tree" model="ir.ui.view">
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="groups_id"
+               eval="[(4, ref('account_invoice_margin.group_account_invoice_margin_security'))]"/>
+        <field name="arch" type="xml">
+            <field name="amount_untaxed_invoice_signed" position="before">
+                <field name="margin_signed" sum="Total"/>
+                <field name="margin_percent"/>
+            </field>
         </field>
     </record>
 
