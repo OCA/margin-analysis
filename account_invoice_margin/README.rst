@@ -27,6 +27,16 @@ Account Invoice Margin
 
 This module allows to show sales margin in invoices.
 
+The new information is available:
+
+* on the account form view
+
+.. figure:: https://raw.githubusercontent.com/OCA/margin-analysis/12.0/account_invoice_margin/static/description/account_invoice_form.png
+
+* and on the account tree view
+
+.. figure:: https://raw.githubusercontent.com/OCA/margin-analysis/12.0/account_invoice_margin/static/description/account_invoice_tree.png
+
 **Table of contents**
 
 .. contents::
@@ -57,6 +67,7 @@ Authors
 ~~~~~~~
 
 * Tecnativa
+* GRAP
 
 Contributors
 ~~~~~~~~~~~~
@@ -64,6 +75,10 @@ Contributors
 * `Tecnativa <https://www.tecnativa.com>`__:
 
   * Sergio Teruel
+
+* `GRAP <http://www.grap.coop>`__:
+
+  * Sylvain LE GAL (https://twitter.com/legalsylvain)
 
 Maintainers
 ~~~~~~~~~~~
