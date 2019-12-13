@@ -38,19 +38,42 @@ class AccountInvoice(models.Model):
         'invoice_line_ids.price_subtotal',
     )
     def _compute_margin(self):
-        # quick computation with read_group
-        for invoice in self.filtered(
-                lambda x: not isinstance(x.id, models.NewId)):
+        real_invoices = self.filtered(
+            lambda x: not isinstance(x.id, models.NewId))
+        virtual_invoices = self - real_invoices
+        chunks = (
+            real_invoices[i:i + models.PREFETCH_MAX]
+            for i in range(0, len(real_invoices), models.PREFETCH_MAX)
+        )
+        # split in chunks for not losing performance in IN SQL query
+        for chunk in chunks:
+            # quick computation with read_group for real DB records
             res = self.env['account.invoice.line'].read_group(
-                [('invoice_id', '=', self.id)],
+                [('invoice_id', 'in', chunk.ids)],
                 ['margin', 'margin_signed', 'price_subtotal'],
                 ['invoice_id'],
-            )[0]
+            )
+            for group in res:
+                invoice = self.browse(group['invoice_id'][0])
+                invoice.update({
+                    'margin': group['margin'],
+                    'margin_signed': group['margin_signed'],
+                    'margin_percent': (
+                        group['price_subtotal'] and
+                        group['margin_signed'] /
+                        group['price_subtotal'] * 100 or 0
+                    ),
+                })
+        # Normal computation for virtual IDs
+        for invoice in virtual_invoices:
+            invoice_lines = invoice.invoice_line_ids
+            price_subtotal = sum(invoice_lines.mapped('price_subtotal'))
+            margin_signed = sum(invoice_lines.mapped('margin_signed'))
             invoice.update({
-                'margin': res['margin'],
-                'margin_signed': res['margin_signed'],
-                'margin_percent': res['price_subtotal'] and (
-                    res['margin_signed'] / res['price_subtotal'] * 100),
+                'margin': sum(invoice_lines.mapped('margin')),
+                'margin_signed': margin_signed,
+                'margin_percent': price_subtotal and (
+                    margin_signed / price_subtotal * 100) or 0,
             })
 
 
