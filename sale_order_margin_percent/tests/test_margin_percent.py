@@ -9,7 +9,7 @@ class TestSaleMarginPercent(SavepointCase):
         super().setUp()
         self.SaleOrder = self.env['sale.order']
 
-        self.product_uom_id = self.ref('product.product_uom_unit')
+        self.product_uom_id = self.ref('uom.product_uom_unit')
         self.product_id = self.ref('product.product_product_24')
         self.partner_id = self.ref('base.res_partner_4')
 
