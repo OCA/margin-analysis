@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo12-addon-sale_margin_delivered',
         'odoo12-addon-sale_margin_security',
         'odoo12-addon-sale_margin_sync',
+        'odoo12-addon-sale_order_margin_percent',
         'odoo12-addon-sale_report_margin',
     ],
     classifiers=[
