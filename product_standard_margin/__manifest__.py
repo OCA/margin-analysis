@@ -19,19 +19,13 @@
 #
 ##############################################################################
 {
-    'name': 'Product Margin and Margin Rate',
-    'version': '8.0.2.0.0',
-    'author': 'Camptocamp,GRAP,Odoo Community Association (OCA)',
-    'category': 'Product',
-    'depends': [
-        'product_replenishment_cost',
-        'account',
-    ],
-    'website': 'http://www.camptocamp.com/',
-    'data': [
-        'data/decimal_precision.yml',
-        'views/view.xml',
-    ],
-    'license': 'AGPL-3',
-    'installable': False,
+    "name": "Product Margin and Margin Rate",
+    "version": "8.0.2.0.0",
+    "author": "Camptocamp,GRAP,Odoo Community Association (OCA)",
+    "category": "Product",
+    "depends": ["product_replenishment_cost", "account",],
+    "website": "http://www.camptocamp.com/",
+    "data": ["data/decimal_precision.yml", "views/view.xml",],
+    "license": "AGPL-3",
+    "installable": False,
 }
