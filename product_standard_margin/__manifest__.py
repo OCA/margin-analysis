@@ -1,31 +1,18 @@
-# -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Joel Grand-Guillaume
-#    Copyright 2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright (C) 2012 - Today: Camptocamp SA
+# @author: Joel Grand-Guillaume
+# Copyright (C) 2019 - Today: GRAP (http://www.grap.coop)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Product Margin and Margin Rate",
-    "version": "8.0.2.0.0",
+    "version": "12.0.1.0.0",
     "author": "Camptocamp,GRAP,Odoo Community Association (OCA)",
     "category": "Product",
-    "depends": ["product_replenishment_cost", "account",],
-    "website": "http://www.camptocamp.com/",
-    "data": ["data/decimal_precision.yml", "views/view.xml",],
+    "depends": ["account"],
+    "maintainers": ["legalsylvain"],
+    "website": "https://www.github.com/OCA/margin-analysis",
+    "data": ["views/view_product_product.xml", "views/view_product_template.xml"],
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
+    "images": ["static/description/product_form.png"],
 }
