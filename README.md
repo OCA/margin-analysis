@@ -17,6 +17,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [product_replenishment_cost](product_replenishment_cost/) | 10.0.1.0.0 | Replenishment Cost
+[product_standard_margin](product_standard_margin/) | 10.0.1.0.0 | Product Margin and Margin Rate
 [sale_line_cost_control](sale_line_cost_control/) | 10.0.1.0.0 | Sales Lines Cost Control
 
 
@@ -31,7 +32,6 @@ addon | version | summary
 [product_historical_margin](product_historical_margin/) | 0.2 (unported) | Product Historical Margin
 [product_historical_margin_report](product_historical_margin_report/) | 1.0 (unported) | Product Historial Margin Report
 [product_price_history](product_price_history/) | 1.2.2 (unported) | Product Price History
-[product_standard_margin](product_standard_margin/) | 8.0.2.0.0 (unported) | Product Margin and Margin Rate
 [product_stock_cost_field_report](product_stock_cost_field_report/) | 1.0 (unported) | Product Cost field Report
 
 [//]: # (end addons)
