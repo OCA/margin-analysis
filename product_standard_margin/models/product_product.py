@@ -27,46 +27,62 @@ import openerp.addons.decimal_precision as dp
 
 
 class ProductProduct(Model):
-    _inherit = 'product.product'
+    _inherit = "product.product"
 
     @api.multi
     @api.depends(
-        'product_tmpl_id.list_price', 'replenishment_cost', 'taxes_id.type',
-        'taxes_id.price_include', 'taxes_id.amount',
-        'taxes_id.include_base_amount', 'taxes_id.child_depend')
+        "product_tmpl_id.list_price",
+        "replenishment_cost",
+        "taxes_id.type",
+        "taxes_id.price_include",
+        "taxes_id.amount",
+        "taxes_id.include_base_amount",
+        "taxes_id.child_depend",
+    )
     def _get_margin(self):
         for product in self:
             product.list_price_vat_excl = product.taxes_id.compute_all(
-                product.list_price, 1, product=product.id)['total']
+                product.list_price, 1, product=product.id
+            )["total"]
 
-            product.standard_margin =\
+            product.standard_margin = (
                 product.list_price_vat_excl - product.replenishment_cost
+            )
             if product.list_price_vat_excl == 0:
-                product.standard_margin_rate = 999.
+                product.standard_margin_rate = 999.0
             else:
                 product.standard_margin_rate = (
-                    (product.list_price_vat_excl
-                        - product.replenishment_cost) /
-                    product.list_price_vat_excl * 100)
+                    (product.list_price_vat_excl - product.replenishment_cost)
+                    / product.list_price_vat_excl
+                    * 100
+                )
 
     # Column Section
     list_price_vat_excl = fields.Float(
-        compute=_get_margin, string='Sale Price VAT Excluded', store=True,
-        digits_compute=dp.get_precision('Product Price'),
-        )
+        compute=_get_margin,
+        string="Sale Price VAT Excluded",
+        store=True,
+        digits_compute=dp.get_precision("Product Price"),
+    )
 
     standard_margin = fields.Float(
-        compute=_get_margin, string='Theorical Margin', store=True,
-        digits_compute=dp.get_precision('Product Price'),
-        help='Theorical Margin is [ sale price (Wo Tax) - cost price ] '
-             'of the product form (not based on historical values). '
-             'Take care of tax include and exclude. If no sale price, '
-             'the margin will be negativ.')
+        compute=_get_margin,
+        string="Theorical Margin",
+        store=True,
+        digits_compute=dp.get_precision("Product Price"),
+        help="Theorical Margin is [ sale price (Wo Tax) - cost price ] "
+        "of the product form (not based on historical values). "
+        "Take care of tax include and exclude. If no sale price, "
+        "the margin will be negativ.",
+    )
 
     standard_margin_rate = fields.Float(
-        compute=_get_margin, string='Theorical Margin (%)', store=True,
-        digits_compute=dp.get_precision('Product Margin Precision'),
-        help='Markup rate is [ Theorical Margin / sale price (Wo Tax) ] '
-             'of the product form (not based on historical values).'
-             'Take care of tax include and exclude.. If no sale price '
-             'set, will display 999.0')
+        compute=_get_margin,
+        string="Theorical Margin (%)",
+        store=True,
+        digits_compute=dp.get_precision("Product Margin Precision"),
+        help="Markup rate is [ Theorical Margin / sale price (Wo Tax) ] "
+        "of the product form (not based on historical values)."
+        "Take care of tax include and exclude.. If no sale price "
+        "set, will display 999.0",
+    )
