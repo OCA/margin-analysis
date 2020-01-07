@@ -18,14 +18,16 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: account_invoice_margin
-#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_percent
-msgid "% Margin"
-msgstr "% Margen"
-
-#. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__purchase_price
 msgid "Cost"
 msgstr "Coste"
+
+#. module: account_invoice_margin
+#: model:ir.model,name:account_invoice_margin.model_account_invoice
+#, fuzzy
+#| msgid "Invoice Line"
+msgid "Invoice"
+msgstr "Línea factura"
 
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice_line
@@ -38,12 +40,22 @@ msgid "Invoices Statistics"
 msgstr "Estadísticas de facturas"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_report__margin
 msgid "Margin"
 msgstr "Margen"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin_percent
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_percent
+#, fuzzy
+#| msgid "Margin"
+msgid "Margin (%)"
+msgstr "Margen"
+
+#. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin_signed
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_signed
 msgid "Margin Signed"
 msgstr "Margen firmado"
@@ -52,3 +64,11 @@ msgstr "Margen firmado"
 #: model:res.groups,name:account_invoice_margin.group_account_invoice_margin_security
 msgid "Show Invoice Margin"
 msgstr "Mostrar margen en facturas"
+
+#. module: account_invoice_margin
+#: model_terms:ir.ui.view,arch_db:account_invoice_margin.view_account_invoice_tree
+msgid "Total"
+msgstr ""
+
+#~ msgid "% Margin"
+#~ msgstr "% Margen"
