@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo10-addon-product_replenishment_cost',
+        'odoo10-addon-product_standard_margin',
         'odoo10-addon-sale_line_cost_control',
     ],
     classifiers=[
