@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_product_form" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <field name="lst_price" position="before">
+                <field name="list_price_vat_excl" invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='standard_price']/ancestor::*[1]" position="after"> 
+                <field name="standard_margin" widget="monetary"/>
+                <field name="standard_margin_rate"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_product_form_easy" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+        <field name="arch" type="xml">
+            <field name="lst_price" position="before">
+                <field name="list_price_vat_excl" invisible="1"/>
+            </field>
+            <field name="standard_price" position="before">
+                <field name="standard_margin" widget="monetary"/>
+                <field name="standard_margin_rate"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

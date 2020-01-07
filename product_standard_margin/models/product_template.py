@@ -8,21 +8,19 @@ from odoo import api, fields, models
 import odoo.addons.decimal_precision as dp
 
 
-class ProductProduct(models.Model):
-    _inherit = "product.product"
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
 
     # Column Section
     list_price_vat_excl = fields.Float(
         compute="_compute_margin",
         string="Sale Price VAT Excluded",
-        store=True,
         digits=dp.get_precision("Product Price"),
     )
 
     standard_margin = fields.Float(
         compute="_compute_margin",
         string="Theorical Margin",
-        store=True,
         digits=dp.get_precision("Product Price"),
         help="Theorical Margin is [ sale price (Wo Tax) - cost price ] "
         "of the product form (not based on historical values). "
@@ -33,9 +31,8 @@ class ProductProduct(models.Model):
     standard_margin_rate = fields.Float(
         compute="_compute_margin",
         string="Theorical Margin (%)",
-        store=True,
         digits=dp.get_precision("Product Price"),
-        help="Markup rate is [ Theorical Margin / sale price (Wo Tax) ] "
+        help="Margin rate is [ Theorical Margin / sale price (Wo Tax) ] "
         "of the product form (not based on historical values)."
         "Take care of tax include and exclude.. If no sale price "
         "set, will display 999.0",
@@ -44,25 +41,27 @@ class ProductProduct(models.Model):
     # Compute Section
     @api.depends(
         "lst_price",
-        "product_tmpl_id.list_price",
         "standard_price",
         "taxes_id.price_include",
         "taxes_id.amount",
         "taxes_id.include_base_amount",
     )
     def _compute_margin(self):
-        for product in self:
-            product.list_price_vat_excl = product.taxes_id.compute_all(
-                product.lst_price, product=product
+        # The code is duplicated from product.product model
+        # because otherwise, the recomputation is not done correctly
+        # when the product datas are changed from the template view
+        for template in self:
+            template.list_price_vat_excl = template.taxes_id.compute_all(
+                template.list_price, product=template
             )["total_excluded"]
-            product.standard_margin = (
-                product.list_price_vat_excl - product.standard_price
+            template.standard_margin = (
+                template.list_price_vat_excl - template.standard_price
             )
-            if product.list_price_vat_excl == 0:
-                product.standard_margin_rate = 999.0
+            if template.list_price_vat_excl == 0:
+                template.standard_margin_rate = 999.0
             else:
-                product.standard_margin_rate = (
-                    (product.list_price_vat_excl - product.standard_price)
-                    / product.list_price_vat_excl
+                template.standard_margin_rate = (
+                    (template.list_price_vat_excl - template.standard_price)
+                    / template.list_price_vat_excl
                     * 100
                 )
