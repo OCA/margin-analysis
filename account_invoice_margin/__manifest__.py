@@ -21,8 +21,6 @@
     "data": [
         'security/account_invoice_margin_security.xml',
         'views/account_invoice_margin_view.xml',
-    ],
-    "demo": [
-        'demo/res_groups.xml',
+        'data/res_groups.xml',
     ],
 }
