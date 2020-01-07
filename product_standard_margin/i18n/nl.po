@@ -11,6 +11,7 @@ msgstr ""
 "Last-Translator: Erwin van der Ploeg | Endian Solutions "
 "<erwin@endiansolutions.nl>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,11 +19,46 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #. module: product_standard_margin
-#: model:ir.model.fields,help:product_standard_margin.field_delivery_carrier_standard_margin_rate
-#: model:ir.model.fields,help:product_standard_margin.field_prestashop_delivery_carrier_standard_margin_rate
-#: model:ir.model.fields,help:product_standard_margin.field_prestashop_product_combination_standard_margin_rate
+#: model:product.product,name:product_standard_margin.product_free_wine
+#: model:product.template,name:product_standard_margin.product_free_wine_product_template
+msgid "Free Wine"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template_standard_margin
+msgid "Margin"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product_standard_margin_rate
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template_standard_margin_rate
+#, fuzzy
+msgid "Margin (%)"
+msgstr "Theoretische marge (%)"
+
+#. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_template_standard_margin
+#, fuzzy
+msgid ""
+"Margin is [ sale price (Wo Tax) - cost price ] of the product form (not "
+"based on historical values). Take care of tax include and exclude. If no "
+"sale price, the margin will be negativ."
+msgstr ""
+"Theoretische marge is [ Verkoopprijs (excl. BTW) - Kostprijs) ] van het "
+"product (niet gebaseerd op historische waardes). Het veld houdt rekening met "
+"prijzen incl. en excl. BTW. Indien geen verkooprijs is ingevoerd, zal de "
+"marge negatief zijn."
+
+#. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product_standard_margin_rate
-msgid "Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product form (not based on historical values).Take care of tax include and exclude.. If no sale price set, will display 999.0"
+#: model:ir.model.fields,help:product_standard_margin.field_product_template_standard_margin_rate
+#, fuzzy
+msgid ""
+"Markup rate is [ Margin / sale price (Wo Tax) ] of the product form (not "
+"based on historical values).Take care of tax include and exclude. If no sale "
+"price set, will display 999.0"
 msgstr ""
 "Theoretische marge (%) is [ Theoretische marge / Verkoopprijs (excl. BTW) ] "
 "van het product (niet gebaseerd op historische waardes). Het veld houdt "
@@ -30,43 +66,32 @@ msgstr ""
 "ingevoerd, wordt 999,0 weergegeven."
 
 #. module: product_standard_margin
+#: model:product.product,name:product_standard_margin.product_non_profit_wine
+#: model:product.template,name:product_standard_margin.product_non_profit_wine_product_template
+msgid "Non-profit Wine"
+msgstr ""
+
+#. module: product_standard_margin
 #: model:ir.model,name:product_standard_margin.model_product_product
 msgid "Product"
 msgstr "Product"
 
 #. module: product_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_delivery_carrier_list_price_vat_excl
-#: model:ir.model.fields,field_description:product_standard_margin.field_prestashop_delivery_carrier_list_price_vat_excl
-#: model:ir.model.fields,field_description:product_standard_margin.field_prestashop_product_combination_list_price_vat_excl
+#: model:ir.model,name:product_standard_margin.model_product_template
+#, fuzzy
+msgid "Product Template"
+msgstr "Product"
+
+#. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product_list_price_vat_excl
 msgid "Sale Price VAT Excluded"
 msgstr "Sale Price VAT Excluded"
 
 #. module: product_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_delivery_carrier_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_prestashop_delivery_carrier_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_prestashop_product_combination_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_product_standard_margin
-msgid "Theorical Margin"
-msgstr "Theoretische marge"
-
-#. module: product_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_delivery_carrier_standard_margin_rate
-#: model:ir.model.fields,field_description:product_standard_margin.field_prestashop_delivery_carrier_standard_margin_rate
-#: model:ir.model.fields,field_description:product_standard_margin.field_prestashop_product_combination_standard_margin_rate
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_product_standard_margin_rate
-msgid "Theorical Margin (%)"
-msgstr "Theoretische marge (%)"
-
-#. module: product_standard_margin
-#: model:ir.model.fields,help:product_standard_margin.field_delivery_carrier_standard_margin
-#: model:ir.model.fields,help:product_standard_margin.field_prestashop_delivery_carrier_standard_margin
-#: model:ir.model.fields,help:product_standard_margin.field_prestashop_product_combination_standard_margin
-#: model:ir.model.fields,help:product_standard_margin.field_product_product_standard_margin
-msgid "Theorical Margin is [ sale price (Wo Tax) - cost price ] of the product form (not based on historical values). Take care of tax include and exclude. If no sale price, the margin will be negativ."
+#: model:product.product,name:product_standard_margin.product_wine
+#: model:product.template,name:product_standard_margin.product_wine_product_template
+msgid "Wine"
 msgstr ""
-"Theoretische marge is [ Verkoopprijs (excl. BTW) - Kostprijs) ] van het "
-"product (niet gebaseerd op historische waardes). Het veld houdt rekening met "
-"prijzen incl. en excl. BTW. Indien geen verkooprijs is ingevoerd, zal de "
-"marge negatief zijn."
 
+#~ msgid "Theorical Margin"
+#~ msgstr "Theoretische marge"
