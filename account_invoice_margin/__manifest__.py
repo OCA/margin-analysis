@@ -6,8 +6,9 @@
     "summary": "Show margin in invoices",
     "version": "12.0.1.0.0",
     "category": "Account",
-    "website": "http://www.tecnativa.com",
+    "website": "https://www.github.com/OCA/margin-analysis",
     "author": "Tecnativa, "
+              "GRAP, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "development_status": "Production/Stable",
@@ -20,5 +21,6 @@
     "data": [
         'security/account_invoice_margin_security.xml',
         'views/account_invoice_margin_view.xml',
+        'data/res_groups.xml',
     ],
 }
