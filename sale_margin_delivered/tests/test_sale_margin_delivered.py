@@ -54,6 +54,7 @@ class TestSaleMarginDelivered(SavepointCase):
             {
                 "date_order": datetime.today(),
                 "name": "Test_SO011",
+                "partner_id": self.partner.id,
                 "order_line": [
                     (
                         0,
@@ -61,11 +62,10 @@ class TestSaleMarginDelivered(SavepointCase):
                         {
                             "product_id": self.product.id,
                             "product_uom_qty": 6,
-                            "product_uom": self.product.uom_po_id.id,
+                            "product_uom": self.product.uom_id.id,
                         },
                     )
                 ],
-                "partner_id": self.partner.id,
             }
         )
         sale_order.onchange_partner_id()
@@ -100,9 +100,10 @@ class TestSaleMarginDelivered(SavepointCase):
     def _create_return(self, picking, to_refund=False):
         return_wiz = (
             self.env["stock.return.picking"]
-            .with_context(active_id=picking.id)
+            .with_context(active_id=picking.id, active_model="stock.picking")
             .create({})
         )
+        return_wiz._onchange_picking_id()
         return_wiz.product_return_moves.write({"quantity": 3.0, "to_refund": to_refund})
         new_picking_id, pick_type_id = return_wiz._create_returns()
         return self.env["stock.picking"].browse(new_picking_id)
