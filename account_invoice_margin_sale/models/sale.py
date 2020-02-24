@@ -8,7 +8,7 @@ from odoo import models
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    def _prepare_invoice_line(self, qty):
-        vals = super()._prepare_invoice_line(qty)
+    def _prepare_invoice_line(self):
+        vals = super()._prepare_invoice_line()
         vals["purchase_price"] = self.purchase_price
         return vals

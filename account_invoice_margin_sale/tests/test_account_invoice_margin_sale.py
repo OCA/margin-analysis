@@ -13,7 +13,11 @@ class TestAccountInvoiceMargin(SavepointCase):
             {"name": "Test journal", "type": "sale", "code": "TEST_J"}
         )
         cls.account_type = cls.env["account.account.type"].create(
-            {"name": "Test account type", "type": "receivable"}
+            {
+                "name": "Test account type",
+                "type": "receivable",
+                "internal_group": "income",
+            }
         )
         cls.account = cls.env["account.account"].create(
             {
@@ -24,7 +28,7 @@ class TestAccountInvoiceMargin(SavepointCase):
             }
         )
         cls.partner = cls.env["res.partner"].create(
-            {"name": "Test partner", "customer": True, "is_company": True}
+            {"name": "Test partner", "customer_rank": 1, "is_company": True}
         )
         cls.partner.property_account_receivable_id = cls.account
         cls.product_categ = cls.env["product.category"].create(
@@ -69,6 +73,5 @@ class TestAccountInvoiceMargin(SavepointCase):
     def test_invoice_sale_order(self):
         self.sale_order.action_confirm()
         self.sale_order.order_line.purchase_price = 500.00
-        invoice_id = self.sale_order.action_invoice_create()
-        invoice = self.env["account.invoice"].browse(invoice_id)
+        invoice = self.sale_order._create_invoices()
         self.assertAlmostEqual(invoice.invoice_line_ids.purchase_price, 500.00, 2)
