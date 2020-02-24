@@ -14,8 +14,8 @@ class SaleReport(models.Model):
             fields = {}
         fields.update(
             {
-                "margin_delivered": " ,SUM(l.margin_delivered / COALESCE(s.currency_rate, 1.0)) AS"
-                " margin_delivered"
+                "margin_delivered": " ,SUM(l.margin_delivered /"
+                " COALESCE(s.currency_rate, 1.0)) AS margin_delivered"
             }
         )
         return super()._query(
