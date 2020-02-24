@@ -3,19 +3,16 @@
 {
     "name": "Sale Margin Security",
     "version": "12.0.1.0.0",
-    "author": 'Tecnativa,'
-              'Odoo Community Association (OCA)',
-    "website": 'https://github.com/OCA/margin-analysis',
+    "author": "Tecnativa," "Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/margin-analysis",
     "category": "Sales",
     "license": "AGPL-3",
     "development_status": "Production/Stable",
     "maintainers": ["sergio-teruel"],
-    "depends": [
-        "sale_margin",
-    ],
+    "depends": ["sale_margin"],
     "data": [
-        'security/sale_margin_security_security.xml',
-        'views/sale_margin_security_view.xml',
+        "security/sale_margin_security_security.xml",
+        "views/sale_margin_security_view.xml",
     ],
-    'installable': True,
+    "installable": True,
 }
