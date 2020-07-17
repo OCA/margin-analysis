@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_margin_security
+#: model:ir.model,name:sale_margin_security.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_margin_security
 #: model:res.groups,name:sale_margin_security.group_sale_margin_security
 msgid "Show Sale Margin"
 msgstr ""
