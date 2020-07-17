@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-account_invoice_margin',
+        'odoo13-addon-sale_margin_delivered',
         'odoo13-addon-sale_margin_security',
         'odoo13-addon-sale_report_margin',
     ],
