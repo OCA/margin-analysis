@@ -26,5 +26,8 @@ msgstr ""
 
 #. module: sale_order_margin_percent
 #: model:ir.model,name:sale_order_margin_percent.model_sale_order
-msgid "Sales Order"
-msgstr "销售订单"
+msgid "Quotation"
+msgstr ""
+
+#~ msgid "Sales Order"
+#~ msgstr "销售订单"
