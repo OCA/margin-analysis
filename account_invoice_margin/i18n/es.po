@@ -48,7 +48,6 @@ msgstr "Margen"
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move_line__margin_percent
 #, fuzzy
-#| msgid "Margin"
 msgid "Margin (%)"
 msgstr "Margen"
 
