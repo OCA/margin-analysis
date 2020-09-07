@@ -10,10 +10,6 @@
     "author": "PESOL, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "depends": [
-        'sale_margin'
-    ],
-    "data": [
-        'views/sale_order_margin_percent_view.xml',
-    ]
+    "depends": ["sale_margin"],
+    "data": ["views/sale_order_margin_percent_view.xml",],
 }
