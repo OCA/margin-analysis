@@ -15,3 +15,5 @@ class SaleOrder(models.Model):
         for order in self:
             if order.margin and order.amount_untaxed:
                 order.percent = (order.margin / order.amount_untaxed) * 100
+            else:
+                order.percent = 0.0
