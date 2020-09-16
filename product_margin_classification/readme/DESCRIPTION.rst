@@ -1,6 +1,6 @@
 This module is designed to extend Sale Price computation in Odoo.
 
-This module add a new model 'Margin Classifications' linked to Product Templates.
+This module add a new model 'Margin Classifications' linked to Product variants.
 
 A margin classification has a 'Profit Margin' field and extra fields to manage
 computation method, like in Pricelist Item model (Markup Rate, Rounding and Surcharge fields)
@@ -10,18 +10,23 @@ not the same as the sale price, an extra field 'Theoretical Price' is
 displayed, based on the Margin Classification and a button is available to
 change sale price.
 
-.. image:: ../static/description/product_template_form.png
+.. image:: ../static/description/product_product_form.png
 
 On the Margin classification Form, user can change computation fields.
-(Margin, Rounding method, ...) 
+(Margin, Rounding method, ...)
 Three buttons are available to apply theoretical prices:
-* to all products, 
+* to all products,
 * only for products that are too expensive
 * only for products that are too cheap
 
 .. image:: ../static/description/margin_classification_form.png
 
-User can so see easily products with incorrect margins in the tree views, and in the menu:
+By clicking on the smart buttons on the right part of the form,
+all the products will be displayed, and user can easily change prices
+
+.. image:: ../static/description/product_product_tree_incorrect_price.png
+
+User can also see easily products with incorrect margins in the margin classification tree views:
 
 .. image:: ../static/description/margin_classification_tree.png
 
