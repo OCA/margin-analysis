@@ -7,13 +7,13 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 <odoo>
 
-    <record id="action_view_product_template_by_margin_classification" model="ir.actions.act_window">
+    <record id="action_view_product_product_by_margin_classification" model="ir.actions.act_window">
         <field name="name">Products</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">product.template</field>
+        <field name="res_model">product.product</field>
         <field name="view_mode">tree</field>
         <field name="view_type">form</field>
-        <field name="view_id" ref="view_product_template_tree"/>
+        <field name="view_id" ref="view_product_product_tree"/>
     </record>
 
     <record id="view_product_margin_classification_tree" model="ir.ui.view">
@@ -22,9 +22,9 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             <tree>
                 <field name="name"/>
                 <field name="profit_margin"/>
-                <field name="template_too_cheap_qty"/>
-                <field name="template_too_expensive_qty"/>
-                <field name="template_qty"/>
+                <field name="product_too_cheap_qty"/>
+                <field name="product_too_expensive_qty"/>
+                <field name="product_qty"/>
                 <field name="company_id" groups="base.group_multi_company"/>
             </tree>
         </field>
@@ -36,54 +36,57 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             <form>
                 <header>
                     <button name="apply_theoretical_price" type="object" string="Apply Theoretical Price"
-                            attrs="{'invisible': [('template_incorrect_price_qty', '=', 0)]}"/>
+                            attrs="{'invisible': [('product_incorrect_price_qty', '=', 0)]}"/>
                     <button name="apply_theoretical_price_too_cheap" type="object" string="Up to Theoretical Price"
-                            attrs="{'invisible': [('template_too_cheap_qty', '=', 0)]}"/>
+                            attrs="{'invisible': [('product_too_cheap_qty', '=', 0)]}"/>
                     <button name="apply_theoretical_price_too_expensive" type="object" string="Down to Theoretical Price"
-                            attrs="{'invisible': [('template_too_expensive_qty', '=', 0)]}"/>
+                            attrs="{'invisible': [('product_too_expensive_qty', '=', 0)]}"/>
                 </header>
+
                 <sheet>
+
                     <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
-                        <button name="%(action_view_product_template_by_margin_classification)d"
+                        <button name="%(action_view_product_product_by_margin_classification)d"
                             type="action" class="oe_stat_button oe_inline" icon="fa-list"
                             context="{'search_default_margin_classification_id': active_id}"
-                            attrs="{'invisible': [('template_qty', '=', 0)]}">
-                            <field name="template_qty" widget="statinfo" string="Products"/>
+                            attrs="{'invisible': [('product_qty', '=', 0)]}">
+                            <field name="product_qty" widget="statinfo" string="Products"/>
                         </button>
 
-                        <button name="%(action_view_product_template_by_margin_classification)d" 
+                        <button name="%(action_view_product_product_by_margin_classification)d"
                             type="action" class="oe_stat_button oe_inline" icon="fa-check-square"
                             context="{'search_default_margin_classification_id': active_id,
                                 'search_default_filter_margin_correct': True}"
-                            attrs="{'invisible': [('template_correct_price_qty', '=', 0)]}">
-                            <field name="template_correct_price_qty" widget="statinfo" string="Correct"/>
+                            attrs="{'invisible': [('product_correct_price_qty', '=', 0)]}">
+                            <field name="product_correct_price_qty" widget="statinfo" string="Correct"/>
                         </button>
 
-                        <button name="%(action_view_product_template_by_margin_classification)d" 
+                        <button name="%(action_view_product_product_by_margin_classification)d"
                             type="action" class="oe_stat_button oe_inline" icon="fa-square"
                             context="{'search_default_margin_classification_id': active_id,
                                 'search_default_filter_margin_incorrect': True}"
-                            attrs="{'invisible': [('template_incorrect_price_qty', '=', 0)]}">
-                            <field name="template_incorrect_price_qty" widget="statinfo" string="Incorrect"/>
+                            attrs="{'invisible': [('product_incorrect_price_qty', '=', 0)]}">
+                            <field name="product_incorrect_price_qty" widget="statinfo" string="Incorrect"/>
                         </button>
 
-                        <button name="%(action_view_product_template_by_margin_classification)d" 
+                        <button name="%(action_view_product_product_by_margin_classification)d"
                             type="action" class="oe_stat_button oe_inline" icon="fa-minus-square"
                             context="{'search_default_margin_classification_id': active_id,
                                 'search_default_filter_margin_too_cheap': True}"
-                            attrs="{'invisible': [('template_too_cheap_qty', '=', 0)]}">
-                            <field name="template_too_cheap_qty" widget="statinfo" string="Too Cheap"/>
+                            attrs="{'invisible': [('product_too_cheap_qty', '=', 0)]}">
+                            <field name="product_too_cheap_qty" widget="statinfo" string="Too Cheap"/>
                         </button>
 
-                        <button name="%(action_view_product_template_by_margin_classification)d" 
+                        <button name="%(action_view_product_product_by_margin_classification)d"
                             type="action" class="oe_stat_button oe_inline" icon="fa-plus-square"
                             context="{'search_default_margin_classification_id': active_id,
                                 'search_default_filter_margin_too_expensive': True}"
-                            attrs="{'invisible': [('template_too_expensive_qty', '=', 0)]}">
-                            <field name="template_too_expensive_qty" widget="statinfo" string="Too Priced"/>
+                            attrs="{'invisible': [('product_too_expensive_qty', '=', 0)]}">
+                            <field name="product_too_expensive_qty" widget="statinfo" string="Too Priced"/>
                         </button>
-
                     </div>
+
+
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only"/>
                         <h1><field name="name"/></h1>
@@ -98,19 +101,16 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                                 <div>
                                     <field name="profit_margin" class="oe_inline"
                                         attrs="{'required': True}"/>
-                                    <label string="%" class="oe_inline"/>
                                 </div>
                                 <label for="markup"/>
                                 <div>
                                     <field name="markup" class="oe_inline"/>
-                                    <label string="%" class="oe_inline"/>
                                 </div>
                                 <field name="price_round"/>
                                 <field name="price_surcharge"/>
                             </group>
                         </page>
                     </notebook>
-
                 </sheet>
             </form>
         </field>
@@ -125,7 +125,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
     </record>
 
     <menuitem id="menu_product_margin_classification"
-        parent="sales_team.menu_sale_config"
+        parent="sale.prod_config_main"
         action="action_product_margin_classification"
         sequence="5"/>
 
