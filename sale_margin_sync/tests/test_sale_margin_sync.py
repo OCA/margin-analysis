@@ -8,11 +8,11 @@ class TestSaleMarginSync(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.pricelist = cls.env["product.pricelist"].create(
-            {"name": "Pricelist for testing sale_margin_sync",}
+            {"name": "Pricelist for testing sale_margin_sync"}
         )
-        cls.partner = cls.env["res.partner"].create({"name": "Test",})
+        cls.partner = cls.env["res.partner"].create({"name": "Test"})
         cls.product = cls.env["product.product"].create(
-            {"name": "test_product", "type": "product", "standard_price": 70,}
+            {"name": "test_product", "type": "product", "standard_price": 70}
         )
         cls.env["stock.quant"].create(
             {
@@ -47,7 +47,7 @@ class TestSaleMarginSync(SavepointCase):
         move = so_line.move_ids[:1]
         move.quantity_done = 10
         move.picking_id.action_done()
-        move.price_unit = -80.0
+        move.stock_valuation_layer_ids[:1].unit_cost = 80.0
         self.assertEqual(so_line.purchase_price, 80.0)
         self.assertEqual(so_line.margin, 200.0)
 
@@ -56,6 +56,6 @@ class TestSaleMarginSync(SavepointCase):
         so_line = self.order.order_line[:1]
         move = so_line.move_ids[:1]
         move.quantity_done = 10
-        move.price_unit = -80.0
+        move.stock_valuation_layer_ids[:1].unit_cost = 80.0
         self.assertEqual(so_line.purchase_price, 70.0)
         self.assertEqual(so_line.margin, 300.0)
