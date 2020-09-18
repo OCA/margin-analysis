@@ -22,7 +22,12 @@ class SaleOrderLine(models.Model):
         store=True,
     )
 
-    @api.depends("margin", "qty_delivered", "product_uom_qty", "move_ids.price_unit")
+    @api.depends(
+        "margin",
+        "qty_delivered",
+        "product_uom_qty",
+        "move_ids.stock_valuation_layer_ids.unit_cost",
+    )
     def _compute_margin_delivered(self):
         digits = self.env["decimal.precision"].precision_get("Product Price")
         for line in self:
@@ -48,7 +53,12 @@ class SaleOrderLine(models.Model):
                     )
                 )
                 for move in moves:
-                    cost_price += move.product_qty * move.price_unit
+                    # In v12.0 price unit was negative for incomming moves, in
+                    # v13.0 price unit is positive in stock valuation layer model
+                    cost = move.stock_valuation_layer_ids[:1].unit_cost
+                    if move.to_refund:
+                        cost = -cost
+                    cost_price += move.product_qty * cost
                 average_price = (
                     abs(cost_price) / line.qty_delivered
                 ) or line.purchase_price
