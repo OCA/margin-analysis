@@ -30,12 +30,10 @@ class SaleOrderLine(models.Model):
     )
     def _compute_margin_delivered(self):
         digits = self.env["decimal.precision"].precision_get("Product Price")
+        self.margin_delivered = 0.0
+        self.margin_delivered_percent = 0.0
+        self.purchase_price_delivery = 0.0
         for line in self:
-            if not line.price_reduce:
-                line.margin_delivered = 0.0
-                line.margin_delivered_percent = 0.0
-                line.purchase_price_delivery = 0.0
-                continue
             if not line.qty_delivered and not line.product_uom_qty:
                 continue
             qty = line.qty_delivered or line.product_uom_qty
