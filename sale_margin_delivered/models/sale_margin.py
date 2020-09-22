@@ -70,6 +70,7 @@ class SaleOrderLine(models.Model):
             # quantities
             line.margin_delivered_percent = (
                 qty
+                and line.price_reduce
                 and (
                     (line.price_reduce - line.purchase_price_delivery)
                     / line.price_reduce
