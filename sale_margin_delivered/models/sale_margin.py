@@ -22,15 +22,18 @@ class SaleOrderLine(models.Model):
         store=True,
     )
 
-    @api.depends("margin", "qty_delivered", "product_uom_qty", "move_ids.price_unit")
+    @api.depends(
+        "margin",
+        "qty_delivered",
+        "product_uom_qty",
+        "move_ids.stock_valuation_layer_ids.unit_cost",
+    )
     def _compute_margin_delivered(self):
         digits = self.env["decimal.precision"].precision_get("Product Price")
+        self.margin_delivered = 0.0
+        self.margin_delivered_percent = 0.0
+        self.purchase_price_delivery = 0.0
         for line in self:
-            if not line.price_reduce:
-                line.margin_delivered = 0.0
-                line.margin_delivered_percent = 0.0
-                line.purchase_price_delivery = 0.0
-                continue
             if not line.qty_delivered and not line.product_uom_qty:
                 continue
             qty = line.qty_delivered or line.product_uom_qty
@@ -48,7 +51,12 @@ class SaleOrderLine(models.Model):
                     )
                 )
                 for move in moves:
-                    cost_price += move.product_qty * move.price_unit
+                    # In v12.0 price unit was negative for incomming moves, in
+                    # v13.0 price unit is positive in stock valuation layer model
+                    cost = move.stock_valuation_layer_ids[:1].unit_cost
+                    if move.to_refund:
+                        cost = -cost
+                    cost_price += move.product_qty * cost
                 average_price = (
                     abs(cost_price) / line.qty_delivered
                 ) or line.purchase_price
@@ -62,6 +70,7 @@ class SaleOrderLine(models.Model):
             # quantities
             line.margin_delivered_percent = (
                 qty
+                and line.price_reduce
                 and (
                     (line.price_reduce - line.purchase_price_delivery)
                     / line.price_reduce
