@@ -43,8 +43,8 @@ class ProductProduct(models.Model):
 
     # Compute Section
     @api.depends(
-        "lst_price",
         "product_tmpl_id.list_price",
+        "product_tmpl_id.price_attribute_value_ids.price_extra",
         "standard_price",
         "taxes_id.price_include",
         "taxes_id.amount",

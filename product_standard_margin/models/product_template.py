@@ -37,10 +37,14 @@ class ProductTemplate(models.Model):
         "Take care of tax include and exclude.. If no sale price "
         "set, will display 999.0",
     )
+    price_attribute_value_ids = fields.One2many(
+        "product.template.attribute.value",
+        "product_tmpl_id",
+        )
 
     # Compute Section
     @api.depends(
-        "lst_price",
+        "list_price",
         "standard_price",
         "taxes_id.price_include",
         "taxes_id.amount",
