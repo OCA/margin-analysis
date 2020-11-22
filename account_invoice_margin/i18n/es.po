@@ -25,7 +25,6 @@ msgstr "Coste"
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice
 #, fuzzy
-#| msgid "Invoice Line"
 msgid "Invoice"
 msgstr "Línea factura"
 
@@ -50,7 +49,6 @@ msgstr "Margen"
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_percent
 #, fuzzy
-#| msgid "Margin"
 msgid "Margin (%)"
 msgstr "Margen"
 
