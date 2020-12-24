@@ -6,30 +6,32 @@ from odoo import models, api, fields
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    percent = fields.Float(
-        string='Percent',
-        compute='_compute_percent',
+    margin_percent = fields.Float(
+        string='Margin %',
+        compute='_compute_margin_percent',
         digits=(16, 2),
+        store=True,
         )
 
     @api.depends('margin', 'amount_untaxed')
-    def _compute_percent(self):
+    def _compute_margin_percent(self):
         for order in self:
             if order.margin and order.amount_untaxed:
-                order.percent = (order.margin / order.amount_untaxed) * 100
+                order.margin_percent = (order.margin / order.amount_untaxed) * 100
 
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    percent = fields.Float(
-        string='Percent',
-        compute='_compute_percent',
+    margin_percent = fields.Float(
+        string='Margin %',
+        compute='_compute_margin_percent',
         digits=(16, 2),
+        store=True,
         )
 
     @api.depends('margin', 'price_subtotal')
-    def _compute_percent(self):
+    def _compute_margin_percent(self):
         for order in self:
             if order.margin and order.price_subtotal:
-                order.percent = (order.margin / order.price_subtotal) * 100
+                order.margin_percent = (order.margin / order.price_subtotal) * 100
