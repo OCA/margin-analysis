@@ -8,14 +8,20 @@
             <field name="margin" position="after">
                 <field name="percent" widget="progressbar" />
             </field>
-            <xpath expr="//field[@name='order_line']/form//field[@name='tax_id']" position="before">
-                <field name="percent" string="Margin" widget="progressbar"/>
+            <xpath
+                expr="//field[@name='order_line']/form//field[@name='tax_id']"
+                position="before"
+            >
+                <field name="percent" string="Margin" widget="progressbar" />
             </xpath>
-           <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="after">
-                <field name="percent" string="Margin"/>
+           <xpath
+                expr="//field[@name='order_line']/tree//field[@name='price_subtotal']"
+                position="after"
+            >
+                <field name="percent" string="Margin" />
                 <!-- The button is used only to display % icon
                     since is not possible to add html to tree view yet-->
-                <button icon="fa-percent"/>
+                <button icon="fa-percent" />
             </xpath>
 
         </field>

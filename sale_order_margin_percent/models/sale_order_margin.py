@@ -16,15 +16,15 @@ class SaleOrder(models.Model):
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = "sale.order.line"
 
     percent = fields.Float(
-        string='Percent',
-        compute='_compute_percent',
+        string="Percent",
+        compute="_compute_percent",
         digits=(16, 2),
-        )
+    )
 
-    @api.depends('margin', 'price_subtotal')
+    @api.depends("margin", "price_subtotal")
     def _compute_percent(self):
         for order in self:
             if order.margin and order.price_subtotal:
