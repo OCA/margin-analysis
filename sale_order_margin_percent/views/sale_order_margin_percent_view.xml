@@ -6,7 +6,7 @@
         <field name='inherit_id' ref='sale_margin.sale_margin_sale_order' />
         <field name="arch" type="xml">
             <field name="margin" position="after">
-                <field name="margin_percen" widget="progressbar" />
+                <field name="margin_percent" widget="progressbar" />
             </field>
             <xpath
                 expr="//field[@name='order_line']/form//field[@name='tax_id']"
