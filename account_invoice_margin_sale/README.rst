@@ -63,6 +63,10 @@ Contributors
   * Sergio Teruel
   * Carlos Dauden
 
+* `Open Source Integrators <https://www.opensourceintegrators.com>`__:
+
+  * Bhavesh Odedra
+
 Maintainers
 ~~~~~~~~~~~
 
