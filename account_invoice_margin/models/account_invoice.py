@@ -30,6 +30,10 @@ class AccountMove(models.Model):
         store=True,
     )
 
+    def _get_margin_applicable_lines(self):
+        self.ensure_one()
+        return self.invoice_line_ids
+
     @api.depends(
         "invoice_line_ids.margin",
         "invoice_line_ids.margin_signed",
@@ -40,9 +44,7 @@ class AccountMove(models.Model):
             margin = 0.0
             margin_signed = 0.0
             price_subtotal = 0.0
-            for line in invoice.invoice_line_ids:
-                if any(line.sale_line_ids.mapped("is_downpayment")):
-                    continue
+            for line in invoice._get_margin_applicable_lines():
                 margin += line.margin
                 margin_signed += line.margin_signed
                 price_subtotal += line.price_subtotal
@@ -79,11 +81,7 @@ class AccountMoveLine(models.Model):
     @api.depends("purchase_price", "price_subtotal")
     def _compute_margin(self):
         for line in self:
-            if (
-                line.move_id
-                and line.move_id.type[:2] == "in"
-                or any(line.sale_line_ids.mapped("is_downpayment"))
-            ):
+            if line.move_id and line.move_id.type[:2] == "in":
                 line.update(
                     {"margin": 0.0, "margin_signed": 0.0, "margin_percent": 0.0}
                 )
