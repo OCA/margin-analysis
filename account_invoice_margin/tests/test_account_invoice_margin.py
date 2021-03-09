@@ -137,7 +137,8 @@ class TestAccountInvoiceMargin(SavepointCase):
         self.order.action_confirm()
         # Create one down payment
         wiz = SaleAdvancePaymentInv.with_context(
-            active_ids=self.order.ids, open_invoices=True,
+            active_ids=self.order.ids,
+            open_invoices=True,
         ).create({"advance_payment_method": "fixed", "fixed_amount": 100.00})
         action = wiz.create_invoices()
         invoice_id = action["res_id"]
@@ -146,7 +147,8 @@ class TestAccountInvoiceMargin(SavepointCase):
 
         # Create regular invoice which has a down payment
         wiz = SaleAdvancePaymentInv.with_context(
-            active_ids=self.order.ids, open_invoices=True,
+            active_ids=self.order.ids,
+            open_invoices=True,
         ).create({"advance_payment_method": "delivered"})
         wiz.create_invoices()
         invoice2 = self.order.invoice_ids - invoice1
