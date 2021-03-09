@@ -45,12 +45,12 @@ class TestAccountInvoiceMargin(SavepointCase):
                 "standard_price": 100.00,
             }
         )
-        cls.product.property_account_receivable_id = cls.account
+        cls.product.property_account_income_id = cls.account
         cls.invoice = cls.env["account.move"].create(
             {
                 "partner_id": cls.partner.id,
                 "invoice_date": fields.Date.from_string("2017-06-19"),
-                "type": "out_invoice",
+                "move_type": "out_invoice",
                 "currency_id": cls.env.user.company_id.currency_id.id,
                 "invoice_line_ids": [
                     (
@@ -59,7 +59,7 @@ class TestAccountInvoiceMargin(SavepointCase):
                         {
                             "product_id": cls.product.id,
                             "product_uom_id": cls.product.uom_id.id,
-                            "account_id": cls.product.property_account_receivable_id.id,
+                            "account_id": cls.product.property_account_income_id.id,
                             "name": "Test Margin",
                             "price_unit": cls.product.list_price,
                             "quantity": 10,
@@ -100,57 +100,3 @@ class TestAccountInvoiceMargin(SavepointCase):
         new_invoice = self.env["account.move"].browse(action["res_id"])
         self.assertEqual(new_invoice.invoice_line_ids.margin, 1000.00)
         self.assertEqual(new_invoice.invoice_line_ids.margin_signed, -1000.00)
-
-    def test_invoice_down_payment(self):
-        SaleAdvancePaymentInv = self.env["sale.advance.payment.inv"]
-        AccountMove = self.env["account.move"]
-        product = self.env["product.product"].create(
-            {
-                "name": "test product for down payment",
-                "categ_id": self.product_categ.id,
-                "uom_id": self.env.ref("uom.product_uom_unit").id,
-                "list_price": 1000.00,
-                "standard_price": 500.00,
-                "type": "service",
-                "invoice_policy": "order",
-            }
-        )
-        self.order = self.env["sale.order"].create(
-            {
-                "partner_id": self.partner.id,
-                "order_line": [
-                    (
-                        0,
-                        False,
-                        {
-                            "product_id": product.id,
-                            "name": "Testing Product",
-                            "product_uom_qty": 1,
-                            "product_uom": product.uom_id.id,
-                            "price_unit": 1000.00,
-                            "purchase_price": 500.00,
-                        },
-                    ),
-                ],
-            }
-        )
-        self.order.action_confirm()
-        # Create one down payment
-        wiz = SaleAdvancePaymentInv.with_context(
-            active_ids=self.order.ids,
-            open_invoices=True,
-        ).create({"advance_payment_method": "fixed", "fixed_amount": 100.00})
-        action = wiz.create_invoices()
-        invoice_id = action["res_id"]
-        invoice1 = AccountMove.browse(invoice_id)
-        self.assertEqual(invoice1.margin, 0.0)
-
-        # Create regular invoice which has a down payment
-        wiz = SaleAdvancePaymentInv.with_context(
-            active_ids=self.order.ids,
-            open_invoices=True,
-        ).create({"advance_payment_method": "delivered"})
-        wiz.create_invoices()
-        invoice2 = self.order.invoice_ids - invoice1
-        self.assertEqual(invoice2.margin, 500.00)
-        self.assertEqual(invoice2.margin_percent, 50.0)
