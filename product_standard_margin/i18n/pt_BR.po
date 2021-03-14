@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_standard_margin
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+#. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin_rate
+msgid "Margin rate is [ Theorical Margin / sale price (Wo Tax) ] of the product form (not based on historical values).Take care of tax include and exclude.. If no sale price set, will display 999.0"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
+msgid "Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product form (not based on historical values).Take care of tax include and exclude.. If no sale price set, will display 999.0"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model,name:product_standard_margin.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model,name:product_standard_margin.model_product_template
+msgid "Product Template"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__list_price_vat_excl
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__list_price_vat_excl
+msgid "Sale Price VAT Excluded"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin
+msgid "Theorical Margin"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin_rate
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin_rate
+msgid "Theorical Margin (%)"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin
+msgid "Theorical Margin is [ sale price (Wo Tax) - cost price ] of the product form (not based on historical values). Take care of tax include and exclude. If no sale price, the margin will be negativ."
+msgstr ""
