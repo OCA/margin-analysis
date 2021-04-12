@@ -6,59 +6,61 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2021-04-12 16:46+0000\n"
+"Last-Translator: alvarorib <alvaro.ribeiro@exo.pt>\n"
 "Language-Team: none\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__purchase_price
 msgid "Cost"
-msgstr ""
+msgstr "Custo"
 
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Fatura"
 
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice_line
 msgid "Invoice Line"
-msgstr ""
+msgstr "Linha da Fatura"
 
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice_report
 msgid "Invoices Statistics"
-msgstr ""
+msgstr "Estatísticas das Faturas"
 
 #. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_report__margin
 msgid "Margin"
-msgstr ""
+msgstr "Margem"
 
 #. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_percent
 msgid "Margin (%)"
-msgstr ""
+msgstr "Margem (%)"
 
 #. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin_signed
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_signed
 msgid "Margin Signed"
-msgstr ""
+msgstr "Margem Assinalada"
 
 #. module: account_invoice_margin
 #: model:res.groups,name:account_invoice_margin.group_account_invoice_margin_security
 msgid "Show Invoice Margin"
-msgstr ""
+msgstr "Mostrar Margem da Fatura"
 
 #. module: account_invoice_margin
 #: model_terms:ir.ui.view,arch_db:account_invoice_margin.view_account_invoice_tree
 msgid "Total"
-msgstr ""
+msgstr "Total"
