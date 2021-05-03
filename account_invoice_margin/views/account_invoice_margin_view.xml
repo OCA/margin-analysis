@@ -24,9 +24,9 @@
                 expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']"
                 position="after"
             >
-                <field name="purchase_price" />
-                <field name="margin" />
-                <field name="margin_percent" />
+                <field name="purchase_price" optional="show" />
+                <field name="margin" optional="show" />
+                <field name="margin_percent" optional="show" />
             </xpath>
             <!-- Add fields to embed invoice line form view  -->
             <xpath
@@ -52,8 +52,8 @@
         />
         <field name="arch" type="xml">
             <field name="amount_untaxed_signed" position="before">
-                <field name="margin_signed" sum="Total" />
-                <field name="margin_percent" />
+                <field name="margin_signed" sum="Total" optional="show" />
+                <field name="margin_percent" optional="show" />
             </field>
         </field>
     </record>
