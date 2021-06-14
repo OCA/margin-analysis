@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo13-addon-account_invoice_margin_sale',
         'odoo13-addon-sale_margin_delivered',
         'odoo13-addon-sale_margin_security',
+        'odoo13-addon-sale_margin_sync',
         'odoo13-addon-sale_order_margin_percent',
         'odoo13-addon-sale_report_margin',
     ],
