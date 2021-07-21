@@ -39,3 +39,4 @@ class TestSaleMarginPercent(SavepointCase):
         # (1200 - 700)*10 = 5000 - margin
         # 1000 * 10 = 12000      - amount untaxed
         self.assertEqual(sale_order.percent, 41.67)
+        self.assertEqual(sale_order.order_line.margin_percent, 41.67)
