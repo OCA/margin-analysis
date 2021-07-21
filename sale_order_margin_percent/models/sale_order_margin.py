@@ -17,3 +17,19 @@ class SaleOrder(models.Model):
                 order.percent = (order.margin / order.amount_untaxed) * 100
             else:
                 order.percent = 0.0
+
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    margin_percent = fields.Float(
+        string="Margin(%)", compute="_compute_margin_percent", digits=(16, 2),
+    )
+
+    @api.depends("margin", "price_subtotal")
+    def _compute_margin_percent(self):
+        for line in self:
+            if line.margin and line.price_subtotal:
+                line.margin_percent = (line.margin / line.price_subtotal) * 100
+            else:
+                line.margin_percent = 0.0
