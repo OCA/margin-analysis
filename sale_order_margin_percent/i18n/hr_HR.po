@@ -21,6 +21,11 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: sale_order_margin_percent
+#: model:ir.model.fields,field_description:sale_order_margin_percent.field_sale_order_line__margin_percent
+msgid "Margin(%)"
+msgstr ""
+
+#. module: sale_order_margin_percent
 #: model:ir.model.fields,field_description:sale_order_margin_percent.field_sale_order__percent
 msgid "Percent"
 msgstr ""
@@ -30,3 +35,8 @@ msgstr ""
 #, fuzzy
 msgid "Sale Order"
 msgstr "Prodjani nalog"
+
+#. module: sale_order_margin_percent
+#: model:ir.model,name:sale_order_margin_percent.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
