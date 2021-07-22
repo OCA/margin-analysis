@@ -20,11 +20,24 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: sale_order_margin_percent
+#: model:ir.model.fields,field_description:sale_order_margin_percent.field_sale_order_line__margin_percent
+msgid "Margin(%)"
+msgstr ""
+
+#. module: sale_order_margin_percent
 #: model:ir.model.fields,field_description:sale_order_margin_percent.field_sale_order__percent
 msgid "Percent"
 msgstr "Percentatge"
 
 #. module: sale_order_margin_percent
 #: model:ir.model,name:sale_order_margin_percent.model_sale_order
-msgid "Sale Order"
-msgstr "Comandes de venda"
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_order_margin_percent
+#: model:ir.model,name:sale_order_margin_percent.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#~ msgid "Sale Order"
+#~ msgstr "Comandes de venda"
