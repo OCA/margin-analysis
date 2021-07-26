@@ -39,7 +39,8 @@ class TestSaleMarginDelivered(SavepointCase):
         })
 
     def _new_sale_order(self):
-        sale_order = self.SaleOrder.new({
+        vals = self.SaleOrder.default_get(self.SaleOrder._fields.keys())
+        vals.update({
             'date_order': datetime.today(),
             'name': 'Test_SO011',
             'order_line': [
@@ -51,6 +52,7 @@ class TestSaleMarginDelivered(SavepointCase):
             ],
             'partner_id': self.partner.id,
         })
+        sale_order = self.SaleOrder.new(vals)
         sale_order.onchange_partner_id()
         return self.SaleOrder.create(
             sale_order._convert_to_write(sale_order._cache))
