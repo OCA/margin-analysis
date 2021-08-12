@@ -8,7 +8,11 @@ class AccountInvoiceReport(models.Model):
     _inherit = "account.invoice.report"
 
     margin = fields.Float(string="Margin", readonly=True)
+    margin_percent = fields.Float(string="Margin (%)", readonly=True)
 
     def _select(self):
         select_str = super()._select()
-        return "%s, SUM(line.margin_signed) AS margin" % select_str
+        return (
+            "%s, SUM(line.margin_signed) AS margin, "
+            "AVG(move.margin_percent)  AS margin_percent" % select_str
+        )
