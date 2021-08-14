@@ -17,9 +17,9 @@ TODO: add repo description.
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[account_invoice_margin](account_invoice_margin/) | 14.0.1.0.0 | Show margin in invoices
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[account_invoice_margin](account_invoice_margin/) | 14.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Show margin in invoices
 
 [//]: # (end addons)
 
