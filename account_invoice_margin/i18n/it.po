@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_invoice_margin
+# 	* account_invoice_margin
 #
 msgid ""
 msgstr ""
@@ -46,6 +46,7 @@ msgstr "Margine"
 #. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_percent
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_report__margin_percent
 msgid "Margin (%)"
 msgstr "Margine (%)"
 
