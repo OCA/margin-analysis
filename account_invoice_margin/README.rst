@@ -80,6 +80,10 @@ Contributors
 
   * Sylvain LE GAL (https://twitter.com/legalsylvain)
 
+* `Open Source Integrators <https://www.opensourceintegrators.com>`__:
+
+  * Bhavesh Odedra
+
 Maintainers
 ~~~~~~~~~~~
 
