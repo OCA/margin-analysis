@@ -36,7 +36,7 @@ class AccountInvoiceReport(models.Model):
         full_fields = all(x in fields for x in {"margin", "margin_percent"})
         margin_percent = "margin_percent" in fields
         for line in res:
-            if full_fields:  # compute difference
+            if full_fields and line["price_total"]:  # compute difference
                 line["margin_percent"] = (
                     (line["margin"] or 0.0) / line["price_total"]
                 ) * 100
