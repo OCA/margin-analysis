@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-account_invoice_margin',
+        'odoo14-addon-account_invoice_margin_sale',
     ],
     classifiers=[
         'Programming Language :: Python',
