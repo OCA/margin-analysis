@@ -2,7 +2,7 @@
 #  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl
 from datetime import datetime
 
-from odoo.tests import SavepointCase
+from odoo.tests import Form, SavepointCase
 
 
 class TestSaleMarginDelivered(SavepointCase):
@@ -71,6 +71,16 @@ class TestSaleMarginDelivered(SavepointCase):
         sale_order.onchange_partner_id()
         return self.SaleOrder.create(sale_order._convert_to_write(sale_order._cache))
 
+    def get_return_picking_wizard(self, picking):
+        stock_return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=picking.ids,
+                active_id=picking.ids[0],
+                active_model="stock.picking",
+            )
+        )
+        return stock_return_picking_form.save()
+
     def test_sale_margin_ordered(self):
         sale_order = self._new_sale_order()
         order_line = sale_order.order_line[:1]
@@ -98,12 +108,7 @@ class TestSaleMarginDelivered(SavepointCase):
         self.assertEqual(order_line.margin_delivered_percent, 0)
 
     def _create_return(self, picking, to_refund=False):
-        return_wiz = (
-            self.env["stock.return.picking"]
-            .with_context(active_id=picking.id, active_model="stock.picking")
-            .create({})
-        )
-        return_wiz._onchange_picking_id()
+        return_wiz = self.get_return_picking_wizard(picking)
         return_wiz.product_return_moves.write({"quantity": 3.0, "to_refund": to_refund})
         new_picking_id, pick_type_id = return_wiz._create_returns()
         return self.env["stock.picking"].browse(new_picking_id)
