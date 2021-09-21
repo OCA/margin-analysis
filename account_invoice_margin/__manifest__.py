@@ -18,4 +18,5 @@
         "security/account_invoice_margin_security.xml",
         "views/account_invoice_margin_view.xml",
     ],
+    "pre_init_hook": "pre_init_hook",
 }
