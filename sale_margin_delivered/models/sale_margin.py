@@ -33,9 +33,9 @@ class SaleOrderLine(models.Model):
         for line in self.filtered('price_reduce'):
             if not line.qty_delivered and not line.product_uom_qty:
                 continue
-            qty = line.qty_delivered or line.product_uom_qty
-            line.purchase_price_delivery = line.purchase_price
-            line.margin_delivered = line.margin
+            line.margin_delivered = 0.0
+            line.margin_delivered_percent = 0.0
+            line.purchase_price_delivery = 0.0
             if line.qty_delivered:
                 cost_price = 0.0
                 moves = line.move_ids.filtered(
@@ -55,6 +55,6 @@ class SaleOrderLine(models.Model):
                 )
             # compute percent margin based on delivered quantities or ordered
             # quantities
-            line.margin_delivered_percent = qty and (
+            line.margin_delivered_percent = line.qty_delivered and (
                 (line.price_reduce - line.purchase_price_delivery) /
                 line.price_reduce * 100.0) or 0.0

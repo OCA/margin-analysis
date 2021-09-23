@@ -60,10 +60,9 @@ class TestSaleMarginDelivered(SavepointCase):
     def test_sale_margin_ordered(self):
         sale_order = self._new_sale_order()
         order_line = sale_order.order_line[:1]
-        self.assertEqual(order_line.margin_delivered, 60.0)
-        self.assertEqual(order_line.margin_delivered_percent, 50.0)
-        self.assertEqual(
-            order_line.purchase_price_delivery, order_line.purchase_price)
+        self.assertEqual(order_line.margin_delivered, 0.0)
+        self.assertEqual(order_line.margin_delivered_percent, 0.0)
+        self.assertEqual(order_line.purchase_price_delivery, 0.0)
 
     def test_sale_margin_delivered(self):
         sale_order = self._new_sale_order()
