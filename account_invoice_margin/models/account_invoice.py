@@ -1,8 +1,54 @@
 # © 2017 Sergio Teruel <sergio.teruel@tecnativa.com>
+# © 2021 Manuel Regidor <manuel.regidor@sygel.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
 from odoo.addons import decimal_precision as dp
+
+
+class AccountInvoice(models.Model):
+    _inherit = 'account.invoice'
+
+    margin = fields.Monetary(
+        string='Margin',
+        compute='_compute_margin',
+        digits=dp.get_precision('Product Price'),
+        store=True,
+        currency_field='currency_id',
+    )
+
+    margin_signed = fields.Monetary(
+        string='Margin Signed',
+        compute='_compute_margin',
+        digits=dp.get_precision('Product Price'),
+        store=True,
+        currency_field='currency_id',
+    )
+
+    margin_percent = fields.Float(
+        string='(%) Margin',
+        digits=dp.get_precision('Product Price'),
+        compute='_compute_margin',
+        store=True,
+    )
+
+    @api.multi
+    @api.depends(
+        'invoice_line_ids.margin',
+        'invoice_line_ids.margin_signed',
+        'invoice_line_ids.price_subtotal',
+    )
+    def _compute_margin(self):
+        for invoice in self:
+            invoice_lines = invoice.invoice_line_ids
+            price_subtotal = sum(invoice_lines.mapped('price_subtotal'))
+            margin_signed = sum(invoice_lines.mapped('margin_signed'))
+            invoice.update({
+                'margin': sum(invoice_lines.mapped('margin')),
+                'margin_signed': margin_signed,
+                'margin_percent': price_subtotal and (
+                    margin_signed / price_subtotal * 100) or 0,
+            })
 
 
 class AccountInvoiceLine(models.Model):
