@@ -19,8 +19,18 @@ msgid "% Margin"
 msgstr ""
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_margin_percent
+msgid "(%) Margin"
+msgstr ""
+
+#. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line_purchase_price
 msgid "Cost"
+msgstr ""
+
+#. module: account_invoice_margin
+#: model:ir.model,name:account_invoice_margin.model_account_invoice
+msgid "Invoice"
 msgstr ""
 
 #. module: account_invoice_margin
@@ -35,17 +45,24 @@ msgstr ""
 
 #. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_report_margin
 msgid "Margin"
 msgstr ""
 
 #. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line_margin_signed
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_margin_signed
 msgid "Margin Signed"
 msgstr ""
 
 #. module: account_invoice_margin
 #: model:res.groups,name:account_invoice_margin.group_account_invoice_margin_security
 msgid "Show Invoice Margin"
+msgstr ""
+
+#. module: account_invoice_margin
+#: model:ir.ui.view,arch_db:account_invoice_margin.view_account_invoice_tree
+msgid "Total"
 msgstr ""
 
