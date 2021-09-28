@@ -65,6 +65,10 @@ Contributors
 
   * Sergio Teruel
 
+* `Sygel <https://www.sygel.es>`__:
+
+  * Manuel Regidor
+
 Maintainers
 ~~~~~~~~~~~
 
