@@ -69,6 +69,28 @@ class TestAccountInvoiceMargin(SavepointCase):
                 ],
             }
         )
+        cls.vendor_bill = cls.env["account.move"].create(
+            {
+                "partner_id": cls.partner.id,
+                "invoice_date": fields.Date.from_string("2017-06-19"),
+                "type": "in_invoice",
+                "currency_id": cls.env.user.company_id.currency_id.id,
+                "invoice_line_ids": [
+                    (
+                        0,
+                        None,
+                        {
+                            "product_id": cls.product.id,
+                            "product_uom_id": cls.product.uom_id.id,
+                            "account_id": cls.product.property_account_receivable_id.id,
+                            "name": "Test Margin",
+                            "price_unit": cls.product.list_price,
+                            "quantity": 10,
+                        },
+                    )
+                ],
+            }
+        )
 
     def test_invoice_margin(self):
         self.assertEqual(self.invoice.invoice_line_ids.purchase_price, 100.00)
@@ -78,6 +100,10 @@ class TestAccountInvoiceMargin(SavepointCase):
             check_move_validity=False
         ).discount = 50
         self.assertEqual(self.invoice.invoice_line_ids.margin, 0.0)
+
+    def test_vendor_bill_margin(self):
+        self.assertEqual(self.vendor_bill.invoice_line_ids.purchase_price, 0.00)
+        self.assertEqual(self.vendor_bill.invoice_line_ids.margin, 0.00)
 
     def test_invoice_margin_uom(self):
         inv_line = self.invoice.invoice_line_ids
