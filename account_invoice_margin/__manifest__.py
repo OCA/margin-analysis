@@ -23,4 +23,5 @@
         'views/account_invoice_margin_view.xml',
         'data/res_groups.xml',
     ],
+    "pre_init_hook": "pre_init_hook",
 }
