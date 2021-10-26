@@ -5,11 +5,11 @@ from odoo import api, fields, models
 
 
 class AccountInvoiceLine(models.Model):
-    _inherit = 'account.invoice.line'
+    _inherit = "account.invoice.line"
 
     purchase_price = fields.Float(
-        string='Purchase Price',
-        compute='_compute_purchase_price',
+        string="Purchase Price",
+        compute="_compute_purchase_price",
         store=True,
         readonly=False,
         # HACK: Allow to write this field
@@ -20,8 +20,8 @@ class AccountInvoiceLine(models.Model):
     @api.depends("sale_line_ids.purchase_price_delivery")
     def _compute_purchase_price(self):
         for line in self:
-            if line.invoice_type in ['out_invoice', 'out_refund']:
+            if line.invoice_type in ["out_invoice", "out_refund"]:
                 line.purchase_price = (
-                    line.sale_line_ids.purchase_price_delivery or
-                    line.sale_line_ids.purchase_price
+                    line.sale_line_ids.purchase_price_delivery
+                    or line.sale_line_ids.purchase_price
                 )
