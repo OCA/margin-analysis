@@ -4,7 +4,7 @@
 {
     "name": "Account Invoice Margin Sale Delivered Sync",
     "summary": "Sync invoice margin between invoices and sale orders",
-    "version": "12.0.1.0.1",
+    "version": "13.0.1.0.1",
     "development_status": "Beta",
     "maintainers": ["sergio-teruel"],
     "category": "Account",
