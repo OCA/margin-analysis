@@ -17,11 +17,6 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: account_invoice_margin
-#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__purchase_price
-msgid "Cost"
-msgstr "Kustannus"
-
-#. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice
 msgid "Invoice"
 msgstr "Lasku"
@@ -57,6 +52,11 @@ msgid "Margin Signed"
 msgstr "Kate etumerkillä"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__purchase_price
+msgid "Purchase Price"
+msgstr ""
+
+#. module: account_invoice_margin
 #: model:res.groups,name:account_invoice_margin.group_account_invoice_margin_security
 msgid "Show Invoice Margin"
 msgstr "Näytä laskujen kate"
@@ -65,3 +65,6 @@ msgstr "Näytä laskujen kate"
 #: model_terms:ir.ui.view,arch_db:account_invoice_margin.view_account_invoice_tree
 msgid "Total"
 msgstr "Yhteensä"
+
+#~ msgid "Cost"
+#~ msgstr "Kustannus"

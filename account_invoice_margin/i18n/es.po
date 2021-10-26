@@ -18,11 +18,6 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: account_invoice_margin
-#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__purchase_price
-msgid "Cost"
-msgstr "Coste"
-
-#. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice
 #, fuzzy
 msgid "Invoice"
@@ -60,6 +55,11 @@ msgid "Margin Signed"
 msgstr "Margen firmado"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__purchase_price
+msgid "Purchase Price"
+msgstr ""
+
+#. module: account_invoice_margin
 #: model:res.groups,name:account_invoice_margin.group_account_invoice_margin_security
 msgid "Show Invoice Margin"
 msgstr "Mostrar margen en facturas"
@@ -68,6 +68,9 @@ msgstr "Mostrar margen en facturas"
 #: model_terms:ir.ui.view,arch_db:account_invoice_margin.view_account_invoice_tree
 msgid "Total"
 msgstr ""
+
+#~ msgid "Cost"
+#~ msgstr "Coste"
 
 #~ msgid "% Margin"
 #~ msgstr "% Margen"

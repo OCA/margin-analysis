@@ -15,11 +15,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 
 #. module: account_invoice_margin
-#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__purchase_price
-msgid "Cost"
-msgstr ""
-
-#. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice
 msgid "Invoice"
 msgstr ""
@@ -52,6 +47,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin_signed
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_signed
 msgid "Margin Signed"
+msgstr ""
+
+#. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__purchase_price
+msgid "Purchase Price"
 msgstr ""
 
 #. module: account_invoice_margin
