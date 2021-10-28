@@ -30,7 +30,7 @@ class SaleOrderLine(models.Model):
                  'move_ids.price_unit')
     def _compute_margin_delivered(self):
         digits = self.env['decimal.precision'].precision_get('Product Price')
-        for line in self.filtered('price_reduce'):
+        for line in self:
             if not line.qty_delivered and not line.product_uom_qty:
                 continue
             line.margin_delivered = 0.0
@@ -55,6 +55,8 @@ class SaleOrderLine(models.Model):
                 )
             # compute percent margin based on delivered quantities or ordered
             # quantities
-            line.margin_delivered_percent = line.qty_delivered and (
+            line.margin_delivered_percent = (
+                line.qty_delivered and line.price_reduce and (
                 (line.price_reduce - line.purchase_price_delivery) /
                 line.price_reduce * 100.0) or 0.0
+            )
