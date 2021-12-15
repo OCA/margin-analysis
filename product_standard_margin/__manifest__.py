@@ -10,7 +10,7 @@
     "category": "Product",
     "depends": ["account"],
     "maintainers": ["legalsylvain"],
-    "website": "https://www.github.com/OCA/margin-analysis",
+    "website": "https://github.com/OCA/margin-analysis",
     "data": ["views/view_product_product.xml", "views/view_product_template.xml"],
     "license": "AGPL-3",
     "installable": True,
