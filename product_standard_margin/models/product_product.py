@@ -41,6 +41,16 @@ class ProductProduct(models.Model):
         "Take care of tax include and exclude.. If no sale price "
         "set, will display 999.0",
     )
+    standard_markup_rate = fields.Float(
+        compute="_compute_margin",
+        string="Theorical Markup (%)",
+        store=True,
+        digits=dp.get_precision("Product Price"),
+        help="Markup rate is [ Theorical Margin / cost price (Wo Tax) ] "
+        "of the product form (not based on historical values)."
+        "Take care of tax include and exclude.. If no cost price "
+        "set, will display 999.0",
+    )
 
     # Compute Section
     @api.depends(
@@ -65,5 +75,13 @@ class ProductProduct(models.Model):
                 product.standard_margin_rate = (
                     (product.list_price_vat_excl - product.standard_price)
                     / product.list_price_vat_excl
+                    * 100
+                )
+            if product.standard_price == 0:
+                product.standard_markup_rate = 999.0
+            else:
+                product.standard_markup_rate = (
+                    (product.list_price_vat_excl - product.standard_price)
+                    / product.standard_price
                     * 100
                 )
