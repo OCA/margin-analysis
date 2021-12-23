@@ -1,9 +1,12 @@
-Add a field on the product form that compute the standard (or theorical)
-margin based on the current values of sale and standard price present in
-the product form. We take care of taxe included or excluded.
+Add 2 fields on the product form that compute the standard (or theorical)
+margin and markup based on the current values of sale and standard price
+present in the product form. We take care of taxe included or excluded.
 
 It will just compute it as follow:
+Margin :
 (Sale Price without tax - Standard Price) / Sale Price without tax
+Markup :
+(Sale Price without tax - Standard Price) / Standard Price
 
 .. figure:: ../static/description/product_form.png
 
