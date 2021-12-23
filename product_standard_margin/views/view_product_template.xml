@@ -19,6 +19,11 @@
                     widget="percentpie"
                     attrs="{'invisible': [('product_variant_count', '>', 1)]}"
                 />
+                <field
+                    name="standard_markup_rate"
+                    widget="percentpie"
+                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                />
             </xpath>
         </field>
     </record>
@@ -35,6 +40,11 @@
                 />
                 <field
                     name="standard_margin_rate"
+                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                    optional="hide"
+                />
+                <field
+                    name="standard_markup_rate"
                     attrs="{'invisible': [('product_variant_count', '>', 1)]}"
                     optional="hide"
                 />
