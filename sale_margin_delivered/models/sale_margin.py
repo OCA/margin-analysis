@@ -34,7 +34,15 @@ class SaleOrderLine(models.Model):
         self.margin_delivered_percent = 0.0
         self.purchase_price_delivery = 0.0
         for line in self.filtered("qty_delivered"):
-            if line.qty_delivered:
+            if line.product_id.type != "product":
+                currency = line.order_id.pricelist_id.currency_id
+                price = line.purchase_price
+                line.margin_delivered = currency.round(
+                    line.price_subtotal - (price * line.qty_delivered)
+                )
+                line.purchase_price_delivery = price
+                continue
+            else:
                 cost_price = 0.0
                 moves = line.move_ids.filtered(
                     lambda x: (
