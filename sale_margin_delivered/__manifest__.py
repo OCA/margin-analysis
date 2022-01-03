@@ -9,7 +9,7 @@
     "category": "Sales",
     "license": "AGPL-3",
     "depends": [
-        "stock",
+        "sale_stock",
         "sale_margin_security",
     ],
     "data": [

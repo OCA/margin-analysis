@@ -36,7 +36,17 @@ class SaleOrderLine(models.Model):
             line.margin_delivered = 0.0
             line.margin_delivered_percent = 0.0
             line.purchase_price_delivery = 0.0
-            if line.qty_delivered:
+            # We don't want to compute non storable products from moves prices.
+            # This could be problematic for services or MRP kits which don't
+            # relate
+            if line.qty_delivered and line.product_id.type != "product":
+                currency = line.order_id.pricelist_id.currency_id
+                price = line.purchase_price
+                line.margin_delivered = currency.round(
+                    line.price_subtotal - (price * line.qty_delivered)
+                )
+                line.purchase_price_delivery = price
+            elif line.qty_delivered:
                 cost_price = 0.0
                 moves = line.move_ids.filtered(
                     lambda x: (
