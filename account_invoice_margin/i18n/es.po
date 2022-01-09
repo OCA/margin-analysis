@@ -7,21 +7,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-04 13:11+0000\n"
-"PO-Revision-Date: 2019-12-04 14:12+0100\n"
-"Last-Translator: Marta Vázquez Rodríguez <vazrodmar@gmail.com>\n"
+"PO-Revision-Date: 2022-01-09 20:39+0000\n"
+"Last-Translator: Rafa Martínez <rmartinez@puntsistemes.es>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice
-#, fuzzy
 msgid "Invoice"
-msgstr "Línea factura"
+msgstr "Factura"
 
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_invoice_line
@@ -44,20 +43,19 @@ msgstr "Margen"
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_report__margin_percent
-#, fuzzy
 msgid "Margin (%)"
-msgstr "Margen"
+msgstr "Margen (%)"
 
 #. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice__margin_signed
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__margin_signed
 msgid "Margin Signed"
-msgstr "Margen firmado"
+msgstr "Margen con signo"
 
 #. module: account_invoice_margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_line__purchase_price
 msgid "Purchase Price"
-msgstr ""
+msgstr "Coste"
 
 #. module: account_invoice_margin
 #: model:res.groups,name:account_invoice_margin.group_account_invoice_margin_security
@@ -67,7 +65,7 @@ msgstr "Mostrar margen en facturas"
 #. module: account_invoice_margin
 #: model_terms:ir.ui.view,arch_db:account_invoice_margin.view_account_invoice_tree
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #~ msgid "Cost"
 #~ msgstr "Coste"
