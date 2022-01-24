@@ -31,27 +31,31 @@ class TestModule(TransactionCase):
             product = self._create_product(model, 50, 200, [])
             self.assertEqual(
                 product.standard_margin, 150,
-                "Incorrect Standard Margin")
+                "Incorrect Standard Margin for model %s" % model)
             self.assertEqual(
                 product.standard_margin_rate, 75.0,
-                "Incorrect Standard Margin Rate")
+                "Incorrect Standard Margin Rate for model %s" % model)
 
     def test_02_margin_without_standard_price(self):
         for model in ['product', 'template']:
             product = self._create_product(model, 0, 200, [])
             self.assertEqual(
                 product.standard_margin, 200,
-                "Incorrect Standard Margin (without standard price)")
+                "Incorrect Standard Margin (without standard price)"
+                " for model %s" % model)
             self.assertEqual(
                 product.standard_margin_rate, 100.0,
-                "Incorrect Standard Margin Rate (without standard price)")
+                "Incorrect Standard Margin Rate (without standard price)"
+                " for model %s" % model)
 
     def test_03_margin_without_sale_price(self):
         for model in ['product', 'template']:
             product = self._create_product(model, 50, 0, [])
             self.assertEqual(
                 product.standard_margin, -50,
-                "Incorrect Standard Margin (without sale price)")
+                "Incorrect Standard Margin (without sale price)"
+                " for model %s" % model)
             self.assertEqual(
                 product.standard_margin_rate, 999.0,
-                "Incorrect Standard Margin Rate (without sale price)")
+                "Incorrect Standard Margin Rate (without sale price)"
+                " for model %s" % model)
