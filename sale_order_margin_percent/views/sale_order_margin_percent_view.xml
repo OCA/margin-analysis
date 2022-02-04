@@ -5,9 +5,9 @@
         <field name="model">sale.order</field>
         <field name='inherit_id' ref='sale_margin.sale_margin_sale_order' />
         <field name="arch" type="xml">
-            <field name="margin" position="after">
-                <field name="percent" widget="progressbar" />
-            </field>
+            <xpath expr="//field[@name='margin']/parent::div" position="inside">
+                    <field name="percent" widget="progressbar" />
+            </xpath>
         </field>
     </record>
     <record model="ir.ui.view" id="sale_margin_sale_order_line">
