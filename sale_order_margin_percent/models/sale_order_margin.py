@@ -7,7 +7,9 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     percent = fields.Float(
-        string="Percent", compute="_compute_percent", digits=(16, 2),
+        string="Percent",
+        compute="_compute_percent",
+        digits=(16, 2),
     )
 
     @api.depends("margin", "amount_untaxed")
@@ -23,7 +25,9 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     margin_percent = fields.Float(
-        string="Margin(%)", compute="_compute_margin_percent", digits=(16, 2),
+        string="Margin(%)",
+        compute="_compute_margin_percent",
+        digits=(16, 2),
     )
 
     @api.depends("margin", "price_subtotal")
