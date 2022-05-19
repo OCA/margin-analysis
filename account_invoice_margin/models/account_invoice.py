@@ -57,7 +57,7 @@ class AccountMoveLine(models.Model):
         digits="Product Price",
     )
 
-    @api.depends("purchase_price", "price_subtotal")
+    @api.depends("purchase_price", "price_subtotal", "move_id.move_type", "quantity")
     def _compute_margin(self):
         for line in self:
             if line.move_id and line.move_id.move_type[:2] == "in":
