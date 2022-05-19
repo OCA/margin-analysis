@@ -44,10 +44,8 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    margin = fields.Float(compute="_compute_margin", digits="Product Price", store=True)
-    margin_signed = fields.Float(
-        compute="_compute_margin", digits="Product Price", store=True
-    )
+    margin = fields.Monetary(compute="_compute_margin", store=True)
+    margin_signed = fields.Monetary(compute="_compute_margin", store=True)
     margin_percent = fields.Float(
         string="Margin (%)", compute="_compute_margin", store=True
     )
