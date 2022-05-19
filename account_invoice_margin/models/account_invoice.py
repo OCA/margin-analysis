@@ -85,7 +85,7 @@ class AccountMoveLine(models.Model):
         self.ensure_one()
         return self.product_id.standard_price
 
-    @api.depends("product_id", "product_uom_id")
+    @api.depends("product_id", "product_uom_id", "move_id.move_type")
     def _compute_purchase_price(self):
         for line in self:
             if line.move_id.move_type in ["out_invoice", "out_refund"]:
