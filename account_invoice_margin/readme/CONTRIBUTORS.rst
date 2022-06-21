@@ -9,3 +9,7 @@
 * `Open Source Integrators <https://www.opensourceintegrators.com>`__:
 
   * Bhavesh Odedra
+
+* `Avoin.Systems <https://www.avoin.systems>`__:
+
+  * Nedas Žilinskas
