@@ -8,14 +8,12 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     margin = fields.Monetary(
-        string="Margin",
         compute="_compute_margin",
         store=True,
         currency_field="currency_id",
     )
 
     margin_signed = fields.Monetary(
-        string="Margin Signed",
         compute="_compute_margin",
         store=True,
         currency_field="currency_id",
@@ -56,14 +54,11 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    margin = fields.Float(
-        compute="_compute_margin", digits="Product Price", store=True, string="Margin"
-    )
+    margin = fields.Float(compute="_compute_margin", digits="Product Price", store=True)
     margin_signed = fields.Float(
         compute="_compute_margin",
         digits="Product Price",
         store=True,
-        string="Margin Signed",
     )
     margin_percent = fields.Float(
         string="Margin (%)", compute="_compute_margin", store=True, readonly=True
