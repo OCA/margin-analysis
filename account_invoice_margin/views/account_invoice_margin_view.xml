@@ -37,7 +37,7 @@
                 <field name="margin" />
                 <field name="margin_percent" />
             </xpath>
-            <field name="amount_untaxed" position="before">
+            <field name="tax_totals_json" position="before">
                 <field name="margin" />
                 <field name="margin_percent" />
             </field>
