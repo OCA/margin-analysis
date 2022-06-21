@@ -7,7 +7,7 @@ from odoo import fields, models
 class AccountInvoiceReport(models.Model):
     _inherit = "account.invoice.report"
 
-    margin = fields.Float(string="Margin", readonly=True)
+    margin = fields.Float(readonly=True)
 
     def _select(self):
         select_str = super()._select()

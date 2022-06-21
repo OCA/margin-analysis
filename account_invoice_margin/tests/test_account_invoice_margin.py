@@ -2,11 +2,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields
-from odoo.tests.common import SavepointCase, tagged
+from odoo.tests.common import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestAccountInvoiceMargin(SavepointCase):
+class TestAccountInvoiceMargin(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestAccountInvoiceMargin, cls).setUpClass()
@@ -120,7 +120,13 @@ class TestAccountInvoiceMargin(SavepointCase):
                 active_ids=self.invoice.ids,
                 active_id=self.invoice.id,
             )
-            .create({"refund_method": "refund", "reason": "reason test create"})
+            .create(
+                {
+                    "refund_method": "refund",
+                    "reason": "reason test create",
+                    "journal_id": self.invoice.journal_id.id,
+                }
+            )
         )
         action = wiz.reverse_moves()
         new_invoice = self.env["account.move"].browse(action["res_id"])
