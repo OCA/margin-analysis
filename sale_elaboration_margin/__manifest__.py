@@ -6,7 +6,7 @@
     "version": "13.0.1.0.0",
     "development_status": "Beta",
     "category": "Sale",
-    "website": "https://github.com/OCA/sale-workflow",
+    "website": "https://github.com/OCA/margin-analysis",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
