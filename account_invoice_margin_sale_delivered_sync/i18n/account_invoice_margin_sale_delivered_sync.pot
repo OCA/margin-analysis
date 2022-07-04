@@ -14,6 +14,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_invoice_margin_sale_delivered_sync
+#: model:ir.model,name:account_invoice_margin_sale_delivered_sync.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: account_invoice_margin_sale_delivered_sync
+#: model:ir.model,name:account_invoice_margin_sale_delivered_sync.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: account_invoice_margin_sale_delivered_sync
 #: model:ir.model,name:account_invoice_margin_sale_delivered_sync.model_account_move_line
 msgid "Journal Item"
 msgstr ""
@@ -21,4 +31,10 @@ msgstr ""
 #. module: account_invoice_margin_sale_delivered_sync
 #: model:ir.model,name:account_invoice_margin_sale_delivered_sync.model_sale_order_line
 msgid "Sales Order Line"
+msgstr ""
+
+#. module: account_invoice_margin_sale_delivered_sync
+#: model:ir.model.fields,field_description:account_invoice_margin_sale_delivered_sync.field_res_company__margin_sale_sync_invoice_posted
+#: model:ir.model.fields,field_description:account_invoice_margin_sale_delivered_sync.field_res_config_settings__margin_sale_sync_invoice_posted
+msgid "Sync sale delivered margin on posted invoices"
 msgstr ""
