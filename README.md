@@ -21,7 +21,19 @@ This project aim to deal with modules related to manage Financial controlling an
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[account_invoice_margin](account_invoice_margin/) | 13.0.1.2.2 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Show margin in invoices
+[account_invoice_margin_sale](account_invoice_margin_sale/) | 13.0.1.0.2 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) | Set margin in invoices from sale orders
+[account_invoice_margin_sale_delivered_sync](account_invoice_margin_sale_delivered_sync/) | 13.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sync invoice margin between invoices and sale orders
+[sale_elaboration_margin](sale_elaboration_margin/) | 13.0.1.0.0 |  | Compute elaboration margins in sale orders lines
+[sale_margin_delivered](sale_margin_delivered/) | 13.0.1.0.2 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Delivered
+[sale_margin_security](sale_margin_security/) | 13.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Security
+[sale_margin_sync](sale_margin_sync/) | 13.0.1.0.1 |  | Recompute sale margin when stock move cost price is changed
+[sale_order_margin_percent](sale_order_margin_percent/) | 13.0.1.1.0 |  | Show Percent in sale order
+[sale_report_margin](sale_report_margin/) | 13.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Report Margin
 
 [//]: # (end addons)
 
