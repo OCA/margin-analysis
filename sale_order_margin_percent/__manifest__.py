@@ -6,7 +6,7 @@
     "summary": "Show Percent in sale order",
     "version": "13.0.1.1.0",
     "category": "Sales",
-    "website": "https://github.com/OCA/margin-analysis/",
+    "website": "https://github.com/OCA/margin-analysis",
     "author": "PESOL, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
