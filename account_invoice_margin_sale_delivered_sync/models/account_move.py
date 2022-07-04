@@ -19,4 +19,10 @@ class AccountMoveLine(models.Model):
         "product_id", "product_uom_id", "sale_line_ids.purchase_price_delivery"
     )
     def _compute_purchase_price(self):
-        return super()._compute_purchase_price()
+        """Exclude posted invoice lines depending on company setting values.
+        """
+        lines_posted = self.filtered(
+            lambda ln: not ln.company_id.margin_sale_sync_invoice_posted
+            and ln.parent_state == "posted"
+        )
+        return super(AccountMoveLine, self - lines_posted)._compute_purchase_price()

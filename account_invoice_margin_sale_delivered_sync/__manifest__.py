@@ -14,4 +14,5 @@
     "application": False,
     "installable": True,
     "depends": ["sale_margin_delivered", "account_invoice_margin_sale"],
+    "data": ["views/res_config_settings_views.xml"],
 }
