@@ -10,7 +10,7 @@
     "maintainers": ["legalsylvain"],
     "website": "https://github.com/OCA/margin-analysis",
     "license": "AGPL-3",
-    "depends": ["sale"],
+    "depends": ["account"],
     "data": [
         "views/view_product_template.xml",
         "wizards/wizard_preview_pricelist_margin.xml",
