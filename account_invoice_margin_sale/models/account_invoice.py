@@ -15,6 +15,7 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
+    # pylint: disable=W8110
     @api.depends("purchase_price", "price_subtotal")
     def _compute_margin(self):
         for line in self:
