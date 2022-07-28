@@ -2,13 +2,13 @@
 # Copyright 2019 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestAccountInvoiceMargin(SavepointCase):
+class TestAccountInvoiceMargin(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestAccountInvoiceMargin, cls).setUpClass()
+        super().setUpClass()
         cls.journal = cls.env["account.journal"].create(
             {"name": "Test journal", "type": "sale", "code": "TEST_J"}
         )
