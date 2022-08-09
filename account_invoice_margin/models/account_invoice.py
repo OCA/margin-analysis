@@ -113,6 +113,14 @@ class AccountMoveLine(models.Model):
                     purchase_price = line.product_id.uom_id._compute_price(
                         purchase_price, line.product_uom_id
                     )
-                line.purchase_price = purchase_price
+                move = line.move_id
+                company = move.company_id or self.env.company
+                line.purchase_price = company.currency_id._convert(
+                    purchase_price,
+                    move.currency_id,
+                    company,
+                    move.invoice_date or fields.Date.today(),
+                    round=False,
+                )
             else:
                 line.purchase_price = 0.0
