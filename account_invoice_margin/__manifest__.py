@@ -4,7 +4,7 @@
 {
     "name": "Account Invoice Margin",
     "summary": "Show margin in invoices",
-    "version": "13.0.1.2.2",
+    "version": "13.0.1.2.3",
     "category": "Account",
     "website": "https://github.com/OCA/margin-analysis",
     "author": "Tecnativa, " "GRAP, " "Odoo Community Association (OCA)",
