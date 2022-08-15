@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields
-from odoo.tests.common import SavepointCase, tagged
+from odoo.tests.common import Form, SavepointCase, tagged
 
 
 @tagged("post_install", "-at_install")
@@ -126,3 +126,26 @@ class TestAccountInvoiceMargin(SavepointCase):
         new_invoice = self.env["account.move"].browse(action["res_id"])
         self.assertEqual(new_invoice.invoice_line_ids.margin, 1000.00)
         self.assertEqual(new_invoice.invoice_line_ids.margin_signed, -1000.00)
+
+    def test_invoice_different_currency(self):
+        company = self.env.company
+        currency = self.env["res.currency"].create(
+            {
+                "name": "TC1",
+                "symbol": "T",
+                "rate_ids": [
+                    (0, 0, {"company_id": company.id, "name": "2022-01-01", "rate": 2})
+                ],
+            }
+        )
+        company.currency_id.rate_ids.unlink()  # avoid odd rates if currency != EUR
+        move_form = Form(
+            self.env["account.move"].with_context(default_move_type="out_invoice")
+        )
+        move_form.partner_id = self.partner
+        move_form.currency_id = currency
+        move_form.invoice_date = "2022-01-01"
+        with move_form.invoice_line_ids.new() as line_form:
+            line_form.product_id = self.product
+        invoice = move_form.save()
+        self.assertEqual(invoice.invoice_line_ids.purchase_price, 200)
