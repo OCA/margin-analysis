@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo14-addon-account_invoice_margin',
         'odoo14-addon-account_invoice_margin_sale',
         'odoo14-addon-sale_margin_delivery_cost',
+        'odoo14-addon-sale_report_margin',
     ],
     classifiers=[
         'Programming Language :: Python',
