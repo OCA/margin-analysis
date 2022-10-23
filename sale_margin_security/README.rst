@@ -14,16 +14,16 @@ Sale Margin Security
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github
-    :target: https://github.com/OCA/margin-analysis/tree/13.0/sale_margin_security
+    :target: https://github.com/OCA/margin-analysis/tree/14.0/sale_margin_security
     :alt: OCA/margin-analysis
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/margin-analysis-13-0/margin-analysis-13-0-sale_margin_security
+    :target: https://translation.odoo-community.org/projects/margin-analysis-14-0/margin-analysis-14-0-sale_margin_security
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/132/13.0
+    :target: https://runbot.odoo-community.org/runbot/132/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows to restrict the access to sale margin fields to a specific
 security group of users.
@@ -91,8 +91,8 @@ promote its widespread use.
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-sergio-teruel| 
+|maintainer-sergio-teruel|
 
-This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/13.0/sale_margin_security>`_ project on GitHub.
+This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/14.0/sale_margin_security>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
