@@ -8,11 +8,11 @@ class SaleOrderLine(models.Model):
 
     def write(self, vals):
         """In sale_margin, when the line already exists, the purchase_price
-           is computed with the product onchange method, so if the user doesn't
-           have the field available in the view it's not going to get the right
-           price. This should be fixed in v13 with the new compute fields
-           possibilities.
-           """
+        is computed with the product onchange method, so if the user doesn't
+        have the field available in the view it's not going to get the right
+        price. This should be fixed in v13 with the new compute fields
+        possibilities.
+        """
         # TODO: Check if this can be done through computed writable field
         res = super().write(vals)
         if not vals.get("product_id") or "purchase_price" in vals:
