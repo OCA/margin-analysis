@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 Tecnativa - Sergio Teruel
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="sale_margin.sale_margin_sale_order">
+        <field
+            name="groups_id"
+            eval="[(4,ref('sale_margin_security.group_sale_margin_security'))]"
+        />
+    </record>
+    <record model="ir.ui.view" id="sale_margin.sale_margin_sale_order_line">
+        <field
+            name="groups_id"
+            eval="[(4,ref('sale_margin_security.group_sale_margin_security'))]"
+        />
+    </record>
+    <record model="ir.ui.view" id="sale_margin.sale_margin_sale_order_line_form">
+        <field
+            name="groups_id"
+            eval="[(4,ref('sale_margin_security.group_sale_margin_security'))]"
+        />
+    </record>
+</odoo>
