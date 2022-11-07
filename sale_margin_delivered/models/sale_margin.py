@@ -7,17 +7,13 @@ from odoo import api, fields, models, tools
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    margin_delivered = fields.Float(
-        string="Margin Delivered", compute="_compute_margin_delivered", store=True
-    )
+    margin_delivered = fields.Float(compute="_compute_margin_delivered", store=True)
     margin_delivered_percent = fields.Float(
-        string="Margin Delivered Percent",
         compute="_compute_margin_delivered",
         store=True,
         readonly=True,
     )
     purchase_price_delivery = fields.Float(
-        string="Purchase Price Delivered",
         compute="_compute_margin_delivered",
         store=True,
     )
