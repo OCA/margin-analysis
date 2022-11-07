@@ -7,7 +7,7 @@ from odoo import fields, models
 class SaleReport(models.Model):
     _inherit = "sale.report"
 
-    margin_delivered = fields.Float(string="Margin Delivered", readonly=True)
+    margin_delivered = fields.Float(readonly=True)
 
     def _query(self, with_clause="", fields=None, groupby="", from_clause=""):
         if fields is None:
