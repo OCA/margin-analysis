@@ -1,11 +1,10 @@
 #  Copyright 2019 Tecnativa - Sergio Teruel
 #  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl
-from datetime import datetime
 
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form, TransactionCase
 
 
-class TestSaleMarginDelivered(SavepointCase):
+class TestSaleMarginDelivered(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -50,26 +49,12 @@ class TestSaleMarginDelivered(SavepointCase):
         )
 
     def _new_sale_order(self):
-        sale_order = self.SaleOrder.new(
-            {
-                "date_order": datetime.today(),
-                "name": "Test_SO011",
-                "partner_id": self.partner.id,
-                "order_line": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_id": self.product.id,
-                            "product_uom_qty": 6,
-                            "product_uom": self.product.uom_id.id,
-                        },
-                    )
-                ],
-            }
-        )
-        sale_order.onchange_partner_id()
-        return self.SaleOrder.create(sale_order._convert_to_write(sale_order._cache))
+        sale_order_form = Form(self.SaleOrder)
+        sale_order_form.partner_id = self.partner
+        with sale_order_form.order_line.new() as order_line_form:
+            order_line_form.product_id = self.product
+            order_line_form.product_uom_qty = 6
+        return sale_order_form.save()
 
     def get_return_picking_wizard(self, picking):
         stock_return_picking_form = Form(
@@ -94,7 +79,7 @@ class TestSaleMarginDelivered(SavepointCase):
         picking = sale_order.picking_ids
         picking.action_assign()
         picking.move_line_ids.qty_done = 3.0
-        picking.action_done()
+        picking._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 30.0)
         self.assertEqual(order_line.margin_delivered_percent, 50.0)
@@ -117,7 +102,7 @@ class TestSaleMarginDelivered(SavepointCase):
         picking = sale_order.picking_ids
         picking.action_assign()
         picking.move_line_ids.qty_done = 6.0
-        picking.action_done()
+        picking._action_done()
         return picking
 
     def test_sale_margin_delivered_return_to_refund(self):
@@ -126,7 +111,7 @@ class TestSaleMarginDelivered(SavepointCase):
         picking = self._validate_so_picking(sale_order)
         picking_return = self._create_return(picking, to_refund=True)
         picking_return.move_line_ids.qty_done = 3.0
-        picking_return.action_done()
+        picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 30.0)
         self.assertEqual(order_line.margin_delivered_percent, 50.0)
@@ -138,7 +123,7 @@ class TestSaleMarginDelivered(SavepointCase):
         picking = self._validate_so_picking(sale_order)
         picking_return = self._create_return(picking, to_refund=False)
         picking_return.move_line_ids.qty_done = 3.0
-        picking_return.action_done()
+        picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 60.0)
         self.assertEqual(order_line.margin_delivered_percent, 50.0)
