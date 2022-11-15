@@ -14,7 +14,7 @@ class SaleReport(models.Model):
             fields = {}
         fields.update(
             {
-                "purchase_price": " ,SUM(l.purchase_price /"
+                "purchase_price": " ,SUM(l.purchase_price * l.product_uom_qty /"
                 " COALESCE(s.currency_rate, 1.0))"
                 "AS purchase_price"
             }
