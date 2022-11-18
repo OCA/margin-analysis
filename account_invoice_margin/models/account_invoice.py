@@ -7,20 +7,8 @@ from odoo import api, fields, models
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    margin = fields.Monetary(
-        string="Margin",
-        compute="_compute_margin",
-        store=True,
-        currency_field="currency_id",
-    )
-
-    margin_signed = fields.Monetary(
-        string="Margin Signed",
-        compute="_compute_margin",
-        store=True,
-        currency_field="currency_id",
-    )
-
+    margin = fields.Monetary(compute="_compute_margin", store=True)
+    margin_signed = fields.Monetary(compute="_compute_margin", store=True)
     margin_percent = fields.Float(
         string="Margin (%)",
         digits="Product Price",
@@ -56,17 +44,10 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    margin = fields.Float(
-        compute="_compute_margin", digits="Product Price", store=True, string="Margin"
-    )
-    margin_signed = fields.Float(
-        compute="_compute_margin",
-        digits="Product Price",
-        store=True,
-        string="Margin Signed",
-    )
+    margin = fields.Monetary(compute="_compute_margin", store=True)
+    margin_signed = fields.Monetary(compute="_compute_margin", store=True)
     margin_percent = fields.Float(
-        string="Margin (%)", compute="_compute_margin", store=True, readonly=True
+        string="Margin (%)", compute="_compute_margin", store=True
     )
     purchase_price = fields.Float(
         string="Cost",
@@ -76,7 +57,7 @@ class AccountMoveLine(models.Model):
         digits="Product Price",
     )
 
-    @api.depends("purchase_price", "price_subtotal")
+    @api.depends("purchase_price", "price_subtotal", "move_id.move_type", "quantity")
     def _compute_margin(self):
         for line in self:
             if line.move_id and line.move_id.move_type[:2] == "in":
@@ -104,7 +85,7 @@ class AccountMoveLine(models.Model):
         self.ensure_one()
         return self.product_id.standard_price
 
-    @api.depends("product_id", "product_uom_id")
+    @api.depends("product_id", "product_uom_id", "move_id.move_type")
     def _compute_purchase_price(self):
         for line in self:
             if line.move_id.move_type in ["out_invoice", "out_refund"]:
