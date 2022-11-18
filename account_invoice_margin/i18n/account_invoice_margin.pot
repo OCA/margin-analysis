@@ -14,6 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_report__purchase_price
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move_line__purchase_price
 msgid "Cost"
 msgstr ""
