@@ -19,13 +19,11 @@ class SaleOrderLine(models.Model):
         compute="_compute_elaboration_price",
         store=True,
         readonly=False,
-        string="Elaboration Price",
         digits="Product Price",
         group_operator="avg",
     )
     elaboration_margin = fields.Monetary(
         compute="_compute_elaboration_margin",
-        string="Elaboration Margin",
         currency_field="currency_id",
         default=0.0,
     )
