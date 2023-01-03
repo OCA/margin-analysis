@@ -14,14 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_margin_classification
-#: code:addons/product_margin_classification/models/product_margin_classification.py:111
-#: code:addons/product_margin_classification/models/product_margin_classification.py:140
+#: code:addons/product_margin_classification/models/product_margin_classification.py:112
+#: code:addons/product_margin_classification/models/product_margin_classification.py:141
 #, python-format
 msgid "-100 is not a valid Markup."
 msgstr ""
 
 #. module: product_margin_classification
-#: code:addons/product_margin_classification/models/product_margin_classification.py:125
+#: code:addons/product_margin_classification/models/product_margin_classification.py:126
 #, python-format
 msgid "100 is not a valid Profit Margin."
 msgstr ""
@@ -155,7 +155,7 @@ msgid "Price Rounding"
 msgstr ""
 
 #. module: product_margin_classification
-#: code:addons/product_margin_classification/models/product_margin_classification.py:180
+#: code:addons/product_margin_classification/models/product_margin_classification.py:181
 #, python-format
 msgid "Price Rounding can not be null."
 msgstr ""
