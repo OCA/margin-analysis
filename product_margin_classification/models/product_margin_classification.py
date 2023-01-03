@@ -11,6 +11,7 @@ import odoo.addons.decimal_precision as dp
 class ProductMarginClassification(models.Model):
     _name = "product.margin.classification"
     _description = "Product Margin Classification"
+    _order = "name"
 
     # Column Section
     name = fields.Char(string="Name", required=True)
