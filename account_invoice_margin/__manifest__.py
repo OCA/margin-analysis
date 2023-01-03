@@ -4,7 +4,7 @@
 {
     "name": "Account Invoice Margin",
     "summary": "Show margin in invoices",
-    "version": "12.0.3.0.2",
+    "version": "12.0.3.0.3",
     "category": "Account",
     "website": "https://github.com/OCA/margin-analysis",
     "author": "Tecnativa, "
