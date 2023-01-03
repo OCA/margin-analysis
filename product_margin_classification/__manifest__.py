@@ -8,7 +8,7 @@
     "category": "Account",
     "author": "GRAP,Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
-    "website": "https://github.com/OCA/sale-workflow",
+    "website": "https://github.com/OCA/margin-analysis",
     "license": "AGPL-3",
     "depends": ["sale"],
     "data": [
