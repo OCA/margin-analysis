@@ -19,6 +19,24 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__id
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product____last_update
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin_rate
 #, fuzzy
 msgid ""
@@ -30,6 +48,15 @@ msgstr ""
 "van het product (niet gebaseerd op historische waardes). Het veld houdt "
 "rekening met prijzen incl. en excl. BTW. Indien geen verkooprijs is "
 "ingevoerd, wordt 999,0 weergegeven."
+
+#. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_markup_rate
+#: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_markup_rate
+msgid ""
+"Markup rate is [ Theorical Margin / cost price (Wo Tax) ] of the product "
+"form (not based on historical values).Take care of tax include and exclude.. "
+"If no cost price set, will display 999.0"
+msgstr ""
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
@@ -85,6 +112,12 @@ msgstr ""
 "product (niet gebaseerd op historische waardes). Het veld houdt rekening met "
 "prijzen incl. en excl. BTW. Indien geen verkooprijs is ingevoerd, zal de "
 "marge negatief zijn."
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_markup_rate
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_markup_rate
+msgid "Theorical Markup (%)"
+msgstr ""
 
 #~ msgid "Error: Invalid ean code"
 #~ msgstr "Fout: ongeldige ean code"
