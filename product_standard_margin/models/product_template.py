@@ -50,7 +50,7 @@ class ProductTemplate(models.Model):
 
     # Compute Section
     @api.depends(
-        "lst_price",
+        "list_price",
         "standard_price",
         "taxes_id.price_include",
         "taxes_id.amount",
