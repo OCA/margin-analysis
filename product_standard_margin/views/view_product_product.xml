@@ -5,7 +5,7 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="arch" type="xml">
-            <field name="lst_price" position="before">
+            <field name="list_price" position="before">
                 <field name="list_price_vat_excl" invisible="1" />
             </field>
             <xpath
