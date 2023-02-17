@@ -6,10 +6,11 @@ from odoo.tests.common import TransactionCase
 
 
 class TestModule(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.ProductProduct = self.env["product.product"]
-        self.ProductTemplate = self.env["product.template"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.ProductProduct = cls.env["product.product"]
+        cls.ProductTemplate = cls.env["product.template"]
 
     # Custom Section
     def _create_product(self, model, standard_price, sale_price, sale_tax_ids):
@@ -21,7 +22,7 @@ class TestModule(TransactionCase):
             {
                 "name": "Demo Product",
                 "standard_price": standard_price,
-                "lst_price": sale_price,
+                "list_price": sale_price,
                 "taxes_id": [(6, 0, sale_tax_ids)],
             }
         )
