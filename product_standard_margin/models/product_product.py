@@ -54,7 +54,7 @@ class ProductProduct(models.Model):
 
     # Compute Section
     @api.depends(
-        "lst_price",
+        "list_price",
         "product_tmpl_id.list_price",
         "standard_price",
         "taxes_id.price_include",
@@ -64,7 +64,7 @@ class ProductProduct(models.Model):
     def _compute_margin(self):
         for product in self:
             product.list_price_vat_excl = product.taxes_id.compute_all(
-                product.lst_price, product=product
+                product.list_price, product=product
             )["total_excluded"]
             product.standard_margin = (
                 product.list_price_vat_excl - product.standard_price
