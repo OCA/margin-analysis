@@ -7,5 +7,6 @@ class ResCompany(models.Model):
     _inherit = "res.company"
 
     margin_sale_sync_invoice_posted = fields.Boolean(
-        string="Sync sale delivered margin on posted invoices", default=True,
+        string="Sync sale delivered margin on posted invoices",
+        default=True,
     )
