@@ -2,11 +2,11 @@
 # Copyright 2019 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase, tagged
+from odoo.tests.common import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestAccountInvoiceMarginSync(SavepointCase):
+class TestAccountInvoiceMarginSync(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -48,7 +48,7 @@ class TestAccountInvoiceMarginSync(SavepointCase):
                 "standard_price": 100.00,
             }
         )
-        cls.product.property_account_receivable_id = cls.account
+        cls.product.property_account_income_id = cls.account
         pricelist = cls.env["product.pricelist"].create({"name": "Public Pricelist"})
 
         cls.sale_order = cls.env["sale.order"].create(
