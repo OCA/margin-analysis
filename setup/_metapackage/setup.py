@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-account_invoice_margin>=15.0dev,<15.1dev',
         'odoo-addon-account_invoice_margin_sale>=15.0dev,<15.1dev',
+        'odoo-addon-account_invoice_margin_sale_delivered_sync>=15.0dev,<15.1dev',
         'odoo-addon-product_standard_margin>=15.0dev,<15.1dev',
         'odoo-addon-sale_elaboration_margin>=15.0dev,<15.1dev',
         'odoo-addon-sale_margin_delivered>=15.0dev,<15.1dev',
