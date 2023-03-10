@@ -37,6 +37,8 @@ class AccountMove(models.Model):
     )
     def _compute_margin(self):
         for invoice in self:
+            if not invoice.is_invoice():
+                continue
             margin = 0.0
             margin_signed = 0.0
             price_subtotal = 0.0
@@ -74,13 +76,15 @@ class AccountMoveLine(models.Model):
     @api.depends("purchase_price", "price_subtotal")
     def _compute_margin(self):
         for line in self:
-            if line.move_id and line.move_id.move_type[:2] == "in":
+            if not line.move_id.is_invoice():
+                continue
+            if line.move_id and line.move_id.is_purchase_document():
                 line.update(
                     {"margin": 0.0, "margin_signed": 0.0, "margin_percent": 0.0}
                 )
                 continue
             tmp_margin = line.price_subtotal - (line.purchase_price * line.quantity)
-            sign = line.move_id.move_type in ["in_refund", "out_refund"] and -1 or 1
+            sign = line.move_id.move_type == "out_refund" and -1 or 1
             line.update(
                 {
                     "margin": tmp_margin,
@@ -102,7 +106,9 @@ class AccountMoveLine(models.Model):
     @api.depends("product_id", "product_uom_id")
     def _compute_purchase_price(self):
         for line in self:
-            if line.move_id.move_type in ["out_invoice", "out_refund"]:
+            if not line.move_id.is_invoice():
+                continue
+            if line.move_id.is_sale_document():
                 purchase_price = line._get_purchase_price()
                 if line.product_uom_id != line.product_id.uom_id:
                     purchase_price = line.product_id.uom_id._compute_price(

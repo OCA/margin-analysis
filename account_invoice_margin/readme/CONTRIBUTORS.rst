@@ -13,3 +13,7 @@
 * `Avoin.Systems <https://www.avoin.systems>`__:
 
   * Nedas Žilinskas
+
+* `Factor Libre <https://factorlibre.com>`__:
+
+  * Luis J. Salvatierra
