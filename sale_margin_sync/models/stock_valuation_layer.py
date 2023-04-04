@@ -28,9 +28,20 @@ class StockValuationLayer(models.Model):
         for svl in self.filtered(lambda l: (l.quantity < 0.0)):
             sale_line_id = svl.stock_move_id.sale_line_id
             product_cost = svl.unit_cost
+            sale_currency = (
+                sale_line_id.currency_id or sale_line_id.order_id.currency_id
+            )
             if sale_line_id.product_uom and sale_line_id.product_uom != svl.uom_id:
                 product_cost = svl.uom_id._compute_price(
                     product_cost,
                     sale_line_id.product_uom,
+                )
+            if sale_currency and product_cost and sale_currency != svl.currency_id:
+                product_cost = svl.currency_id._convert(
+                    from_amount=product_cost,
+                    to_currency=sale_currency,
+                    company=svl.company_id or self.env.company,
+                    date=svl.create_date,
+                    round=False,
                 )
             sale_line_id.purchase_price = product_cost
