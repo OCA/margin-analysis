@@ -6,8 +6,6 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
 
-import odoo.addons.decimal_precision as dp
-
 
 class ProductMarginClassification(models.Model):
     _name = "product.margin.classification"
@@ -15,12 +13,11 @@ class ProductMarginClassification(models.Model):
     _order = "name"
 
     # Column Section
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
 
     markup = fields.Float(
-        string="Markup",
         required=True,
-        digits=dp.get_precision("Margin Rate"),
+        digits="Margin Rate",
         help="Value that help you to compute the sale price, based on your"
         " cost, as defined: Sale Price = (Cost * (100 + Markup)) / 100\n"
         "It is computed with the following formula"
@@ -28,10 +25,9 @@ class ProductMarginClassification(models.Model):
     )
 
     profit_margin = fields.Float(
-        string="Profit Margin",
         compute="_compute_profit_margin",
         inverse="_inverse_profit_margin",
-        digits=dp.get_precision("Margin Rate"),
+        digits="Margin Rate",
         help="Also called 'Net margin' or 'Net Profit Ratio'.\n"
         "It is computed with the following formula"
         " Profit Margin = 100 * (Sale Price - Cost) / Sale Price",
@@ -75,7 +71,7 @@ class ProductMarginClassification(models.Model):
 
     price_round = fields.Float(
         string="Price Rounding",
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
         default=lambda s: s._default_price_round(),
         help="Sets the price so that it is a multiple of this value.\n"
         "Rounding is applied after the margin and before the surcharge.\n"
@@ -83,8 +79,7 @@ class ProductMarginClassification(models.Model):
     )
 
     price_surcharge = fields.Float(
-        string="Price Surcharge",
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
         help="Specify the fixed amount to add or substract(if negative) to"
         " the amount calculated with the discount.",
     )
@@ -110,7 +105,6 @@ class ProductMarginClassification(models.Model):
             ):
                 raise ValidationError(_("-100 is not a valid Markup."))
 
-    @api.multi
     def _inverse_profit_margin(self):
         pass
 
@@ -179,21 +173,17 @@ class ProductMarginClassification(models.Model):
                 raise ValidationError(_("Price Rounding can not be null."))
 
     # Custom Section
-    @api.multi
     def _apply_theoretical_price(self, state_list):
         products = self.mapped("product_ids").filtered(
             lambda x: x.margin_state in state_list
         )
         products.use_theoretical_price()
 
-    @api.multi
     def apply_theoretical_price(self):
         self._apply_theoretical_price(["too_cheap", "too_expensive"])
 
-    @api.multi
     def apply_theoretical_price_too_cheap(self):
         self._apply_theoretical_price(["too_cheap"])
 
-    @api.multi
     def apply_theoretical_price_too_expensive(self):
         self._apply_theoretical_price(["too_expensive"])

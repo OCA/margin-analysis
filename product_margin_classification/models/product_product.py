@@ -6,17 +6,15 @@ from odoo import _, api, fields, models, tools
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
 
-import odoo.addons.decimal_precision as dp
+MARGIN_STATE_SELECTION = [
+    ("correct", "Correct Margin"),
+    ("too_cheap", "Too Cheap"),
+    ("too_expensive", "Too Expensive"),
+]
 
 
 class Productproduct(models.Model):
     _inherit = "product.product"
-
-    MARGIN_STATE_SELECTION = [
-        ("correct", "Correct Margin"),
-        ("too_cheap", "Too Cheap"),
-        ("too_expensive", "Too Expensive"),
-    ]
 
     # Columns Section
     margin_classification_id = fields.Many2one(
@@ -25,15 +23,13 @@ class Productproduct(models.Model):
     )
 
     theoretical_price = fields.Float(
-        string="Theoretical Price",
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
         compute="_compute_theoretical_multi",
         store=True,
     )
 
     theoretical_difference = fields.Float(
-        string="Theoretical Difference",
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
         compute="_compute_theoretical_multi",
         store=True,
     )
@@ -46,6 +42,7 @@ class Productproduct(models.Model):
     )
 
     # Compute Section
+    @api.depends_context("company")
     @api.depends(
         "standard_price",
         "lst_price",
@@ -53,47 +50,61 @@ class Productproduct(models.Model):
         "margin_classification_id.markup",
         "margin_classification_id.price_round",
         "margin_classification_id.price_surcharge",
-        "taxes_id",
+        "product_tmpl_id.taxes_id",
+        "product_tmpl_id.list_price",
     )
     def _compute_theoretical_multi(self):
-        precision = self.env["decimal.precision"].precision_get("Product Price")
-
         for product in self:
-            classification = product.margin_classification_id
-            if classification:
-                multi = (100 + classification.markup) / 100
-                if product.taxes_id.filtered(lambda x: x.amount_type != "percent"):
-                    raise ValidationError(
-                        _(
-                            "Unimplemented Feature\n"
-                            "The sale taxes are not correctly set for computing"
-                            " prices with coefficients for the product %s"
-                        )
-                        % (product.name)
+            (
+                product.margin_state,
+                product.theoretical_price,
+                product.theoretical_difference,
+            ) = self._get_margin_info(
+                product.margin_classification_id,
+                product.taxes_id,
+                product.name,
+                product.standard_price,
+                product.lst_price,
+            )
+
+    @api.model
+    def _get_margin_info(
+        self, classification, sale_taxes, product_name, standard_price, sale_price
+    ):
+        precision = self.env["decimal.precision"].precision_get("Product Price")
+        if classification:
+            multi = (100 + classification.markup) / 100
+            if sale_taxes.filtered(lambda x: x.amount_type != "percent"):
+                raise ValidationError(
+                    _(
+                        "Unimplemented Feature\n"
+                        "The sale taxes are not correctly set for computing"
+                        " prices with coefficients for the product %s"
                     )
-                for tax in product.taxes_id.filtered(lambda x: x.price_include):
-                    multi *= (100 + tax.amount) / 100.0
-                product.theoretical_price = (
-                    tools.float_round(
-                        product.standard_price * multi,
-                        precision_rounding=classification.price_round,
-                    )
-                    + classification.price_surcharge
+                    % (product_name)
                 )
-            else:
-                product.theoretical_price = product.lst_price
-            difference = product.lst_price - product.theoretical_price
-            compare = float_compare(difference, 0, precision_digits=precision)
-            if compare < 0:
-                product.margin_state = "too_cheap"
-            elif compare > 0:
-                product.margin_state = "too_expensive"
-            else:
-                product.margin_state = "correct"
-            product.theoretical_difference = difference
+            for tax in sale_taxes.filtered(lambda x: x.price_include):
+                multi *= (100 + tax.amount) / 100.0
+            theoretical_price = (
+                tools.float_round(
+                    standard_price * multi,
+                    precision_rounding=classification.price_round,
+                )
+                + classification.price_surcharge
+            )
+        else:
+            theoretical_price = sale_price
+        difference = sale_price - theoretical_price
+        compare = float_compare(difference, 0, precision_digits=precision)
+        if compare < 0:
+            margin_state = "too_cheap"
+        elif compare > 0:
+            margin_state = "too_expensive"
+        else:
+            margin_state = "correct"
+        return (margin_state, theoretical_price, difference)
 
     # Custom Section
-    @api.multi
     def use_theoretical_price(self):
         for product in self:
             product.lst_price = product.theoretical_price
