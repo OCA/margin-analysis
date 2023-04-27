@@ -60,10 +60,10 @@ class TestProductMarginClassification(common.TransactionCase):
     def test_05_margin_classification_change_value(self):
         self.too_expensive_product.use_theoretical_price()
 
-        # Change markup  and check theoritical_price
+        # Change markup and check theoritical_price
         theoritical_price = self.too_expensive_product.theoretical_price
         self.classification_big_margin.markup += 10
-        self.assertNotEquals(
+        self.assertNotEqual(
             theoritical_price,
             self.too_expensive_product.theoretical_price,
             "Change markup should change theoritical Price",
@@ -72,7 +72,7 @@ class TestProductMarginClassification(common.TransactionCase):
         # Change price_round and check theoritical_price
         theoritical_price = self.too_expensive_product.theoretical_price
         self.classification_big_margin.price_round += 10
-        self.assertNotEquals(
+        self.assertNotEqual(
             theoritical_price,
             self.too_expensive_product.theoretical_price,
             "Change price_round should change theoritical Price",
@@ -81,7 +81,7 @@ class TestProductMarginClassification(common.TransactionCase):
         # Change price_surcharge and check theoritical_price
         theoritical_price = self.too_expensive_product.theoretical_price
         self.classification_big_margin.price_surcharge += 10
-        self.assertNotEquals(
+        self.assertNotEqual(
             theoritical_price,
             self.too_expensive_product.theoretical_price,
             "Change price_surcharge should change theoritical Price",
