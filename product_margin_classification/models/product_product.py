@@ -5,6 +5,7 @@
 from odoo import _, api, fields, models, tools
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
+
 import odoo.addons.decimal_precision as dp
 
 
@@ -55,26 +56,22 @@ class Productproduct(models.Model):
         "taxes_id",
     )
     def _compute_theoretical_multi(self):
-        precision = self.env["decimal.precision"].precision_get(
-            "Product Price")
+        precision = self.env["decimal.precision"].precision_get("Product Price")
 
         for product in self:
             classification = product.margin_classification_id
             if classification:
                 multi = (100 + classification.markup) / 100
-                if product.taxes_id.filtered(
-                    lambda x: x.amount_type != "percent"
-                ):
-                    raise ValidationError(_(
-                        "Unimplemented Feature\n"
-                        "The sale taxes are not correctly set for computing"
-                        " prices with coefficients for the product %s"
-                    )
+                if product.taxes_id.filtered(lambda x: x.amount_type != "percent"):
+                    raise ValidationError(
+                        _(
+                            "Unimplemented Feature\n"
+                            "The sale taxes are not correctly set for computing"
+                            " prices with coefficients for the product %s"
+                        )
                         % (product.name)
                     )
-                for tax in product.taxes_id.filtered(
-                    lambda x: x.price_include
-                ):
+                for tax in product.taxes_id.filtered(lambda x: x.price_include):
                     multi *= (100 + tax.amount) / 100.0
                 product.theoretical_price = (
                     tools.float_round(
@@ -86,8 +83,7 @@ class Productproduct(models.Model):
             else:
                 product.theoretical_price = product.lst_price
             difference = product.lst_price - product.theoretical_price
-            compare = float_compare(
-                difference, 0, precision_digits=precision)
+            compare = float_compare(difference, 0, precision_digits=precision)
             if compare < 0:
                 product.margin_state = "too_cheap"
             elif compare > 0:
