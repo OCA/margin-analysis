@@ -9,21 +9,24 @@ class TestAccountInvoiceMargin(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                mail_create_nolog=True,
+                mail_create_nosubscribe=True,
+                mail_notrack=True,
+                no_reset_password=True,
+                tracking_disable=True,
+            )
+        )
         cls.journal = cls.env["account.journal"].create(
             {"name": "Test journal", "type": "sale", "code": "TEST_J"}
-        )
-        cls.account_type = cls.env["account.account.type"].create(
-            {
-                "name": "Test account type",
-                "type": "receivable",
-                "internal_group": "income",
-            }
         )
         cls.account = cls.env["account.account"].create(
             {
                 "name": "Test account",
-                "code": "TEST_A",
-                "user_type_id": cls.account_type.id,
+                "code": "TESTACCRECV",
+                "account_type": "asset_receivable",
                 "reconcile": True,
             }
         )
