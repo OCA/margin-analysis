@@ -9,6 +9,7 @@ class AccountInvoiceReport(models.Model):
 
     margin = fields.Float(readonly=True)
     purchase_price = fields.Float("Cost", readonly=True)
+    margin_percent = fields.Float("Margin (%)", group_operator="avg", readonly=True)
 
     def _select(self):
         res = super()._select()
@@ -16,6 +17,7 @@ class AccountInvoiceReport(models.Model):
         return ",\n".join(
             [
                 res,
+                "line.margin_percent AS margin_percent",
                 "line.margin_signed AS margin",
                 f"""
                 (
