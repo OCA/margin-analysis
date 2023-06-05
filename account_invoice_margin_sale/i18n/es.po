@@ -18,8 +18,8 @@ msgstr ""
 
 #. module: account_invoice_margin_sale
 #: model:ir.model,name:account_invoice_margin_sale.model_account_move
-msgid "Journal Entries"
-msgstr "Entradas de diario"
+msgid "Journal Entry"
+msgstr ""
 
 #. module: account_invoice_margin_sale
 #: model:ir.model,name:account_invoice_margin_sale.model_account_move_line
@@ -30,3 +30,6 @@ msgstr "Apunte contable"
 #: model:ir.model,name:account_invoice_margin_sale.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
+
+#~ msgid "Journal Entries"
+#~ msgstr "Entradas de diario"
