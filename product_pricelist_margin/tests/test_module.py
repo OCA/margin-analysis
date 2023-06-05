@@ -9,9 +9,11 @@ class TestModule(common.TransactionCase):
     def setUp(self):
         super().setUp()
         self.product = self.env.ref("product_pricelist_margin.demo_product")
-        self.wizard = self.env["wizard.preview.pricelist.margin"].with_context(
-            active_model="product.product",
-            active_id=self.product.id).create({})
+        self.wizard = (
+            self.env["wizard.preview.pricelist.margin"]
+            .with_context(active_model="product.product", active_id=self.product.id)
+            .create({})
+        )
 
     def _get_wizard_line(self, pricelist_xml_id):
         for line in self.wizard.line_ids:
@@ -25,18 +27,21 @@ class TestModule(common.TransactionCase):
 
     def test_margin_computation(self):
         line = self._get_wizard_line("product.list0")
-        self.assertEquals(
-            line.margin_percent, 50.0,
+        self.assertEqual(
+            line.margin_percent,
+            50.0,
             "By default a product with a cost of 20 and a sale price of 40"
-            " should have a margin of 50%.")
+            " should have a margin of 50%.",
+        )
 
-        self.assertEquals(
-            line.bg_color, "rgb(105, {green:.0f}, {blue:.0f})".format(
-                green=105 + 1.5 * 50,
-                blue=255 - 1.5 * 50)
+        self.assertEqual(
+            line.bg_color,
+            "rgb(105, {green:.0f}, {blue:.0f})".format(
+                green=105 + 1.5 * 50, blue=255 - 1.5 * 50
+            ),
         )
 
         # We set a date when the pricelist has an exception
         self.wizard.price_date = "2000-01-02"
         line = self._get_wizard_line("product.list0")
-        self.assertEquals(line.margin_percent, 75.0)
+        self.assertEqual(line.margin_percent, 75.0)
