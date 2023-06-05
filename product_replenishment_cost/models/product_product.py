@@ -7,8 +7,6 @@
 from odoo import api, fields
 from odoo.models import Model
 
-import odoo.addons.decimal_precision as dp
-
 
 class ProductProduct(Model):
     _inherit = "product.product"
@@ -22,7 +20,7 @@ class ProductProduct(Model):
         string="Replenishment cost",
         compute="_compute_replenishment_cost",
         store=True,
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
         help="The cost that you have to support in order to produce or "
         "acquire the goods. Depending on the modules installed, "
         "this cost may be computed based on various pieces of "

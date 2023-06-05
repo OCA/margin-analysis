@@ -6,7 +6,7 @@
     "name": "Product Replenishment Cost",
     "summary": "Provides an overridable method on product which compute"
     "the Replenishment cost of a product",
-    "version": "12.0.1.0.1",
+    "version": "16.0.1.0.0",
     "author": "Camptocamp,GRAP,Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Products",
