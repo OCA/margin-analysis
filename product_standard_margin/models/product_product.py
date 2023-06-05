@@ -6,8 +6,6 @@
 
 from odoo import api, fields, models
 
-import odoo.addons.decimal_precision as dp
-
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -17,14 +15,14 @@ class ProductProduct(models.Model):
         compute="_compute_margin",
         string="Sale Price VAT Excluded",
         store=True,
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
     )
 
     standard_margin = fields.Float(
         compute="_compute_margin",
         string="Theorical Margin",
         store=True,
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
         help="Theorical Margin is [ sale price (Wo Tax) - cost price ] "
         "of the product form (not based on historical values). "
         "Take care of tax include and exclude. If no sale price, "
@@ -35,8 +33,8 @@ class ProductProduct(models.Model):
         compute="_compute_margin",
         string="Theorical Margin (%)",
         store=True,
-        digits=dp.get_precision("Product Price"),
-        help="Markup rate is [ Theorical Margin / sale price (Wo Tax) ] "
+        digits="Product Price",
+        help="Margin rate is [ Theorical Margin / sale price (Wo Tax) ] "
         "of the product form (not based on historical values)."
         "Take care of tax include and exclude.. If no sale price "
         "set, will display 999.0",
@@ -45,7 +43,7 @@ class ProductProduct(models.Model):
         compute="_compute_margin",
         string="Theorical Markup (%)",
         store=True,
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
         help="Markup rate is [ Theorical Margin / cost price (Wo Tax) ] "
         "of the product form (not based on historical values)."
         "Take care of tax include and exclude.. If no cost price "
