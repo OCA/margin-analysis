@@ -6,18 +6,19 @@ from openerp.tests.common import TransactionCase
 
 
 class TestModule(TransactionCase):
-
     def setUp(self):
         super(TestModule, self).setUp()
-        self.ProductProduct = self.env['product.product']
+        self.ProductProduct = self.env["product.product"]
 
     # Test Section
     def test_create_or_update(self):
         # Test compute on creation
-        product = self.ProductProduct.create({
-            'name': 'Wine A01',
-            'standard_price': 50,
-        })
+        product = self.ProductProduct.create(
+            {
+                "name": "Wine A01",
+                "standard_price": 50,
+            }
+        )
         self.assertEqual(product.replenishment_cost, 50.0)
 
         # Test Update
