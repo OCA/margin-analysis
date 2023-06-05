@@ -9,19 +9,7 @@ class SaleReport(models.Model):
 
     purchase_price = fields.Float(readonly=True)
 
-    def _query(self, with_clause="", fields=None, groupby="", from_clause=""):
-        if fields is None:
-            fields = {}
-        fields.update(
-            {
-                "purchase_price": " ,SUM(l.purchase_price /"
-                " COALESCE(s.currency_rate, 1.0))"
-                "AS purchase_price"
-            }
-        )
-        return super()._query(
-            with_clause=with_clause,
-            fields=fields,
-            groupby=groupby,
-            from_clause=from_clause,
-        )
+    def _select_additional_fields(self):
+        res = super()._select_additional_fields()
+        res["purchase_price"] = "SUM(l.purchase_price)"
+        return res
