@@ -13,8 +13,8 @@
                 position="after"
             >
                 <field name="standard_margin" widget="monetary" />
-                <field name="standard_margin_rate" widget="percentpie" />
-                <field name="standard_markup_rate" widget="percentpie" />
+                <field name="standard_margin_rate" />
+                <field name="standard_markup_rate" />
             </xpath>
         </field>
     </record>
@@ -28,8 +28,8 @@
             </field>
             <field name="standard_price" position="before">
                 <field name="standard_margin" widget="monetary" />
-                <field name="standard_margin_rate" widget="percentpie" />
-                <field name="standard_markup_rate" widget="percentpie" />
+                <field name="standard_margin_rate" />
+                <field name="standard_markup_rate" />
             </field>
         </field>
     </record>
