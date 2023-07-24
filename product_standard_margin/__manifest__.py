@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Product Margin and Margin Rate",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "author": "Camptocamp,GRAP,Odoo Community Association (OCA)",
     "category": "Product",
     "depends": ["account"],
