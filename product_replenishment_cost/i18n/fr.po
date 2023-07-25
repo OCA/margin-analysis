@@ -18,8 +18,8 @@ msgstr ""
 
 #. module: product_replenishment_cost
 #: model:ir.model,name:product_replenishment_cost.model_product_product
-msgid "Product"
-msgstr "Article"
+msgid "Product Variant"
+msgstr ""
 
 #. module: product_replenishment_cost
 #: model:ir.model.fields,field_description:product_replenishment_cost.field_product_product__replenishment_cost
@@ -39,3 +39,6 @@ msgstr ""
 "s'appuyer sur diverses informations : par exemple les nomenclatures ou les "
 "derniers achats. Par défaut, le coût de réapprovisionnement est le même que "
 "le Prix de revient."
+
+#~ msgid "Product"
+#~ msgstr "Article"
