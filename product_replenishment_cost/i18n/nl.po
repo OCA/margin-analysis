@@ -20,8 +20,8 @@ msgstr ""
 
 #. module: product_replenishment_cost
 #: model:ir.model,name:product_replenishment_cost.model_product_product
-msgid "Product"
-msgstr "Product"
+msgid "Product Variant"
+msgstr ""
 
 #. module: product_replenishment_cost
 #: model:ir.model.fields,field_description:product_replenishment_cost.field_product_product__replenishment_cost
@@ -36,3 +36,6 @@ msgid ""
 "various pieces of information, for example Bills of Materials or latest "
 "Purchases. By default, the Replenishment cost is the same as the Cost Price."
 msgstr "Dit is de kostprijs, inclusief eventuele kosten."
+
+#~ msgid "Product"
+#~ msgstr "Product"
