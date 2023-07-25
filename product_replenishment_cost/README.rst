@@ -14,18 +14,22 @@ Product Replenishment Cost
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github
-    :target: https://github.com/OCA/margin-analysis/tree/12.0/product_replenishment_cost
+    :target: https://github.com/OCA/margin-analysis/tree/16.0/product_replenishment_cost
     :alt: OCA/margin-analysis
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/margin-analysis-12-0/margin-analysis-12-0-product_replenishment_cost
+    :target: https://translation.odoo-community.org/projects/margin-analysis-16-0/margin-analysis-16-0-product_replenishment_cost
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/132/12.0
+    :target: https://runbot.odoo-community.org/runbot/132/16.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 Provides an overridable method on product which compute the Replenishment cost of a product. By default it just returns the value of "Cost price" field, but using the product_cost_incl_bom module, it will return the costing from the bom.
+
+"Cost price" is the cost assigned for each product in the warehouse and the "Replenishment cost" is the cost it would cost to buy a new product. They are different costs because the cost price depends on your valuation method and the operations you have performed while the replenishment cost is determined by the current market conditions.
+
+For example: The price of the product in the supplier's catalog is €15/piece. Therefore, if I want to buy a new unit, my replenishment cost would be €15. But if my stock comes from having bought it in a special offer that allowed me to buy it for €10, then my cost price is €10/piece.
 
 As it is a generic module, you can also setup your own way of computing the replenishment_cost for your product.
 
@@ -51,7 +55,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/margin-analysis/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20product_replenishment_cost%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20product_replenishment_cost%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -86,6 +90,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/12.0/product_replenishment_cost>`_ project on GitHub.
+This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/16.0/product_replenishment_cost>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
