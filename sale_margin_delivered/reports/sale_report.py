@@ -9,18 +9,9 @@ class SaleReport(models.Model):
 
     margin_delivered = fields.Float(readonly=True)
 
-    def _query(self, with_clause="", fields=None, groupby="", from_clause=""):
-        if fields is None:
-            fields = {}
-        fields.update(
-            {
-                "margin_delivered": " ,SUM(l.margin_delivered /"
-                " COALESCE(s.currency_rate, 1.0)) AS margin_delivered"
-            }
-        )
-        return super()._query(
-            with_clause=with_clause,
-            fields=fields,
-            groupby=groupby,
-            from_clause=from_clause,
-        )
+    def _select_additional_fields(self):
+        res = super()._select_additional_fields()
+        res[
+            "margin_delivered"
+        ] = "SUM(l.margin_delivered / COALESCE(s.currency_rate, 1.0))"
+        return res
