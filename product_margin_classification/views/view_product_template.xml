@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2016-Today GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+
+    <record id="view_product_template_form" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <label for="list_price" position="before">
+                <field
+                    name="margin_classification_id"
+                    attrs="{'invisible': [('product_variant_count', '&gt;', 1)]}"
+                />
+                <label
+                    for="theoretical_price"
+                    attrs="{'invisible': ['|', ('margin_state', '=', 'correct'), ('product_variant_count', '&gt;', 1)]}"
+                />
+                <div
+                    attrs="{'invisible': ['|', ('margin_state', '=', 'correct'), ('product_variant_count', '&gt;', 1)]}"
+                >
+                    <field name="theoretical_price" class="oe_inline" />
+                    <button
+                        name="use_theoretical_price"
+                        string="⇒ Increase Price"
+                        type="object"
+                        class="oe_link"
+                        attrs="{'invisible': [('margin_state', '!=', 'too_cheap')]}"
+                        help="Increase the Sale Price up to Theoretical Price"
+                    />
+                    <button
+                        name="use_theoretical_price"
+                        string="⇒ Decrease Price"
+                        type="object"
+                        class="oe_link"
+                        attrs="{'invisible': [('margin_state', '!=', 'too_expensive')]}"
+                        help="Decrease the Sale Price down to Theoretical Price"
+                    />
+                </div>
+                <field name="margin_state" invisible="1" />
+            </label>
+        </field>
+    </record>
+
+</odoo>
