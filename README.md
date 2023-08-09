@@ -24,7 +24,7 @@ addon | version | maintainers | summary
 [account_invoice_margin](account_invoice_margin/) | 15.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Show margin in invoices
 [account_invoice_margin_sale](account_invoice_margin_sale/) | 15.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) | Set margin in invoices from sale orders
 [account_invoice_margin_sale_delivered_sync](account_invoice_margin_sale_delivered_sync/) | 15.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sync invoice margin between invoices and sale orders
-[product_standard_margin](product_standard_margin/) | 15.0.1.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Product Margin and Margin Rate
+[product_standard_margin](product_standard_margin/) | 15.0.1.0.1 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Product Margin and Margin Rate
 [sale_elaboration_margin](sale_elaboration_margin/) | 15.0.2.0.0 |  | Compute elaboration margins in sale orders lines
 [sale_margin_delivered](sale_margin_delivered/) | 15.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Delivered
 [sale_margin_security](sale_margin_security/) | 15.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Security
