@@ -17,17 +17,48 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_margin_classification
-#: code:addons/product_margin_classification/models/product_margin_classification.py:112
-#: code:addons/product_margin_classification/models/product_margin_classification.py:141
+#. odoo-python
+#: code:addons/product_margin_classification/models/product_margin_classification.py:0
 #, python-format
 msgid "-100 is not a valid Markup."
 msgstr "-100 n'est pas un taux de marge valide."
 
 #. module: product_margin_classification
-#: code:addons/product_margin_classification/models/product_margin_classification.py:126
+#. odoo-python
+#: code:addons/product_margin_classification/models/product_margin_classification.py:0
 #, python-format
 msgid "100 is not a valid Profit Margin."
 msgstr "100 n'est pas un taux de marque valide."
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Correct</span>"
+msgstr ""
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Incorrect</span>"
+msgstr ""
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Products</span>"
+msgstr ""
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Too Cheap</span>"
+msgstr ""
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Too Priced</span>"
+msgstr ""
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span>%</span>"
+msgstr ""
 
 #. module: product_margin_classification
 #: model:ir.model.fields,help:product_margin_classification.field_product_margin_classification__profit_margin
@@ -61,13 +92,9 @@ msgid "Computation Method"
 msgstr "Méthode de calcul"
 
 #. module: product_margin_classification
-#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
-msgid "Correct"
-msgstr "Correct"
-
-#. module: product_margin_classification
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_product__margin_state__correct
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_template__margin_state__correct
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_search
-#: selection:product.product,margin_state:0
 msgid "Correct Margin"
 msgstr "Marge correcte"
 
@@ -102,11 +129,6 @@ msgstr "Baisser jusqu'au prix théorique"
 #: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__id
 msgid "ID"
 msgstr "ID"
-
-#. module: product_margin_classification
-#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
-msgid "Incorrect"
-msgstr "Incorrect"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_search
@@ -163,7 +185,8 @@ msgid "Price Rounding"
 msgstr "Arrondi du prix"
 
 #. module: product_margin_classification
-#: code:addons/product_margin_classification/models/product_margin_classification.py:181
+#. odoo-python
+#: code:addons/product_margin_classification/models/product_margin_classification.py:0
 #, python-format
 msgid "Price Rounding can not be null."
 msgstr "La méthode d'arrondi ne peut être nulle"
@@ -174,7 +197,7 @@ msgid "Price Surcharge"
 msgstr "Surcharge du prix"
 
 #. module: product_margin_classification
-#: model:ir.model,name:product_margin_classification.model_product_product
+#: model:ir.model,name:product_margin_classification.model_product_template
 msgid "Product"
 msgstr "Article"
 
@@ -184,14 +207,13 @@ msgid "Product Margin Classification"
 msgstr "Catégorie de marge de produit"
 
 #. module: product_margin_classification
-#: model:ir.model,name:product_margin_classification.model_product_template
-msgid "Product Template"
-msgstr "Modèle d'article"
+#: model:ir.model,name:product_margin_classification.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: product_margin_classification
 #: model:ir.actions.act_window,name:product_margin_classification.action_view_product_product_by_margin_classification
 #: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__product_ids
-#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "Products"
 msgstr "Articles"
 
@@ -250,34 +272,28 @@ msgid "Theoretical Price State"
 msgstr "Etat de la marge"
 
 #. module: product_margin_classification
-#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_product__margin_state__too_cheap
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_template__margin_state__too_cheap
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_search
-#: selection:product.product,margin_state:0
 msgid "Too Cheap"
 msgstr "Pas assez cher"
 
 #. module: product_margin_classification
-#: model:product.product,name:product_margin_classification.too_cheap_product
 #: model:product.template,name:product_margin_classification.too_cheap_product_product_template
 msgid "Too Cheap Product"
 msgstr "Produit pas assez cher"
 
 #. module: product_margin_classification
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_product__margin_state__too_expensive
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_template__margin_state__too_expensive
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_search
-#: selection:product.product,margin_state:0
 msgid "Too Expensive"
 msgstr "Trop cher"
 
 #. module: product_margin_classification
-#: model:product.product,name:product_margin_classification.too_expensive_product
 #: model:product.template,name:product_margin_classification.too_expensive_product_product_template
 msgid "Too Expensive Product"
 msgstr "Produit trop cher"
-
-#. module: product_margin_classification
-#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
-msgid "Too Priced"
-msgstr "Trop cher"
 
 #. module: product_margin_classification
 #: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__product_too_cheap_qty
@@ -300,7 +316,8 @@ msgid "Total Products With Incorrect Price"
 msgstr "Total des produits avec un prix incorrect"
 
 #. module: product_margin_classification
-#: code:addons/product_margin_classification/models/product_product.py:68
+#. odoo-python
+#: code:addons/product_margin_classification/models/product_product.py:0
 #, python-format
 msgid ""
 "Unimplemented Feature\n"
@@ -310,14 +327,6 @@ msgstr ""
 "Fonctionnalité non implémentée\n"
 "Les taxes à la vente ne sont pas correctment configuré pour calculer les "
 "prix avec des coéfficients pour l'article %s"
-
-#. module: product_margin_classification
-#: model:product.product,uom_name:product_margin_classification.too_cheap_product
-#: model:product.product,uom_name:product_margin_classification.too_expensive_product
-#: model:product.template,uom_name:product_margin_classification.too_cheap_product_product_template
-#: model:product.template,uom_name:product_margin_classification.too_expensive_product_product_template
-msgid "Unit(s)"
-msgstr "Unité(s)"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
@@ -338,14 +347,6 @@ msgstr ""
 "HT - Coût HT) / Coût HT"
 
 #. module: product_margin_classification
-#: model:product.product,weight_uom_name:product_margin_classification.too_cheap_product
-#: model:product.product,weight_uom_name:product_margin_classification.too_expensive_product
-#: model:product.template,weight_uom_name:product_margin_classification.too_cheap_product_product_template
-#: model:product.template,weight_uom_name:product_margin_classification.too_expensive_product_product_template
-msgid "kg"
-msgstr "kg"
-
-#. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_form
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_template_form
 msgid "⇒ Decrease Price"
@@ -356,3 +357,21 @@ msgstr "⇒ Baisser le prix"
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_template_form
 msgid "⇒ Increase Price"
 msgstr "⇒ Augmenter le prix"
+
+#~ msgid "Correct"
+#~ msgstr "Correct"
+
+#~ msgid "Incorrect"
+#~ msgstr "Incorrect"
+
+#~ msgid "Product Template"
+#~ msgstr "Modèle d'article"
+
+#~ msgid "Too Priced"
+#~ msgstr "Trop cher"
+
+#~ msgid "Unit(s)"
+#~ msgstr "Unité(s)"
+
+#~ msgid "kg"
+#~ msgstr "kg"
