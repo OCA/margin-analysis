@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-01 07:49+0000\n"
-"PO-Revision-Date: 2019-08-01 07:49+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2023-09-02 18:17+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: product_margin_classification
 #. odoo-python
@@ -33,32 +34,32 @@ msgstr "100 no es un Marge Neto válido."
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span class=\"o_stat_text\">Correct</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Correcto</span>"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span class=\"o_stat_text\">Incorrect</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Incorrecto</span>"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span class=\"o_stat_text\">Products</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Productos</span>"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span class=\"o_stat_text\">Too Cheap</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Demasiado barato</span>"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span class=\"o_stat_text\">Too Priced</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Demasiado caro</span>"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span>%</span>"
-msgstr ""
+msgstr "<span>%</span>"
 
 #. module: product_margin_classification
 #: model:ir.model.fields,help:product_margin_classification.field_product_margin_classification__profit_margin
@@ -204,12 +205,12 @@ msgstr "Producto"
 #. module: product_margin_classification
 #: model:ir.model,name:product_margin_classification.model_product_margin_classification
 msgid "Product Margin Classification"
-msgstr ""
+msgstr "Clasificación del margen del producto"
 
 #. module: product_margin_classification
 #: model:ir.model,name:product_margin_classification.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante del producto"
 
 #. module: product_margin_classification
 #: model:ir.actions.act_window,name:product_margin_classification.action_view_product_product_by_margin_classification
@@ -280,7 +281,7 @@ msgstr "Demasiado Barato"
 #. module: product_margin_classification
 #: model:product.template,name:product_margin_classification.too_cheap_product_product_template
 msgid "Too Cheap Product"
-msgstr ""
+msgstr "Producto demasiado barato"
 
 #. module: product_margin_classification
 #: model:ir.model.fields.selection,name:product_margin_classification.selection__product_product__margin_state__too_expensive
@@ -292,7 +293,7 @@ msgstr "Demasiado caro"
 #. module: product_margin_classification
 #: model:product.template,name:product_margin_classification.too_expensive_product_product_template
 msgid "Too Expensive Product"
-msgstr ""
+msgstr "Producto demasiado caro"
 
 #. module: product_margin_classification
 #: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__product_too_cheap_qty
