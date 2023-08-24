@@ -18,6 +18,7 @@ class TestProductMarginClassification(common.TransactionCase):
         self.classification_big_margin = self.env.ref(
             "product_margin_classification.classification_big_margin"
         )
+        self.ProductTemplate = self.env["product.template"]
 
     def test_01_product_use_theoretical_price(self):
         """Apply a 100% Markup (with rounding method) for a product with
@@ -85,4 +86,15 @@ class TestProductMarginClassification(common.TransactionCase):
             theoritical_price,
             self.too_expensive_product.theoretical_price,
             "Change price_surcharge should change theoritical Price",
+        )
+
+    def test_06_create_product_template(self):
+        template = self.ProductTemplate.create(
+            {
+                "name": "Template Name",
+                "margin_classification_id": self.classification_big_margin,
+            }
+        )
+        self.assertEqual(
+            template.margin_classification_id, self.classification_big_margin
         )
