@@ -5,23 +5,26 @@
     <record id="view_order_form" model="ir.ui.view">
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line_form" />
-        <field
-            name="groups_id"
-            eval="[(4,ref('sale_margin_security.group_sale_margin_security'))]"
-        />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='margin']" position="after">
                 <field
                     name="purchase_price_delivery"
                     string="Cost Price dlvd."
                     optional="hide"
+                    groups="sale_margin_security.group_sale_margin_security"
                 />
                 <field
                     name="margin_delivered_percent"
-                    string="% Margin"
+                    string="Margin dlvd. (%)"
                     optional="hide"
+                    groups="sale_margin_security.group_sale_margin_security"
                 />
-                <field name="margin_delivered" string="Margin dlvd." optional="hide" />
+                <field
+                    name="margin_delivered"
+                    string="Margin dlvd."
+                    optional="hide"
+                    groups="sale_margin_security.group_sale_margin_security"
+                />
             </xpath>
         </field>
     </record>
