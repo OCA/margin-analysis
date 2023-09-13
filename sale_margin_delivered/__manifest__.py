@@ -7,7 +7,7 @@
     "website": "https://github.com/OCA/margin-analysis",
     "category": "Sales",
     "license": "AGPL-3",
-    "depends": ["sale_stock", "sale_margin_security"],
+    "depends": ["sale_stock", "sale_margin"],
     "data": ["views/sale_margin_delivered_view.xml"],
     "installable": True,
     "development_status": "Production/Stable",
