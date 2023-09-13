@@ -11,20 +11,13 @@
                     name="purchase_price_delivery"
                     string="Cost Price dlvd."
                     optional="hide"
-                    groups="sale_margin_security.group_sale_margin_security"
                 />
                 <field
                     name="margin_delivered_percent"
                     string="Margin dlvd. (%)"
                     optional="hide"
-                    groups="sale_margin_security.group_sale_margin_security"
                 />
-                <field
-                    name="margin_delivered"
-                    string="Margin dlvd."
-                    optional="hide"
-                    groups="sale_margin_security.group_sale_margin_security"
-                />
+                <field name="margin_delivered" string="Margin dlvd." optional="hide" />
             </xpath>
         </field>
     </record>
