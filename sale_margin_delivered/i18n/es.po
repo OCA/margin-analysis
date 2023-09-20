@@ -19,18 +19,8 @@ msgstr ""
 
 #. module: sale_margin_delivered
 #: model_terms:ir.ui.view,arch_db:sale_margin_delivered.view_order_form
-msgid "% Margin"
-msgstr "% Margen"
-
-#. module: sale_margin_delivered
-#: model_terms:ir.ui.view,arch_db:sale_margin_delivered.view_order_form
 msgid "Cost Price dlvd."
 msgstr "Coste de lo entregado."
-
-#. module: sale_margin_delivered
-#: model_terms:ir.ui.view,arch_db:sale_margin_delivered.view_order_form
-msgid "Margin"
-msgstr "Margen"
 
 #. module: sale_margin_delivered
 #: model:ir.model.fields,field_description:sale_margin_delivered.field_sale_order_line__margin_delivered
@@ -49,9 +39,14 @@ msgid "Margin dlvd."
 msgstr "Margen entr."
 
 #. module: sale_margin_delivered
+#: model_terms:ir.ui.view,arch_db:sale_margin_delivered.view_order_form
+msgid "Margin dlvd. (%)"
+msgstr ""
+
+#. module: sale_margin_delivered
 #: model:ir.model.fields,field_description:sale_margin_delivered.field_sale_order_line__purchase_price_delivery
-msgid "Purchase Price Delivered"
-msgstr "Precio de compra de lo entregado"
+msgid "Purchase Price Delivery"
+msgstr ""
 
 #. module: sale_margin_delivered
 #: model:ir.model,name:sale_margin_delivered.model_sale_report
@@ -63,3 +58,11 @@ msgstr "Análisis de ventas"
 msgid "Sales Order Line"
 msgstr "Línea de pedido de ventas"
 
+#~ msgid "% Margin"
+#~ msgstr "% Margen"
+
+#~ msgid "Margin"
+#~ msgstr "Margen"
+
+#~ msgid "Purchase Price Delivered"
+#~ msgstr "Precio de compra de lo entregado"
