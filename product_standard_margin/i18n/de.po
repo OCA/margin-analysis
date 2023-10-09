@@ -17,6 +17,7 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
 #: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin_rate
 msgid ""
 "Margin rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
@@ -38,25 +39,14 @@ msgid ""
 msgstr ""
 
 #. module: product_standard_margin
-#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
-msgid ""
-"Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
-"form (not based on historical values).Take care of tax include and exclude.. "
-"If no sale price set, will display 999.0"
-msgstr ""
-"Der Aufschlagssatz ist [ Theoretische Marge / Verkaufspreis (Ohne Steuern) ] "
-"des Produkts (nicht auf historischen Werten basierend), mit und ohne Steuer. "
-"Wenn kein Verkaufspreis festgelegt wurde, wird 999.0 angezeigt"
-
-#. module: product_standard_margin
-#: model:ir.model,name:product_standard_margin.model_product_product
+#: model:ir.model,name:product_standard_margin.model_product_template
 msgid "Product"
 msgstr "Produkt"
 
 #. module: product_standard_margin
-#: model:ir.model,name:product_standard_margin.model_product_template
-msgid "Product Template"
-msgstr "Produktvorlage"
+#: model:ir.model,name:product_standard_margin.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__list_price_vat_excl
@@ -94,3 +84,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_markup_rate
 msgid "Theorical Markup (%)"
 msgstr ""
+
+#~ msgid ""
+#~ "Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
+#~ "form (not based on historical values).Take care of tax include and "
+#~ "exclude.. If no sale price set, will display 999.0"
+#~ msgstr ""
+#~ "Der Aufschlagssatz ist [ Theoretische Marge / Verkaufspreis (Ohne "
+#~ "Steuern) ] des Produkts (nicht auf historischen Werten basierend), mit "
+#~ "und ohne Steuer. Wenn kein Verkaufspreis festgelegt wurde, wird 999.0 "
+#~ "angezeigt"
+
+#~ msgid "Product Template"
+#~ msgstr "Produktvorlage"
