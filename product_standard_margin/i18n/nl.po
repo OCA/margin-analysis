@@ -19,6 +19,7 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
 #: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin_rate
 #, fuzzy
 msgid ""
@@ -41,27 +42,14 @@ msgid ""
 msgstr ""
 
 #. module: product_standard_margin
-#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
-msgid ""
-"Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
-"form (not based on historical values).Take care of tax include and exclude.. "
-"If no sale price set, will display 999.0"
-msgstr ""
-"Theoretische marge (%) is [ Theoretische marge / Verkoopprijs (excl. BTW) ] "
-"van het product (niet gebaseerd op historische waardes). Het veld houdt "
-"rekening met prijzen incl. en excl. BTW. Indien geen verkooprijs is "
-"ingevoerd, wordt 999,0 weergegeven."
-
-#. module: product_standard_margin
-#: model:ir.model,name:product_standard_margin.model_product_product
+#: model:ir.model,name:product_standard_margin.model_product_template
 msgid "Product"
 msgstr "Product"
 
 #. module: product_standard_margin
-#: model:ir.model,name:product_standard_margin.model_product_template
-#, fuzzy
-msgid "Product Template"
-msgstr "Product"
+#: model:ir.model,name:product_standard_margin.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__list_price_vat_excl
@@ -100,6 +88,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_markup_rate
 msgid "Theorical Markup (%)"
 msgstr ""
+
+#~ msgid ""
+#~ "Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
+#~ "form (not based on historical values).Take care of tax include and "
+#~ "exclude.. If no sale price set, will display 999.0"
+#~ msgstr ""
+#~ "Theoretische marge (%) is [ Theoretische marge / Verkoopprijs (excl. "
+#~ "BTW) ] van het product (niet gebaseerd op historische waardes). Het veld "
+#~ "houdt rekening met prijzen incl. en excl. BTW. Indien geen verkooprijs is "
+#~ "ingevoerd, wordt 999,0 weergegeven."
+
+#, fuzzy
+#~ msgid "Product Template"
+#~ msgstr "Product"
 
 #~ msgid "Error: Invalid ean code"
 #~ msgstr "Fout: ongeldige ean code"
