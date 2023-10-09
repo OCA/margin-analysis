@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* product_replenishment_cost
+# 	* product_replenishment_cost
 #
 msgid ""
 msgstr ""
@@ -28,5 +28,11 @@ msgstr "补货成本"
 
 #. module: product_replenishment_cost
 #: model:ir.model.fields,help:product_replenishment_cost.field_product_product__replenishment_cost
-msgid "The cost that you have to support in order to produce or acquire the goods. Depending on the modules installed, this cost may be computed based on various pieces of information, for example Bills of Materials or latest Purchases. By default, the Replenishment cost is the same as the Cost Price."
-msgstr "为生产或获得货物而必须支付的费用。根据安装的模块，此成本可根据各种信息（例如物料清单或最新采购）计算。默认情况下，补货成本与成本价相同。"
+msgid ""
+"The cost that you have to support in order to produce or acquire the goods. "
+"Depending on the modules installed, this cost may be computed based on "
+"various pieces of information, for example Bills of Materials or latest "
+"Purchases. By default, the Replenishment cost is the same as the Cost Price."
+msgstr ""
+"为生产或获得货物而必须支付的费用。根据安装的模块，此成本可根据各种信息（例如"
+"物料清单或最新采购）计算。默认情况下，补货成本与成本价相同。"
