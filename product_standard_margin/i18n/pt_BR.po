@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* product_standard_margin
+# 	* product_standard_margin
 #
 msgid ""
 msgstr ""
@@ -16,12 +16,18 @@ msgstr ""
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin_rate
-msgid "Margin rate is [ Theorical Margin / sale price (Wo Tax) ] of the product form (not based on historical values).Take care of tax include and exclude.. If no sale price set, will display 999.0"
+msgid ""
+"Margin rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
+"form (not based on historical values).Take care of tax include and exclude.. "
+"If no sale price set, will display 999.0"
 msgstr ""
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
-msgid "Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product form (not based on historical values).Take care of tax include and exclude.. If no sale price set, will display 999.0"
+msgid ""
+"Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
+"form (not based on historical values).Take care of tax include and exclude.. "
+"If no sale price set, will display 999.0"
 msgstr ""
 
 #. module: product_standard_margin
@@ -55,5 +61,8 @@ msgstr ""
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin
-msgid "Theorical Margin is [ sale price (Wo Tax) - cost price ] of the product form (not based on historical values). Take care of tax include and exclude. If no sale price, the margin will be negativ."
+msgid ""
+"Theorical Margin is [ sale price (Wo Tax) - cost price ] of the product form "
+"(not based on historical values). Take care of tax include and exclude. If "
+"no sale price, the margin will be negativ."
 msgstr ""
