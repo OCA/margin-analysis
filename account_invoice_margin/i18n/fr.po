@@ -28,7 +28,7 @@ msgstr "Statistiques des factures"
 
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_move
-msgid "Journal Entries"
+msgid "Journal Entry"
 msgstr ""
 
 #. module: account_invoice_margin
@@ -37,21 +37,27 @@ msgid "Journal Item"
 msgstr ""
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_bank_statement_line__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_report__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move_line__margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_payment__margin
 msgid "Margin"
 msgstr "Marge"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_bank_statement_line__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move_line__margin_percent
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_payment__margin_percent
 msgid "Margin (%)"
 msgstr "Marge (%)"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_bank_statement_line__margin_signed
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move__margin_signed
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move_line__margin_signed
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_payment__margin_signed
 msgid "Margin Signed"
 msgstr "Marge"
 
