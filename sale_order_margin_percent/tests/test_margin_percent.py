@@ -13,7 +13,7 @@ class TestSaleMarginPercent(SavepointCase):
         self.partner_id = self.ref("base.res_partner_4")
 
     def test_sale_margin(self):
-        """ Test the sale_margin module in Odoo. """
+        """Test the sale_margin module in Odoo."""
         sale_order = self.SaleOrder.create(
             {
                 "name": "Test_SO011",
