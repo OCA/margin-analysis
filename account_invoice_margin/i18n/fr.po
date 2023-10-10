@@ -29,8 +29,8 @@ msgstr "Statistiques des factures"
 
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_move
-msgid "Journal Entries"
-msgstr "Pièces comptables"
+msgid "Journal Entry"
+msgstr ""
 
 #. module: account_invoice_margin
 #: model:ir.model,name:account_invoice_margin.model_account_move_line
@@ -38,21 +38,27 @@ msgid "Journal Item"
 msgstr "Ecriture comptable"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_bank_statement_line__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_invoice_report__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move__margin
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move_line__margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_payment__margin
 msgid "Margin"
 msgstr "Marge"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_bank_statement_line__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move__margin_percent
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move_line__margin_percent
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_payment__margin_percent
 msgid "Margin (%)"
 msgstr "Marge (%)"
 
 #. module: account_invoice_margin
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_bank_statement_line__margin_signed
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move__margin_signed
 #: model:ir.model.fields,field_description:account_invoice_margin.field_account_move_line__margin_signed
+#: model:ir.model.fields,field_description:account_invoice_margin.field_account_payment__margin_signed
 msgid "Margin Signed"
 msgstr "Marge"
 
@@ -65,6 +71,9 @@ msgstr "Voir la marge sur les factures"
 #: model_terms:ir.ui.view,arch_db:account_invoice_margin.view_account_invoice_tree
 msgid "Total"
 msgstr "Total"
+
+#~ msgid "Journal Entries"
+#~ msgstr "Pièces comptables"
 
 #~ msgid "Invoice"
 #~ msgstr "Facture"
