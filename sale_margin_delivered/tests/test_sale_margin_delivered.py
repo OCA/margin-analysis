@@ -3,11 +3,14 @@
 
 from odoo.tests import Form, TransactionCase
 
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+
 
 class TestSaleMarginDelivered(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.SaleOrder = cls.env["sale.order"]
         cls.product_uom_id = cls.env.ref("uom.product_uom_unit")
         cls.product = cls.env["product.product"].create(
