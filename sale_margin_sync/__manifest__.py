@@ -3,7 +3,7 @@
 {
     "name": "Sale margin sync",
     "summary": "Recompute sale margin when stock move cost price is changed",
-    "version": "15.0.1.0.1",
+    "version": "15.0.1.0.2",
     "category": "Sales",
     "website": "https://github.com/OCA/margin-analysis",
     "author": "Tecnativa, Odoo Community Association (OCA)",
