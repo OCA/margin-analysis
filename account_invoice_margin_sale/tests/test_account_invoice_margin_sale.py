@@ -4,21 +4,14 @@
 
 from odoo.tests.common import TransactionCase
 
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+
 
 class TestAccountInvoiceMargin(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(
-            context=dict(
-                cls.env.context,
-                mail_create_nolog=True,
-                mail_create_nosubscribe=True,
-                mail_notrack=True,
-                no_reset_password=True,
-                tracking_disable=True,
-            )
-        )
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.journal = cls.env["account.journal"].create(
             {"name": "Test journal", "type": "sale", "code": "TEST_J"}
         )
