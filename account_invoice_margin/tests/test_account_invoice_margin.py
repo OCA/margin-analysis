@@ -10,8 +10,17 @@ class TestAccountInvoiceMargin(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestAccountInvoiceMargin, cls).setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.Product = cls.env["product.template"]
-
         cls.journal = cls.env["account.journal"].create(
             {"name": "Test journal", "type": "sale", "code": "TEST_J"}
         )
