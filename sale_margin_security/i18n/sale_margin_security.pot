@@ -14,13 +14,36 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_margin_security
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order_line__purchase_price
+msgid "Cost"
+msgstr ""
+
+#. module: sale_margin_security
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order__margin
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order_line__margin
 #: model:ir.model.fields,field_description:sale_margin_security.field_sale_report__margin
 msgid "Margin"
 msgstr ""
 
 #. module: sale_margin_security
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order__margin_percent
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order_line__margin_percent
+msgid "Margin (%)"
+msgstr ""
+
+#. module: sale_margin_security
 #: model:ir.model,name:sale_margin_security.model_sale_report
 msgid "Sales Analysis Report"
+msgstr ""
+
+#. module: sale_margin_security
+#: model:ir.model,name:sale_margin_security.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_margin_security
+#: model:ir.model,name:sale_margin_security.model_sale_order_line
+msgid "Sales Order Line"
 msgstr ""
 
 #. module: sale_margin_security
