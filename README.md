@@ -27,7 +27,7 @@ addon | version | maintainers | summary
 [product_standard_margin](product_standard_margin/) | 15.0.1.0.1 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Product Margin and Margin Rate
 [sale_elaboration_margin](sale_elaboration_margin/) | 15.0.2.0.0 |  | Compute elaboration margins in sale orders lines
 [sale_margin_delivered](sale_margin_delivered/) | 15.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Delivered
-[sale_margin_security](sale_margin_security/) | 15.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Security
+[sale_margin_security](sale_margin_security/) | 15.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Security
 [sale_margin_sync](sale_margin_sync/) | 15.0.1.0.2 |  | Recompute sale margin when stock move cost price is changed
 [sale_report_margin](sale_report_margin/) | 15.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Report Margin
 
