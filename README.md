@@ -28,7 +28,7 @@ addon | version | maintainers | summary
 [product_standard_margin](product_standard_margin/) | 16.0.1.0.1 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Product Margin and Margin Rate
 [sale_margin_delivered](sale_margin_delivered/) | 16.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Delivered
 [sale_margin_delivered_security](sale_margin_delivered_security/) | 16.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Glue module between sale margin delivered and sale margin security modules
-[sale_margin_security](sale_margin_security/) | 16.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Security
+[sale_margin_security](sale_margin_security/) | 16.0.2.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Security
 [sale_margin_sync](sale_margin_sync/) | 16.0.1.0.1 |  | Recompute sale margin when stock move cost price is changed
 [sale_report_margin](sale_report_margin/) | 16.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Report Margin
 
