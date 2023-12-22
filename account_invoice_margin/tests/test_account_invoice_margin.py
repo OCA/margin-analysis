@@ -61,16 +61,36 @@ class TestAccountInvoiceMargin(AccountTestInvoicingCommon):
             )
             .create(
                 {
-                    "refund_method": "refund",
                     "reason": "reason test create",
                     "journal_id": self.invoice.journal_id.id,
                 }
             )
         )
-        action = wiz.reverse_moves()
+        action = wiz.refund_moves()
         new_invoice = self.env["account.move"].browse(action["res_id"])
         self.assertEqual(new_invoice.invoice_line_ids.margin, 1000.00)
         self.assertEqual(new_invoice.invoice_line_ids.margin_signed, -1000.00)
+
+    def test_invoice_modify_moves(self):
+        self.invoice.action_post()
+        wiz = (
+            self.env["account.move.reversal"]
+            .with_context(
+                active_model="account.move",
+                active_ids=self.invoice.ids,
+                active_id=self.invoice.id,
+            )
+            .create(
+                {
+                    "reason": "reason test create",
+                    "journal_id": self.invoice.journal_id.id,
+                }
+            )
+        )
+        action = wiz.modify_moves()
+        new_invoice = self.env["account.move"].browse(action["res_id"])
+        self.assertEqual(new_invoice.invoice_line_ids.margin, 1000.00)
+        self.assertEqual(new_invoice.invoice_line_ids.margin_signed, 1000.00)
 
     def test_invoice_different_currency(self):
         company = self.env.company
