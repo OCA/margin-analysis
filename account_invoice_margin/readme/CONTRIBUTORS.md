@@ -8,3 +8,5 @@
   - Nedas Žilinskas
 - [Factor Libre](https://factorlibre.com):
   - Luis J. Salvatierra
+- [Komit](https://komit-consulting.com):
+  - Jean-Charles Drubay

@@ -15,7 +15,8 @@ COLUMNS = (
 )
 
 
-def pre_init_hook(cr):
+def pre_init_hook(env):
+    cr = env.cr
     for table, column in COLUMNS:
         if not column_exists(cr, table, column):
             _logger.info("Create column %s in database", column)
