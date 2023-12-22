@@ -17,9 +17,22 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: sale_margin_security
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order_line__purchase_price
+msgid "Cost"
+msgstr ""
+
+#. module: sale_margin_security
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order__margin
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order_line__margin
 #: model:ir.model.fields,field_description:sale_margin_security.field_sale_report__margin
 msgid "Margin"
 msgstr "Margen"
+
+#. module: sale_margin_security
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order__margin_percent
+#: model:ir.model.fields,field_description:sale_margin_security.field_sale_order_line__margin_percent
+msgid "Margin (%)"
+msgstr ""
 
 #. module: sale_margin_security
 #: model:ir.model,name:sale_margin_security.model_sale_report
@@ -27,9 +40,16 @@ msgid "Sales Analysis Report"
 msgstr "Informe de análisis de ventas"
 
 #. module: sale_margin_security
+#: model:ir.model,name:sale_margin_security.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_margin_security
+#: model:ir.model,name:sale_margin_security.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: sale_margin_security
 #: model:res.groups,name:sale_margin_security.group_sale_margin_security
 msgid "Show Sale Margin"
 msgstr "Mostrar Margen de Venta"
-
-#~ msgid "Sales Order Line"
-#~ msgstr "Línea de pedido de venta"
