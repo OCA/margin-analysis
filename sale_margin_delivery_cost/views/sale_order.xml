@@ -9,15 +9,15 @@
                     <field
                         name="other_cost_ids"
                         nolabel="1"
-                        mode="tree"
-                        attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                        mode="list"
+                        readonly="state in ('done', 'cancel')"
                     >
-                        <tree editable="bottom">
+                        <list editable="bottom">
                             <field name="product_id" />
                             <field name="name" />
                             <field name="price_unit" />
                             <field name="company_id" invisible="True" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
             </field>
