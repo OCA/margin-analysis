@@ -12,9 +12,7 @@ class SaleOrder(models.Model):
         "sale.order.other.cost",
         "order_id",
         string="Other Costs",
-        states={"cancel": [("readonly", True)], "done": [("readonly", True)]},
         copy=True,
-        auto_join=True,
     )
 
     @api.depends("order_line.margin", "amount_untaxed", "other_cost_ids.price_unit")
@@ -27,6 +25,7 @@ class SaleOrder(models.Model):
             order.margin_percent = (
                 order.amount_untaxed and order.margin / order.amount_untaxed
             )
+        return True
 
     def set_delivery_line(self, carrier, amount):
         # Using the UPDATE SHIPPING COST button sets an Other Costs line with the cost,
@@ -37,7 +36,7 @@ class SaleOrder(models.Model):
         # For "sale" charging policy, use standard logic - shipping as an SO line.
         # For "other" charging policy, set the delivery cost in the Other Costs field.
         if carrier.charge_policy == "sale":
-            super(SaleOrder, self).set_delivery_line(carrier, amount)
+            super().set_delivery_line(carrier, amount)
         else:
             for order in self:
                 order.carrier_id = carrier.id
@@ -45,9 +44,9 @@ class SaleOrder(models.Model):
                     lang=self.partner_id.lang
                 )
                 if carrier_with_partner_lang.product_id.description_sale:
-                    so_description = "%s: %s" % (
-                        carrier_with_partner_lang.name,
-                        carrier_with_partner_lang.product_id.description_sale,
+                    so_description = (
+                        f"{carrier_with_partner_lang.name}: "
+                        f"{carrier_with_partner_lang.product_id.description_sale}"
                     )
                 else:
                     so_description = carrier_with_partner_lang.name
