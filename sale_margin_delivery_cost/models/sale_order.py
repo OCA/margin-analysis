@@ -27,6 +27,7 @@ class SaleOrder(models.Model):
             order.margin_percent = (
                 order.amount_untaxed and order.margin / order.amount_untaxed
             )
+        return True
 
     def set_delivery_line(self, carrier, amount):
         # Using the UPDATE SHIPPING COST button sets an Other Costs line with the cost,
