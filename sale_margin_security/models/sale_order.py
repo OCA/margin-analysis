@@ -21,5 +21,5 @@ class SaleOrderLine(models.Model):
         groups="sale_margin_security.group_sale_margin_security"
     )
     purchase_price = fields.Float(
-        groups="sale_margin_security.group_sale_margin_security"
+        groups="sale_margin_security.group_sale_margin_security", copy=False
     )
