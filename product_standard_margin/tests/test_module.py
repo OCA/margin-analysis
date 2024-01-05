@@ -14,18 +14,19 @@ class TestModule(TransactionCase):
 
     # Custom Section
     def _create_product(self, model, standard_price, sale_price, sale_tax_ids):
+        vals = {
+            "name": "Demo Product",
+            "standard_price": standard_price,
+            "taxes_id": [(6, 0, sale_tax_ids)],
+        }
         if model == "product":
             ModelObj = self.ProductProduct
+            vals.update({"lst_price": sale_price})
         else:
             ModelObj = self.ProductTemplate
-        return ModelObj.create(
-            {
-                "name": "Demo Product",
-                "standard_price": standard_price,
-                "list_price": sale_price,
-                "taxes_id": [(6, 0, sale_tax_ids)],
-            }
-        )
+            vals.update({"list_price": sale_price})
+
+        return ModelObj.create(vals)
 
     # Test Section
     def test_01_classic_margin(self):
