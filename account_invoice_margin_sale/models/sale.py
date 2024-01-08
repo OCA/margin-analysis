@@ -10,5 +10,5 @@ class SaleOrderLine(models.Model):
 
     def _prepare_invoice_line(self, **optional_values):
         vals = super()._prepare_invoice_line(**optional_values)
-        vals["purchase_price"] = self.purchase_price
+        vals["purchase_price"] = self.sudo().purchase_price
         return vals
