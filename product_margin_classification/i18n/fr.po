@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-02 16:30+0000\n"
-"PO-Revision-Date: 2020-09-02 16:30+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2024-01-09 00:49+0000\n"
+"Last-Translator: kbentaleb <k.bentaleb@gmail.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: product_margin_classification
 #. odoo-python
@@ -33,7 +34,7 @@ msgstr "100 n'est pas un taux de marque valide."
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span class=\"o_stat_text\">Correct</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Correct</span>"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
@@ -43,17 +44,17 @@ msgstr ""
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span class=\"o_stat_text\">Products</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Produits</span>"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span class=\"o_stat_text\">Too Cheap</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Pas assez cher</span>"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "<span class=\"o_stat_text\">Too Priced</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Trop cher</span>"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
@@ -209,7 +210,7 @@ msgstr "Catégorie de marge de produit"
 #. module: product_margin_classification
 #: model:ir.model,name:product_margin_classification.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variantes de produit"
 
 #. module: product_margin_classification
 #: model:ir.actions.act_window,name:product_margin_classification.action_view_product_product_by_margin_classification
