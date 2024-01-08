@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-23 19:48+0000\n"
-"PO-Revision-Date: 2021-12-23 19:48+0000\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2024-01-09 00:49+0000\n"
+"Last-Translator: kbentaleb <k.bentaleb@gmail.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
@@ -50,7 +51,7 @@ msgstr "Article"
 #. module: product_standard_margin
 #: model:ir.model,name:product_standard_margin.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variantes de produit"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__list_price_vat_excl
