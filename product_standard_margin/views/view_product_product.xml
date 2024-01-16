@@ -13,8 +13,14 @@
                 position="after"
             >
                 <field name="standard_margin" widget="monetary" />
-                <field name="standard_margin_rate" />
-                <field name="standard_markup_rate" />
+                <label for="standard_margin_rate" string="Theorical Margin" />
+                <div name="standard_margin_rate">
+                    <field name="standard_margin_rate" class="oe_inline" /> %
+                </div>
+                <label for="standard_markup_rate" string="Theorical Markup" />
+                <div name="standard_markup_rate">
+                    <field name="standard_markup_rate" class="oe_inline" /> %
+                </div>
             </xpath>
         </field>
     </record>
@@ -28,8 +34,14 @@
             </field>
             <field name="standard_price" position="before">
                 <field name="standard_margin" widget="monetary" />
-                <field name="standard_margin_rate" />
-                <field name="standard_markup_rate" />
+                <label for="standard_margin_rate" string="Theorical Margin" />
+                <div name="standard_margin_rate">
+                    <field name="standard_margin_rate" class="oe_inline" /> %
+                </div>
+                <label for="standard_markup_rate" string="Theorical Markup" />
+                <div name="standard_markup_rate">
+                    <field name="standard_markup_rate" class="oe_inline" /> %
+                </div>
             </field>
         </field>
     </record>
