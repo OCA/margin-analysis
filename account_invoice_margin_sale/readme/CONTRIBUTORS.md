@@ -7,3 +7,5 @@
   - Daniel Reis \<<dreis@opensourceintegrators.com>\>
 - [Factor Libre](https://www.factorlibre.com):
   - Luis J. Salvatierra
+- [Avoin.Systems](https://avoin.systems/):
+  - Nedas Żilinskas
