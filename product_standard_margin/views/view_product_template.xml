@@ -14,14 +14,28 @@
                     widget="monetary"
                     attrs="{'invisible': [('product_variant_count', '>', 1)]}"
                 />
-                <field
+                <label
+                    for="standard_margin_rate"
+                    string="Theorical Margin"
+                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                />
+                <div
                     name="standard_margin_rate"
                     attrs="{'invisible': [('product_variant_count', '>', 1)]}"
-                />
-                <field
-                    name="standard_markup_rate"
+                >
+                    <field name="standard_margin_rate" class="oe_inline" /> %
+                </div>
+                <label
+                    for="standard_markup_rate"
+                    string="Theorical Markup"
                     attrs="{'invisible': [('product_variant_count', '>', 1)]}"
                 />
+                <div
+                    name="standard_markup_rate"
+                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                >
+                    <field name="standard_markup_rate" class="oe_inline" /> %
+                </div>
             </xpath>
         </field>
     </record>
