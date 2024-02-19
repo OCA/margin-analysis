@@ -1,0 +1,9 @@
+- [Tecnativa](https://www.tecnativa.com):
+  - Sergio Teruel
+  - Carlos Dauden
+  - Víctor Martínez
+- [Open Source Integrators](https://www.opensourceintegrators.com):
+  - Bhavesh Odedra
+  - Daniel Reis \<<dreis@opensourceintegrators.com>\>
+- [Factor Libre](https://www.factorlibre.com):
+  - Luis J. Salvatierra
