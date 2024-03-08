@@ -1,5 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
+# 	* sale_margin_delivered_security
 #
 msgid ""
 msgstr ""
@@ -11,3 +12,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sale_margin_delivered_security
+#: model:ir.model.fields,field_description:sale_margin_delivered_security.field_sale_order__margin_delivered
+msgid "Margin Delivered"
+msgstr ""
+
+#. module: sale_margin_delivered_security
+#: model:ir.model.fields,field_description:sale_margin_delivered_security.field_sale_order__margin_delivered_percent
+msgid "Margin Delivered Percent"
+msgstr ""
+
+#. module: sale_margin_delivered_security
+#: model:ir.model.fields,field_description:sale_margin_delivered_security.field_sale_order__purchase_price_delivery
+msgid "Purchase Price Delivery"
+msgstr ""
+
+#. module: sale_margin_delivered_security
+#: model:ir.model,name:sale_margin_delivered_security.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_margin_delivered_security
+#: model:ir.model.fields,field_description:sale_margin_delivered_security.field_sale_order__user_can_update_cost
+msgid "User Can Update Cost"
+msgstr ""
