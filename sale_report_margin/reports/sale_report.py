@@ -8,15 +8,19 @@ class SaleReport(models.Model):
     _inherit = "sale.report"
 
     purchase_price = fields.Float(string="Purchase Price", readonly=True)
+    purchase_price_total = fields.Float(string="Purchase Price Total", readonly=True)
 
     def _query(self, with_clause="", fields=None, groupby="", from_clause=""):
         if fields is None:
             fields = {}
         fields.update(
             {
-                "purchase_price": " ,SUM(l.purchase_price /"
+                "purchase_price": " ,AVG(l.purchase_price /"
                 " COALESCE(s.currency_rate, 1.0))"
-                "AS purchase_price"
+                "AS purchase_price",
+                "purchase_price_total": " ,SUM(l.purchase_price * l.product_uom_qty /"
+                " COALESCE(s.currency_rate, 1.0))"
+                "AS purchase_price_total"
             }
         )
         return super()._query(
