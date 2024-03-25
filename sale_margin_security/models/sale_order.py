@@ -5,21 +5,17 @@ from odoo import fields, models
 
 
 class SaleOrder(models.Model):
-    _inherit = "sale.order"
+    _name = "sale.order"
+    _inherit = ["sale.order", "product.cost.security.mixin"]
 
-    margin = fields.Monetary(groups="sale_margin_security.group_sale_margin_security")
-    margin_percent = fields.Float(
-        groups="sale_margin_security.group_sale_margin_security"
-    )
+    margin = fields.Monetary(groups="product_cost_security.group_product_cost")
+    margin_percent = fields.Float(groups="product_cost_security.group_product_cost")
 
 
 class SaleOrderLine(models.Model):
-    _inherit = "sale.order.line"
+    _name = "sale.order.line"
+    _inherit = ["sale.order.line", "product.cost.security.mixin"]
 
-    margin = fields.Float(groups="sale_margin_security.group_sale_margin_security")
-    margin_percent = fields.Float(
-        groups="sale_margin_security.group_sale_margin_security"
-    )
-    purchase_price = fields.Float(
-        groups="sale_margin_security.group_sale_margin_security"
-    )
+    margin = fields.Float(groups="product_cost_security.group_product_cost")
+    margin_percent = fields.Float(groups="product_cost_security.group_product_cost")
+    purchase_price = fields.Float(groups="product_cost_security.group_product_cost")
