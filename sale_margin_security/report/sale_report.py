@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class SaleReport(models.Model):
-    _inherit = "sale.report"
+    _name = "sale.report"
+    _inherit = ["sale.report", "product.cost.security.mixin"]
 
-    margin = fields.Float(groups="sale_margin_security.group_sale_margin_security")
+    margin = fields.Float(groups="product_cost_security.group_product_cost")
