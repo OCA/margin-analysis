@@ -43,6 +43,7 @@ def pre_init_hook(cr):
             FROM account_move_line
             INNER JOIN account_move
             ON account_move.id = account_move_line.move_id
+            WHERE account_move_line.exclude_from_invoice_tab = false
             GROUP BY account_move_line.move_id
         )
         UPDATE account_move
