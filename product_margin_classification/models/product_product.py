@@ -108,3 +108,16 @@ class Productproduct(models.Model):
     def use_theoretical_price(self):
         for product in self:
             product.lst_price = product.theoretical_price
+
+    def _apply_theoretical_price(self, state_list):
+        products = self.filtered(lambda x: x.margin_state in state_list)
+        products.use_theoretical_price()
+
+    def apply_theoretical_price(self):
+        self._apply_theoretical_price(["too_cheap", "too_expensive"])
+
+    def apply_theoretical_price_too_cheap(self):
+        self._apply_theoretical_price(["too_cheap"])
+
+    def apply_theoretical_price_too_expensive(self):
+        self._apply_theoretical_price(["too_expensive"])

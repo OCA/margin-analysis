@@ -173,17 +173,11 @@ class ProductMarginClassification(models.Model):
                 raise ValidationError(_("Price Rounding can not be null."))
 
     # Custom Section
-    def _apply_theoretical_price(self, state_list):
-        products = self.mapped("product_ids").filtered(
-            lambda x: x.margin_state in state_list
-        )
-        products.use_theoretical_price()
-
     def apply_theoretical_price(self):
-        self._apply_theoretical_price(["too_cheap", "too_expensive"])
+        self.product_ids.apply_theoretical_price()
 
     def apply_theoretical_price_too_cheap(self):
-        self._apply_theoretical_price(["too_cheap"])
+        self.product_ids.apply_theoretical_price_too_cheap()
 
     def apply_theoretical_price_too_expensive(self):
-        self._apply_theoretical_price(["too_expensive"])
+        self.product_ids.apply_theoretical_price_too_expensive()
