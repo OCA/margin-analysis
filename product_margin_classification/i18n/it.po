@@ -19,7 +19,6 @@ msgstr ""
 #. module: product_margin_classification
 #. odoo-python
 #: code:addons/product_margin_classification/models/product_margin_classification.py:0
-#: code:addons/product_margin_classification/models/product_margin_classification.py:0
 #, python-format
 msgid "-100 is not a valid Markup."
 msgstr "-100 non è un ricarico valido."
@@ -65,11 +64,17 @@ msgstr "<span>%</span>"
 #: model:ir.model.fields,help:product_margin_classification.field_product_margin_classification__profit_margin
 msgid ""
 "Also called 'Net margin' or 'Net Profit Ratio'.\n"
-"It is computed with the following formula Profit Margin = 100 * (Sale Price - Cost) / Sale Price"
+"It is computed with the following formula Profit Margin = 100 * (Sale Price "
+"- Cost) / Sale Price"
 msgstr ""
 "Chiamato anche 'Margine netto' o 'Rapporto profitto netto'.\n"
 "Viene calcolato con la seguente formula Margine profitto = 100 * (Prezzo di "
 "vendita - Costo) / Prezzo di vendita"
+
+#. module: product_margin_classification
+#: model:ir.actions.server,name:product_margin_classification.action_apply_theoretical_price_too_expensive
+msgid "Apply Down To Theoretical Price"
+msgstr ""
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_tree
@@ -77,9 +82,15 @@ msgid "Apply Margin"
 msgstr "Applica margine"
 
 #. module: product_margin_classification
+#: model:ir.actions.server,name:product_margin_classification.action_apply_theoretical_price
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "Apply Theoretical Price"
 msgstr "Applica prezzo teorico"
+
+#. module: product_margin_classification
+#: model:ir.actions.server,name:product_margin_classification.action_apply_theoretical_price_too_cheap
+msgid "Apply Up To Theoretical Price"
+msgstr ""
 
 #. module: product_margin_classification
 #: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__company_id
@@ -321,7 +332,8 @@ msgstr "Totale prodotti con il prezzo errato"
 #, python-format
 msgid ""
 "Unimplemented Feature\n"
-"The sale taxes are not correctly set for computing prices with coefficients for the product %s"
+"The sale taxes are not correctly set for computing prices with coefficients "
+"for the product %s"
 msgstr ""
 "Funzionalità non implementata\n"
 "Le tasse di vendita non sono impostate correttamente per il calcolo del "
@@ -335,13 +347,15 @@ msgstr "Fino al prezzo teorico"
 #. module: product_margin_classification
 #: model:ir.model.fields,help:product_margin_classification.field_product_margin_classification__markup
 msgid ""
-"Value that help you to compute the sale price, based on your cost, as defined: Sale Price = (Cost * (100 + Markup)) / 100\n"
-"It is computed with the following formula Markup = 100 * (Sale Price - Cost) / Cost"
+"Value that help you to compute the sale price, based on your cost, as "
+"defined: Sale Price = (Cost * (100 + Markup)) / 100\n"
+"It is computed with the following formula Markup = 100 * (Sale Price - "
+"Cost) / Cost"
 msgstr ""
 "Valore che aiuta a calcolare il prezzo di vendita, in base al costo, così "
 "definito: Prezzo di vendita = (Costo * (100 + Ricarico)) / 100\n"
-"Viene calcolato con la seguente formula Ricarico = 100 * (Prezzo di vendita -"
-" Costo) / Costo"
+"Viene calcolato con la seguente formula Ricarico = 100 * (Prezzo di vendita "
+"- Costo) / Costo"
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_form
