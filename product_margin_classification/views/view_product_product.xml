@@ -129,4 +129,33 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         </field>
     </record>
 
+    <record id="action_apply_theoretical_price" model="ir.actions.server">
+        <field name="name">Apply Theoretical Price</field>
+        <field name="groups_id" eval="[Command.link(ref('base.group_user'))]" />
+        <field name="model_id" ref="product.model_product_product" />
+        <field name="binding_model_id" ref="product.model_product_product" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.apply_theoretical_price()</field>
+    </record>
+
+    <record id="action_apply_theoretical_price_too_cheap" model="ir.actions.server">
+        <field name="name">Apply Up To Theoretical Price</field>
+        <field name="groups_id" eval="[Command.link(ref('base.group_user'))]" />
+        <field name="model_id" ref="product.model_product_product" />
+        <field name="binding_model_id" ref="product.model_product_product" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.apply_theoretical_price_too_cheap()</field>
+    </record>
+
+    <record id="action_apply_theoretical_price_too_expensive" model="ir.actions.server">
+        <field name="name">Apply Down To Theoretical Price</field>
+        <field name="groups_id" eval="[Command.link(ref('base.group_user'))]" />
+        <field name="model_id" ref="product.model_product_product" />
+        <field name="binding_model_id" ref="product.model_product_product" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.apply_theoretical_price_too_expensive()</field>
+    </record>
 </odoo>
