@@ -14,6 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_margin_delivered
+#: model:ir.model.fields,help:sale_margin_delivered.field_sale_order_line__purchase_price_delivery
+msgid ""
+"Average Unit Cost of delivered products.\n"
+"\n"
+"Formula: Value Delivered / Quantity Delivered"
+msgstr ""
+
+#. module: sale_margin_delivered
 #: model_terms:ir.ui.view,arch_db:sale_margin_delivered.view_order_form
 msgid "Cost Price dlvd."
 msgstr ""
@@ -40,6 +48,14 @@ msgid "Margin dlvd. (%)"
 msgstr ""
 
 #. module: sale_margin_delivered
+#: model:ir.model.fields,help:sale_margin_delivered.field_sale_order_line__margin_delivered_percent
+msgid ""
+"Margin percent between the Unit Price with discounts and Delivered Unit Cost.\n"
+"\n"
+"Formula: (Margin Dlvd. / Unit Price with Discounts) * 100.0"
+msgstr ""
+
+#. module: sale_margin_delivered
 #: model:ir.model.fields,field_description:sale_margin_delivered.field_sale_order_line__purchase_price_delivery
 msgid "Purchase Price Delivery"
 msgstr ""
@@ -52,4 +68,12 @@ msgstr ""
 #. module: sale_margin_delivered
 #: model:ir.model,name:sale_margin_delivered.model_sale_order_line
 msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_margin_delivered
+#: model:ir.model.fields,help:sale_margin_delivered.field_sale_order_line__margin_delivered
+msgid ""
+"Total Margin of all delivered products.\n"
+"\n"
+"Formula: Delivered Quantities * (Unit Price with Discounts - Average Unit Cost of Delivered Products)"
 msgstr ""
