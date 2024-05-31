@@ -92,6 +92,9 @@ Contributors
   * Carlos Roca
   * Pilar Vargas
 
+* Eduardo de Miguel (`Moduon <https://www.moduon.team/>`__)
+* Rafael Blasco (`Moduon <https://www.moduon.team/>`__)
+
 Maintainers
 ~~~~~~~~~~~
 
