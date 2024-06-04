@@ -7,22 +7,34 @@ from odoo import api, fields, models, tools
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    margin_delivered = fields.Float(compute="_compute_margin_delivered", store=True)
+    margin_delivered = fields.Float(
+        compute="_compute_margin_delivered",
+        store=True,
+        help="Total Margin of all delivered products.\n\n"
+        "Formula: Delivered Quantities * (Unit Price with Discounts - "
+        "Average Unit Cost of Delivered Products)",
+    )
     margin_delivered_percent = fields.Float(
         compute="_compute_margin_delivered",
         store=True,
         readonly=True,
+        help="Margin percent between the Unit Price with discounts and "
+        "Delivered Unit Cost.\n\n"
+        "Formula: (Margin Dlvd. / Unit Price with Discounts) * 100.0",
     )
     purchase_price_delivery = fields.Float(
         compute="_compute_margin_delivered",
         store=True,
+        help="Average Unit Cost of delivered products.\n\n"
+        "Formula: Value Delivered / Quantity Delivered",
     )
 
     @api.depends(
         "margin",
         "qty_delivered",
         "product_uom_qty",
-        "move_ids.stock_valuation_layer_ids.unit_cost",
+        "move_ids.stock_valuation_layer_ids.value",
+        "move_ids.stock_valuation_layer_ids.quantity",
     )
     def _compute_margin_delivered(self):
         digits = self.env["decimal.precision"].precision_get("Product Price")
@@ -39,7 +51,6 @@ class SaleOrderLine(models.Model):
                 line.purchase_price_delivery = price
                 continue
             else:
-                cost_price = 0.0
                 moves = line.move_ids.filtered(
                     lambda x: (
                         x.state == "done"
@@ -49,20 +60,18 @@ class SaleOrderLine(models.Model):
                         )
                     )
                 )
-                for move in moves:
-                    # In v12.0 price unit was negative for incomming moves, in
-                    # v13.0 price unit is positive in stock valuation layer model
-                    cost = move.stock_valuation_layer_ids[:1].unit_cost
-                    if move.to_refund:
-                        cost = -cost
-                    cost_price += move.product_qty * cost
-                average_price = (
-                    abs(cost_price) / line.qty_delivered
-                ) or line.purchase_price
-                line.purchase_price_delivery = tools.float_round(
-                    average_price, precision_digits=digits
+                # Qty and Value Delivered is negative when outgoing
+                value_delivered = sum(moves.mapped("stock_valuation_layer_ids.value"))
+                qty_delivered = (
+                    sum(moves.mapped("stock_valuation_layer_ids.quantity"))
+                    or -line.qty_delivered
                 )
-                line.margin_delivered = line.qty_delivered * (
+                # purchase_price_delivery always will be positive because division of same signs
+                line.purchase_price_delivery = tools.float_round(
+                    value_delivered / qty_delivered, precision_digits=digits
+                )
+                # Inverse qty_delivered because outgoing quantities are negative
+                line.margin_delivered = -qty_delivered * (
                     line.price_reduce - line.purchase_price_delivery
                 )
             # compute percent margin based on delivered quantities or ordered
