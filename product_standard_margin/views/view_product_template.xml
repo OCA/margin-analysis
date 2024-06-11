@@ -12,15 +12,15 @@
                 <field
                     name="standard_margin"
                     widget="monetary"
-                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                    invisible="product_variant_count > 1"
                 />
                 <field
                     name="standard_margin_rate"
-                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                    invisible="product_variant_count > 1"
                 />
                 <field
                     name="standard_markup_rate"
-                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                    invisible="product_variant_count > 1"
                 />
             </xpath>
         </field>
@@ -33,17 +33,17 @@
                 <field
                     name="standard_margin"
                     widget="monetary"
-                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                    invisible="product_variant_count > 1"
                     optional="hide"
                 />
                 <field
                     name="standard_margin_rate"
-                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                    invisible="product_variant_count > 1"
                     optional="hide"
                 />
                 <field
                     name="standard_markup_rate"
-                    attrs="{'invisible': [('product_variant_count', '>', 1)]}"
+                    invisible="product_variant_count > 1"
                     optional="hide"
                 />
             </xpath>

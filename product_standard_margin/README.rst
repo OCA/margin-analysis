@@ -88,6 +88,7 @@ Contributors
 -  Joël Grand-Guillaume <joel.grand-guillaume@camptocamp.com>
 -  Sylvain Le Gal (https://twitter.com/legalsylvain)
 -  Cyril Vinh-Tung <cyril@invitu.com>
+-  Do Anh Duy <duyda@trobz.com>
 
 Maintainers
 -----------

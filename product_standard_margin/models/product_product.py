@@ -60,9 +60,10 @@ class ProductProduct(models.Model):
         "taxes_id.include_base_amount",
     )
     def _compute_margin(self):
+        currency = self.env.company.currency_id
         for product in self:
             product.list_price_vat_excl = product.taxes_id.compute_all(
-                product.lst_price, product=product
+                product.lst_price, currency=currency, product=product
             )["total_excluded"]
             product.standard_margin = (
                 product.list_price_vat_excl - product.standard_price

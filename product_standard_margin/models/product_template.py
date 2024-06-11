@@ -58,9 +58,10 @@ class ProductTemplate(models.Model):
         # The code is duplicated from product.product model
         # because otherwise, the recomputation is not done correctly
         # when the product datas are changed from the template view
+        currency = self.env.company.currency_id
         for template in self:
             template.list_price_vat_excl = template.taxes_id.compute_all(
-                template.list_price, product=template
+                template.list_price, currency=currency, product=template
             )["total_excluded"]
             template.standard_margin = (
                 template.list_price_vat_excl - template.standard_price
