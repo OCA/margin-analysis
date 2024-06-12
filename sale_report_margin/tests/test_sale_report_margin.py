@@ -36,7 +36,7 @@ class TestSaleReportMargin(TransactionCase):
         order.action_confirm()
         report = self.env["sale.report"].search(
             [
-                ("order_id", "=", order.id),
+                ("order_reference", "=", f"{order._name},{order.id}"),
                 ("product_id", "=", self.product_product.id),
             ]
         )

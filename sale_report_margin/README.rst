@@ -75,6 +75,8 @@ Contributors
       -  David Vidal
       -  Carlos Roca
 
+-  SodexisTeam <dev@sodexis.com>
+
 Maintainers
 -----------
 
