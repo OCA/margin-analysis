@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 class TestSaleReportMargin(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestSaleReportMargin, cls).setUpClass()
+        super().setUpClass()
         cls.product_product = cls.env["product.product"].create(
             {"name": "Product Test"}
         )
