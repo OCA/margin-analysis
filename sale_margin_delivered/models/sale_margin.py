@@ -12,7 +12,8 @@ class SaleOrderLine(models.Model):
         store=True,
         help="Total Margin of all delivered products.\n\n"
         "Formula: Delivered Quantities * (Unit Price with Discounts - "
-        "Average Unit Cost of Delivered Products)",
+        "Average Unit Cost of Delivered Products)\n\nValue may differ from "
+        "Cost Price because Stock Valuation Layers are used instead of Cost on line.",
     )
     margin_delivered_percent = fields.Float(
         compute="_compute_margin_delivered",
@@ -20,7 +21,8 @@ class SaleOrderLine(models.Model):
         readonly=True,
         help="Margin percent between the Unit Price with discounts and "
         "Delivered Unit Cost.\n\n"
-        "Formula: (Margin Dlvd. / Unit Price with Discounts) * 100.0",
+        "Formula: ((Unit Price with Discounts - Average Unit Cost of "
+        "delivered products) / Unit Price with Discounts) * 100.0",
     )
     purchase_price_delivery = fields.Float(
         compute="_compute_margin_delivered",
