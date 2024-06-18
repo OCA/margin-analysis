@@ -72,6 +72,10 @@ class SaleOrderLine(models.Model):
         self.margin_delivered_percent = 0.0
         self.purchase_price_delivery = 0.0
         for line in self.filtered("qty_delivered"):
+            # we need to compute the price reduce to avoid rounding issues
+            # the one stored in the line is rounded to the product price precision
+            price_reduce_taxexcl = line.price_subtotal / line.product_uom_qty
+
             if line.product_id.type != "product":
                 currency = line.order_id.pricelist_id.currency_id
                 price = line.purchase_price
@@ -91,13 +95,13 @@ class SaleOrderLine(models.Model):
                 )
                 # Inverse qty_delivered because outgoing quantities are negative
                 line.margin_delivered = -qty_delivered * (
-                    line.price_reduce - line.purchase_price_delivery
+                    price_reduce_taxexcl - line.purchase_price_delivery
                 )
             # compute percent margin based on delivered quantities or ordered
             # quantities
-            if line.price_reduce:
+            if price_reduce_taxexcl:
                 line.margin_delivered_percent = (
-                    (line.price_reduce - line.purchase_price_delivery)
-                    / line.price_reduce
+                    (price_reduce_taxexcl - line.purchase_price_delivery)
+                    / price_reduce_taxexcl
                     * 100.0
                 )
