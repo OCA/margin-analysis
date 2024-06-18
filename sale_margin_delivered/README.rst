@@ -30,10 +30,22 @@ Sale Margin Delivered
 
 Computes sale order lines margins for the delivered items.
 
+This module takes in consideration Outgoing and Returns.
+
 **Table of contents**
 
 .. contents::
    :local:
+
+Use Cases / Context
+===================
+
+This module has been developed to be able to show delivered margins on sale order lines.
+
+If you need this module for those reasons, these might interest you too:
+
+- sale_margin_delivered_dropshipping
+- sale_report_delivered
 
 Configuration
 =============
@@ -111,10 +123,13 @@ promote its widespread use.
 .. |maintainer-sergio-teruel| image:: https://github.com/sergio-teruel.png?size=40px
     :target: https://github.com/sergio-teruel
     :alt: sergio-teruel
+.. |maintainer-Shide| image:: https://github.com/Shide.png?size=40px
+    :target: https://github.com/Shide
+    :alt: Shide
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-sergio-teruel| 
+|maintainer-sergio-teruel| |maintainer-Shide| 
 
 This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/16.0/sale_margin_delivered>`_ project on GitHub.
 

@@ -11,5 +11,5 @@
     "data": ["views/sale_margin_delivered_view.xml"],
     "installable": True,
     "development_status": "Production/Stable",
-    "maintainers": ["sergio-teruel"],
+    "maintainers": ["sergio-teruel", "Shide"],
 }
