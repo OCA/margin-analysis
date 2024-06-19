@@ -16,6 +16,8 @@
                     name="margin_delivered_percent"
                     string="Margin dlvd. (%)"
                     optional="hide"
+                    attrs="{'invisible': [('price_subtotal', '=', 0)]}"
+                    widget="percentage"
                 />
                 <field name="margin_delivered" string="Margin dlvd." optional="hide" />
             </xpath>
