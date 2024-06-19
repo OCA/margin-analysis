@@ -1,6 +1,6 @@
-=====================
-Sale Margin Delivered
-=====================
+==================================
+Sale Margin Delivered Dropshipping
+==================================
 
 .. 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -10,17 +10,17 @@ Sale Margin Delivered
    !! source digest: sha256:5a597b346c2f49f2ccba1b1f44ed58c0c66d0bf10be25e6e8aeb9c56e4674328
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Production/Stable
+    :alt: Alpha
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github
-    :target: https://github.com/OCA/margin-analysis/tree/16.0/sale_margin_delivered
+    :target: https://github.com/OCA/margin-analysis/tree/16.0/sale_margin_delivered_dropshipping
     :alt: OCA/margin-analysis
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/margin-analysis-16-0/margin-analysis-16-0-sale_margin_delivered
+    :target: https://translation.odoo-community.org/projects/margin-analysis-16-0/margin-analysis-16-0-sale_margin_delivered_dropshipping
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
     :target: https://runboat.odoo-community.org/builds?repo=OCA/margin-analysis&target_branch=16.0
@@ -30,28 +30,27 @@ Sale Margin Delivered
 
 Computes sale order lines margins for the delivered items.
 
-This module takes in consideration Outgoing and Returns.
+This module takes in consideration Outgoing, Returns and Dropship.
+
+.. IMPORTANT::
+   This is an alpha version, the data model and design can change at any time without warning.
+   Only for development or testing purpose, do not use in production.
+   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 
 .. contents::
    :local:
 
-Use Cases / Context
-===================
-
-This module has been developed to be able to show delivered margins on sale order lines.
-
-If you need this module for those reasons, these might interest you too:
-
-- sale_margin_delivered_dropshipping
-- sale_report_delivered
-
 Configuration
 =============
 
-To grant Sales Margin view privileges to a user, go to *Settings > Users &
-Companies > Users*, select the user and set *Show Sale Margin* on.
+#. To grant Sales Margin view privileges to a user, go to *Settings > Users &
+   Companies > Users*, select the user and set *Show Sale Margin* on.
+#. Go to *Settings > Purchase > Logistics* and activate *Dropshipping*.
+#. Configure Dropship Product: Create or Edit an Storable product,
+   activate Dropship route on *Inventory Tab > Routes* and
+   add a Product Supplierinfo under *Purchase tab > Vendors*.
 
 Usage
 =====
@@ -81,7 +80,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/margin-analysis/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20sale_margin_delivered%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20sale_margin_delivered_dropshipping%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -91,18 +90,10 @@ Credits
 Authors
 ~~~~~~~
 
-* Tecnativa
+* Moduon
 
 Contributors
 ~~~~~~~~~~~~
-
-
-* `Tecnativa <https://www.tecnativa.com>`_:
-
-  * Sergio Teruel
-  * David Vidal
-  * Carlos Roca
-  * Pilar Vargas
 
 * Eduardo de Miguel (`Moduon <https://www.moduon.team/>`__)
 * Rafael Blasco (`Moduon <https://www.moduon.team/>`__)
@@ -120,17 +111,14 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-sergio-teruel| image:: https://github.com/sergio-teruel.png?size=40px
-    :target: https://github.com/sergio-teruel
-    :alt: sergio-teruel
 .. |maintainer-Shide| image:: https://github.com/Shide.png?size=40px
     :target: https://github.com/Shide
     :alt: Shide
 
-Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-sergio-teruel| |maintainer-Shide| 
+|maintainer-Shide| 
 
-This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/16.0/sale_margin_delivered>`_ project on GitHub.
+This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/16.0/sale_margin_delivered_dropshipping>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

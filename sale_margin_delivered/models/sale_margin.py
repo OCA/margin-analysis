@@ -28,8 +28,32 @@ class SaleOrderLine(models.Model):
         compute="_compute_margin_delivered",
         store=True,
         help="Average Unit Cost of delivered products.\n\n"
-        "Formula: Value Delivered / Quantity Delivered",
+        "Formula: Value Delivered / Quantity Delivered\n\n"
+        "When using the FIFO method, the value of this field may not match the "
+        "actual cost of the product delivered.\n"
+        "There may also be differences with the costing of the Sales from "
+        "Deliveries report, because when the sales order is created, it is not known "
+        "exactly which units will actually be delivered to calculate their cost.\n"
+        "This is because when the sales order is created, it is not known which "
+        "units will actually be delivered to calculate their actual cost. You do not "
+        "have this information until you validate the corresponding delivery note.",
     )
+
+    def _get_delivered_margin_valuation_layers(self):
+        """Gets all Valuation Layers that should be considered for
+        Delivered Margin calculation."""
+        self.ensure_one()
+        valuation_layers = self.env["stock.valuation.layer"]
+        for move in self.move_ids.filtered(lambda m: m.state == "done"):
+            if move.picking_code == "outgoing":
+                # Outgoing moves have 1 valuation layer and are always negative
+                valuation_layers |= move.stock_valuation_layer_ids
+            elif move.picking_code == "incoming" and move.to_refund:
+                # Incoming moves have 2 valuation layers. Use positive one
+                valuation_layers |= move.stock_valuation_layer_ids.filtered(
+                    lambda vl: vl.quantity > 0
+                )
+        return valuation_layers
 
     @api.depends(
         "margin",
@@ -39,6 +63,10 @@ class SaleOrderLine(models.Model):
         "move_ids.stock_valuation_layer_ids.quantity",
     )
     def _compute_margin_delivered(self):
+        """Computes the Delivered Margin of the Lines.
+
+        It is calculated based on the Valuation Layers of each Line.
+        """
         digits = self.env["decimal.precision"].precision_get("Product Price")
         self.margin_delivered = 0.0
         self.margin_delivered_percent = 0.0
@@ -51,22 +79,11 @@ class SaleOrderLine(models.Model):
                     line.price_subtotal - (price * line.qty_delivered)
                 )
                 line.purchase_price_delivery = price
-                continue
             else:
-                moves = line.move_ids.filtered(
-                    lambda x: (
-                        x.state == "done"
-                        and (
-                            x.picking_code == "outgoing"
-                            or (x.picking_code == "incoming" and x.to_refund)
-                        )
-                    )
-                )
-                # Qty and Value Delivered is negative when outgoing
-                value_delivered = sum(moves.mapped("stock_valuation_layer_ids.value"))
+                valuation_layers = line._get_delivered_margin_valuation_layers()
+                value_delivered = sum(valuation_layers.mapped("value"))
                 qty_delivered = (
-                    sum(moves.mapped("stock_valuation_layer_ids.quantity"))
-                    or -line.qty_delivered
+                    sum(valuation_layers.mapped("quantity")) or -line.qty_delivered
                 )
                 # purchase_price_delivery always will be positive because division of same signs
                 line.purchase_price_delivery = tools.float_round(
