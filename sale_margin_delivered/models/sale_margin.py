@@ -22,7 +22,7 @@ class SaleOrderLine(models.Model):
         help="Margin percent between the Unit Price with discounts and "
         "Delivered Unit Cost.\n\n"
         "Formula: ((Unit Price with Discounts - Average Unit Cost of "
-        "delivered products) / Unit Price with Discounts) * 100.0",
+        "delivered products) / Unit Price with Discounts)",
     )
     purchase_price_delivery = fields.Float(
         compute="_compute_margin_delivered",
@@ -101,7 +101,5 @@ class SaleOrderLine(models.Model):
             # quantities
             if price_reduce_taxexcl:
                 line.margin_delivered_percent = (
-                    (price_reduce_taxexcl - line.purchase_price_delivery)
-                    / price_reduce_taxexcl
-                    * 100.0
-                )
+                    price_reduce_taxexcl - line.purchase_price_delivery
+                ) / price_reduce_taxexcl
