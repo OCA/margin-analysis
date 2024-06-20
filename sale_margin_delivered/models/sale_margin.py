@@ -74,7 +74,11 @@ class SaleOrderLine(models.Model):
         for line in self.filtered("qty_delivered"):
             # we need to compute the price reduce to avoid rounding issues
             # the one stored in the line is rounded to the product price precision
-            price_reduce_taxexcl = line.price_subtotal / line.product_uom_qty
+            price_reduce_taxexcl = (
+                line.price_subtotal / line.product_uom_qty
+                if line.product_uom_qty
+                else 0.0
+            )
 
             if line.product_id.type != "product":
                 currency = line.order_id.pricelist_id.currency_id
