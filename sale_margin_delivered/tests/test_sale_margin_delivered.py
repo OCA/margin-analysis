@@ -91,7 +91,7 @@ class TestSaleMarginDelivered(TransactionCase):
         picking._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 30.0)
-        self.assertEqual(order_line.margin_delivered_percent, 50.0)
+        self.assertEqual(order_line.margin_delivered_percent, 0.5)
         self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)
 
     def test_sale_margin_delivered_excess(self):
@@ -104,7 +104,7 @@ class TestSaleMarginDelivered(TransactionCase):
         picking._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 120.0)
-        self.assertEqual(order_line.margin_delivered_percent, 50.0)
+        self.assertEqual(order_line.margin_delivered_percent, 0.5)
         self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)
 
     def test_sale_margin_zero(self):
@@ -142,7 +142,7 @@ class TestSaleMarginDelivered(TransactionCase):
         picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 30.0)
-        self.assertEqual(order_line.margin_delivered_percent, 50.0)
+        self.assertEqual(order_line.margin_delivered_percent, 0.5)
         self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)
 
     def test_sale_margin_delivered_return_to_refund_excess(self):
@@ -155,7 +155,7 @@ class TestSaleMarginDelivered(TransactionCase):
         picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 90.0)
-        self.assertEqual(order_line.margin_delivered_percent, 50.0)
+        self.assertEqual(order_line.margin_delivered_percent, 0.5)
         self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)
 
     def test_sale_margin_delivered_return_no_refund(self):
@@ -168,7 +168,7 @@ class TestSaleMarginDelivered(TransactionCase):
         picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 60.0)
-        self.assertEqual(order_line.margin_delivered_percent, 50.0)
+        self.assertEqual(order_line.margin_delivered_percent, 0.5)
         self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)
 
     def test_sale_margin_delivered_return_no_refund_excess(self):
@@ -181,5 +181,40 @@ class TestSaleMarginDelivered(TransactionCase):
         picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 120.0)
-        self.assertEqual(order_line.margin_delivered_percent, 50.0)
+        self.assertEqual(order_line.margin_delivered_percent, 0.5)
+        self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)
+
+    def test_sale_margin_delivered_precision(self):
+        self.product.standard_price = 10.30
+        self.product.list_price = 20.17
+        sale_order = self._new_sale_order()
+        sale_order.order_line[:1].discount = 17.0
+        sale_order.action_confirm()
+        picking = sale_order.picking_ids
+        picking.action_assign()
+        picking.move_line_ids.qty_done = 6.0
+        picking._action_done()
+        order_line = sale_order.order_line[:1]
+        # price_subtotal is rounded
+        self.assertEqual(order_line.price_subtotal, 100.45)
+        # the unit reduce price will be computed as 100.45 / 6 = 16.741666666666667
+        # it should not be rounded to 16.74
+        # margin_delivered: round(6 * ((100.45 /6) - 10.30)) != round(6 * (16.74 - 10.30))
+        self.assertEqual(order_line.margin_delivered, 38.65)
+        self.assertAlmostEqual(order_line.margin_delivered_percent, 0.38476854156296)
+        self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)
+
+    def test_sale_margin_no_cost(self):
+        self.product.standard_price = 0.0
+        self.product.list_price = 20
+        sale_order = self._new_sale_order()
+        sale_order.action_confirm()
+        picking = sale_order.picking_ids
+        picking.action_assign()
+        picking.move_line_ids.qty_done = 6.0
+        picking._action_done()
+        order_line = sale_order.order_line[:1]
+        # price_subtotal is rounded
+        self.assertEqual(order_line.margin_delivered, 120)
+        self.assertAlmostEqual(order_line.margin_delivered_percent, 1)
         self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)

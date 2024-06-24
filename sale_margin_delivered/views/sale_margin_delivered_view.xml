@@ -6,7 +6,7 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='margin']" position="after">
+            <xpath expr="//field[@name='margin_percent']" position="after">
                 <field
                     name="purchase_price_delivery"
                     string="Cost Price dlvd."
@@ -16,6 +16,8 @@
                     name="margin_delivered_percent"
                     string="Margin dlvd. (%)"
                     optional="hide"
+                    attrs="{'invisible': [('price_subtotal', '=', 0)]}"
+                    widget="percentage"
                 />
                 <field name="margin_delivered" string="Margin dlvd." optional="hide" />
             </xpath>

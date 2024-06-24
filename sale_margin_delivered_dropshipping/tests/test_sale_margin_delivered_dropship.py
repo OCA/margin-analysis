@@ -48,5 +48,5 @@ class TestSaleMarginDeliveredDropship(TestSaleMarginDelivered):
         picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 30.0)
-        self.assertEqual(order_line.margin_delivered_percent, 50.0)
+        self.assertEqual(order_line.margin_delivered_percent, 0.5)
         self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)
