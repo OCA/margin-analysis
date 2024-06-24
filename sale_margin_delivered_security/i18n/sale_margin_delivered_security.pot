@@ -40,7 +40,7 @@ msgstr ""
 msgid ""
 "Margin percent between the Unit Price with discounts and Delivered Unit Cost.\n"
 "\n"
-"Formula: ((Unit Price with Discounts - Average Unit Cost of delivered products) / Unit Price with Discounts) * 100.0"
+"Formula: ((Unit Price with Discounts - Average Unit Cost of delivered products) / Unit Price with Discounts)"
 msgstr ""
 
 #. module: sale_margin_delivered_security
