@@ -75,6 +75,7 @@ Contributors
   * Sergio Teruel
   * Carlos Dauden
   * Víctor Martínez
+  * Carolina Fernandez
 
 * `Open Source Integrators <https://www.opensourceintegrators.com>`__:
 
