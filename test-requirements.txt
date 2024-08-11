@@ -1,0 +1,1 @@
+odoo-addon-product-cost-security @ git+https://github.com/OCA/product-attribute.git@refs/pull/1596/head#subdirectory=product_cost_security
