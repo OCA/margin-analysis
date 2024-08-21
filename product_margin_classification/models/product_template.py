@@ -35,9 +35,9 @@ class ProductTemplate(models.Model):
     )
 
     def _get_related_fields_variant_template(self):
-        res = super()._get_related_fields_variant_template()
-        res.append("margin_classification_id")
-        return res
+        fields = super()._get_related_fields_variant_template()
+        fields.append("margin_classification_id")
+        return fields
 
     @api.onchange(
         "standard_price", "taxes_id", "margin_classification_id", "list_price"

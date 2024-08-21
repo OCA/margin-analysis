@@ -24,5 +24,5 @@
         "demo/product_margin_classification.xml",
         "demo/product_product.xml",
     ],
-    "installable": False,
+    "installable": True,
 }

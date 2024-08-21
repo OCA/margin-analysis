@@ -25,13 +25,13 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     name="lst_price"
                     widget="monetary"
                     options="{'currency_field': 'currency_id', 'field_digits': True}"
-                    attrs="{'readonly': [('product_variant_count', '&gt;', 1)]}"
+                   readonly="product_variant_count &gt; 1"
                 />
                 <field
                     name="theoretical_price"
                     widget="monetary"
                     options="{'currency_field': 'currency_id', 'field_digits': True}"
-                    attrs="{'invisible': [('theoretical_difference', '=', 0)]}"
+                    invisible="theoretical_difference == 0"
                 />
                 <field name="margin_state" />
                 <button
@@ -39,7 +39,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     type="object"
                     string="Apply Margin"
                     icon="fa-arrow-up"
-                    attrs="{'invisible': [('margin_state', '!=', 'too_cheap')]}"
+                    invisible="margin_state != 'too_cheap'"
                     help="Increase the Sale Price up to Theoretical Price"
                 />
                 <button
@@ -47,7 +47,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     type="object"
                     string="Apply Margin"
                     icon="fa-arrow-down"
-                    attrs="{'invisible': [('margin_state', '!=', 'too_expensive')]}"
+                    invisible="margin_state != 'too_expensive'"
                     help="Decrease the Sale Price down to Theoretical Price"
                 />
                 <field
@@ -101,18 +101,15 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="arch" type="xml">
             <label for="lst_price" position="before">
                 <field name="margin_classification_id" />
-                <label
-                    for="theoretical_price"
-                    attrs="{'invisible': [('margin_state', '=', 'correct')]}"
-                />
-                <div attrs="{'invisible': [('margin_state', '=', 'correct')]}">
+                <label for="theoretical_price" invisible="margin_state == 'correct'" />
+                <div invisible="margin_state ==  'correct'">
                     <field name="theoretical_price" class="oe_inline" />
                     <button
                         name="use_theoretical_price"
                         string="⇒ Increase Price"
                         type="object"
                         class="oe_link"
-                        attrs="{'invisible': [('margin_state', '!=', 'too_cheap')]}"
+                        invisible="margin_state != 'too_cheap'"
                         help="Increase the Sale Price up to Theoretical Price"
                     />
                     <button
@@ -120,7 +117,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         string="⇒ Decrease Price"
                         type="object"
                         class="oe_link"
-                        attrs="{'invisible': [('margin_state', '!=', 'too_expensive')]}"
+                        invisible="margin_state != 'too_expensive'"
                         help="Decrease the Sale Price down to Theoretical Price"
                     />
                 </div>

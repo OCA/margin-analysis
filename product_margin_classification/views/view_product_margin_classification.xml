@@ -41,19 +41,19 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         type="object"
                         string="Apply Theoretical Price"
                         class="btn-primary"
-                        attrs="{'invisible': [('product_incorrect_price_qty', '=', 0)]}"
+                        invisible="product_incorrect_price_qty == 0"
                     />
                     <button
                         name="apply_theoretical_price_too_cheap"
                         type="object"
                         string="Up to Theoretical Price"
-                        attrs="{'invisible': [('product_too_cheap_qty', '=', 0)]}"
+                        invisible="product_too_cheap_qty == 0"
                     />
                     <button
                         name="apply_theoretical_price_too_expensive"
                         type="object"
                         string="Down to Theoretical Price"
-                        attrs="{'invisible': [('product_too_expensive_qty', '=', 0)]}"
+                        invisible="product_too_expensive_qty == 0"
                     />
                 </header>
 
@@ -66,7 +66,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                             class="oe_stat_button"
                             icon="fa-list"
                             context="{'search_default_margin_classification_id': active_id}"
-                            attrs="{'invisible': [('product_qty', '=', 0)]}"
+                            invisible="product_qty == 0"
                         >
                             <div class="o_form_field o_stat_info">
                                 <span class="o_stat_value">
@@ -83,7 +83,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                             icon="fa-check-square"
                             context="{'search_default_margin_classification_id': active_id,
                                 'search_default_filter_margin_correct': True}"
-                            attrs="{'invisible': [('product_correct_price_qty', '=', 0)]}"
+                            invisible="product_correct_price_qty == 0"
                         >
                             <div class="o_form_field o_stat_info">
                                 <span class="o_stat_value">
@@ -100,7 +100,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                             icon="fa-square"
                             context="{'search_default_margin_classification_id': active_id,
                                 'search_default_filter_margin_incorrect': True}"
-                            attrs="{'invisible': [('product_incorrect_price_qty', '=', 0)]}"
+                            invisible="product_incorrect_price_qty == 0"
                         >
                             <div class="o_form_field o_stat_info">
                                 <span class="o_stat_value">
@@ -117,7 +117,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                             icon="fa-minus-square"
                             context="{'search_default_margin_classification_id': active_id,
                                 'search_default_filter_margin_too_cheap': True}"
-                            attrs="{'invisible': [('product_too_cheap_qty', '=', 0)]}"
+                             invisible="product_too_cheap_qty == 0"
                         >
                             <div class="o_form_field o_stat_info">
                                 <span class="o_stat_value">
@@ -134,7 +134,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                             icon="fa-plus-square"
                             context="{'search_default_margin_classification_id': active_id,
                                 'search_default_filter_margin_too_expensive': True}"
-                            attrs="{'invisible': [('product_too_expensive_qty', '=', 0)]}"
+                            invisible="product_too_expensive_qty == 0"
                         >
                             <div class="o_form_field o_stat_info">
                                 <span class="o_stat_value">
@@ -160,7 +160,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                                     <div class="o_row">
                                         <field
                                             name="profit_margin"
-                                            attrs="{'required': True}"
+                                            required="True"
                                         />
                                         <span>%</span>
                                     </div>
