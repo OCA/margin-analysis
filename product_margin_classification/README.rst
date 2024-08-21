@@ -17,32 +17,36 @@ Product Margin Classification
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github
-    :target: https://github.com/OCA/margin-analysis/tree/16.0/product_margin_classification
+    :target: https://github.com/OCA/margin-analysis/tree/17.0/product_margin_classification
     :alt: OCA/margin-analysis
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/margin-analysis-16-0/margin-analysis-16-0-product_margin_classification
+    :target: https://translation.odoo-community.org/projects/margin-analysis-17-0/margin-analysis-17-0-product_margin_classification
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/margin-analysis&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/margin-analysis&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module is designed to extend Sale Price computation in Odoo.
 
-This module add a new model 'Margin Classifications' linked to Product variants.
+This module add a new model 'Margin Classifications' linked to Product
+variants.
 
-A margin classification has a 'Profit Margin' field and extra fields to manage
-computation method, like in Pricelist Item model (Markup Rate, Rounding and Surcharge fields)
+A margin classification has a 'Profit Margin' field and extra fields to
+manage computation method, like in Pricelist Item model (Markup Rate,
+Rounding and Surcharge fields)
 
-This module use both [Markup](https://en.wikipedia.org/wiki/Markup_(business))
-and [Profit Margin](https://en.wikipedia.org/wiki/Profit_margin) concepts.
+This module use both
+[Markup](https://en.wikipedia.org/wiki/Markup_(business)) and [Profit
+Margin](https://en.wikipedia.org/wiki/Profit_margin) concepts.
 
-You could be interested by native Pricelist functionalities, setting sale
-prices based on Cost prices. The main problem of this design is that sale price
-change automaticaly when cost price changes, that is not desired in some user
-cases. For exemple, if you have a shop, you want to changes sale prices when
-customers is not in the shop, and after having changed labels in the shop.
+You could be interested by native Pricelist functionalities, setting
+sale prices based on Cost prices. The main problem of this design is
+that sale price change automaticaly when cost price changes, that is not
+desired in some user cases. For exemple, if you have a shop, you want to
+changes sale prices when customers is not in the shop, and after having
+changed labels in the shop.
 
 **Table of contents**
 
@@ -52,44 +56,49 @@ customers is not in the shop, and after having changed labels in the shop.
 Configuration
 =============
 
-* Go to : 'Sale > Configuration > Products > Margin Classifications
-* Create new classifications
-* Set classification to your products
+-  Go to : 'Sale > Configuration > Products > Margin Classifications
+-  Create new classifications
+-  Set classification to your products
 
 On the Margin classification Form, user can change computation fields.
-(Margin, Rounding method, ...)
-Three buttons are available to apply theoretical prices:
-* to all products,
-* only for products that are too expensive
-* only for products that are too cheap
+(Margin, Rounding method, ...) Three buttons are available to apply
+theoretical prices: \* to all products, \* only for products that are
+too expensive \* only for products that are too cheap
 
-.. image:: https://raw.githubusercontent.com/OCA/margin-analysis/16.0/product_margin_classification/static/description/margin_classification_form.png
+|image|
 
-By clicking on the smart buttons on the right part of the form,
-all the products will be displayed, and user can easily change prices
+By clicking on the smart buttons on the right part of the form, all the
+products will be displayed, and user can easily change prices
 
-.. image:: https://raw.githubusercontent.com/OCA/margin-analysis/16.0/product_margin_classification/static/description/product_product_tree_incorrect_price.png
+|image1|
 
-User can also see easily products with incorrect margins in the margin classification tree views:
+User can also see easily products with incorrect margins in the margin
+classification tree views:
 
-.. image:: https://raw.githubusercontent.com/OCA/margin-analysis/16.0/product_margin_classification/static/description/margin_classification_tree.png
+|image2|
+
+.. |image| image:: https://raw.githubusercontent.com/OCA/margin-analysis/17.0/product_margin_classification/static/description/margin_classification_form.png
+.. |image1| image:: https://raw.githubusercontent.com/OCA/margin-analysis/17.0/product_margin_classification/static/description/product_product_tree_incorrect_price.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/margin-analysis/17.0/product_margin_classification/static/description/margin_classification_tree.png
 
 Usage
 =====
 
-If product has a margin classification defined and the theoretical price is
-not the same as the sale price, an extra field 'Theoretical Price' is
-displayed, based on the Margin Classification and a button is available to
-change sale price.
+If product has a margin classification defined and the theoretical price
+is not the same as the sale price, an extra field 'Theoretical Price' is
+displayed, based on the Margin Classification and a button is available
+to change sale price.
 
-.. image:: https://raw.githubusercontent.com/OCA/margin-analysis/16.0/product_margin_classification/static/description/product_product_form.png
+|image4|
+
+.. |image4| image:: https://raw.githubusercontent.com/OCA/margin-analysis/17.0/product_margin_classification/static/description/product_product_form.png
 
 Known issues / Roadmap
 ======================
 
-* This module will not work for variants that have a not null ``price_extra`` value,
-  due to the poor design of Odoo product module.
-  This issue can be maybe fixed in new version of Odoo.
+-  This module will not work for variants that have a not null
+   ``price_extra`` value, due to the poor design of Odoo product module.
+   This issue can be maybe fixed in new version of Odoo.
 
 Bug Tracker
 ===========
@@ -97,7 +106,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/margin-analysis/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20product_margin_classification%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20product_margin_classification%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -105,18 +114,18 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * GRAP
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Sylvain LE GAL <https://twitter.com/legalsylvain>
-* Marc Poch Mallandrich <mpoch@planetatic.com>
+-  Sylvain LE GAL <https://twitter.com/legalsylvain>
+-  Marc Poch Mallandrich <mpoch@planetatic.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -136,6 +145,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-legalsylvain| 
 
-This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/16.0/product_margin_classification>`_ project on GitHub.
+This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/17.0/product_margin_classification>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
