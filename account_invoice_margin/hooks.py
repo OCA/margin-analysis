@@ -33,6 +33,39 @@ def pre_init_hook(cr):
         AND price_subtotal > 0.0;
     """
     )
+    if column_exists(cr, "sale_order_line", "purchase_price"):
+        # Copy margins from Sale Orders, if possible
+        _logger.info("Copy margins from Sale Orders to Invoices...")
+        cr.execute(
+            """
+            WITH margins AS (
+                SELECT aml.id
+                 , SUM(sol.purchase_price * sol.product_uom_qty)
+                   / SUM(sol.product_uom_qty) as purchase_price_unit
+            FROM account_move_line aml
+              INNER JOIN account_move am
+                      ON aml.move_id = am.id
+              INNER JOIN sale_order_line_invoice_rel rel
+                      ON rel.invoice_line_id = aml.id
+              INNER JOIN sale_order_line sol
+                      ON rel.order_line_id = sol.id
+            WHERE am.move_type NOT ILIKE 'in_%'
+              AND aml.price_subtotal <> 0
+              AND sol.product_uom_qty <> 0
+              AND sol.purchase_price <> 0
+            GROUP BY aml.id
+            HAVING SUM(sol.purchase_price) <> 0
+            )
+            UPDATE account_move_line
+               SET purchase_price = m.purchase_price_unit * quantity
+                 , margin = price_subtotal - (m.purchase_price_unit * quantity)
+                 , margin_signed = price_subtotal - (m.purchase_price_unit * quantity)
+                 , margin_percent = (price_subtotal - (m.purchase_price_unit * quantity))
+                   / price_subtotal
+            FROM margins m
+            WHERE m.id = account_move_line.id ;
+            """
+        )
     cr.execute(
         """
         WITH aml AS(
