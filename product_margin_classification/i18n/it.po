@@ -1,0 +1,370 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_margin_classification
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-05-08 09:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: product_margin_classification
+#. odoo-python
+#: code:addons/product_margin_classification/models/product_margin_classification.py:0
+#, python-format
+msgid "-100 is not a valid Markup."
+msgstr "-100 non è un ricarico valido."
+
+#. module: product_margin_classification
+#. odoo-python
+#: code:addons/product_margin_classification/models/product_margin_classification.py:0
+#, python-format
+msgid "100 is not a valid Profit Margin."
+msgstr "100 non è un margine di profitto valido."
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Correct</span>"
+msgstr "<span class=\"o_stat_text\">Corretto</span>"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Incorrect</span>"
+msgstr "<span class=\"o_stat_text\">Errato</span>"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Products</span>"
+msgstr "<span class=\"o_stat_text\">Prodotti</span>"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Too Cheap</span>"
+msgstr "<span class=\"o_stat_text\">Troppo economico</span>"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span class=\"o_stat_text\">Too Priced</span>"
+msgstr "<span class=\"o_stat_text\">Troppo caro</span>"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "<span>%</span>"
+msgstr "<span>%</span>"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,help:product_margin_classification.field_product_margin_classification__profit_margin
+msgid ""
+"Also called 'Net margin' or 'Net Profit Ratio'.\n"
+"It is computed with the following formula Profit Margin = 100 * (Sale Price "
+"- Cost) / Sale Price"
+msgstr ""
+"Chiamato anche 'Margine netto' o 'Rapporto profitto netto'.\n"
+"Viene calcolato con la seguente formula Margine profitto = 100 * (Prezzo di "
+"vendita - Costo) / Prezzo di vendita"
+
+#. module: product_margin_classification
+#: model:ir.actions.server,name:product_margin_classification.action_apply_theoretical_price_too_expensive
+msgid "Apply Down To Theoretical Price"
+msgstr "Applica rifuzione a prezzo teorico"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_tree
+msgid "Apply Margin"
+msgstr "Applica margine"
+
+#. module: product_margin_classification
+#: model:ir.actions.server,name:product_margin_classification.action_apply_theoretical_price
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "Apply Theoretical Price"
+msgstr "Applica prezzo teorico"
+
+#. module: product_margin_classification
+#: model:ir.actions.server,name:product_margin_classification.action_apply_theoretical_price_too_cheap
+msgid "Apply Up To Theoretical Price"
+msgstr "Applica aumento a prezzo teorico"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "Computation Method"
+msgstr "Metodo di calcolo"
+
+#. module: product_margin_classification
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_product__margin_state__correct
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_template__margin_state__correct
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_search
+msgid "Correct Margin"
+msgstr "Margine corretto"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_form
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_tree
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_template_form
+msgid "Decrease the Sale Price down to Theoretical Price"
+msgstr "Diminuire il prezzo di vendita al prezzo teorico"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "Down to Theoretical Price"
+msgstr "Ridurre al prezzo teorico"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_search
+msgid "Incorrect Margin"
+msgstr "Margine errato"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_form
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_tree
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_template_form
+msgid "Increase the Sale Price up to Theoretical Price"
+msgstr "Aumentare il prezzo di vendita al prezzo teorico"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_product__margin_classification_id
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_template__margin_classification_id
+msgid "Margin Classification"
+msgstr "Classificazione margine"
+
+#. module: product_margin_classification
+#: model:ir.actions.act_window,name:product_margin_classification.action_product_margin_classification
+#: model:ir.ui.menu,name:product_margin_classification.menu_product_margin_classification
+msgid "Margin Classifications"
+msgstr "Classificazione margine"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__markup
+msgid "Markup"
+msgstr "Ricarico"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__price_round
+msgid "Price Rounding"
+msgstr "Arrotondamento prezzo"
+
+#. module: product_margin_classification
+#. odoo-python
+#: code:addons/product_margin_classification/models/product_margin_classification.py:0
+#, python-format
+msgid "Price Rounding can not be null."
+msgstr "L'arrotondamento del prezzo non può essere nullo."
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__price_surcharge
+msgid "Price Surcharge"
+msgstr "Sovrapprezzo"
+
+#. module: product_margin_classification
+#: model:ir.model,name:product_margin_classification.model_product_template
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: product_margin_classification
+#: model:ir.model,name:product_margin_classification.model_product_margin_classification
+msgid "Product Margin Classification"
+msgstr "Classificazione margine prodotti"
+
+#. module: product_margin_classification
+#: model:ir.model,name:product_margin_classification.model_product_product
+msgid "Product Variant"
+msgstr "Variante prodotto"
+
+#. module: product_margin_classification
+#: model:ir.actions.act_window,name:product_margin_classification.action_view_product_product_by_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__product_ids
+msgid "Products"
+msgstr "Prodotti"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__product_qty
+msgid "Products Quantity"
+msgstr "Quantità prodotti"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__profit_margin
+msgid "Profit Margin"
+msgstr "Margine di profitto"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,help:product_margin_classification.field_product_margin_classification__price_round
+msgid ""
+"Sets the price so that it is a multiple of this value.\n"
+"Rounding is applied after the margin and before the surcharge.\n"
+"To have prices that end in 9.99, set rounding 1, surcharge -0.01"
+msgstr ""
+"Impostare il prezzo in modo che sia un multiplo di questo valore.\n"
+"L'arrotondamento viene applicato dopo il margine e prima dello sconto.\n"
+"Per avere prezzi che terminano con 9,99, impostare arrotondamento a 1 e "
+"sconto -0,01"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "Settings"
+msgstr "Impostazioni"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,help:product_margin_classification.field_product_margin_classification__price_surcharge
+msgid ""
+"Specify the fixed amount to add or substract(if negative) to the amount "
+"calculated with the discount."
+msgstr ""
+"Specificare l'importo fisso da aggiungere o sottrarre (se negativo) "
+"dall'importo calcolato con lo sconto."
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_product__theoretical_difference
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_template__theoretical_difference
+msgid "Theoretical Difference"
+msgstr "Differenza teorica"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_product__theoretical_price
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_template__theoretical_price
+msgid "Theoretical Price"
+msgstr "Prezzo teorico"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_product__margin_state
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_template__margin_state
+msgid "Theoretical Price State"
+msgstr "Stato prezzo teorico"
+
+#. module: product_margin_classification
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_product__margin_state__too_cheap
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_template__margin_state__too_cheap
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_search
+msgid "Too Cheap"
+msgstr "Troppo economico"
+
+#. module: product_margin_classification
+#: model:product.template,name:product_margin_classification.too_cheap_product_product_template
+msgid "Too Cheap Product"
+msgstr "Prodotto troppo economico"
+
+#. module: product_margin_classification
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_product__margin_state__too_expensive
+#: model:ir.model.fields.selection,name:product_margin_classification.selection__product_template__margin_state__too_expensive
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_search
+msgid "Too Expensive"
+msgstr "Troppo caro"
+
+#. module: product_margin_classification
+#: model:product.template,name:product_margin_classification.too_expensive_product_product_template
+msgid "Too Expensive Product"
+msgstr "Prodotto troppo caro"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__product_too_cheap_qty
+msgid "Total Products Too Cheap"
+msgstr "Totale prodotti troppo economici"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__product_too_expensive_qty
+msgid "Total Products Too Expensive"
+msgstr "Totale prodotti troppo cari"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__product_correct_price_qty
+msgid "Total Products With Correct Price"
+msgstr "Totale prodotti con il prezzo corretto"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__product_incorrect_price_qty
+msgid "Total Products With Incorrect Price"
+msgstr "Totale prodotti con il prezzo errato"
+
+#. module: product_margin_classification
+#. odoo-python
+#: code:addons/product_margin_classification/models/product_product.py:0
+#, python-format
+msgid ""
+"Unimplemented Feature\n"
+"The sale taxes are not correctly set for computing prices with coefficients "
+"for the product %s"
+msgstr ""
+"Funzionalità non implementata\n"
+"Le tasse di vendita non sono impostate correttamente per il calcolo del "
+"prezzo con il coefficiente per il prodotto %s"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
+msgid "Up to Theoretical Price"
+msgstr "Fino al prezzo teorico"
+
+#. module: product_margin_classification
+#: model:ir.model.fields,help:product_margin_classification.field_product_margin_classification__markup
+msgid ""
+"Value that help you to compute the sale price, based on your cost, as "
+"defined: Sale Price = (Cost * (100 + Markup)) / 100\n"
+"It is computed with the following formula Markup = 100 * (Sale Price - "
+"Cost) / Cost"
+msgstr ""
+"Valore che aiuta a calcolare il prezzo di vendita, in base al costo, così "
+"definito: Prezzo di vendita = (Costo * (100 + Ricarico)) / 100\n"
+"Viene calcolato con la seguente formula Ricarico = 100 * (Prezzo di vendita "
+"- Costo) / Costo"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_form
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_template_form
+msgid "⇒ Decrease Price"
+msgstr "⇒ Diminuire prezzo"
+
+#. module: product_margin_classification
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_product_form
+#: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_template_form
+msgid "⇒ Increase Price"
+msgstr "⇒ Aumentare Prezzo"
