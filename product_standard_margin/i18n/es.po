@@ -18,30 +18,49 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin
+msgid "Margin"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin_rate
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin_rate
+msgid "Margin (%)"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin
+msgid ""
+"Margin is [ sale price (Wo Tax) - cost price ] of the product form (not "
+"based on historical values). Take care of tax include and exclude. If no "
+"sale price, the margin will be negativ."
+msgstr ""
+
+#. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
 #: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin_rate
 msgid ""
-"Margin rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
-"form (not based on historical values).Take care of tax include and exclude.. "
-"If no sale price set, will display 999.0"
+"Margin rate is [ Margin / sale price (Wo Tax) ] of the product form (not "
+"based on historical values).Take care of tax include and exclude.. If no "
+"sale price set, will display 999.0"
 msgstr ""
-"La tasa de margen es [ Margen teórico / precio de venta (sin impuestos) ] de "
-"la ficha del producto (no basado en valores históricos). Tenga cuidado de "
-"impuestos incluidos y excluidos. Si no hay precio de venta establecido "
-"mostrará 999.0"
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_markup_rate
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_markup_rate
+msgid "Markup (%)"
+msgstr ""
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_markup_rate
 #: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_markup_rate
 msgid ""
-"Markup rate is [ Theorical Margin / cost price (Wo Tax) ] of the product "
-"form (not based on historical values).Take care of tax include and exclude.. "
-"If no cost price set, will display 999.0"
+"Markup rate is [ Margin / cost price (Wo Tax) ] of the product form (not "
+"based on historical values).Take care of tax include and exclude.. If no "
+"cost price set, will display 999.0"
 msgstr ""
-"La tasa de Markup es [ Margen teórico / precio de coste (sin impuestos) ] de "
-"la ficha del producto (no basado en valores históricos). Tenga cuidado de "
-"impuestos incluidos y excluidos. Si no hay precio de coste establecido "
-"mostrará 999.0"
 
 #. module: product_standard_margin
 #: model:ir.model,name:product_standard_margin.model_product_template
@@ -59,33 +78,41 @@ msgstr "Variante de producto"
 msgid "Sale Price VAT Excluded"
 msgstr "Precio de venta sin impuestos"
 
-#. module: product_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin
-msgid "Theorical Margin"
-msgstr "Margen teórico"
+#~ msgid ""
+#~ "Margin rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
+#~ "form (not based on historical values).Take care of tax include and "
+#~ "exclude.. If no sale price set, will display 999.0"
+#~ msgstr ""
+#~ "La tasa de margen es [ Margen teórico / precio de venta (sin impuestos) ] "
+#~ "de la ficha del producto (no basado en valores históricos). Tenga cuidado "
+#~ "de impuestos incluidos y excluidos. Si no hay precio de venta establecido "
+#~ "mostrará 999.0"
 
-#. module: product_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin_rate
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin_rate
-msgid "Theorical Margin (%)"
-msgstr "Margen teórico (%)"
+#~ msgid ""
+#~ "Markup rate is [ Theorical Margin / cost price (Wo Tax) ] of the product "
+#~ "form (not based on historical values).Take care of tax include and "
+#~ "exclude.. If no cost price set, will display 999.0"
+#~ msgstr ""
+#~ "La tasa de Markup es [ Margen teórico / precio de coste (sin impuestos) ] "
+#~ "de la ficha del producto (no basado en valores históricos). Tenga cuidado "
+#~ "de impuestos incluidos y excluidos. Si no hay precio de coste establecido "
+#~ "mostrará 999.0"
 
-#. module: product_standard_margin
-#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin
-#: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin
-msgid ""
-"Theorical Margin is [ sale price (Wo Tax) - cost price ] of the product form "
-"(not based on historical values). Take care of tax include and exclude. If "
-"no sale price, the margin will be negativ."
-msgstr ""
-"El margen teórico es [ precio de venta (sin impuestos) - precio de coste ] "
-"de la ficha del producto (no basado en valores históricos). Tenga cuidado de "
-"impuestos incluidos y excluidos. Si no hay precio de venta el margen será "
-"negativo."
+#~ msgid "Theorical Margin"
+#~ msgstr "Margen teórico"
 
-#. module: product_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_markup_rate
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_markup_rate
-msgid "Theorical Markup (%)"
-msgstr "Markup teórico (%)"
+#~ msgid "Theorical Margin (%)"
+#~ msgstr "Margen teórico (%)"
+
+#~ msgid ""
+#~ "Theorical Margin is [ sale price (Wo Tax) - cost price ] of the product "
+#~ "form (not based on historical values). Take care of tax include and "
+#~ "exclude. If no sale price, the margin will be negativ."
+#~ msgstr ""
+#~ "El margen teórico es [ precio de venta (sin impuestos) - precio de "
+#~ "coste ] de la ficha del producto (no basado en valores históricos). Tenga "
+#~ "cuidado de impuestos incluidos y excluidos. Si no hay precio de venta el "
+#~ "margen será negativo."
+
+#~ msgid "Theorical Markup (%)"
+#~ msgstr "Markup teórico (%)"
