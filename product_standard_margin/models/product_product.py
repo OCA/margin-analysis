@@ -20,10 +20,10 @@ class ProductProduct(models.Model):
 
     standard_margin = fields.Float(
         compute="_compute_margin",
-        string="Theorical Margin",
+        string="Margin",
         store=True,
         digits="Product Price",
-        help="Theorical Margin is [ sale price (Wo Tax) - cost price ] "
+        help="Margin is [ sale price (Wo Tax) - cost price ] "
         "of the product form (not based on historical values). "
         "Take care of tax include and exclude. If no sale price, "
         "the margin will be negativ.",
@@ -31,20 +31,20 @@ class ProductProduct(models.Model):
 
     standard_margin_rate = fields.Float(
         compute="_compute_margin",
-        string="Theorical Margin (%)",
+        string="Margin (%)",
         store=True,
         digits="Product Price",
-        help="Margin rate is [ Theorical Margin / sale price (Wo Tax) ] "
+        help="Margin rate is [ Margin / sale price (Wo Tax) ] "
         "of the product form (not based on historical values)."
         "Take care of tax include and exclude.. If no sale price "
         "set, will display 999.0",
     )
     standard_markup_rate = fields.Float(
         compute="_compute_margin",
-        string="Theorical Markup (%)",
+        string="Markup (%)",
         store=True,
         digits="Product Price",
-        help="Markup rate is [ Theorical Margin / cost price (Wo Tax) ] "
+        help="Markup rate is [ Margin / cost price (Wo Tax) ] "
         "of the product form (not based on historical values)."
         "Take care of tax include and exclude.. If no cost price "
         "set, will display 999.0",
