@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-01 13:33+0000\n"
+"PO-Revision-Date: 2024-10-21 10:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,19 +14,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin
 msgid "Margin"
-msgstr ""
+msgstr "Margine"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin_rate
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin_rate
 msgid "Margin (%)"
-msgstr ""
+msgstr "Margine (%)"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin
@@ -36,6 +36,9 @@ msgid ""
 "based on historical values). Take care of tax include and exclude. If no "
 "sale price, the margin will be negativ."
 msgstr ""
+"Il margine è [ prezzo di vendita (esc. imposte) - costo ] della maschera del "
+"prodotto (non basato su valori storici). Fare attenzione all'inclusione o "
+"meno delle imposte. Se non è presente il prezzo, il margine sarà negativo."
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
@@ -45,12 +48,16 @@ msgid ""
 "based on historical values).Take care of tax include and exclude.. If no "
 "sale price set, will display 999.0"
 msgstr ""
+"Il tasso di margine è [ Margine / prezzo di vendita (esc. imposte) ] della "
+"maschera del prodotto (non basato su valori storici). Fare attenzione "
+"all'inclusione o meno delle imposte. Se non è impostato il prezzo, "
+"visualizzerà 999,0"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_markup_rate
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_markup_rate
 msgid "Markup (%)"
-msgstr ""
+msgstr "Ricarico (%)"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_markup_rate
@@ -60,6 +67,9 @@ msgid ""
 "based on historical values).Take care of tax include and exclude.. If no "
 "cost price set, will display 999.0"
 msgstr ""
+"Il tasso di ricarico è [ Margine / costo (esc. imposte) ] della maschera del "
+"prodotto (non basato su valori storici). Fare attenzione all'inclusione o "
+"meno delle imposte. Se non è impostato il costo, visualizzerà 999,0"
 
 #. module: product_standard_margin
 #: model:ir.model,name:product_standard_margin.model_product_template
