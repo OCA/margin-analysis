@@ -6,28 +6,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-05-21 20:34+0000\n"
-"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
-"translation.odoo-community.org>\n"
+"PO-Revision-Date: 2024-11-13 19:06+0000\n"
+"Last-Translator: Rodrigo Sottomaior Macedo "
+"<sottomaiormacedotec@sottomaiormacedo.tech>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin
 msgid "Margin"
-msgstr ""
+msgstr "Margem"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin_rate
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin_rate
 msgid "Margin (%)"
-msgstr ""
+msgstr "Margem (%)"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin
@@ -37,6 +37,9 @@ msgid ""
 "based on historical values). Take care of tax include and exclude. If no "
 "sale price, the margin will be negativ."
 msgstr ""
+"Margem é [ preço de venda (Wo Tax) - preço de custo ] do produto (não "
+"baseado em valores históricos). Tome cuidado com impostos inclusos e "
+"excluídos. Se não houver preço de venda, a margem será negativa."
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
@@ -46,12 +49,15 @@ msgid ""
 "based on historical values).Take care of tax include and exclude.. If no "
 "sale price set, will display 999.0"
 msgstr ""
+"A taxa de margem é [ Margin / sale price (Wo Tax) ] do formulário do produto "
+"(não com base em valores históricos). Tome cuidado com a inclusão e exclusão "
+"de impostos. Se nenhum preço de venda for definido, será exibido 999,0"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_markup_rate
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_markup_rate
 msgid "Markup (%)"
-msgstr ""
+msgstr "Marcação (%)"
 
 #. module: product_standard_margin
 #: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_markup_rate
@@ -61,6 +67,10 @@ msgid ""
 "based on historical values).Take care of tax include and exclude.. If no "
 "cost price set, will display 999.0"
 msgstr ""
+"A taxa de marcação é [ Margin / cost price (Wo Tax) ] do formulário do "
+"produto (não com base em valores históricos). Tome cuidado com a inclusão e "
+"exclusão de impostos. Se nenhum preço de custo for definido, será exibido "
+"999,0"
 
 #. module: product_standard_margin
 #: model:ir.model,name:product_standard_margin.model_product_template
