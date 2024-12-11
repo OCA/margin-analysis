@@ -18,14 +18,15 @@ class SomethingCase(SaleCommon):
             login="salesperson_edit",
             groups=(
                 "sales_team.group_sale_salesman,"
-                "product_cost_security.group_product_edit_cost"
+                "sale_margin_security.group_sale_margin_edit_security"
             ),
         )
         cls.salesperson_read = new_test_user(
             cls.env,
             name="Salesperson PC Read",
             login="salesperson_read",
-            groups="sales_team.group_sale_salesman,product_cost_security.group_product_cost",
+            groups="sales_team.group_sale_salesman,"
+            "sale_margin_security.group_sale_margin_security",
         )
         cls.salesperson_none = new_test_user(
             cls.env,

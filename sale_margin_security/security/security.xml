@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 Tecnativa - Sergio Teruel
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="group_sale_margin_security" model="res.groups">
+        <field name="name">Show Sale Margin (and Show Costs)</field>
+        <field name="category_id" ref="base.module_category_hidden" />
+        <field
+            name="implied_ids"
+            eval="[(4, ref('product_cost_security.group_product_cost'))]"
+        />
+    </record>
+
+    <record id="group_sale_margin_edit_security" model="res.groups">
+        <field name="name">Show Sale Margin (and Edit Costs)</field>
+        <field name="category_id" ref="base.module_category_hidden" />
+        <field
+            name="implied_ids"
+            eval="[(4, ref('group_sale_margin_security')), (4, ref('product_cost_security.group_product_edit_cost'))]"
+        />
+    </record>
+</odoo>

@@ -10,7 +10,7 @@
             <xpath expr="//field[@name='margin']/.." position="attributes">
                 <attribute
                     name="groups"
-                >product_cost_security.group_product_cost</attribute>
+                >sale_margin_security.group_sale_margin_security</attribute>
             </xpath>
         </field>
     </record>
