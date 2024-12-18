@@ -4,7 +4,7 @@
 <odoo>
     <record id="group_sale_margin_security" model="res.groups">
         <field name="name">Show Sale Margin (and Show Costs)</field>
-        <field name="category_id" ref="base.module_category_hidden" />
+        <field name="category_id" ref="product_cost_security.module_category" />
         <field
             name="implied_ids"
             eval="[(4, ref('product_cost_security.group_product_cost'))]"
@@ -13,7 +13,7 @@
 
     <record id="group_sale_margin_edit_security" model="res.groups">
         <field name="name">Show Sale Margin (and Edit Costs)</field>
-        <field name="category_id" ref="base.module_category_hidden" />
+        <field name="category_id" ref="product_cost_security.module_category" />
         <field
             name="implied_ids"
             eval="[(4, ref('group_sale_margin_security')), (4, ref('product_cost_security.group_product_edit_cost'))]"
