@@ -61,6 +61,7 @@ Contributors
      - Carlos Dauden
      - Sergio Teruel
      - Carlos Roca
+     - Carlos Lopez
 
 Maintainers
 -----------
