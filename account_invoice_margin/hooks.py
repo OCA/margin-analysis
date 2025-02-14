@@ -1,6 +1,6 @@
 import logging
 
-from odoo.tools import column_exists, create_column
+from odoo.tools.sql import column_exists, create_column
 
 _logger = logging.getLogger(__name__)
 
