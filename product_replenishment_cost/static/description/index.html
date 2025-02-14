@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -275,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -301,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -369,12 +369,25 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:11c36c6abdc64d2df703b1e6a520296b6566111a90c1782d8093576c121677a1
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/margin-analysis/tree/16.0/product_replenishment_cost"><img alt="OCA/margin-analysis" src="https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/margin-analysis-16-0/margin-analysis-16-0-product_replenishment_cost"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/margin-analysis&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>Provides an overridable method on product which compute the Replenishment cost of a product. By default it just returns the value of “Cost price” field, but using the product_cost_incl_bom module, it will return the costing from the bom.</p>
-<p>“Cost price” is the cost assigned for each product in the warehouse and the “Replenishment cost” is the cost it would cost to buy a new product. They are different costs because the cost price depends on your valuation method and the operations you have performed while the replenishment cost is determined by the current market conditions.</p>
-<p>For example: The price of the product in the supplier’s catalog is €15/piece. Therefore, if I want to buy a new unit, my replenishment cost would be €15. But if my stock comes from having bought it in a special offer that allowed me to buy it for €10, then my cost price is €10/piece.</p>
-<p>As it is a generic module, you can also setup your own way of computing the replenishment_cost for your product.</p>
-<p>All OCA modules to compute margins are based on it, so you’ll be able to use them in your own way.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/margin-analysis/tree/18.0/product_replenishment_cost"><img alt="OCA/margin-analysis" src="https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/margin-analysis-18-0/margin-analysis-18-0-product_replenishment_cost"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/margin-analysis&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>Provides an overridable method on product which compute the
+Replenishment cost of a product. By default it just returns the value of
+“Cost price” field, but using the product_cost_incl_bom module, it will
+return the costing from the bom.</p>
+<p>“Cost price” is the cost assigned for each product in the warehouse and
+the “Replenishment cost” is the cost it would cost to buy a new product.
+They are different costs because the cost price depends on your
+valuation method and the operations you have performed while the
+replenishment cost is determined by the current market conditions.</p>
+<p>For example: The price of the product in the supplier’s catalog is
+€15/piece. Therefore, if I want to buy a new unit, my replenishment cost
+would be €15. But if my stock comes from having bought it in a special
+offer that allowed me to buy it for €10, then my cost price is
+€10/piece.</p>
+<p>As it is a generic module, you can also setup your own way of computing
+the replenishment_cost for your product.</p>
+<p>All OCA modules to compute margins are based on it, so you’ll be able to
+use them in your own way.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -391,16 +404,17 @@ ul.auto-toc {
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#toc-entry-1">Known issues / Roadmap</a></h1>
 <p>Due to framework limitation, the field <tt class="docutils literal">replenishment_cost</tt> is not
-company dependent, while <tt class="docutils literal">standard_price</tt> is. (in the recent Odoo versions)</p>
-<p>It is due to the current impossibility to make working computed field between
-two field <tt class="docutils literal">company_dependent=True</tt>.</p>
+company dependent, while <tt class="docutils literal">standard_price</tt> is. (in the recent Odoo
+versions)</p>
+<p>It is due to the current impossibility to make working computed field
+between two field <tt class="docutils literal">company_dependent=True</tt>.</p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/margin-analysis/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/margin-analysis/issues/new?body=module:%20product_replenishment_cost%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/margin-analysis/issues/new?body=module:%20product_replenishment_cost%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -425,11 +439,13 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="maintainers">
 <h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/margin-analysis/tree/16.0/product_replenishment_cost">OCA/margin-analysis</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/margin-analysis/tree/18.0/product_replenishment_cost">OCA/margin-analysis</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
