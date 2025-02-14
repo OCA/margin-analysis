@@ -11,4 +11,4 @@ class AccountInvoiceReport(models.Model):
 
     def _select(self):
         select_str = super()._select()
-        return "%s, line.margin_signed AS margin" % select_str
+        return f"{select_str}, line.margin_signed AS margin"
