@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <!-- To display new fields in invoice lines tab  -->
             <xpath
-                expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']"
+                expr="//field[@name='invoice_line_ids']/list/field[@name='price_unit']"
                 position="after"
             >
                 <field
@@ -61,7 +61,7 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_invoice_tree" />
         <field name="arch" type="xml">
-            <field name="amount_untaxed_signed" position="before">
+            <field name="amount_untaxed_in_currency_signed" position="before">
                 <field
                     name="margin_signed"
                     sum="Total"

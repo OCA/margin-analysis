@@ -1,10 +1,9 @@
 # © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import fields
-from odoo.tests.common import Form, tagged
+from odoo.tests import Form, tagged
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 
 
 @tagged("post_install", "-at_install")
@@ -12,7 +11,12 @@ class TestAccountInvoiceMargin(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        cls.env.user.groups_id |= cls.env.ref(
+            "product_cost_security.group_product_edit_cost"
+        )
+        cls.env.user.groups_id |= cls.env.ref(
+            "product_cost_security.group_product_cost"
+        )
         cls.product_a.lst_price = 200
         cls.product_a.standard_price = 100
         cls.invoice = cls.init_invoice(
