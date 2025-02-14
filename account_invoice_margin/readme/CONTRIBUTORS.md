@@ -10,3 +10,5 @@
   - Luis J. Salvatierra
 - [Komit](https://komit-consulting.com):
   - Jean-Charles Drubay
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
