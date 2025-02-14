@@ -2,16 +2,14 @@
 # Copyright 2019 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.fields import Command
 from odoo.tests.common import TransactionCase
-
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 
 
 class TestAccountInvoiceMargin(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.journal = cls.env["account.journal"].create(
             {"name": "Test journal", "type": "sale", "code": "TEST_J"}
         )
@@ -50,9 +48,7 @@ class TestAccountInvoiceMargin(TransactionCase):
                 "partner_id": cls.partner.id,
                 "pricelist_id": pricelist.id,
                 "order_line": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": cls.product.name,
                             "product_id": cls.product.id,
@@ -89,9 +85,7 @@ class TestAccountInvoiceMargin(TransactionCase):
             {
                 "partner_id": self.partner.id,
                 "order_line": [
-                    (
-                        0,
-                        False,
+                    Command.create(
                         {
                             "product_id": product.id,
                             "name": "Testing Product",
