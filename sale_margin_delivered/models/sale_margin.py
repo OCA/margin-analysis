@@ -93,7 +93,8 @@ class SaleOrderLine(models.Model):
                 qty_delivered = (
                     sum(valuation_layers.mapped("quantity")) or -line.qty_delivered
                 )
-                # purchase_price_delivery always will be positive because division of same signs
+                # purchase_price_delivery always will be positive
+                # because division of same signs
                 line.purchase_price_delivery = tools.float_round(
                     value_delivered / qty_delivered, precision_digits=digits
                 )

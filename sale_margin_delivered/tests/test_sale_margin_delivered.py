@@ -199,7 +199,8 @@ class TestSaleMarginDelivered(TransactionCase):
         self.assertEqual(order_line.price_subtotal, 100.45)
         # the unit reduce price will be computed as 100.45 / 6 = 16.741666666666667
         # it should not be rounded to 16.74
-        # margin_delivered: round(6 * ((100.45 /6) - 10.30)) != round(6 * (16.74 - 10.30))
+        # margin_delivered:
+        # round(6 * ((100.45 /6) - 10.30)) != round(6 * (16.74 - 10.30))
         self.assertEqual(order_line.margin_delivered, 38.65)
         self.assertAlmostEqual(order_line.margin_delivered_percent, 0.38476854156296)
         self.assertEqual(order_line.purchase_price_delivery, order_line.purchase_price)
