@@ -80,8 +80,11 @@ class SaleOrderLine(models.Model):
                 else 0.0
             )
 
-            if line.product_id.type != "product":
-                currency = line.order_id.pricelist_id.currency_id
+            if not line.product_id.is_storable:
+                currency = (
+                    line.order_id.pricelist_id.currency_id
+                    or line.company_id.currency_id
+                )
                 price = line.purchase_price
                 line.margin_delivered = currency.round(
                     line.price_subtotal - (price * line.qty_delivered)
@@ -91,7 +94,11 @@ class SaleOrderLine(models.Model):
                 valuation_layers = line._get_delivered_margin_valuation_layers()
                 value_delivered = sum(valuation_layers.mapped("value"))
                 qty_delivered = (
-                    sum(valuation_layers.mapped("quantity")) or -line.qty_delivered
+                    sum(
+                        vl.uom_id._compute_quantity(vl.quantity, line.product_uom)
+                        for vl in valuation_layers
+                    )
+                    or -line.qty_delivered
                 )
                 # purchase_price_delivery always will be positive
                 # because division of same signs
