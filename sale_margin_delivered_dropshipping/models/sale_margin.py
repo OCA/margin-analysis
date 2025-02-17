@@ -13,11 +13,23 @@ class SaleOrderLine(models.Model):
         valuation_layers = super()._get_delivered_margin_valuation_layers()
         for move in self.move_ids.filtered(lambda m: m.state == "done"):
             if (
-                move.location_dest_usage == "customer"
-                and move.location_usage == "supplier"
+                move.picking_code == "dropship"
+                and move.location_id.usage == "supplier"
+                and move.location_dest_id.usage == "customer"
+                and not move.to_refund
             ):
-                # Dropship moves have 2 valuation layers. Use negative one
+                # Forward dropship moves: collect negative VL (cost)
                 valuation_layers |= move.stock_valuation_layer_ids.filtered(
                     lambda vl: vl.quantity < 0
+                )
+            elif (
+                move.picking_code == "dropship"
+                and move.location_id.usage == "customer"
+                and move.location_dest_id.usage == "supplier"
+                and move.to_refund
+            ):
+                # Return dropship moves: collect positive VL (cost reversal)
+                valuation_layers |= move.stock_valuation_layer_ids.filtered(
+                    lambda vl: vl.quantity > 0
                 )
         return valuation_layers
