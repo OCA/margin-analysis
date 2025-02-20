@@ -1,7 +1,8 @@
 # Copyright 2024 Moduon Team S.L.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 from odoo.exceptions import AccessError
-from odoo.tests.common import Form, new_test_user
+from odoo.tests import Form
+from odoo.tests.common import new_test_user
 from odoo.tools import mute_logger
 
 from odoo.addons.sale.tests.common import SaleCommon
@@ -11,7 +12,7 @@ class SomethingCase(SaleCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.consumable_product.standard_price = 10
+        cls.product.standard_price = 10
         cls.salesperson_edit = new_test_user(
             cls.env,
             name="Salesperson PC Edit",
@@ -41,7 +42,7 @@ class SomethingCase(SaleCommon):
         with Form(so) as order_f:
             # Lines contain margin fields
             with order_f.order_line.new() as line_f:
-                line_f.product_id = self.consumable_product
+                line_f.product_id = self.product
                 self.assertEqual(line_f.purchase_price, 10)
                 self.assertEqual(line_f.margin, 10)
                 self.assertEqual(line_f.margin_percent, 0.5)
@@ -63,7 +64,7 @@ class SomethingCase(SaleCommon):
         with Form(so) as order_f:
             # Lines contain margin fields
             with order_f.order_line.new() as line_f:
-                line_f.product_id = self.consumable_product
+                line_f.product_id = self.product
                 line_f.product_uom_qty = 1
                 self.assertEqual(line_f.purchase_price, 10)
                 self.assertEqual(line_f.margin, 10)
@@ -89,7 +90,7 @@ class SomethingCase(SaleCommon):
             self.assertRaises(AssertionError, hasattr, order_f, "margin_percent")
             # Lines don't contain margin fields
             with order_f.order_line.new() as line_f:
-                line_f.product_id = self.consumable_product
+                line_f.product_id = self.product
                 self.assertRaises(AssertionError, hasattr, line_f, "purchase_price")
                 self.assertRaises(AssertionError, hasattr, line_f, "margin")
                 self.assertRaises(AssertionError, hasattr, line_f, "margin_percent")
