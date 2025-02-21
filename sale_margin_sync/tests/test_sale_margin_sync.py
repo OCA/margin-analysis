@@ -1,19 +1,17 @@
 # Copyright 2019 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo.tests.common import TransactionCase
+from odoo import Command
 
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestSaleMarginSync(TransactionCase):
+class TestSaleMarginSync(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.pricelist = cls.env["product.pricelist"].create(
             {"name": "Pricelist for testing sale_margin_sync"}
         )
-        cls.partner = cls.env["res.partner"].create({"name": "Test"})
         cls.product = cls.env["product.product"].create(
             {"name": "test_product", "type": "product", "standard_price": 70}
         )
@@ -28,9 +26,7 @@ class TestSaleMarginSync(TransactionCase):
             {
                 "partner_id": cls.partner.id,
                 "order_line": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": cls.product.name,
                             "product_id": cls.product.id,
@@ -39,9 +35,7 @@ class TestSaleMarginSync(TransactionCase):
                             "price_unit": 100.00,
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": cls.product.name,
                             "product_id": cls.product.id,
@@ -59,10 +53,10 @@ class TestSaleMarginSync(TransactionCase):
         self.order.action_confirm()
         so_line1 = self.order.order_line[:1]
         move1 = so_line1.move_ids[:1]
-        move1.quantity_done = 10
+        move1.write({"quantity": 10, "picked": True})
         so_line2 = self.order.order_line[1:2]
         move2 = so_line2.move_ids[:1]
-        move2.quantity_done = 2
+        move2.write({"quantity": 2, "picked": True})
         self.order.picking_ids[:1]._action_done()
         move1.stock_valuation_layer_ids[:1].unit_cost = 80.0
         move2.stock_valuation_layer_ids[:1].unit_cost = 80.0
@@ -75,11 +69,11 @@ class TestSaleMarginSync(TransactionCase):
         self.order.action_confirm()
         so_line1 = self.order.order_line[:1]
         move1 = so_line1.move_ids[:1]
-        move1.quantity_done = 10
+        move1.quantity = 10
         move1.stock_valuation_layer_ids[:1].unit_cost = 80.0
         so_line2 = self.order.order_line[1:2]
         move2 = so_line2.move_ids[:1]
-        move2.quantity_done = 2
+        move2.quantity = 2
         move2.stock_valuation_layer_ids[:1].unit_cost = 80.0
         self.assertEqual(so_line1.purchase_price, 70.0)
         self.assertEqual(so_line1.margin, 300.0)
