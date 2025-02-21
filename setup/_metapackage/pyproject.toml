@@ -1,0 +1,11 @@
+[project]
+name = "odoo-addons-oca-margin-analysis"
+version = "18.0.20250221.0"
+dependencies = [
+    "odoo-addon-sale_margin_security==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
