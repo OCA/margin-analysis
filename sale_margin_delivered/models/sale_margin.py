@@ -18,7 +18,6 @@ class SaleOrderLine(models.Model):
     margin_delivered_percent = fields.Float(
         compute="_compute_margin_delivered",
         store=True,
-        readonly=True,
         help="Margin percent between the Unit Price with discounts and "
         "Delivered Unit Cost.\n\n"
         "Formula: ((Unit Price with Discounts - Average Unit Cost of "
@@ -81,7 +80,10 @@ class SaleOrderLine(models.Model):
             )
 
             if line.product_id.type != "product":
-                currency = line.order_id.pricelist_id.currency_id
+                currency = (
+                    line.order_id.pricelist_id.currency_id
+                    or line.company_id.currency_id
+                )
                 price = line.purchase_price
                 line.margin_delivered = currency.round(
                     line.price_subtotal - (price * line.qty_delivered)

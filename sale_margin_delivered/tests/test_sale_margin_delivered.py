@@ -1,16 +1,15 @@
 #  Copyright 2019 Tecnativa - Sergio Teruel
 #  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl
+from odoo import Command
+from odoo.tests import Form
 
-from odoo.tests import Form, TransactionCase
-
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestSaleMarginDelivered(TransactionCase):
+class TestSaleMarginDelivered(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.SaleOrder = cls.env["sale.order"]
         cls.product_uom_id = cls.env.ref("uom.product_uom_unit")
         cls.product = cls.env["product.product"].create(
@@ -28,9 +27,7 @@ class TestSaleMarginDelivered(TransactionCase):
             {
                 "name": "Test pricelist",
                 "item_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "applied_on": "3_global",
                             "compute_price": "formula",
@@ -66,9 +63,7 @@ class TestSaleMarginDelivered(TransactionCase):
         """Returns the wizard to create a return picking"""
         stock_return_picking_form = Form(
             self.env["stock.return.picking"].with_context(
-                active_ids=picking.ids,
-                active_id=picking.ids[0],
-                active_model="stock.picking",
+                default_picking_id=picking.id,
             )
         )
         return stock_return_picking_form.save()
@@ -87,8 +82,8 @@ class TestSaleMarginDelivered(TransactionCase):
         sale_order.action_confirm()
         picking = sale_order.picking_ids
         picking.action_assign()
-        picking.move_line_ids.qty_done = 3.0
-        picking._action_done()
+        picking.move_ids.quantity = 3.0
+        picking.with_context(skip_backorder=True).button_validate()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 30.0)
         self.assertEqual(order_line.margin_delivered_percent, 0.5)
@@ -100,8 +95,8 @@ class TestSaleMarginDelivered(TransactionCase):
         sale_order.action_confirm()
         picking = sale_order.picking_ids
         picking.action_assign()
-        picking.move_line_ids.qty_done = 12.0
-        picking._action_done()
+        picking.move_line_ids.quantity = 12.0
+        picking.with_context(skip_backorder=True).button_validate()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 120.0)
         self.assertEqual(order_line.margin_delivered_percent, 0.5)
@@ -121,15 +116,15 @@ class TestSaleMarginDelivered(TransactionCase):
         return_wiz.product_return_moves.write(
             {"quantity": qty_refund, "to_refund": to_refund}
         )
-        new_picking_id, pick_type_id = return_wiz._create_returns()
-        return self.env["stock.picking"].browse(new_picking_id)
+        res = return_wiz.create_returns()
+        return self.env["stock.picking"].browse(res["res_id"])
 
     def _validate_so_picking(self, sale_order, qty_done=6.0):
         """Validate picking"""
         picking = sale_order.picking_ids
         picking.action_assign()
-        picking.move_line_ids.qty_done = qty_done
-        picking._action_done()
+        picking.move_line_ids.quantity = qty_done
+        picking.with_context(skip_backorder=True).button_validate()
         return picking
 
     def test_sale_margin_delivered_return_to_refund(self):
@@ -138,8 +133,8 @@ class TestSaleMarginDelivered(TransactionCase):
         sale_order.action_confirm()
         picking = self._validate_so_picking(sale_order, qty_done=6.0)
         picking_return = self._create_return(picking, qty_refund=3.0, to_refund=True)
-        picking_return.move_line_ids.qty_done = 3.0
-        picking_return._action_done()
+        picking_return.move_line_ids.quantity = 3.0
+        picking_return.with_context(skip_backorder=True).button_validate()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 30.0)
         self.assertEqual(order_line.margin_delivered_percent, 0.5)
@@ -151,8 +146,8 @@ class TestSaleMarginDelivered(TransactionCase):
         sale_order.action_confirm()
         picking = self._validate_so_picking(sale_order, qty_done=12.0)
         picking_return = self._create_return(picking, qty_refund=3.0, to_refund=True)
-        picking_return.move_line_ids.qty_done = 3.0
-        picking_return._action_done()
+        picking_return.move_line_ids.quantity = 3.0
+        picking_return.with_context(skip_backorder=True).button_validate()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 90.0)
         self.assertEqual(order_line.margin_delivered_percent, 0.5)
@@ -164,7 +159,7 @@ class TestSaleMarginDelivered(TransactionCase):
         sale_order.action_confirm()
         picking = self._validate_so_picking(sale_order, qty_done=6.0)
         picking_return = self._create_return(picking, qty_refund=3.0, to_refund=False)
-        picking_return.move_line_ids.qty_done = 3.0
+        picking_return.move_line_ids.quantity = 3.0
         picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 60.0)
@@ -177,7 +172,7 @@ class TestSaleMarginDelivered(TransactionCase):
         sale_order.action_confirm()
         picking = self._validate_so_picking(sale_order, qty_done=12.0)
         picking_return = self._create_return(picking, qty_refund=3.0, to_refund=False)
-        picking_return.move_line_ids.qty_done = 3.0
+        picking_return.move_line_ids.quantity = 3.0
         picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 120.0)
@@ -192,8 +187,8 @@ class TestSaleMarginDelivered(TransactionCase):
         sale_order.action_confirm()
         picking = sale_order.picking_ids
         picking.action_assign()
-        picking.move_line_ids.qty_done = 6.0
-        picking._action_done()
+        picking.move_line_ids.quantity = 6.0
+        picking.with_context(skip_backorder=True).button_validate()
         order_line = sale_order.order_line[:1]
         # price_subtotal is rounded
         self.assertEqual(order_line.price_subtotal, 100.45)
@@ -212,8 +207,8 @@ class TestSaleMarginDelivered(TransactionCase):
         sale_order.action_confirm()
         picking = sale_order.picking_ids
         picking.action_assign()
-        picking.move_line_ids.qty_done = 6.0
-        picking._action_done()
+        picking.move_line_ids.quantity = 6.0
+        picking.with_context(skip_backorder=True).button_validate()
         order_line = sale_order.order_line[:1]
         # price_subtotal is rounded
         self.assertEqual(order_line.margin_delivered, 120)
