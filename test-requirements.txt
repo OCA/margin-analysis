@@ -1,0 +1,1 @@
+odoo-addon-sale_margin_delivered @ git+https://github.com/OCA/margin-analysis.git@refs/pull/239/head#subdirectory=sale_margin_delivered
