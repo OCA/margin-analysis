@@ -37,14 +37,14 @@ class TestSaleMarginDeliveredDropship(TestSaleMarginDelivered):
         purchases = sale_order._get_purchase_orders()
         purchases.button_confirm()
         dropship_picking = purchases.picking_ids
-        dropship_picking.move_line_ids.qty_done = 6.0
+        dropship_picking.move_line_ids.quantity = 6.0
         dropship_picking._action_done()
         # Create return for Dropship
         picking_return = self._create_return(
             dropship_picking, qty_refund=3.0, to_refund=True
         )
         picking_return.action_assign()
-        picking_return.move_line_ids.qty_done = 3.0
+        picking_return.move_line_ids.quantity = 3.0
         picking_return._action_done()
         order_line = sale_order.order_line[:1]
         self.assertEqual(order_line.margin_delivered, 30.0)
