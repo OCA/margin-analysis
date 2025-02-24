@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_margin_security](sale_margin_security/) | 18.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) [![yajo](https://github.com/yajo.png?size=30px)](https://github.com/yajo) | Sale Margin Security
+[sale_margin_sync](sale_margin_sync/) | 18.0.1.0.0 |  | Recompute sale margin when stock move cost price is changed
 
 [//]: # (end addons)
 
