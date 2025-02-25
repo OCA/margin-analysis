@@ -1,0 +1,9 @@
+- [Tecnativa](https://www.tecnativa.com):
+  - Sergio Teruel
+  - David Vidal
+  - Carlos Roca
+  - Pilar Vargas
+- Eduardo de Miguel ([Moduon](https://www.moduon.team/))
+- Rafael Blasco ([Moduon](https://www.moduon.team/))
+- [Heliconia Solutions Pvt. Ltd.](<https://www.heliconia.io>)
+  - Bhavesh Heliconia
