@@ -55,6 +55,9 @@ class Productproduct(models.Model):
     )
     def _compute_theoretical_multi(self):
         for product in self:
+            # Handle special case where self.env.company != product.company_id
+            # we switch in a new context to avoid to have a bad standard price
+            product = product.with_company(product.company_id)
             (
                 product.margin_state,
                 product.theoretical_price,
