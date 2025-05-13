@@ -12,21 +12,23 @@ class SomethingCase(SaleCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.consumable_product.standard_price = 10
-        cls.salesperson_edit = new_test_user(
+        cls.salesperson_edit_margin = new_test_user(
             cls.env,
             name="Salesperson PC Edit",
             login="salesperson_edit",
             groups=(
                 "sales_team.group_sale_salesman,"
-                "sale_margin_security.group_sale_margin_edit_security"
+                "sale_margin_security.group_sale_margin_security,"
+                "product_cost_security.group_product_edit_cost"
             ),
         )
-        cls.salesperson_read = new_test_user(
+        cls.salesperson_read_margin = new_test_user(
             cls.env,
             name="Salesperson PC Read",
             login="salesperson_read",
             groups="sales_team.group_sale_salesman,"
-            "sale_margin_security.group_sale_margin_security",
+            "sale_margin_security.group_sale_margin_security,"
+            "product_cost_security.group_product_cost",
         )
         cls.salesperson_none = new_test_user(
             cls.env,
@@ -37,8 +39,8 @@ class SomethingCase(SaleCommon):
 
     def test_rw_margin_access(self):
         """Unauthorized users cannot see margin data."""
-        self.empty_order.user_id = self.salesperson_edit
-        so = self.empty_order.with_user(self.salesperson_edit)
+        self.empty_order.user_id = self.salesperson_edit_margin
+        so = self.empty_order.with_user(self.salesperson_edit_margin)
         with Form(so) as order_f:
             # Lines contain margin fields
             with order_f.order_line.new() as line_f:
@@ -59,8 +61,8 @@ class SomethingCase(SaleCommon):
 
     def test_ro_margin_access(self):
         """Unauthorized users cannot see margin data."""
-        self.empty_order.user_id = self.salesperson_read
-        so = self.empty_order.with_user(self.salesperson_read)
+        self.empty_order.user_id = self.salesperson_read_margin
+        so = self.empty_order.with_user(self.salesperson_read_margin)
         with Form(so) as order_f:
             # Lines contain margin fields
             with order_f.order_line.new() as line_f:
