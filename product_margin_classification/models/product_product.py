@@ -13,7 +13,7 @@ MARGIN_STATE_SELECTION = [
 ]
 
 
-class Productproduct(models.Model):
+class ProductProduct(models.Model):
     _inherit = "product.product"
 
     # Columns Section

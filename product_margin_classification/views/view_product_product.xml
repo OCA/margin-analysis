@@ -158,4 +158,5 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="state">code</field>
         <field name="code">records.apply_theoretical_price_too_expensive()</field>
     </record>
+
 </odoo>
