@@ -73,10 +73,10 @@ class ProductTemplate(models.Model):
             template.theoretical_difference = variant.theoretical_difference
             template.margin_state = variant.margin_state
         for template in self - unique_variants:
-            template.margin_classification_id = 0.0
+            template.margin_classification_id = False
             template.theoretical_price = 0.0
             template.theoretical_difference = 0.0
-            template.margin_state = 0.0
+            template.margin_state = False
 
     def _inverse_margin_classification_id(self):
         for template in self:
@@ -88,3 +88,12 @@ class ProductTemplate(models.Model):
     # Custom Section
     def use_theoretical_price(self):
         self.mapped("product_variant_ids").use_theoretical_price()
+
+    def apply_theoretical_price(self):
+        self.mapped("product_variant_ids").apply_theoretical_price()
+
+    def apply_theoretical_price_too_cheap(self):
+        self.mapped("product_variant_ids").apply_theoretical_price_too_cheap()
+
+    def apply_theoretical_price_too_expensive(self):
+        self.mapped("product_variant_ids").apply_theoretical_price_too_expensive()
