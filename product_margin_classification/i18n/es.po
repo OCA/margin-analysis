@@ -74,6 +74,7 @@ msgstr ""
 
 #. module: product_margin_classification
 #: model:ir.actions.server,name:product_margin_classification.action_apply_theoretical_price_too_expensive
+#: model:ir.actions.server,name:product_margin_classification.action_product_template_apply_theoretical_price_too_expensive
 msgid "Apply Down To Theoretical Price"
 msgstr ""
 
@@ -84,12 +85,14 @@ msgstr "Aplicar Margen"
 
 #. module: product_margin_classification
 #: model:ir.actions.server,name:product_margin_classification.action_apply_theoretical_price
+#: model:ir.actions.server,name:product_margin_classification.action_product_template_apply_theoretical_price
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
 msgid "Apply Theoretical Price"
 msgstr "Aplicar Precio Teórico"
 
 #. module: product_margin_classification
 #: model:ir.actions.server,name:product_margin_classification.action_apply_theoretical_price_too_cheap
+#: model:ir.actions.server,name:product_margin_classification.action_product_template_apply_theoretical_price_too_cheap
 msgid "Apply Up To Theoretical Price"
 msgstr ""
 
