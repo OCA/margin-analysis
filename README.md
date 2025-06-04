@@ -21,18 +21,18 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_invoice_margin](account_invoice_margin/) | 12.0.3.0.3 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Show margin in invoices
-[account_invoice_margin_sale](account_invoice_margin_sale/) | 12.0.1.0.0 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) | Set margin in invoices from sale orders
-[account_invoice_margin_sale_delivered_sync](account_invoice_margin_sale_delivered_sync/) | 12.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sync invoice margin between invoices and sale orders
-[product_margin_classification](product_margin_classification/) | 12.0.1.0.4 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Product Margin Classification
-[product_pricelist_margin](product_pricelist_margin/) | 12.0.1.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Margins per Pricelist
+[account_invoice_margin](account_invoice_margin/) | 12.0.3.0.3 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Show margin in invoices
+[account_invoice_margin_sale](account_invoice_margin_sale/) | 12.0.1.0.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> <a href='https://github.com/carlosdauden'><img src='https://github.com/carlosdauden.png' width='32' height='32' style='border-radius:50%;' alt='carlosdauden'/></a> | Set margin in invoices from sale orders
+[account_invoice_margin_sale_delivered_sync](account_invoice_margin_sale_delivered_sync/) | 12.0.1.0.1 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Sync invoice margin between invoices and sale orders
+[product_margin_classification](product_margin_classification/) | 12.0.1.0.4 | <a href='https://github.com/legalsylvain'><img src='https://github.com/legalsylvain.png' width='32' height='32' style='border-radius:50%;' alt='legalsylvain'/></a> | Product Margin Classification
+[product_pricelist_margin](product_pricelist_margin/) | 12.0.1.0.0 | <a href='https://github.com/legalsylvain'><img src='https://github.com/legalsylvain.png' width='32' height='32' style='border-radius:50%;' alt='legalsylvain'/></a> | Margins per Pricelist
 [product_replenishment_cost](product_replenishment_cost/) | 12.0.1.0.1 |  | Provides an overridable method on product which computethe Replenishment cost of a product
-[product_standard_margin](product_standard_margin/) | 12.0.1.0.1 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Product Margin and Margin Rate
-[sale_margin_delivered](sale_margin_delivered/) | 12.0.1.0.3 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Delivered
-[sale_margin_security](sale_margin_security/) | 12.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Margin Security
+[product_standard_margin](product_standard_margin/) | 12.0.1.0.1 | <a href='https://github.com/legalsylvain'><img src='https://github.com/legalsylvain.png' width='32' height='32' style='border-radius:50%;' alt='legalsylvain'/></a> | Product Margin and Margin Rate
+[sale_margin_delivered](sale_margin_delivered/) | 12.0.1.0.3 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Sale Margin Delivered
+[sale_margin_security](sale_margin_security/) | 12.0.1.0.1 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Sale Margin Security
 [sale_margin_sync](sale_margin_sync/) | 12.0.1.0.1 |  | Recompute sale margin when stock move cost price is changed
 [sale_order_margin_percent](sale_order_margin_percent/) | 12.0.1.1.1 |  | Show Percent in sale order
-[sale_report_margin](sale_report_margin/) | 12.0.1.0.1 | [![sergio-teruel](https://github.com/sergio-teruel.png?size=30px)](https://github.com/sergio-teruel) | Sale Report Margin
+[sale_report_margin](sale_report_margin/) | 12.0.1.0.1 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Sale Report Margin
 
 [//]: # (end addons)
 
