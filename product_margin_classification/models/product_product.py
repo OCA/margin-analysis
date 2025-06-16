@@ -76,8 +76,9 @@ class ProductProduct(models.Model):
     ):
         precision = self.env["decimal.precision"].precision_get("Product Price")
         if classification:
-            multi = (100 + classification.markup) / 100
-            if sale_taxes.filtered(lambda x: x.amount_type != "percent"):
+            base_price = standard_price * ((100 + classification.markup) / 100)
+            extra_included_taxes = 0
+            if sale_taxes.filtered(lambda x: x.amount_type not in ("percent", "fixed")):
                 raise ValidationError(
                     _(
                         "Unimplemented Feature\n"
@@ -87,10 +88,19 @@ class ProductProduct(models.Model):
                     % (product_name)
                 )
             for tax in sale_taxes.filtered(lambda x: x.price_include):
-                multi *= (100 + tax.amount) / 100.0
+                if tax.amount_type == "percent":
+                    if tax.include_base_amount:
+                        base_price *= (100 + tax.amount) / 100
+                    else:
+                        extra_included_taxes += base_price * (tax.amount / 100)
+                elif tax.amount_type == "fixed":
+                    if tax.include_base_amount:
+                        base_price += tax.amount
+                    else:
+                        extra_included_taxes += tax.amount
             theoretical_price = (
                 tools.float_round(
-                    standard_price * multi,
+                    base_price + extra_included_taxes,
                     precision_rounding=classification.price_round,
                 )
                 + classification.price_surcharge
