@@ -1,9 +1,10 @@
 [project]
 name = "odoo-addons-oca-margin-analysis"
-version = "18.0.20250422.0"
+version = "18.0.20250728.0"
 dependencies = [
     "odoo-addon-account_invoice_margin==18.0.*",
     "odoo-addon-account_invoice_margin_sale==18.0.*",
+    "odoo-addon-product_standard_margin==18.0.*",
     "odoo-addon-sale_margin_delivered==18.0.*",
     "odoo-addon-sale_margin_security==18.0.*",
     "odoo-addon-sale_margin_sync==18.0.*",
