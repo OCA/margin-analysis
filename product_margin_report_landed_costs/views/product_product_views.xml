@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="product_margin_view_form" model="ir.ui.view">
+        <field name="name">product.margin.form.inherit.product_margin_report_sale_margin
+        </field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product_margin.view_product_margin_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='normal_cost']" position="after">
+                <separator string="Landed Costs" colspan="4" />
+                <field name="accumulated_landed_costs" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
