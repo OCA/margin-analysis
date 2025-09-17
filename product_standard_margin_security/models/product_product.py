@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class ProductProduct(models.Model):
-
     _inherit = "product.product"
 
     list_price_vat_excl = fields.Float(
