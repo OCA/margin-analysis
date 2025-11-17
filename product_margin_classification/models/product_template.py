@@ -15,6 +15,7 @@ class ProductTemplate(models.Model):
         string="Margin Classification",
         compute="_compute_theoretical_multi_template",
         inverse="_inverse_margin_classification_id",
+        search="_search_margin_classification_id",
         comodel_name="product.margin.classification",
     )
 
@@ -84,6 +85,12 @@ class ProductTemplate(models.Model):
                 template.product_variant_ids.margin_classification_id = (
                     template.margin_classification_id
                 )
+
+    def _search_margin_classification_id(self, operator, value):
+        # for product.template records with multiple variants, will return the
+        # records for which at least one of the variants satisfies the condition
+        # instead of considering that the field is always unset.
+        return [("product_variant_ids.margin_classification_id", operator, value)]
 
     # Custom Section
     def use_theoretical_price(self):

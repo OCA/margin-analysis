@@ -83,3 +83,16 @@ class TestProductTemplate(TransactionCase):
             self.too_expensive.list_price,
             self.too_expensive.theoretical_price,
         )
+
+    def test_04_search_margin_classification_id(self):
+        products = self.env["product.template"].search(
+            [
+                (
+                    "margin_classification_id",
+                    "=",
+                    self.too_cheap.margin_classification_id.id,
+                )
+            ]
+        )
+        self.assertIn(self.too_cheap, products)
+        self.assertIn(self.too_expensive, products)
