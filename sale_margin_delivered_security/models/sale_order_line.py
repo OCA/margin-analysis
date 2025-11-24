@@ -4,8 +4,7 @@ from odoo import fields, models
 
 
 class SaleOrderLine(models.Model):
-    _name = "sale.order.line"
-    _inherit = ["sale.order.line", "product.cost.security.mixin"]
+    _inherit = "sale.order.line"
 
     # Inherited fields
     purchase_price_delivery = fields.Float(
