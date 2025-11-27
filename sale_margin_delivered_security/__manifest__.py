@@ -4,7 +4,7 @@
     "name": "Sale Margin Delivered - Sale Margin Security",
     "summary": "Glue module between sale margin delivered"
     " and sale margin security modules",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "author": "Tecnativa, GRAP, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/margin-analysis",
     "category": "Sales",
