@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-02 16:30+0000\n"
-"PO-Revision-Date: 2025-12-06 21:42+0000\n"
+"PO-Revision-Date: 2025-12-15 12:55+0000\n"
 "Last-Translator: Simon Hick <sim@coopiteasy.be>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -22,14 +22,14 @@ msgstr ""
 #: code:addons/product_margin_classification/models/product_margin_classification.py:0
 #, python-format
 msgid "-100 is not a valid Markup."
-msgstr "-100 n'est pas un taux de markup valide."
+msgstr "-100 n'est pas un taux de marge valide."
 
 #. module: product_margin_classification
 #. odoo-python
 #: code:addons/product_margin_classification/models/product_margin_classification.py:0
 #, python-format
 msgid "100 is not a valid Profit Margin."
-msgstr "100 n'est pas un taux de marge valide."
+msgstr "100 n'est pas un taux de marque valide."
 
 #. module: product_margin_classification
 #: model_terms:ir.ui.view,arch_db:product_margin_classification.view_product_margin_classification_form
@@ -69,7 +69,7 @@ msgid ""
 "- Cost) / Sale Price"
 msgstr ""
 "Il est calculé à partir de la formule suivante : \n"
-" Taux de marge = 100 * (Prix de vente HT - Coût de revient) / Prix de vente "
+" Taux de marque = 100 * (Prix de vente HT - Coût de revient) / Prix de vente "
 "HT"
 
 #. module: product_margin_classification
@@ -187,7 +187,7 @@ msgstr "Catégories de marge"
 #. module: product_margin_classification
 #: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__markup
 msgid "Markup"
-msgstr "Taux de markup"
+msgstr "Taux de Marge"
 
 #. module: product_margin_classification
 #: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__name
@@ -240,7 +240,7 @@ msgstr "Nombre d'articles"
 #. module: product_margin_classification
 #: model:ir.model.fields,field_description:product_margin_classification.field_product_margin_classification__profit_margin
 msgid "Profit Margin"
-msgstr "Taux de Marge"
+msgstr "Taux de Marque"
 
 #. module: product_margin_classification
 #: model:ir.model.fields,help:product_margin_classification.field_product_margin_classification__price_round
@@ -357,8 +357,8 @@ msgid ""
 "Cost) / Cost"
 msgstr ""
 "Valeur qui vous aide à calculer le prix de vente, en partant du coût, comme "
-"défini : Prix de vente = (Coût * (1 + Taux de markup))\n"
-". Il est calculé avec la formule suivante : Taux de markup = (Prix de vente "
+"défini : Prix de vente = (Coût * (1 + taux de marge))\n"
+". Il est calculé avec la formule suivante : Taux de Marge = (Prix de vente "
 "HT - Coût HT) / Coût HT"
 
 #. module: product_margin_classification
