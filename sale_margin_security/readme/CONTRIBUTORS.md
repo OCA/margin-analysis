@@ -6,3 +6,5 @@
 - [Moduon](https://www.moduon.team)
   - Rafael Blasco
   - Jairo Llopis
+- [Open Source Integrators](https://www.opensourceintegrators.com)
+  - Daniel Reis
