@@ -34,7 +34,6 @@ class TestAccountInvoiceMargin(TransactionCase):
                 "name": "test product",
                 "categ_id": cls.product_categ.id,
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
-                "uom_po_id": cls.env.ref("uom.product_uom_unit").id,
                 "default_code": "test-margin",
                 "invoice_policy": "order",
                 "list_price": 200.00,
@@ -53,7 +52,6 @@ class TestAccountInvoiceMargin(TransactionCase):
                             "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom_qty": 1,
-                            "product_uom": cls.product.uom_id.id,
                             "price_unit": 100.0,
                         },
                     )
@@ -90,7 +88,6 @@ class TestAccountInvoiceMargin(TransactionCase):
                             "product_id": product.id,
                             "name": "Testing Product",
                             "product_uom_qty": 1,
-                            "product_uom": product.uom_id.id,
                             "price_unit": 1000.00,
                             "purchase_price": 500.00,
                         },
