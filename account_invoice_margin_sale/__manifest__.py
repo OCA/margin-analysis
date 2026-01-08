@@ -10,7 +10,7 @@
     "maintainers": ["sergio-teruel", "carlosdauden"],
     "category": "Account",
     "website": "https://github.com/OCA/margin-analysis",
-    "author": "Tecnativa, " "Odoo Community Association (OCA)",
+    "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
