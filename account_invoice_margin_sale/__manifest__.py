@@ -5,7 +5,7 @@
 {
     "name": "Account Invoice Margin Sale",
     "summary": "Set margin in invoices from sale orders",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "development_status": "Production/Stable",
     "maintainers": ["sergio-teruel", "carlosdauden"],
     "category": "Account",

@@ -17,7 +17,6 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    # pylint: disable=W8110
     @api.depends("purchase_price", "price_subtotal")
     def _compute_margin(self):
         invoice_lines_with_downpayment = self.filtered(
@@ -30,4 +29,6 @@ class AccountMoveLine(models.Model):
                 "margin_percent": 0.0,
             }
         )
-        super(AccountMoveLine, self - invoice_lines_with_downpayment)._compute_margin()
+        return super(
+            AccountMoveLine, self - invoice_lines_with_downpayment
+        )._compute_margin()

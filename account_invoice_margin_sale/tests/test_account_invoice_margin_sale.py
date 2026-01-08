@@ -3,10 +3,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.fields import Command
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestAccountInvoiceMargin(TransactionCase):
+class TestAccountInvoiceMargin(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -21,9 +22,6 @@ class TestAccountInvoiceMargin(TransactionCase):
                 "reconcile": True,
             }
         )
-        cls.partner = cls.env["res.partner"].create(
-            {"name": "Test partner", "customer_rank": 1, "is_company": True}
-        )
         cls.partner.property_account_receivable_id = cls.account
         cls.product_categ = cls.env["product.category"].create(
             {"name": "Test category"}
@@ -34,7 +32,6 @@ class TestAccountInvoiceMargin(TransactionCase):
                 "name": "test product",
                 "categ_id": cls.product_categ.id,
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
-                "uom_po_id": cls.env.ref("uom.product_uom_unit").id,
                 "default_code": "test-margin",
                 "invoice_policy": "order",
                 "list_price": 200.00,
@@ -53,7 +50,6 @@ class TestAccountInvoiceMargin(TransactionCase):
                             "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom_qty": 1,
-                            "product_uom": cls.product.uom_id.id,
                             "price_unit": 100.0,
                         },
                     )
@@ -90,7 +86,6 @@ class TestAccountInvoiceMargin(TransactionCase):
                             "product_id": product.id,
                             "name": "Testing Product",
                             "product_uom_qty": 1,
-                            "product_uom": product.uom_id.id,
                             "price_unit": 1000.00,
                             "purchase_price": 500.00,
                         },
