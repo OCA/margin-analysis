@@ -3,3 +3,4 @@
 - Joël Grand-Guillaume \<<joel.grand-guillaume@camptocamp.com>\>
 - Sylvain Le Gal (<https://twitter.com/legalsylvain>)
 - Cyril Vinh-Tung \<<cyril@invitu.com>\>
+- Christian Doñate \<<https://tesseratech.es>\>
