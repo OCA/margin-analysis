@@ -11,12 +11,7 @@ class TestAccountInvoiceMargin(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # cls.env.user.group_ids |= cls.env.ref(
-        #     "product_cost_security.group_product_edit_cost"
-        # )
-        # cls.env.user.group_ids |= cls.env.ref(
-        #     "product_cost_security.group_product_cost"
-        # )
+
         group_edit = cls.env.ref(
             "product_cost_security.group_product_edit_cost", raise_if_not_found=False
         )
