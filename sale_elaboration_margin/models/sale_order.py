@@ -13,14 +13,14 @@ class SaleOrderLine(models.Model):
         readonly=False,
         string="Elaboration Cost",
         digits="Product Price",
-        group_operator="avg",
+        aggregator="avg",
     )
     elaboration_price = fields.Float(
         compute="_compute_elaboration_price",
         store=True,
         readonly=False,
         digits="Product Price",
-        group_operator="avg",
+        aggregator="avg",
     )
     elaboration_margin = fields.Monetary(
         compute="_compute_elaboration_margin",
@@ -38,23 +38,28 @@ class SaleOrderLine(models.Model):
                 elaboration_price = 0
                 elaboration_cost_price = 0
                 for elaboration_product in line.elaboration_ids.product_id:
-                    product = elaboration_product.with_context(
-                        lang=line.order_id.partner_id.lang,
-                        partner=line.order_id.partner_id.id,
-                        quantity=line.product_uom_qty,
-                        date=line.order_id.date_order,
-                        pricelist=line.order_id.pricelist_id.id,
-                        uom=line.product_uom.id,
-                        fiscal_position=self.env.context.get("fiscal_position"),
+                    new_sol = self.env["sale.order.line"].new(
+                        {
+                            "order_id": line.order_id.id,
+                            "product_id": elaboration_product.id,
+                            "product_uom_qty": line.product_uom_qty,
+                            "product_uom": line.product_uom.id,
+                            "sequence": max(
+                                line.order_id.order_line.mapped("sequence"), default=0
+                            )
+                            + 1,
+                        }
                     )
+                    new_sol._compute_price_unit()
                     elaboration_price += self.env[
                         "account.tax"
                     ]._fix_tax_included_price_company(
-                        line._get_display_price(product),
-                        product.taxes_id,
+                        new_sol.price_unit,
+                        elaboration_product.taxes_id,
                         line.tax_id,
                         line.company_id,
                     )
+                    new_sol.order_id = False
                     elaboration_cost_price += elaboration_product.standard_price
                 line.elaboration_price = elaboration_price
                 line.elaboration_cost_price = elaboration_cost_price
