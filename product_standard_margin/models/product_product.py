@@ -31,7 +31,7 @@ class ProductProduct(models.Model):
 
     standard_margin_rate = fields.Float(
         compute="_compute_margin",
-        string="Margin (%)",
+        string="Margin on Sales (%)",
         store=True,
         digits="Product Price",
         help="Margin rate is [ Margin / sale price (Wo Tax) ] "
@@ -41,7 +41,7 @@ class ProductProduct(models.Model):
     )
     standard_markup_rate = fields.Float(
         compute="_compute_margin",
-        string="Markup (%)",
+        string="Markup Rate (%)",
         store=True,
         digits="Product Price",
         help="Markup rate is [ Margin / cost price (Wo Tax) ] "
@@ -55,7 +55,7 @@ class ProductProduct(models.Model):
         "lst_price",
         "product_tmpl_id.list_price",
         "standard_price",
-        "taxes_id.price_include",
+        "taxes_id.price_include_override",
         "taxes_id.amount",
         "taxes_id.include_base_amount",
     )

@@ -29,7 +29,7 @@ class ProductTemplate(models.Model):
 
     standard_margin_rate = fields.Float(
         compute="_compute_margin",
-        string="Margin (%)",
+        string="Margin on Sales (%)",
         digits="Product Price",
         help="Margin rate is [ Margin / sale price (Wo Tax) ] "
         "of the product form (not based on historical values)."
@@ -38,7 +38,7 @@ class ProductTemplate(models.Model):
     )
     standard_markup_rate = fields.Float(
         compute="_compute_margin",
-        string="Markup (%)",
+        string="Markup Rate (%)",
         digits="Product Price",
         help="Markup rate is [ Margin / cost price (Wo Tax) ] "
         "of the product form (not based on historical values)."
@@ -50,7 +50,7 @@ class ProductTemplate(models.Model):
     @api.depends(
         "list_price",
         "standard_price",
-        "taxes_id.price_include",
+        "taxes_id.price_include_override",
         "taxes_id.amount",
         "taxes_id.include_base_amount",
     )
