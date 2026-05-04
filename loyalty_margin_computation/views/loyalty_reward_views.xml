@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="margin_product_loyalty_reward_form_view" model="ir.ui.view">
+        <field name="model">loyalty.reward</field>
+        <field name="inherit_id" ref="loyalty.loyalty_reward_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='reward_type_group']/.." position="after">
+                <group string="Margin's Formulas">
+                    <group>
+                        <field
+                            name="sale_margin_formula"
+                            widget="code"
+                            options="{'mode': 'python'}"
+                        />
+                    </group>
+                    <group>
+                        <div
+                            class="alert alert-info"
+                            role="alert"
+                            name="variables_to_use"
+                        >
+                            <p>The following variables can be used:</p>
+                            <ul>
+                                <li><code
+                                >env</code>: The Sale Order Line environment</li>
+                                <li><code>reward</code>: The reward record</li>
+                            </ul>
+                            <div name="example_to_use">
+                                <p>Example of Python code:</p>
+                                <pre
+                                    style="white-space: pre-wrap"
+                                >result = reward.do_some_action()</pre>
+                            </div>
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
