@@ -16,7 +16,7 @@
                     name="margin_delivered_percent"
                     string="Margin dlvd. (%)"
                     optional="hide"
-                    attrs="{'invisible': [('price_subtotal', '=', 0)]}"
+                    invisible="not price_subtotal"
                     widget="percentage"
                 />
                 <field name="margin_delivered" string="Margin dlvd." optional="hide" />
