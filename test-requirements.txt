@@ -1,0 +1,2 @@
+odoo-addon-sale_margin_pricelist_computation @ git+https://github.com/OCA/margin-analysis.git@refs/pull/262/head#subdirectory=sale_margin_pricelist_computation
+odoo-addon-loyalty_margin_computation @ git+https://github.com/OCA/margin-analysis.git@refs/pull/263/head#subdirectory=loyalty_margin_computation
