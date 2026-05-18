@@ -18,12 +18,12 @@
                 />
                 <field
                     name="margin"
-                    optional="show"
+                    optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
                 />
                 <field
                     name="margin_percent"
-                    optional="show"
+                    optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
                 />
             </xpath>
@@ -65,12 +65,12 @@
                 <field
                     name="margin_signed"
                     sum="Total"
-                    optional="show"
+                    optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
                 />
                 <field
                     name="margin_percent"
-                    optional="show"
+                    optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
                 />
             </field>
