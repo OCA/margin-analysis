@@ -35,14 +35,10 @@ The new information is available:
 * on the invoice form view
 
 .. figure:: https://raw.githubusercontent.com/OCA/margin-analysis/16.0/account_invoice_margin/static/description/account_invoice_form.png
-   :scale: 80 %
-   :alt: Invoice Tree View
 
 * and on the invoice tree view
 
 .. figure:: https://raw.githubusercontent.com/OCA/margin-analysis/16.0/account_invoice_margin/static/description/account_invoice_tree.png
-   :scale: 80 %
-   :alt: Invoice Tree View
 
 **Table of contents**
 
