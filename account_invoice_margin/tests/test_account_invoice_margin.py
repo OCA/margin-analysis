@@ -11,14 +11,8 @@ class TestAccountInvoiceMargin(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.user.groups_id |= cls.env.ref(
-            "product_cost_security.group_product_edit_cost"
-        )
-        cls.env.user.groups_id |= cls.env.ref(
-            "product_cost_security.group_product_cost"
-        )
         cls.product_a.lst_price = 200
-        cls.product_a.standard_price = 100
+        cls.product_a.sudo().write({"standard_price": 100})
         cls.invoice = cls.init_invoice(
             "out_invoice",
             partner=cls.partner_a,
