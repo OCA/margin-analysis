@@ -1,0 +1,1 @@
+This module allows the use of formulas to calculate the margin of sale order lines.

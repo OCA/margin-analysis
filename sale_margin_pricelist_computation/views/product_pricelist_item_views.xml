@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="margin_product_pricelist_item_form_view" model="ir.ui.view">
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='pricelist_rule_related']/.." position="before">
+                <group string="Margin's Formulas">
+                    <group>
+                        <field
+                            name="margin_cost_price_formula"
+                            widget="code"
+                            options="{'mode': 'python'}"
+                            style="min-height:120px;"
+                        />
+                        <field
+                            name="margin_sale_price_formula"
+                            widget="code"
+                            options="{'mode': 'python'}"
+                            style="min-height:120px;"
+                        />
+                    </group>
+                    <group>
+                        <div class="alert alert-info" role="alert">
+                            <p>The following variables can be used:</p>
+                            <ul>
+                                <li><code>line</code>: Order Line (sale.order.line)</li>
+                                <li><code>line.product_uom_qty</code>, <code
+                                >line.qty_delivered</code>: Ordered and delivered quantities</li>
+                                <li><code
+                                >product</code>: The Sale Order Line product</li>
+                                <li><code
+                                >product.standard_price</code>: Product cost</li>
+                                <li><code
+                                >product.list_price</code>: Product sale price</li>
+                                <li><code>pricelist</code>: Current pricelist</li>
+                                <li><code
+                                >pricelist_item</code>: Current pricelist rule</li>
+                                <li><code
+                                >float_compare()</code>: utility function to compare floats based on a specific precision</li>
+                                <li><code
+                                >env</code>: The Sale Order Line environment</li>
+                                <li>To return a result, assign: <code
+                                >result = </code></li>
+                            </ul>
+                            <div>
+                                <p>Example of Python code:</p>
+                                <pre
+                                    style="white-space: pre-wrap"
+                                >result = 20 if line.price_unit > 30 else 10</pre>
+                            </div>
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
