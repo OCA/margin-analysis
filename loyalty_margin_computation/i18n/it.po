@@ -1,0 +1,60 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* loyalty_margin_computation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:loyalty_margin_computation.margin_product_loyalty_reward_form_view
+msgid "<code>env</code>: The Sale Order Line environment"
+msgstr ""
+
+#. module: loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:loyalty_margin_computation.margin_product_loyalty_reward_form_view
+msgid "<code>reward</code>: The reward record"
+msgstr ""
+
+#. module: loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:loyalty_margin_computation.margin_product_loyalty_reward_form_view
+msgid "Example of Python code:"
+msgstr ""
+
+#. module: loyalty_margin_computation
+#: model:ir.model,name:loyalty_margin_computation.model_loyalty_reward
+msgid "Loyalty Reward"
+msgstr ""
+
+#. module: loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:loyalty_margin_computation.margin_product_loyalty_reward_form_view
+msgid "Margin's Formulas"
+msgstr ""
+
+#. module: loyalty_margin_computation
+#: model:ir.model.fields,field_description:loyalty_margin_computation.field_loyalty_reward__sale_margin_formula
+msgid "Sale Margin Formula"
+msgstr ""
+
+#. module: loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:loyalty_margin_computation.margin_product_loyalty_reward_form_view
+msgid "The following variables can be used:"
+msgstr ""
+
+#. module: loyalty_margin_computation
+#: model:ir.model.fields,help:loyalty_margin_computation.field_loyalty_reward__sale_margin_formula
+msgid "This formula is used to calculate the margin"
+msgstr ""
+
+#. module: loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:loyalty_margin_computation.margin_product_loyalty_reward_form_view
+msgid "result = reward.do_some_action()"
+msgstr ""
