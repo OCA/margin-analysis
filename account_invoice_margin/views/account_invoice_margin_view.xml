@@ -62,7 +62,7 @@
     </record>
     <record id="view_account_invoice_tree" model="ir.ui.view">
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="inherit_id" ref="account.view_out_invoice_tree" />
         <field name="arch" type="xml">
             <field name="amount_untaxed_signed" position="before">
                 <field
