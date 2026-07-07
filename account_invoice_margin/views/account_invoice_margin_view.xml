@@ -15,16 +15,19 @@
                     name="purchase_price"
                     optional="show"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'column_invisible': [('parent.move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
                 <field
                     name="margin"
                     optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'column_invisible': [('parent.move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
                 <field
                     name="margin_percent"
                     optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'column_invisible': [('parent.move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
             </xpath>
             <!-- Add fields to embed invoice line form view  -->
