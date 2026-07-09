@@ -3,7 +3,7 @@
 {
     "name": "Sale Elaboration Margin",
     "summary": "Compute elaboration margins in sale orders lines",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "Sale",
     "website": "https://github.com/OCA/margin-analysis",

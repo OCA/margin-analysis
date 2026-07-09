@@ -7,14 +7,14 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='order_line']/form//field[@name='tax_id']"
+                expr="//field[@name='order_line']/form//field[@name='tax_ids']"
                 position="before"
             >
                 <field name="elaboration_cost_price" force_save="1" invisible="1" />
                 <field name="elaboration_price" force_save="1" invisible="1" />
             </xpath>
             <xpath
-                expr="//field[@name='order_line']/list//field[@name='tax_id']"
+                expr="//field[@name='order_line']/list//field[@name='tax_ids']"
                 position="before"
             >
                 <field

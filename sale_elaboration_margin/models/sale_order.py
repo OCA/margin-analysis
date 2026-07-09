@@ -43,7 +43,7 @@ class SaleOrderLine(models.Model):
                             "order_id": line.order_id.id,
                             "product_id": elaboration_product.id,
                             "product_uom_qty": line.product_uom_qty,
-                            "product_uom": line.product_uom.id,
+                            "product_uom_id": line.product_uom_id.id,
                             "sequence": max(
                                 line.order_id.order_line.mapped("sequence"), default=0
                             )
@@ -56,10 +56,17 @@ class SaleOrderLine(models.Model):
                     ]._fix_tax_included_price_company(
                         new_sol.price_unit,
                         elaboration_product.taxes_id,
-                        line.tax_id,
+                        line.tax_ids,
                         line.company_id,
                     )
                     new_sol.order_id = False
+                    # Detaching the temporary line flags its stored computed
+                    # fields to recompute. Left pending, they are computed in
+                    # batch with the real lines on a record without order,
+                    # company nor currency.
+                    for field in list(self.env.fields_to_compute()):
+                        if field.model_name == new_sol._name:
+                            self.env.remove_to_compute(field, new_sol)
                     elaboration_cost_price += elaboration_product.standard_price
                 line.elaboration_price = elaboration_price
                 line.elaboration_cost_price = elaboration_cost_price
