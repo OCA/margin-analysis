@@ -1,9 +1,10 @@
 [project]
 name = "odoo-addons-oca-margin-analysis"
-version = "19.0.20260626.0"
+version = "19.0.20260802.0"
 dependencies = [
     "odoo-addon-account_invoice_margin==19.0.*",
     "odoo-addon-account_invoice_margin_sale==19.0.*",
+    "odoo-addon-product_standard_margin==19.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
