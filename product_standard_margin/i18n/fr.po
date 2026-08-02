@@ -1,0 +1,136 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_standard_margin
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-23 19:48+0000\n"
+"PO-Revision-Date: 2024-01-09 00:49+0000\n"
+"Last-Translator: kbentaleb <k.bentaleb@gmail.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin
+msgid "Margin"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin_rate
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin_rate
+msgid "Margin (%)"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin
+msgid ""
+"Margin is [ sale price (Wo Tax) - cost price ] of the product form (not "
+"based on historical values). Take care of tax include and exclude. If no "
+"sale price, the margin will be negativ."
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_margin_rate
+#: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_margin_rate
+msgid ""
+"Margin rate is [ Margin / sale price (Wo Tax) ] of the product form (not "
+"based on historical values).Take care of tax include and exclude.. If no "
+"sale price set, will display 999.0"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_markup_rate
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_markup_rate
+msgid "Markup (%)"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,help:product_standard_margin.field_product_product__standard_markup_rate
+#: model:ir.model.fields,help:product_standard_margin.field_product_template__standard_markup_rate
+msgid ""
+"Markup rate is [ Margin / cost price (Wo Tax) ] of the product form (not "
+"based on historical values).Take care of tax include and exclude.. If no "
+"cost price set, will display 999.0"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model,name:product_standard_margin.model_product_template
+msgid "Product"
+msgstr "Article"
+
+#. module: product_standard_margin
+#: model:ir.model,name:product_standard_margin.model_product_product
+msgid "Product Variant"
+msgstr "Variantes de produit"
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__list_price_vat_excl
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__list_price_vat_excl
+msgid "Sale Price VAT Excluded"
+msgstr "Prix de vente (HT)"
+
+#~ msgid ""
+#~ "Margin rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
+#~ "form (not based on historical values).Take care of tax include and "
+#~ "exclude.. If no sale price set, will display 999.0"
+#~ msgstr ""
+#~ "Taux de marque théorique [ (PV unitaire - Coût unitaire ) / PV unitaire "
+#~ "du formulaire Produit] (ne tient pas compte de la facturation effective). "
+#~ "Ce taux tient compte des PV TTC (TVA incluse). Si aucun PV n'a été saisi, "
+#~ "le taux sera de 999.0"
+
+#~ msgid ""
+#~ "Markup rate is [ Theorical Margin / cost price (Wo Tax) ] of the product "
+#~ "form (not based on historical values).Take care of tax include and "
+#~ "exclude.. If no cost price set, will display 999.0"
+#~ msgstr ""
+#~ "Taux de marge théorique [ (PV unitaire - Coût unitaire ) / Coût unitaire "
+#~ "du formulaire Produit] (ne tient pas compte de la facturation effective). "
+#~ "Ce taux tient compte des PV TTC (TVA incluse). Si aucun coût n'a été "
+#~ "saisi, le taux sera de 999.0"
+
+#~ msgid "Theorical Margin"
+#~ msgstr "Marge Théorique"
+
+#~ msgid "Theorical Margin (%)"
+#~ msgstr "Taux de marque Théorique (%)"
+
+#~ msgid ""
+#~ "Theorical Margin is [ sale price (Wo Tax) - cost price ] of the product "
+#~ "form (not based on historical values). Take care of tax include and "
+#~ "exclude. If no sale price, the margin will be negativ."
+#~ msgstr ""
+#~ "Marge théorique [ Vente unitaire HT - coût unitaire ] du produit (ne "
+#~ "tient pas compte de la facturation effective). Ce taux tient compte des "
+#~ "PV TTC (TVA incluse). Si aucun PV n'a été saisi, la marge sera négative."
+
+#~ msgid "Theorical Markup (%)"
+#~ msgstr "Taux de marge Théorique (%)"
+
+#~ msgid ""
+#~ "Markup rate is [ Theorical Margin / sale price (Wo Tax) ] of the product "
+#~ "form (not based on historical values).Take care of tax include and "
+#~ "exclude.. If no sale price set, will display 999.0"
+#~ msgstr ""
+#~ "Taux de marge théorique [ (PV unitaire - Coût unitaire ) / Coût unitaire "
+#~ "du formulaire Produit] (ne tient pas compte de la facturation effective). "
+#~ "Ce taux tient compte des PV TTC (TVA incluse). Si aucun coût n'a été "
+#~ "saisi, le taux sera de 999.0"
+
+#~ msgid "Product Template"
+#~ msgstr "Modèle d'article"
+
+#~ msgid "Display Name"
+#~ msgstr "Nom affiché"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Dernière modification le"
