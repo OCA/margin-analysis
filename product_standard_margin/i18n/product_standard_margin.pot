@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,15 +14,21 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin
-msgid "Margin"
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__display_name
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: product_standard_margin
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin_rate
-#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin_rate
-msgid "Margin (%)"
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__id
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin
+msgid "Margin"
 msgstr ""
 
 #. module: product_standard_margin
@@ -32,6 +38,12 @@ msgid ""
 "Margin is [ sale price (Wo Tax) - cost price ] of the product form (not "
 "based on historical values). Take care of tax include and exclude. If no "
 "sale price, the margin will be negativ."
+msgstr ""
+
+#. module: product_standard_margin
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_margin_rate
+#: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_margin_rate
+msgid "Margin on Sales (%)"
 msgstr ""
 
 #. module: product_standard_margin
@@ -46,7 +58,7 @@ msgstr ""
 #. module: product_standard_margin
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_product__standard_markup_rate
 #: model:ir.model.fields,field_description:product_standard_margin.field_product_template__standard_markup_rate
-msgid "Markup (%)"
+msgid "Markup Rate (%)"
 msgstr ""
 
 #. module: product_standard_margin
