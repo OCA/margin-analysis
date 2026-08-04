@@ -1,3 +1,7 @@
+.. image:: https://odoo-community.org/readme-banner-image
+   :target: https://odoo-community.org/get-involved?utm_source=readme
+   :alt: Odoo Community Association
+
 ==============================
 Product Margin and Margin Rate
 ==============================
@@ -13,7 +17,7 @@ Product Margin and Margin Rate
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github
@@ -57,8 +61,10 @@ have added a dependency on sale module.
 Known issues / Roadmap
 ======================
 
-* This module will not work properly if used in a multicompany context with product
-  prices depending on the company.
+This module will not work properly if used in a multicompany context with "global" products
+that are not related to any company.
+This is due to current odoo limitation that compute field with a sudo user, and due to the field `standard_price`
+that is weirdly company dependent, unlike the selling price.
 
 Bug Tracker
 ===========

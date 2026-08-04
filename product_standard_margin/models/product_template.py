@@ -59,25 +59,24 @@ class ProductTemplate(models.Model):
         # because otherwise, the recomputation is not done correctly
         # when the product datas are changed from the template view
         for template in self:
+            standard_price = template.with_company(template.company_id).standard_price
             template.list_price_vat_excl = template.taxes_id.compute_all(
                 template.list_price, product=template
             )["total_excluded"]
-            template.standard_margin = (
-                template.list_price_vat_excl - template.standard_price
-            )
+            template.standard_margin = template.list_price_vat_excl - standard_price
             if template.list_price_vat_excl == 0:
                 template.standard_margin_rate = 999.0
             else:
                 template.standard_margin_rate = (
-                    (template.list_price_vat_excl - template.standard_price)
+                    (template.list_price_vat_excl - standard_price)
                     / template.list_price_vat_excl
                     * 100
                 )
-            if template.standard_price == 0:
+            if standard_price == 0:
                 template.standard_markup_rate = 999.0
             else:
                 template.standard_markup_rate = (
-                    (template.list_price_vat_excl - template.standard_price)
-                    / template.standard_price
+                    (template.list_price_vat_excl - standard_price)
+                    / standard_price
                     * 100
                 )
