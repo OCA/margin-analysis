@@ -15,16 +15,19 @@
                     name="purchase_price"
                     optional="show"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'column_invisible': [('parent.move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
                 <field
                     name="margin"
-                    optional="show"
+                    optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'column_invisible': [('parent.move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
                 <field
                     name="margin_percent"
-                    optional="show"
+                    optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'column_invisible': [('parent.move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
             </xpath>
             <!-- Add fields to embed invoice line form view  -->
@@ -59,18 +62,18 @@
     </record>
     <record id="view_account_invoice_tree" model="ir.ui.view">
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="inherit_id" ref="account.view_out_invoice_tree" />
         <field name="arch" type="xml">
             <field name="amount_untaxed_signed" position="before">
                 <field
                     name="margin_signed"
                     sum="Total"
-                    optional="show"
+                    optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
                 />
                 <field
                     name="margin_percent"
-                    optional="show"
+                    optional="hide"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
                 />
             </field>

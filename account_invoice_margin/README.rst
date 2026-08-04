@@ -1,3 +1,7 @@
+.. image:: https://odoo-community.org/readme-banner-image
+   :target: https://odoo-community.org/get-involved?utm_source=readme
+   :alt: Odoo Community Association
+
 ======================
 Account Invoice Margin
 ======================
@@ -13,7 +17,7 @@ Account Invoice Margin
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github
@@ -35,14 +39,10 @@ The new information is available:
 * on the invoice form view
 
 .. figure:: https://raw.githubusercontent.com/OCA/margin-analysis/16.0/account_invoice_margin/static/description/account_invoice_form.png
-   :scale: 80 %
-   :alt: Invoice Tree View
 
 * and on the invoice tree view
 
 .. figure:: https://raw.githubusercontent.com/OCA/margin-analysis/16.0/account_invoice_margin/static/description/account_invoice_tree.png
-   :scale: 80 %
-   :alt: Invoice Tree View
 
 **Table of contents**
 
