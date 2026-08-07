@@ -10,6 +10,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="markup">50</field>
         <field name="name">Normal Margin (33%)</field>
         <field name="price_round">0.05</field>
+        <field name="company_id" eval="False" />
 
     </record>
 
@@ -18,6 +19,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="name">Big Margin (50%, with 95 cents)</field>
         <field name="price_round">1</field>
         <field name="price_surcharge">-0.05</field>
+        <field name="company_id" eval="False" />
     </record>
 
 </odoo>

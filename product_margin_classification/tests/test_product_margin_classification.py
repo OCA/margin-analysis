@@ -93,6 +93,7 @@ class TestProductMarginClassification(common.TransactionCase):
             {
                 "name": "Template Name",
                 "margin_classification_id": self.classification_big_margin,
+                "company_id": False,
             }
         )
         self.assertEqual(
