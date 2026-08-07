@@ -13,6 +13,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 decoration-warning="margin_state == 'too_expensive'"
                 decoration-danger="margin_state == 'too_cheap'"
                 editable="bottom"
+                edit="true" create="false"
             >
                 <field name="default_code" readonly="1" />
                 <field name="name" readonly="1" />
@@ -55,8 +56,10 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     widget="monetary"
                     options="{'currency_field': 'currency_id', 'field_digits': True}"
                 />
+                <field name="margin_classification_id" optional="show" />
                 <field name="product_variant_count" invisible="1" />
                 <field name="currency_id" invisible="1" />
+                <field name="company_id" optional="hide" />
             </tree>
         </field>
     </record>
