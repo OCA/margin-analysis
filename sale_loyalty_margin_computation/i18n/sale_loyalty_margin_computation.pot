@@ -1,0 +1,67 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_loyalty_margin_computation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-04 06:49+0000\n"
+"PO-Revision-Date: 2026-06-04 06:49+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_margin_computation.sale_margin_product_loyalty_reward_form_view
+msgid "<code>origin_line.product_id</code>: The Origin line product"
+msgstr ""
+
+#. module: sale_loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_margin_computation.sale_margin_product_loyalty_reward_form_view
+msgid "<code>origin_line</code>: The origin sale order line"
+msgstr ""
+
+#. module: sale_loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_margin_computation.sale_margin_product_loyalty_reward_form_view
+msgid "<code>reward_line.product_id</code>: The Reward line product"
+msgstr ""
+
+#. module: sale_loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_margin_computation.sale_margin_product_loyalty_reward_form_view
+msgid "<code>reward_line</code>: The first Reward line"
+msgstr ""
+
+#. module: sale_loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_margin_computation.sale_margin_product_loyalty_reward_form_view
+msgid "<code>reward_lines</code>: The Reward lines"
+msgstr ""
+
+#. module: sale_loyalty_margin_computation
+#. odoo-python
+#: code:addons/sale_loyalty_margin_computation/models/loyalty_reward.py:0
+msgid ""
+"Invalid sale margin formula:\n"
+"%(error)s"
+msgstr ""
+
+#. module: sale_loyalty_margin_computation
+#: model:ir.model,name:sale_loyalty_margin_computation.model_loyalty_reward
+msgid "Loyalty Reward"
+msgstr ""
+
+#. module: sale_loyalty_margin_computation
+#: model:ir.model,name:sale_loyalty_margin_computation.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_loyalty_margin_computation
+#: model_terms:ir.ui.view,arch_db:sale_loyalty_margin_computation.sale_margin_product_loyalty_reward_form_view
+msgid ""
+"product = origin_line.product_id\n"
+"standard_price = product.standard_price\n"
+"result = origin_line.price_unit * 1.2 * origin_line.product_uom_qty - standard_price"
+msgstr ""
