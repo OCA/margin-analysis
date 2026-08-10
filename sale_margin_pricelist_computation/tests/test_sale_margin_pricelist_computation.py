@@ -1,3 +1,4 @@
+from odoo.exceptions import ValidationError
 from odoo.fields import Command
 
 from odoo.addons.sale_margin.tests.test_sale_margin import TestSaleMargin
@@ -58,3 +59,12 @@ class TestSaleMarginPricelistComputation(TestSaleMargin):
         order = self._create_order(20)
         self.assertAlmostEqual(order.margin, 533.4, delta=0.1)
         self.assertAlmostEqual(order.margin_percent, 0.89, delta=0.1)
+
+    def test_pricelist_item_formula_with_eval_context(self):
+        formula = "result = product.list_price_test"
+        with self.assertRaises(ValidationError):
+            self.margin_pricelist.item_ids[0].write(
+                {"margin_sale_price_formula": formula}
+            )
+        formula = "result = product.list_price / line.product_uom_qty + 10"
+        self.margin_pricelist.item_ids[0].write({"margin_sale_price_formula": formula})
