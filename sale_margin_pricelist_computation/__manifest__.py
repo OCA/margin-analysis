@@ -3,7 +3,7 @@
 {
     "name": "Sale Margin Pricelist Computation",
     "summary": "Calculation of margins based on price lists",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Sale",
     "website": "https://github.com/OCA/margin-analysis",
     "author": "Tecnativa, Odoo Community Association (OCA)",
