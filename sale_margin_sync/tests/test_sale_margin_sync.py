@@ -37,7 +37,7 @@ class TestSaleMarginSync(BaseCommon):
                             "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom_qty": 10,
-                            "product_uom": cls.product.uom_id.id,
+                            "product_uom_id": cls.product.uom_id.id,
                             "price_unit": 100.00,
                         },
                     ),
@@ -48,7 +48,7 @@ class TestSaleMarginSync(BaseCommon):
                             "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom_qty": 2,
-                            "product_uom": cls.env.ref("uom.product_uom_dozen").id,
+                            "product_uom_id": cls.env.ref("uom.product_uom_dozen").id,
                             "price_unit": 1200.00,
                         },
                     ),
@@ -66,8 +66,9 @@ class TestSaleMarginSync(BaseCommon):
         move2 = so_line2.move_ids[:1]
         move2.write({"quantity": 2, "picked": True})
         self.order.picking_ids[:1]._action_done()
-        move1.stock_valuation_layer_ids[:1].unit_cost = 80.0
-        move2.stock_valuation_layer_ids[:1].unit_cost = 80.0
+        # Simulate a unit cost of 80 in the product UOM
+        move1.value = 80.0 * move1._get_valued_qty()
+        move2.value = 80.0 * move2._get_valued_qty()
         self.assertEqual(so_line1.purchase_price, 80.0)
         self.assertEqual(so_line1.margin, 200.0)
         self.assertEqual(so_line2.purchase_price, 960.0)
@@ -78,11 +79,9 @@ class TestSaleMarginSync(BaseCommon):
         so_line1 = self.order.order_line[:1]
         move1 = so_line1.move_ids[:1]
         move1.write({"quantity": 10, "picked": True})
-        move1.stock_valuation_layer_ids[:1].unit_cost = 80.0
         so_line2 = self.order.order_line[1:2]
         move2 = so_line2.move_ids[:1]
         move2.write({"quantity": 2, "picked": True})
-        move2.stock_valuation_layer_ids[:1].unit_cost = 80.0
         self.assertEqual(so_line1.purchase_price, 70.0)
         self.assertEqual(so_line1.margin, 300.0)
         self.assertEqual(so_line2.purchase_price, 840.0)
