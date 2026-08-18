@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [account_invoice_margin](account_invoice_margin/) | 19.0.1.0.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Show margin in invoices
 [account_invoice_margin_sale](account_invoice_margin_sale/) | 19.0.1.0.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> <a href='https://github.com/carlosdauden'><img src='https://github.com/carlosdauden.png' width='32' height='32' style='border-radius:50%;' alt='carlosdauden'/></a> | Set margin in invoices from sale orders
 [product_standard_margin](product_standard_margin/) | 19.0.1.1.0 | <a href='https://github.com/legalsylvain'><img src='https://github.com/legalsylvain.png' width='32' height='32' style='border-radius:50%;' alt='legalsylvain'/></a> | Product Margin and Margin Rate
+[sale_margin_sync](sale_margin_sync/) | 19.0.1.0.0 |  | Recompute sale margin when stock move cost price is changed
 
 [//]: # (end addons)
 
