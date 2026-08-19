@@ -1,17 +1,18 @@
 # Copyright 2023 Álvaro Marcos <alvaro.marcos@factorlibre.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+from odoo.orm.commands import Command
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestSaleReportMargin(TransactionCase):
+class TestSaleReportMargin(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.product_product = cls.env["product.product"].create(
             {"name": "Product Test"}
         )
-        cls.partner = cls.env["res.partner"].create({"name": "Partner Test"})
 
     def test_sale_report_margin(self):
         """Check purchase_price in sale report"""
@@ -20,9 +21,7 @@ class TestSaleReportMargin(TransactionCase):
                 "name": "Test Order",
                 "partner_id": self.partner.id,
                 "order_line": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": self.product_product.id,
                             "price_unit": 10.0,
