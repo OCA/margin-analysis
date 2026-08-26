@@ -49,8 +49,8 @@ sale order lines.
 
 If you need this module for those reasons, these might interest you too:
 
-- sale_margin_delivered_dropshipping
-- sale_report_delivered
+-  sale_margin_delivered_dropshipping
+-  sale_report_delivered
 
 Configuration
 =============
@@ -100,18 +100,18 @@ Authors
 Contributors
 ------------
 
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Sergio Teruel
-  - David Vidal
-  - Carlos Roca
-  - Pilar Vargas
+   -  Sergio Teruel
+   -  David Vidal
+   -  Carlos Roca
+   -  Pilar Vargas
 
-- Eduardo de Miguel (`Moduon <https://www.moduon.team/>`__)
-- Rafael Blasco (`Moduon <https://www.moduon.team/>`__)
-- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
+-  Eduardo de Miguel (`Moduon <https://www.moduon.team/>`__)
+-  Rafael Blasco (`Moduon <https://www.moduon.team/>`__)
+-  `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
 
-  - Bhavesh Heliconia
+   -  Bhavesh Heliconia
 
 Maintainers
 -----------
