@@ -39,6 +39,9 @@ Adds margin information to the sales analysis report:
   themselves and on the defined inventory valuation method.
 - ``Margin (%)``: the margin over the untaxed total.
 
+The purchase price, margin and margin percentage are also shown as
+columns in the list view of the report.
+
 **Table of contents**
 
 .. contents::
@@ -49,6 +52,9 @@ Usage
 
 Go to *Sales > Reporting > Sales* and you'll find the new *Purchase
 Price* and *Margin (%)* measures.
+
+In the list view, the *Purchase Price* column is displayed next to the
+unit price, and the *Margin* and *Margin (%)* columns next to the total.
 
 Known issues / Roadmap
 ======================

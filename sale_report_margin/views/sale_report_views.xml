@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Camptocamp SA (https://www.camptocamp.com).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="sale_report_view_tree" model="ir.ui.view">
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.sale_report_view_tree" />
+        <field name="arch" type="xml">
+            <field name="price_unit" position="after">
+                <field name="purchase_price" optional="show" widget="monetary" />
+            </field>
+            <field name="price_total" position="after">
+                <field
+                    name="margin"
+                    optional="show"
+                    widget="monetary"
+                    sum="Sum of Margin"
+                />
+                <field name="margin_percent" optional="show" widget="percentage" />
+            </field>
+        </field>
+    </record>
+</odoo>
