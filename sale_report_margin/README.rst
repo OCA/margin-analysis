@@ -32,10 +32,12 @@ Sale Report Margin
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-Adds purchase_price field to sale report. This field is the unit cost of
-the sold products, in the company currency. It comes from the *Cost*
-field configured in the products themselves and on the defined inventory
-valuation method.
+Adds margin information to the sales analysis report:
+
+- ``Purchase Price``: the unit cost of the sold products, in the company
+  currency. It comes from the *Cost* field configured in the products
+  themselves and on the defined inventory valuation method.
+- ``Margin (%)``: the margin over the untaxed total.
 
 **Table of contents**
 
@@ -46,7 +48,7 @@ Usage
 =====
 
 Go to *Sales > Reporting > Sales* and you'll find the new *Purchase
-Price* measure.
+Price* and *Margin (%)* measures.
 
 Known issues / Roadmap
 ======================
