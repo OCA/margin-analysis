@@ -32,9 +32,15 @@ Sale Report Margin
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-Adds purchase_price field to sale report. This field comes from the
-*Cost* field configured in the products themselves and on the defined
-inventory valuation method.
+Adds margin information to the sales analysis report:
+
+- ``Purchase Price``: the unit cost of the sold products, in the company
+  currency. It comes from the *Cost* field configured in the products
+  themselves and on the defined inventory valuation method.
+- ``Margin (%)``: the margin over the untaxed total.
+
+The purchase price, margin and margin percentage are also shown as
+columns in the list view of the report.
 
 **Table of contents**
 
@@ -45,7 +51,10 @@ Usage
 =====
 
 Go to *Sales > Reporting > Sales* and you'll find the new *Purchase
-Price* measure.
+Price* and *Margin (%)* measures.
+
+In the list view, the *Purchase Price* column is displayed next to the
+unit price, and the *Margin* and *Margin (%)* columns next to the total.
 
 Known issues / Roadmap
 ======================
@@ -80,6 +89,10 @@ Contributors
      - Carlos Roca
 
 - SodexisTeam <dev@sodexis.com>
+
+- `Camptocamp <https://www.camptocamp.com>`__:
+
+     - Iván Todorovich <ivan.todorovich@camptocamp.com>
 
 Maintainers
 -----------
