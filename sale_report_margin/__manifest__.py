@@ -10,5 +10,6 @@
     "category": "Sales",
     "license": "AGPL-3",
     "depends": ["sale_margin"],
+    "data": ["views/sale_report_views.xml"],
     "installable": True,
 }

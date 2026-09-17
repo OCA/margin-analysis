@@ -4,3 +4,6 @@ Adds margin information to the sales analysis report:
   currency. It comes from the *Cost* field configured in the products
   themselves and on the defined inventory valuation method.
 - `Margin (%)`: the margin over the untaxed total.
+
+The purchase price, margin and margin percentage are also shown as columns
+in the list view of the report.
