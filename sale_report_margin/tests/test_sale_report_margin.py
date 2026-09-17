@@ -16,7 +16,14 @@ class TestSaleReportMargin(BaseCommon):
         )
 
     def test_sale_report_margin(self):
-        """Check purchase_price in sale report"""
+        """Check the purchase price and margin of a line in the sale report.
+
+        Scenario:
+            1. Confirm an order with one line sold at 10 with a cost of 8.
+        Expected:
+            - The report row shows a purchase price of 8.
+            - The report row shows a margin of 2, that is 20% of the untaxed total.
+        """
         order = self.env["sale.order"].create(
             {
                 "name": "Test Order",
@@ -41,6 +48,8 @@ class TestSaleReportMargin(BaseCommon):
             ]
         )
         self.assertEqual(report.purchase_price, 8.0)
+        self.assertEqual(report.margin, 2.0)
+        self.assertEqual(report.margin_percent, 0.2)
 
     def test_sale_report_margin_lines_in_one_row(self):
         """Lines merged in one report row show their average unit cost.
@@ -51,7 +60,7 @@ class TestSaleReportMargin(BaseCommon):
         Expected:
             - Both lines fall into a single report row.
             - The row shows a purchase price of 3, not the sum of both costs.
-            - The row shows a margin of 14.
+            - The row shows a margin of 14, that is 70% of the untaxed total.
         """
         order = self.env["sale.order"].create(
             {
@@ -80,17 +89,50 @@ class TestSaleReportMargin(BaseCommon):
         self.assertEqual(len(report), 1)
         self.assertEqual(report.purchase_price, 3.0)
         self.assertEqual(report.margin, 14.0)
+        self.assertEqual(report.margin_percent, 0.7)
+
+    def test_sale_report_margin_percent_no_subtotal(self):
+        """A free line has no margin percentage instead of a division error.
+
+        Scenario:
+            1. Confirm an order with one line sold at 0 with a cost of 8.
+        Expected:
+            - The report row shows a margin of -8 and a margin percentage of 0.
+        """
+        order = self.env["sale.order"].create(
+            {
+                "name": "Test Order",
+                "partner_id": self.partner.id,
+                "order_line": [
+                    Command.create(
+                        {
+                            "product_id": self.product_product.id,
+                            "price_unit": 0.0,
+                            "product_uom_qty": 1.0,
+                            "purchase_price": 8.0,
+                        },
+                    )
+                ],
+            }
+        )
+        order.action_confirm()
+        report = self.env["sale.report"].search(
+            [("order_reference", "=", f"{order._name},{order.id}")]
+        )
+        self.assertEqual(report.margin, -8.0)
+        self.assertEqual(report.margin_percent, 0.0)
 
     def test_sale_report_margin_other_currency(self):
-        """The cost of an order in another currency is reported in the company one.
+        """Amounts of an order in another currency are reported in the company one.
 
         Scenario:
             1. Set up a currency worth half of the company currency.
             2. Confirm an order in that currency with one line sold at 10 with
                a cost of 8.
         Expected:
-            - The report row shows a unit price of 5 and a purchase price of 4,
-              both in the company currency.
+            - The report row shows a unit price of 5, a purchase price of 4 and
+              a margin of 1, all in the company currency.
+            - The margin percentage is still 20%.
         """
         currency = self.quick_ref("base.EUR")
         currency.active = True
@@ -128,3 +170,5 @@ class TestSaleReportMargin(BaseCommon):
         )
         self.assertEqual(report.price_unit, 5.0)
         self.assertEqual(report.purchase_price, 4.0)
+        self.assertEqual(report.margin, 1.0)
+        self.assertEqual(report.margin_percent, 0.2)
