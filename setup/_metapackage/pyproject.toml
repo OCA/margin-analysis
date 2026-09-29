@@ -7,6 +7,7 @@ dependencies = [
     "odoo-addon-product_standard_margin==19.0.*",
     "odoo-addon-sale_margin_security==19.0.*",
     "odoo-addon-sale_report_margin==19.0.*",
+    "odoo-addon-sale_margin_sync==19.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
