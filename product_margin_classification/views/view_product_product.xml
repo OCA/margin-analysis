@@ -6,6 +6,32 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 -->
 <odoo>
 
+    <record id="view_product_product_tree_inherit" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view" />
+        <field name="arch" type="xml">
+            <field name="lst_price" position="after">
+                <field
+                    name="theoretical_price"
+                    widget="monetary"
+                    options="{'currency_field': 'currency_id', 'field_digits': True}"
+                    attrs="{'invisible': [('theoretical_difference', '=', 0)]}"
+                    optional="hide"
+                />
+                <field name="margin_state" optional="hide" />
+                <field
+                    name="theoretical_difference"
+                    widget="monetary"
+                    options="{'currency_field': 'currency_id', 'field_digits': True}"
+                    optional="hide"
+                />
+                <field name="margin_classification_id" optional="hide" />
+                <field name="currency_id" invisible="1" />
+                <field name="company_id" invisible="1" />
+            </field>
+        </field>
+    </record>
+
     <record id="view_product_product_tree" model="ir.ui.view">
         <field name="model">product.product</field>
         <field name="arch" type="xml">
