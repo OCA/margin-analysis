@@ -38,24 +38,29 @@
                 <field
                     name="purchase_price"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'invisible': [('parent.move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
                 <field
                     name="margin"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'invisible': [('parent.move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
                 <field
                     name="margin_percent"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'invisible': [('parent.move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
             </xpath>
             <field name="tax_totals" position="before">
                 <field
                     name="margin"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
                 <field
                     name="margin_percent"
                     groups="account_invoice_margin.group_account_invoice_margin_security"
+                    attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"
                 />
             </field>
         </field>
