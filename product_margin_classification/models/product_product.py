@@ -20,6 +20,7 @@ class ProductProduct(models.Model):
     margin_classification_id = fields.Many2one(
         comodel_name="product.margin.classification",
         string="Margin Classification",
+        check_company=True,
     )
 
     theoretical_price = fields.Float(

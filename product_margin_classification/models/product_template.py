@@ -17,6 +17,7 @@ class ProductTemplate(models.Model):
         inverse="_inverse_margin_classification_id",
         search="_search_margin_classification_id",
         comodel_name="product.margin.classification",
+        check_company=True,
     )
 
     theoretical_price = fields.Float(
