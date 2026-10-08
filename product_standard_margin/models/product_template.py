@@ -14,12 +14,14 @@ class ProductTemplate(models.Model):
     list_price_vat_excl = fields.Float(
         compute="_compute_margin",
         string="Sale Price VAT Excluded",
+        store=True,
         digits="Product Price",
     )
 
     standard_margin = fields.Float(
         compute="_compute_margin",
         string="Margin",
+        store=True,
         digits="Product Price",
         help="Margin is [ sale price (Wo Tax) - cost price ] "
         "of the product form (not based on historical values). "
@@ -30,6 +32,7 @@ class ProductTemplate(models.Model):
     standard_margin_rate = fields.Float(
         compute="_compute_margin",
         string="Margin (%)",
+        store=True,
         digits="Product Price",
         help="Margin rate is [ Margin / sale price (Wo Tax) ] "
         "of the product form (not based on historical values)."
@@ -39,6 +42,7 @@ class ProductTemplate(models.Model):
     standard_markup_rate = fields.Float(
         compute="_compute_margin",
         string="Markup (%)",
+        store=True,
         digits="Product Price",
         help="Markup rate is [ Margin / cost price (Wo Tax) ] "
         "of the product form (not based on historical values)."
