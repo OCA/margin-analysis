@@ -60,6 +60,13 @@ class SaleOrderLine(models.Model):
                         line.company_id,
                     )
                     new_sol.order_id = False
+                    # Detaching the temporary line flags its stored computed
+                    # fields to recompute. Left pending, they are computed in
+                    # batch with the real lines on a record without order,
+                    # company nor currency.
+                    for field in list(self.env.fields_to_compute()):
+                        if field.model_name == new_sol._name:
+                            self.env.remove_to_compute(field, new_sol)
                     elaboration_cost_price += elaboration_product.standard_price
                 line.elaboration_price = elaboration_price
                 line.elaboration_cost_price = elaboration_cost_price
