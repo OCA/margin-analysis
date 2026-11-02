@@ -6,18 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-11-02 15:54+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "<code>env</code>: The Sale Order Line environment"
-msgstr ""
+msgstr "<code>env</code>: l'ambiente della riga dell'ordine di vendita"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
@@ -25,6 +27,8 @@ msgid ""
 "<code>float_compare()</code>: utility function to compare floats based on a "
 "specific precision"
 msgstr ""
+"<code>float_compare()</code>: funzione di utilità per confrontare numeri "
+"decimali in base a una precisione specifica"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
@@ -32,41 +36,43 @@ msgid ""
 "<code>line.product_uom_qty</code>, <code>line.qty_delivered</code>: Ordered "
 "and delivered quantities"
 msgstr ""
+"<code>line.product_uom_qty</code>, <code>line.qty_delivered</code>: quantità "
+"ordinate e consegnate"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "<code>line</code>: Order Line (sale.order.line)"
-msgstr ""
+msgstr "<code>line</code>: riga dell'ordine (sale.order.line)"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "<code>pricelist</code>: Current pricelist"
-msgstr ""
+msgstr "<code>pricelist</code>: listino prezzi corrente"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "<code>pricelist_item</code>: Current pricelist rule"
-msgstr ""
+msgstr "<code>pricelist_item</code>: regola del listino prezzi corrente"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "<code>product.list_price</code>: Product sale price"
-msgstr ""
+msgstr "<code>product.list_price</code>: prezzo di vendita del prodotto"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "<code>product.standard_price</code>: Product cost"
-msgstr ""
+msgstr "<code>product.standard_price</code>: costo del prodotto"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "<code>product</code>: The Sale Order Line product"
-msgstr ""
+msgstr "<code>product</code>: prodotto della riga dell'ordine di vendita"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "Example of Python code:"
-msgstr ""
+msgstr "Esempio di codice Python:"
 
 #. module: sale_margin_pricelist_computation
 #. odoo-python
@@ -75,36 +81,38 @@ msgid ""
 "Invalid sale margin formula:\n"
 "%(error)s"
 msgstr ""
+"Formula del margine di vendita non valida:\n"
+"%(error)s"
 
 #. module: sale_margin_pricelist_computation
 #: model:ir.model.fields,field_description:sale_margin_pricelist_computation.field_product_pricelist_item__margin_cost_price_formula
 msgid "Margin Cost Price Formula"
-msgstr ""
+msgstr "Formula del costo per il calcolo del margine"
 
 #. module: sale_margin_pricelist_computation
 #: model:ir.model.fields,field_description:sale_margin_pricelist_computation.field_product_pricelist_item__margin_sale_price_formula
 msgid "Margin Sale Price Formula"
-msgstr ""
+msgstr "Formula del prezzo di vendita per il calcolo del margine"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "Margin's Formulas"
-msgstr ""
+msgstr "Formule del margine"
 
 #. module: sale_margin_pricelist_computation
 #: model:ir.model,name:sale_margin_pricelist_computation.model_product_pricelist_item
 msgid "Pricelist Rule"
-msgstr ""
+msgstr "Regola del listino prezzi"
 
 #. module: sale_margin_pricelist_computation
 #: model:ir.model,name:sale_margin_pricelist_computation.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Riga ordine di vendita"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "The following variables can be used:"
-msgstr ""
+msgstr "È possibile utilizzare le seguenti variabili:"
 
 #. module: sale_margin_pricelist_computation
 #: model:ir.model.fields,help:sale_margin_pricelist_computation.field_product_pricelist_item__margin_cost_price_formula
@@ -112,6 +120,8 @@ msgid ""
 "This formula is used to calculate the cost price for the purposes of "
 "calculating the margin"
 msgstr ""
+"Questa formula viene utilizzata per calcolare il costo da impiegare nel "
+"calcolo del margine"
 
 #. module: sale_margin_pricelist_computation
 #: model:ir.model.fields,help:sale_margin_pricelist_computation.field_product_pricelist_item__margin_sale_price_formula
@@ -119,13 +129,15 @@ msgid ""
 "This formula is used to calculate the sales order price for the purposes of "
 "margin calculation"
 msgstr ""
+"Questa formula viene utilizzata per calcolare il prezzo dell'ordine di "
+"vendita da impiegare nel calcolo del margine"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "To return a result, assign: <code>result = </code>"
-msgstr ""
+msgstr "Per restituire un risultato, assegnalo con: <code>result = </code>"
 
 #. module: sale_margin_pricelist_computation
 #: model_terms:ir.ui.view,arch_db:sale_margin_pricelist_computation.margin_product_pricelist_item_form_view
 msgid "result = 20 if line.price_unit &gt; 30 else 10"
-msgstr ""
+msgstr "result = 20 if line.price_unit &gt; 30 else 10"
