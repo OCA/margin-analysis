@@ -61,25 +61,24 @@ class ProductProduct(models.Model):
     )
     def _compute_margin(self):
         for product in self:
+            standard_price = product.with_company(product.company_id).standard_price
             product.list_price_vat_excl = product.taxes_id.compute_all(
                 product.lst_price, product=product
             )["total_excluded"]
-            product.standard_margin = (
-                product.list_price_vat_excl - product.standard_price
-            )
+            product.standard_margin = product.list_price_vat_excl - standard_price
             if product.list_price_vat_excl == 0:
                 product.standard_margin_rate = 999.0
             else:
                 product.standard_margin_rate = (
-                    (product.list_price_vat_excl - product.standard_price)
+                    (product.list_price_vat_excl - standard_price)
                     / product.list_price_vat_excl
                     * 100
                 )
-            if product.standard_price == 0:
+            if standard_price == 0:
                 product.standard_markup_rate = 999.0
             else:
                 product.standard_markup_rate = (
-                    (product.list_price_vat_excl - product.standard_price)
-                    / product.standard_price
+                    (product.list_price_vat_excl - standard_price)
+                    / standard_price
                     * 100
                 )

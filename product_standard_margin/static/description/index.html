@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
-<title>Product Margin and Margin Rate</title>
+<title>README.rst</title>
 <style type="text/css">
 
 /*
@@ -408,10 +408,10 @@ have added a dependency on sale module.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h2><a class="toc-backref" href="#toc-entry-1">Known issues / Roadmap</a></h2>
-<ul class="simple">
-<li>This module will not work properly if used in a multicompany context with product
-prices depending on the company.</li>
-</ul>
+<p>This module will not work properly if used in a multicompany context with “global” products
+that are not related to any company.
+This is due to current odoo limitation that compute field with a sudo user, and due to the field <cite>standard_price</cite>
+that is weirdly company dependent, unlike the selling price.</p>
 </div>
 <div class="section" id="bug-tracker">
 <h2><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h2>
