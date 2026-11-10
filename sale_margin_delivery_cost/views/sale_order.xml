@@ -1,0 +1,26 @@
+<odoo>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">Sale Order: other costs</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <field name="note" position="after">
+                <group name="other_costs" string="Other Costs">
+                    <field
+                        name="other_cost_ids"
+                        nolabel="1"
+                        mode="tree"
+                        attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                    >
+                        <tree editable="bottom">
+                            <field name="product_id" />
+                            <field name="name" />
+                            <field name="price_unit" />
+                            <field name="company_id" invisible="True" />
+                        </tree>
+                    </field>
+                </group>
+            </field>
+        </field>
+    </record>
+</odoo>
