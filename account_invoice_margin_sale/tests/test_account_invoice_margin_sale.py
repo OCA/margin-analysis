@@ -23,6 +23,17 @@ class TestAccountInvoiceMargin(BaseCommon):
             }
         )
         cls.partner.property_account_receivable_id = cls.account
+        # No chart of accounts is installed during at-install tests on a
+        # fresh database, so provide the accounts invoice lines need.
+        cls.income_account = cls.env["account.account"].create(
+            {
+                "name": "Test income account",
+                "code": "TESTINC",
+                "account_type": "income",
+            }
+        )
+        cls.env.company.income_account_id = cls.income_account
+        cls.journal.default_account_id = cls.income_account
         cls.product_categ = cls.env["product.category"].create(
             {"name": "Test category"}
         )
