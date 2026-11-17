@@ -1,0 +1,16 @@
+- [Tecnativa](https://www.tecnativa.com):
+  - Sergio Teruel
+- [GRAP](http://www.grap.coop):
+  - Sylvain LE GAL (<https://twitter.com/legalsylvain>)
+- [Open Source Integrators](https://www.opensourceintegrators.com):
+  - Bhavesh Odedra
+- [Avoin.Systems](https://www.avoin.systems):
+  - Nedas Žilinskas
+- [Factor Libre](https://factorlibre.com):
+  - Luis J. Salvatierra
+- [Komit](https://komit-consulting.com):
+  - Jean-Charles Drubay
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
+- [Studio73](https://www.studio73.es)
+  - Arantxa Gandia
