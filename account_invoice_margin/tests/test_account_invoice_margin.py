@@ -62,6 +62,7 @@ class TestAccountInvoiceMargin(AccountTestInvoicingCommon):
         self.assertEqual(inv_line.margin, 12000.00)
 
     def test_invoice_refund(self):
+        self.invoice.invoice_line_ids.purchase_price = 80
         self.invoice.action_post()
         wiz = (
             self.env["account.move.reversal"]
@@ -79,8 +80,19 @@ class TestAccountInvoiceMargin(AccountTestInvoicingCommon):
         )
         action = wiz.refund_moves()
         new_invoice = self.env["account.move"].browse(action["res_id"])
-        self.assertEqual(new_invoice.invoice_line_ids.margin, 1000.00)
-        self.assertEqual(new_invoice.invoice_line_ids.margin_signed, -1000.00)
+        self.assertEqual(new_invoice.invoice_line_ids.margin, 1200.00)
+        self.assertEqual(new_invoice.invoice_line_ids.margin_signed, -1200.00)
+        report = self.env["account.invoice.report"]
+        domain = [("move_id", "in", (self.invoice | new_invoice).ids)]
+        lines = report.search(domain)
+        self.assertEqual(sum(lines.mapped("margin")), 0.0)
+        self.assertEqual(
+            {line.move_id.id: line.margin for line in lines},
+            {self.invoice.id: 1200.0, new_invoice.id: -1200.0},
+        )
+        self.assertEqual(
+            report._read_group(domain, aggregates=["margin:sum"])[0][0], 0.0
+        )
 
     def test_invoice_modify_moves(self):
         self.invoice.action_post()

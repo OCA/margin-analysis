@@ -10,5 +10,5 @@ class AccountInvoiceReport(models.Model):
 
     margin = fields.Float(readonly=True, string="Margin Analysis")
 
-    def _select(self):
-        return SQL("%s, line.margin_signed AS margin", super()._select())
+    def _select_list(self, table):
+        return [*super()._select_list(table), SQL("%s AS margin", table.margin_signed)]

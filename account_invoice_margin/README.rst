@@ -21,13 +21,13 @@ Account Invoice Margin
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmargin--analysis-lightgray.png?logo=github
-    :target: https://github.com/OCA/margin-analysis/tree/19.0/account_invoice_margin
+    :target: https://github.com/OCA/margin-analysis/tree/20.0/account_invoice_margin
     :alt: OCA/margin-analysis
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/margin-analysis-19-0/margin-analysis-19-0-account_invoice_margin
+    :target: https://translation.odoo-community.org/projects/margin-analysis-20-0/margin-analysis-20-0-account_invoice_margin
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/margin-analysis&target_branch=19.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/margin-analysis&target_branch=20.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -36,16 +36,16 @@ This module allows to show sales margin in invoices.
 
 The new information is available:
 
-- on the invoice form view
+-  on the invoice form view
 
 |image1|
 
-- and on the invoice tree view
+-  and on the invoice tree view
 
 |image2|
 
-.. |image1| image:: https://raw.githubusercontent.com/OCA/margin-analysis/19.0/account_invoice_margin/static/description/account_invoice_form.png
-.. |image2| image:: https://raw.githubusercontent.com/OCA/margin-analysis/19.0/account_invoice_margin/static/description/account_invoice_tree.png
+.. |image1| image:: https://raw.githubusercontent.com/OCA/margin-analysis/20.0/account_invoice_margin/static/description/account_invoice_form.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/margin-analysis/20.0/account_invoice_margin/static/description/account_invoice_tree.png
 
 **Table of contents**
 
@@ -66,7 +66,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/margin-analysis/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20account_invoice_margin%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/margin-analysis/issues/new?body=module:%20account_invoice_margin%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -82,33 +82,37 @@ Authors
 Contributors
 ------------
 
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Sergio Teruel
+   -  Sergio Teruel
 
-- `GRAP <http://www.grap.coop>`__:
+-  `GRAP <http://www.grap.coop>`__:
 
-  - Sylvain LE GAL (https://twitter.com/legalsylvain)
+   -  Sylvain LE GAL (https://twitter.com/legalsylvain)
 
-- `Open Source Integrators <https://www.opensourceintegrators.com>`__:
+-  `Open Source Integrators <https://www.opensourceintegrators.com>`__:
 
-  - Bhavesh Odedra
+   -  Bhavesh Odedra
 
-- `Avoin.Systems <https://www.avoin.systems>`__:
+-  `Avoin.Systems <https://www.avoin.systems>`__:
 
-  - Nedas Žilinskas
+   -  Nedas Žilinskas
 
-- `Factor Libre <https://factorlibre.com>`__:
+-  `Factor Libre <https://factorlibre.com>`__:
 
-  - Luis J. Salvatierra
+   -  Luis J. Salvatierra
 
-- `Komit <https://komit-consulting.com>`__:
+-  `Komit <https://komit-consulting.com>`__:
 
-  - Jean-Charles Drubay
+   -  Jean-Charles Drubay
 
-- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
+-  `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
 
-  - Bhavesh Heliconia
+   -  Bhavesh Heliconia
+
+-  `Studio73 <https://www.studio73.es>`__
+
+   -  Arantxa Gandia
 
 Maintainers
 -----------
@@ -131,6 +135,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-sergio-teruel| 
 
-This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/19.0/account_invoice_margin>`_ project on GitHub.
+This module is part of the `OCA/margin-analysis <https://github.com/OCA/margin-analysis/tree/20.0/account_invoice_margin>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
