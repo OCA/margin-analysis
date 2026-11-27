@@ -1,0 +1,60 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_margin_report_landed_costs
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-05 15:23+0000\n"
+"PO-Revision-Date: 2025-08-05 15:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_margin_report_landed_costs
+#: model:ir.model.fields,help:product_margin_report_landed_costs.field_product_product__purchase_avg_price
+msgid ""
+"(Total cost (Purchase) + Accumulated landed costs) / # Invoiced in Purchase"
+msgstr "(Coste total (Compra) + Gastos de envio acumulados) / # Facturado en compra"
+
+#. module: product_margin_report_landed_costs
+#: model:ir.model.fields,field_description:product_margin_report_landed_costs.field_product_product__accumulated_landed_costs
+msgid "Accumulated Landed Costs"
+msgstr "Gastos de envio acumulados"
+
+#. module: product_margin_report_landed_costs
+#: model:ir.model.fields,field_description:product_margin_report_landed_costs.field_product_product__purchase_avg_price
+msgid "Avg. Purchase Unit Price"
+msgstr "Precio unitario medio de compra"
+
+#. module: product_margin_report_landed_costs
+#: model_terms:ir.ui.view,arch_db:product_margin_report_landed_costs.product_margin_view_form
+msgid "Landed Costs"
+msgstr "Gastos de envio"
+
+#. module: product_margin_report_landed_costs
+#: model:ir.model,name:product_margin_report_landed_costs.model_product_product
+msgid "Product Variant"
+msgstr "Variante de producto"
+
+#. module: product_margin_report_landed_costs
+#: model:ir.model.fields,help:product_margin_report_landed_costs.field_product_product__accumulated_landed_costs
+msgid ""
+"Summation of all landed costs associated with the product in the filtered "
+"period."
+msgstr ""
+"Sumatoria de los costos de destino asociados al producto en el período filtrado."
+
+#. module: product_margin_report_landed_costs
+#: model:ir.model.fields,field_description:product_margin_report_landed_costs.field_product_product__total_margin
+msgid "Total Margin"
+msgstr "Margen total"
+
+#. module: product_margin_report_landed_costs
+#: model:ir.model.fields,help:product_margin_report_landed_costs.field_product_product__total_margin
+msgid "Turnover - (# Invoiced in Sale * Avg. Unit Price (Purchases))"
+msgstr "Volumen de negocio - (# Facturado en venta * Precio unitario medio (Compras)"
